@@ -1,0 +1,40 @@
+<ol class="breadcrumb">
+	<li class="active"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></li>
+</ol>
+<div class="well">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="list-group">
+				<a href="<?php echo $this->url('user')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-user"></span>
+					<?php echo $this->translate('Users management');?>
+				</a>
+				<a href="<?php echo $this->url('radionuclide')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-certificate"></span>
+					<?php echo $this->translate('Radionuclides management');?>
+				</a>
+				<a href="<?php echo $this->url('drug')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-tint"></span>
+					<?php echo $this->translate('Drugs management');?>
+				</a>
+				<a href="<?php echo $this->url('examination')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-edit"></span>
+					<?php echo $this->translate('Examinations management');?>
+				</a>
+				<a href="<?php echo $this->url('activimeter')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-dashboard"></span>
+					<?php echo $this->translate('Activimeter');?>
+				</a>
+				<a href="<?php echo $this->url('system')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-search"></span>
+					<?php echo $this->translate('System overview');?>
+				</a>
+<!-- suppression de la gestion manuelle de l'injecteur -->
+<!--				<a href="<?php echo $this->url('injector')?>" class="list-group-item">
+					<span class="glyphicon glyphicon-list-alt"></span>
+					<?php echo $this->translate('Injector management');?>
+				</a>-->
+			</div>
+		</div>
+	</div>
+</div>

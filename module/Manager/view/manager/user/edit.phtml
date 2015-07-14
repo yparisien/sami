@@ -1,0 +1,57 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('manager')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></a></li>
+	<li><a href="<?php echo $this->url('user')?>"><?php echo $this->translate('User management');?></a></li>
+	<li class="active"><?php echo $this->translate('User account');?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user"></span> <?php echo $this->translate('User account');?>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('user', array('action'=>'edit'))?>" onsubmit="return checkForm()">
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Lastname")?></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $this->user->lastname;?>" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Firstname")?></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $this->user->firstname;?>" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Login")?></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="login" name="login" value="<?php echo $this->user->login;?>" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("New Password (let it empty if not modified)")?></label>
+						<div class="col-md-6">
+							<input type="password" class="form-control" id="password" name="password" value=""/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Confirm password (let it empty if not modified)")?></label>
+						<div class="col-md-6">
+							<input type="password" class="form-control" id="password-confirm" name="password-confirm" value=""/>
+						</div>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input id="admin" name="admin" type="checkbox" value="1" <?php if($this->user->admin){echo "checked";}?>>
+							<?php echo $this->translate('User is manager')?>
+						</label>
+					</div>
+					<input type="hidden" id="id" name="id" value="<?php echo $this->user->id;?>" />
+					<button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit")?></button>
+					<button type="button" class="btn btn-danger" onClick="window.location='<?php echo $this->url('user')?>'"><?php echo $this->translate("Abort")?></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

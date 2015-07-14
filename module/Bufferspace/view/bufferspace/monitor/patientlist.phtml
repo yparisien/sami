@@ -1,0 +1,35 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Patients overview')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-list"></span> <?php echo $this->translate('Patients overview')?>
+			</div>
+			<div class="panel-body">
+				<table class="table table-condensed table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Patient name')?></th>
+							<th><?php echo $this->translate('Injection date')?></th>
+							<th><?php echo $this->translate('Injected activity')?></th>
+							<th><?php echo $this->translate('Operator name')?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($injections as $injection) { ?>
+						<tr>
+							<td><?php echo strtoupper($injection->patientlastname)?> <?php echo ucfirst(strtolower($injection->patientfirstname))?></td>
+							<td><?php echo $injection->injectiontime?></td>
+							<td><?php echo $injection->activity?> <?php echo $unit?></td>
+							<td><?php echo strtoupper($injection->operatorlastname)?> <?php echo ucfirst(strtolower($injection->operatorfirstname))?></td>
+						</tr>
+					<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

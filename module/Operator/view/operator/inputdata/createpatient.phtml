@@ -1,0 +1,123 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Creation of patient')?></li>
+</ol>
+
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel-body">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate('Creation of patient')?>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('setup', array('action'=>'createpatient')) ?>">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="lastname" class="col-sm-4 control-label"><?php echo $this->translate('Lastname')?></label>
+									<div class="col-sm-8">
+										<input type="text" tabindex="1" class="form-control input-sm" id="lastname" name="lastname" placeholder="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="input2" class="col-sm-4 control-label"><?php echo $this->translate('Birthdate')?></label>
+									<div class="col-sm-8">
+										<div class="input-group date" id="datetimepicker-birthday">
+											<input type="text" tabindex="3" class="form-control" data-format="YYYY-MM-DD" id="birthdate" name="birthdate" />
+											<span class="input-group-addon">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+									<script type="text/javascript">
+									$(function() {
+										$('#datetimepicker-birthday').datetimepicker({
+											language: 'fr',
+											pickTime: false
+										});
+									});
+									</script>
+								</div>
+
+								<div class="form-group">
+									<label for="input4" class="col-sm-4 control-label"><?php echo $this->translate('Expeditor number')?></label>
+									<div class="col-sm-8">
+										<input type="text" tabindex="5" class="form-control input-sm" id="expeditornum" name="expeditornum" placeholder="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="input5" class="col-sm-4 control-label"><?php echo $this->translate('Examination')?></label>
+									<div class="col-sm-8">
+										<select class="form-control" tabindex="7" id="examination" name="examination">
+										<?php foreach($examinations as $examination) {?>
+											<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
+										<?php } ?>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="input6" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
+									<div class="col-sm-8">
+										<select class="form-control" tabindex="9" id="drugid" name="drugid" disabled>
+										<?php foreach($drugs as $drug) {?>
+											<option value="<?php echo $drug->id;?>"><?php echo $drug->name;?></option>
+										<?php } ?>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="input8" class="col-sm-4 control-label"><?php echo $this->translate('Firstname')?></label>
+									<div class="col-sm-8">
+										<input type="text" tabindex="2" class="form-control input-sm" id="firstname" name="firstname" placeholder="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="input7" class="col-sm-4 control-label"><?php echo $this->translate('Weight');?></label>
+									<div class="col-sm-8">
+										<div class="input-group">
+											<input type="text" tabindex="4" class="form-control input-sm" id="weight" name="weight" placeholder="" />
+											<span class="input-group-addon">Kg</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="selected-patient" class="col-sm-4 control-label"><?php echo $this->translate('Gender')?></label>
+									<div class="col-sm-8">
+										<select class="form-control input-sm" tabindex="6" id="gender" name="gender">
+											<option value="0"><?php echo $this->translate('Select gender...');?></option>
+											<option value="F"><?php echo $this->translate('F');?></option>
+											<option value="M"><?php echo $this->translate('M');?></option>
+											<option value="U"><?php echo $this->translate('U');?></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="input3" class="col-sm-4 control-label"><?php echo $this->translate('Comments');?></label>
+									<div class="col-sm-8">
+										<textarea style="resize:none" tabindex="8" class="form-control input-sm" id="comment" name="comment" rows="3"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 col-md-offset-4">
+								<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next');?>" />
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort');?></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#drugid').val(<?php echo $drugid?>);
+	});
+</script>

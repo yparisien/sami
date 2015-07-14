@@ -1,0 +1,183 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Loading patients data')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-import"></span> <?php echo $this->translate('Loading patients data')?>
+			</div>
+			<div class="panel-body">
+				<form action="<?php echo $this->url('setup', array('action'=>'loadpatient'))?>" method="post" id="loadfile" enctype="multipart/form-data" onSubmit="sendFile();return false;">
+					<div class="row">
+						<div class="col-md-12">
+							<p><?php echo $this->translate('Please plug the USB storage, select the file and confirm')?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<div class="input-group">
+								<span class="input-group-btn">
+									<span class="btn btn-primary btn-file" id="selecttoload">
+										<?php echo $this->translate('Select file')?>
+										<input id="toload" name="toload" type="file" />
+									</span>
+								</span>
+								<input class="form-control" type="text" readonly />
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:20px;">
+						<div class="col-md-10">
+							<div class="progress progress-striped active" id="usb-progress-main">
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="usb-progress">
+									<span class="sr-only">0% Complete</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-mod-2">
+							<input type="submit" class="btn btn-primary" id="usb-confirm" value="<?php echo $this->translate('Confirm')?>" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="usb-working" class="alert alert-warning" style="display:none"><span class="glyphicon glyphicon-time"></span> <?php echo $this->translate('Transfert OK - loading datas...')?></div>
+							<div id="usb-finished" class="alert alert-success" style="display:none"><span class="glyphicon glyphicon-ok"></span> <?php echo $this->translate('Transfert OK - Unplug the USB key and press Next')?></div>
+							<div id="usb-error" class="alert alert-danger" style="display:none">
+								<span class="glyphicon glyphicon-remove"></span> <?php echo $this->translate('Error during transfert!')?><br />
+								<ul id="error-list"></ul>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 col-md-offset-4">
+							<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'drug'))?>'" disabled><?php echo $this->translate('Next')?></button>
+						</div>
+						<div class="col-md-2">
+							<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+						</div>
+					</div>
+				</form>
+			<script type="text/javascript">
+					$(document)
+						.on('change', '.btn-file :file', function() {
+							var input = $(this),
+							numFiles = input.get(0).files ? input.get(0).files.length : 1,
+							label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+							input.trigger('fileselect', [numFiles, label]);
+					});
+					
+					$(document).ready( function() {
+						$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+							var input = $(this).parents('.input-group').find(':text'),
+								log = numFiles > 1 ? numFiles + ' files selected' : label;
+							if(input.length) {
+								input.val(log);
+							} else {
+								if(log) alert(log);
+							}
+						});
+					});
+					function sendFile()
+					{
+						resetBar();
+						$("#usb-confirm").attr('disabled', 1);
+						$("#selecttoload").addClass('disabled');
+						$("#toload").attr('disabled', 1);
+						moveProgressBar(10);
+
+						var _file = $('#toload')[0];
+						if(_file.files.length === 0){
+							$('#usb-confirm').removeAttr('disabled');
+							return;
+						}
+
+						var data = new FormData();
+						data.append('SelectedFile', _file.files[0]);
+
+						var request = new XMLHttpRequest();
+						request.onreadystatechange = function(){
+							if(request.readyState == 4){
+								try {
+									var resp = JSON.parse(request.response);
+									if(resp.success == 1)
+									{
+										// all is ok
+										markAsFinished();
+									}
+									else
+									{
+										// an error occured, show it
+										$('#error-list').empty();
+										$('#error-list').append('<li>'+resp.msg[0]+'</li>');
+										markAsFailed();
+									}
+								} catch (e){
+									var resp = {
+										status: 'error',
+										data: 'Unknown error occurred: [' + request.responseText + ']'
+									};
+								}
+							}
+						};
+
+						request.upload.addEventListener('progress', function(e){
+							moveProgressBar(Math.ceil(e.loaded/e.total) * 100);
+						}, false);
+
+						request.open('POST', '<?php echo $this->url('setup', array('action'=>'loadpatient'))?>');
+						request.send(data);
+					}
+
+					function moveProgressBar(value)
+					{
+						if(value < 100)
+						{
+							$("#usb-confirm").attr('disabled', 1);
+							$("#usb-progress").css('width', value+'%');
+						}
+						else
+						{
+							$("#usb-progress").css('width', '100%');
+							$("#usb-working").show();
+						}
+					}
+
+					function markAsFinished()
+					{
+						moveProgressBar(100);
+						$("#usb-confirm").removeClass("btn-primary");
+						$("#usb-confirm").addClass("btn-success");
+						$("#usb-progress").addClass("progress-bar-success");
+						$("#usb-progress").parent().removeClass("active");
+						$("#usb-working").hide();
+						$("#usb-finished").show();
+						$("#btn-next").removeAttr('disabled');
+					}
+
+					function markAsFailed()
+					{
+						$("#usb-confirm").removeAttr("disabled");
+						$("#usb-progress").addClass("progress-bar-danger");
+						$("#usb-progress").parent().removeClass("active");
+						$("#selecttoload").removeClass('disabled');
+						$("#toload").removeAttr('disabled');
+						$("#usb-working").hide();
+						$("#usb-error").show();
+					}
+
+					function resetBar()
+					{
+						$("#usb-progress").removeClass("progress-bar-danger");
+						$("#usb-progress").addClass("progress-bar-primary");
+						$("#usb-progress").parent().addClass("active");
+						$("#usb-success").hide();
+						$("#usb-working").hide();
+						$("#usb-error").hide();
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,113 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Patient selection')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-list"></span> <?php echo $this->translate('Patient selection')?>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table table-condensed table-hover">
+							<thead>
+								<tr>
+									<th colspan="2"><?php echo $this->translate('Patients list')?></th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php foreach($patients as $patient) { ?>
+								<tr id="patient-<?php echo $patient->id;?>" style="cursor:pointer" onClick="loadPatient(<?php echo $patient->id?>);">
+									<td><?php echo $patient->lastname;?></td>
+									<td><?php echo $patient->firstname;?></td>
+								</tr>
+							<?php } ?>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<?php echo $this->translate('Patient record')?>
+							</div>
+							<div class="panel-body">
+								<form id="submitedpatient-form" action="<?php echo $this->url('setup', array('action'=>'confirmpatient'))?>" method="post">
+									<div class="form-group">
+										<label for="name" class="col-sm-6 control-label"><?php echo $this->translate('Patient name')?></label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control input-sm" id="name" name="name" placeholder="Lastname, firstname" disabled />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="gender" class="col-sm-6 control-label"><?php echo $this->translate('Gender')?></label>
+										<div class="col-sm-6">
+											<select class="form-control input-sm" id="gender" name="gender" disabled>
+												<option value="0"><?php echo $this->translate('Select gender...');?></option>
+												<option value="F"><?php echo $this->translate('F');?></option>
+												<option value="M"><?php echo $this->translate('M');?></option>
+												<option value="U"><?php echo $this->translate('U');?></option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="birthdate" class="col-sm-6 control-label"><?php echo $this->translate('Birthdate')?></label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control input-sm" id="birthdate" name="birthdate" placeholder="0000-00-00" disabled />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="weight" class="col-sm-6 control-label"><?php echo $this->translate('Weight')?></label>
+										<div class="col-sm-6">
+											<div class="input-group">
+												<input type="text" class="form-control input-sm" id="weight" name="weight" placeholder="0" disabled />
+												<span class="input-group-addon">kg</span>
+											</div>
+										</div>
+									</div>
+									<input type="hidden" id="patient-id" name="patient-id" value="" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 col-md-offset-3">
+						<button id="btn-next" type="button" class="btn btn-success btn-block" disabled><?php echo $this->translate('Next')?></button>
+					</div>
+					<div class="col-md-3">
+						<button id="btn-exit" type="button" class="btn btn-primary btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'createpatient'))?>'"><?php echo $this->translate('New patient')?></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function	loadPatient(patientid)
+	{
+		$('tr.info').removeClass('info');
+		$('#patient-'+patientid).addClass('info');
+		$('#patient-id').val(patientid);
+		$.ajax({
+			url: "<?php echo $this->url('bufferspace', array('action'=>'aloadpatient'));?>",
+			type: "POST",
+			data: { 'patientid': patientid },
+			dataType: "json"
+		}).done(function(result) {
+
+			$('#name').val(result.lastname + ', ' + result.firstname);
+			$('#gender').val(result.gender);
+			$('#birthdate').val(result.birthdate);
+			$('#weight').val(result.weight);
+			$('#btn-next').removeAttr('disabled');
+		});
+	}
+	$(function(){
+		$('#btn-next').click(function(){
+			$('#submitedpatient-form').submit();
+		});
+	});
+</script>

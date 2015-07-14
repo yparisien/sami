@@ -1,0 +1,194 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('manager')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></a></li>
+	<li class="active"><?php echo $this->translate('System overview')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-search"></span> <?php echo $this->translate('System overview');?>
+			</div>
+			<div class="panel-body">
+				<form role="form">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-4"><?php echo $this->translate('Language')?></label>
+								<div class="col-sm-8">
+									<select class="form-control" id="language">
+										<option value="de_DE"><?php echo $this->translate('German')?></option>
+										<option value="en_US"><?php echo $this->translate('English')?></option>
+										<option value="es_ES"><?php echo $this->translate('Spanish')?></option>
+										<option value="fr_FR"><?php echo $this->translate('French')?></option>
+										<option value="it_IT"><?php echo $this->translate('Italian')?></option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-3"><?php echo $this->translate('Mode')?></label>
+								<div class="col-sm-9">
+									<select class="form-control" id="mode">
+										<option value="prod"><?php echo $this->translate('Exploitation')?></option>
+										<!-- <option value="demo"><?php echo $this->translate('Demonstration')?></option> -->
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-6"><?php echo $this->translate('Unit of measurement')?></label>
+								<div class="col-sm-6">
+									<select class="form-control" id="unit" disabled>
+										<option value="mbq"><?php echo $this->translate('MBq')?></option>
+										<option value="mci"><?php echo $this->translate('mCi')?></option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading"><?php echo $this->translate('System details')?></div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="col-sm-6 text-right">
+											<?php echo $this->translate('Serial number')?>
+										</div>
+										<div class="col-sm-6">
+											<input id="serial-number" class="form-control" type="text" value="?????" disabled />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="col-sm-6 text-right">
+											<?php echo $this->translate('Activimeter')?>
+										</div>
+										<div class="col-sm-6">
+											<input id="activimeter-version" class="form-control" type="text" value="?????" disabled />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="col-sm-6 text-right">
+											<?php echo $this->translate('System version')?>
+										</div>
+										<div class="col-sm-6">
+											<input id="system-version" class="form-control" type="text" value="?????" disabled />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="col-sm-6 text-right">
+											<?php echo $this->translate('Software version')?>
+										</div>
+										<div class="col-sm-6">
+											<input id="software-version" class="form-control" type="text" value="?????" disabled />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<p><?php echo $this->translate('Use genuine patient kit from DelphInnove')?></p>
+						</div>
+						<div class="col-sm-2">
+							<select class="form-control" id="genuinekit">
+								<option value="0"><?php echo $this->translate('No')?></option>
+								<option value="1"><?php echo $this->translate('Yes')?></option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function	presetSelectors()
+	{
+		$("#language").val("<?php echo $locale;?>");
+		$("#mode").val("<?php echo $mode;?>");
+		$("#unit").val("<?php echo $unit;?>");
+		$("#genuinekit").val(<?php echo (int)$genuinekit;?>);
+	}
+	function	loadSystemData()
+	{
+		$.ajax({
+			type: "GET",
+			url: "<?php echo $this->url('system', array('action'=>'agetsystem'))?>",
+			dataType: "json"
+		}).done(function(result) {
+			var data = result;
+			$("#serial-number").val(data.serialnumber);
+			$("#activimeter-version").val(data.activimeterversion);
+			$("#system-version").val(data.systemversion);
+			$("#software-version").val(data.softwareversion);
+		});
+	}
+	$(function(){
+		presetSelectors();
+		loadSystemData();
+	});
+	$("#language").change(function(){
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('system', array('action'=>'asetlocalsystem'));?>",
+			dataType:"json",
+			data: {"language": $("#language").val() },
+		}).done(function(result) {
+			if(result.success == 1)
+			{
+				window.location.reload();
+			}
+		});
+	});
+	$("#mode").change(function(){
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('system', array('action'=>'asetmodesystem'));?>",
+			dataType:"json",
+			data: {"mode": $("#mode").val() },
+		}).done(function(result) {
+			if(result.success == 1)
+			{
+				window.location.reload();
+			}
+		});
+	});
+	$("#genuinekit").change(function(){
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('system', array('action'=>'asetgenuinekit'));?>",
+			dataType:"json",
+			data: {"genuinekit": $("#genuinekit").val() },
+		}).done(function(result) {
+			if(result.success == 1)
+			{
+				window.location.reload();
+			}
+		});
+	});
+	/*$("#unit").change(function(){
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('system', array('action'=>'asetunitsystem'));?>",
+			dataType:"json",
+			data: {"unit": $("#unit").val() },
+		}).done(function(result) {
+			if(result.success == 1)
+			{
+				window.location.reload();
+			}
+		});
+	});*/
+</script>

@@ -1,0 +1,78 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('manager')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></a></li>
+	<li><a href="<?php echo $this->url('examination')?>"><?php echo $this->translate('Examination management');?></a></li>
+	<li class="active"><?php echo $this->translate('Examination profile');?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-edit"></span> <?php echo $this->translate('Examination profile');?>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('examination', array('action'=>'edit'))?>" onsubmit="return checkForm()">
+					<div class="form-group">
+						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->examination->name;?>" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="drugid" class="control-label col-md-2"><?php echo $this->translate("Drug")?></label>
+						<div class="col-md-6">
+							<select class="form-control" id="drugid" name="drugid">
+							<?php foreach ($this->drugs as $drug) { ?>
+								<option value="<?php echo $drug->id;?>"<?php if($drug->id == $this->examination->drugid){echo " selected";}?>><?php echo $drug->name;?></option>
+							<?php } ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="rate" class="control-label col-md-2"><?php echo $this->translate("Rate")?></label>
+						<div class="col-md-6">
+							<div class="input-group">
+								<input type="text" class="form-control" id="rate" name="rate" value="<?php echo $this->examination->rate;?>" required />
+								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="min" class="control-label col-md-2"><?php echo $this->translate("Min.")?></label>
+						<div class="col-md-6">
+							<div class="input-group">
+								<input type="text" class="form-control" id="min" name="min" value="<?php echo $this->examination->min;?>" required />
+								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="max" class="control-label col-md-2"><?php echo $this->translate("Max.")?></label>
+						<div class="col-md-6">
+							<div class="input-group">
+								<input type="text" class="form-control" id="max" name="max" value="<?php echo $this->examination->max;?>" required />
+								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="id" name="id" value="<?php echo $this->examination->id;?>" />
+					<button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit")?></button>
+					<button type="button" class="btn btn-danger" onClick="window.location='<?php echo $this->url('examination')?>'"><?php echo $this->translate("Abort")?></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function	checkForm()
+	{
+		if(true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+</script>

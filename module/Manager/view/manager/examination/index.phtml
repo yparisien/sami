@@ -1,0 +1,47 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('manager')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></a></li>
+	<li class="active"><?php echo $this->translate('Examination management')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-edit"></span> <?php echo $this->translate('Examination list');?>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Name');?></th>
+							<th><?php echo $this->translate('Drug');?></th>
+							<th><?php echo $this->translate('Rate');?></th>
+							<th><?php echo $this->translate('Min');?></th>
+							<th><?php echo $this->translate('Max');?></th>
+							<th><?php echo $this->translate('Action');?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($examinations as $examination) { ?>
+						<tr>
+							<td><?php echo $this->escapeHtml($examination->examination_name);?></td>
+							<td><?php echo $this->escapeHtml($examination->drug_name);?></td>
+							<td><?php echo $this->escapeHtml($examination->rate);?> <?php echo $unit?>/Kg</td>
+							<td><?php echo $this->escapeHtml($examination->min);?> <?php echo $unit?></td>
+							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>
+							<td>
+								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>"><span class="glyphicon glyphicon-pencil"></span></a>
+								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>
+						</tr>
+						<?php } ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="6" class="text-center"><a class="btn btn-primary" href="<?php echo $this->url('examination', array('action'=>'add'));?>"><?php echo $this->translate('Add an examination')?></a></th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

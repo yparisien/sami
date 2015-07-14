@@ -1,0 +1,78 @@
+<div class="jumbotron">
+	<img src="/img/error/error-<?php echo rand(1,5)?>.jpg" style="float:left;margin-right:10px;" />
+	<h1><span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('An error occurred') ?></h1>
+	<p><?php echo $this->message ?></p>
+	<br class="clean:both"/>
+	<p><button class="btn btn-primary" onClick="window.location.reload()"><?php echo $this->translate('I\'ve fixed it, reload!')?></button></p>
+</div>
+<?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
+
+<?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
+<hr/>
+<div class="panel panel-danger">
+	<div class="panel-heading">
+		<h2><?php echo $this->translate('Additional information') ?>:</h2>
+	</div>
+	<div class="panel-body">
+		<h3><?php echo get_class($this->exception); ?></h3>
+		<dl>
+			<dt><?php echo $this->translate('File') ?>:</dt>
+			<dd>
+				<pre class="prettyprint linenums"><?php echo $this->exception->getFile() ?>:<?php echo $this->exception->getLine() ?></pre>
+			</dd>
+			<dt><?php echo $this->translate('Message') ?>:</dt>
+			<dd>
+				<pre class="prettyprint linenums"><?php echo $this->escapeHtml($this->exception->getMessage()) ?></pre>
+			</dd>
+			<dt><?php echo $this->translate('Stack trace') ?>:</dt>
+			<dd>
+				<pre class="prettyprint linenums"><?php echo $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
+			</dd>
+		</dl>
+	</div>
+</div>
+<?php
+	$e = $this->exception->getPrevious();
+	if ($e) :
+?>
+<hr/>
+<div class="panel panel-warning">
+	<div class="panel-heading">
+		<h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
+	</div>
+	<div class="panel-body">
+		<ul class="unstyled">
+			<?php while($e) : ?>
+			<li>
+				<h3><?php echo get_class($e); ?></h3>
+				<dl>
+					<dt><?php echo $this->translate('File') ?>:</dt>
+					<dd>
+						<pre class="prettyprint linenums"><?php echo $e->getFile() ?>:<?php echo $e->getLine() ?></pre>
+					</dd>
+					<dt><?php echo $this->translate('Message') ?>:</dt>
+					<dd>
+						<pre class="prettyprint linenums"><?php echo $this->escapeHtml($e->getMessage()) ?></pre>
+					</dd>
+					<dt><?php echo $this->translate('Stack trace') ?>:</dt>
+					<dd>
+						<pre class="prettyprint linenums"><?php echo $this->escapeHtml($e->getTraceAsString()) ?></pre>
+					</dd>
+				</dl>
+			</li>
+			<?php
+				$e = $e->getPrevious();
+				endwhile;
+			?>
+		</ul>
+	</div>
+</div>
+<?php endif; ?>
+
+<?php else: ?>
+
+<h3><?php echo $this->translate('No Exception available') ?></h3>
+
+<?php endif ?>
+
+<?php endif ?>

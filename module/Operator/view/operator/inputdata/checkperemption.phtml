@@ -1,0 +1,41 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> Menu opérateur</a></li>
+	<li class="active">Confirmation du compte utilisateur</li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel-body">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3><span class="glyphicon glyphicon-warning-sign"></span> ATTENTION : HEURE DE PEREMPTION DEPASSEE</h3>
+				</div>
+				<div class="panel-body">
+					<h4>Injection interdite sauf autorisation Radio-pharmacien(ne)</h4>
+					<p><strong>Pour Autorisation : Veuillez saisir le Diminutif et le Mot de Passe de l'autorité puis Valider, ou Annuler pour terminer les Injections.</strong></p>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<form role="form">
+								<div id="inputgroup1" class="form-group">
+									<label for="input1">Utilisateur</label>
+									<input type="text" class="form-control" id="input1" placeholder="" autocomplete="off" />
+								</div>
+								<div id="inputgroup2" class="form-group">
+									<label for="input2">Mot de passe</label>
+									<input type="password" class="form-control" id="input2" placeholder="" autocomplete="off" />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 col-md-offset-3">
+							<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'selectpatient'))?>'">Valider</button>
+						</div>
+						<div class="col-md-3">
+							<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

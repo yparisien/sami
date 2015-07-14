@@ -1,0 +1,69 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li><?php echo $this->translate('Export')?></li>
+	<li class="active"><?php echo $this->translate('Export data')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-export"></span> <?php echo $this->translate('Export patients data')?>
+			</div>
+			<div class="panel-body">
+				<div class="well">
+					<div class="row">
+						<div class="col-md-12">
+							<p>
+								<?php echo $this->translate("Push the following button to generate file which allow to import injections result's datas into your management software.")?>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-md-offset-2">
+							<button class="btn btn-lg btn-primary btn-block" onClick="launchExportGen()" id="genbtn">
+								<span class="glyphicon glyphicon-share"></span>
+								<?php echo $this->translate('Generate export')?>
+							</button>
+						</div>
+						<div class="col-md-4">
+							<button class="btn btn-lg btn-primary btn-block" onClick="window.open('/tmp/schedule.csv')" id="downloadbtn" disabled>
+								<span class="glyphicon glyphicon-floppy-save"></span>
+								<?php echo $this->translate('Download export')?>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="loading-screen" tabindex="-1" role="dialog" aria-labelledby="loading-screen-label" aria-hidden="true" data-keyboard="false">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="loading-screen-label"><?php echo $this->translate('Loading')?></h4>
+			</div>
+			<div class="modal-body">
+				<img src="/img/ajax-loader-black.gif" style="margin-right:10px"/>
+				<?php echo $this->translate('Loading, please wait.')?>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function	launchExportGen()
+	{
+		$('#loading-screen').modal('show');
+		$.ajax({
+			url: "<?php echo $this->url('exportbuffer', array('action'=>'agenfile'))?>",
+		}).done(function(result){
+			if(result.success = 1)
+			{
+				$('#downloadbtn').removeAttr('disabled');
+				$('#genbtn').attr('disabled', 1);
+				$('#loading-screen').modal('hide');
+			}
+		});
+	}
+</script>

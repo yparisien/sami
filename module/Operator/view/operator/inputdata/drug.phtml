@@ -1,0 +1,214 @@
+<ol class="breadcrumb">
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator\'s dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Filling drug\'s informations')?></li>
+</ol>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-file"></span> <?php echo $this->translate('Filling drug\'s informations')?>
+			</div>
+			<div class="panel-body">
+				<div class="alert alert-info">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<?php echo $this->translate('Fill the vial volume field to enable fields about activity')?>
+				</div>
+				<form class="form-horizontal" role="form" action="<?php echo $this->url('setup', array('action'=>'drug'))?>" method="POST" onSubmit="return checkForm();">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name')?></label>
+								<div class="col-sm-6">
+									<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1">
+									<?php foreach($this->drugs as $drug) { ?>
+										<option value="<?php echo $drug->id?>"><?php echo $drug->name;?></option>
+									<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="" tabindex="3" />
+										<span class="input-group-addon">ml</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
+								<div class="col-sm-6">
+									<div class="input-group date" id="datetimepicker-calibration">
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" tabindex="5" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(function() {
+										$('#datetimepicker-calibration').datetimepicker({
+											language: 'en'
+										});
+									});
+								</script>
+							</div>
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" placeholder=""  tabindex="7" disabled />
+										<span class="input-group-addon"><?php echo $unit?>/ml</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="" tabindex="2" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
+								<div class="col-sm-6">
+									<div class="input-group date" id="datetimepicker-peremption">
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" tabindex="4" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(function() {
+										$('#datetimepicker-peremption').datetimepicker({
+											language: 'en'
+										});
+									});
+								</script>
+							</div>
+							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" disabled />
+										<span class="input-group-addon"><?php echo $unit?></span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="text" class="form-control input-sm" id="activity" name="activity" value="???" readonly/>
+										<span class="input-group-addon"><?php echo $unit?></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 col-md-offset-4">
+							<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next')?>"/>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	/**
+	 * @todo fill the tests
+	 */
+	function	checkForm()
+	{
+		if(true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function	loadActivityData()
+	{
+		$.ajax({
+			type: "GET",
+			url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity'))?>",
+			dataType: "json"
+		}).done(function(result) {
+			var data = result;
+			$("#activity-time").html(data.time);
+			$("#activity").val(data.activity);
+		});
+		setTimeout(function(){loadActivityData();}, 5000);
+	}
+
+	$(function() {
+		loadActivityData();
+
+		$('#vialvol').change(function() {
+			$('#activityconc').removeAttr('disabled');
+			$('#activitycalib').removeAttr('disabled');
+		});
+
+		$("#calibrationtime").change(function() {
+     $.ajax({
+        type: "POST",
+        url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+        dataType: "json",
+        data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), '#calibrationtime': $("#calibrationtime").val() }
+      });
+		});
+
+		$("#activityconc").change(function() {
+			$.ajax({
+				type: "POST",
+				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+				dataType: "json",
+				data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), 'activityconc': $("#activityconc").val(), "calibrationtime": $("#calibrationtime").val() }
+			}).done(function() {
+		
+				$.ajax({
+					type: "POST",
+					url: "<?php echo $this->url('setup', array('action'=>'arecalcactivity'));?>",
+					dataType:"json",
+					data : {"field" : "calib"}
+				}).done(function(result) {
+					$('#activitycalib').val(result["activitycalib"]);
+				});
+			});
+			/*var result = ($('#vialvol').val() * $('#activityconc').val()).toFixed(2);
+			$('#activitycalib').val(result);
+			*/
+		});
+
+		$("#activitycalib").change(function(){
+			$.ajax({
+				type: "POST",
+				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'));?>",
+				dataType:"json",
+				data: {"drugid" : $("#drugid").val(), "vialvol": $("#vialvol").val(), "activitycalib": $('#activitycalib').val(), "calibrationtime": $("#calibrationtime").val() },
+			}).done(function() {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo $this->url('setup', array('action'=>'arecalcactivity'));?>",
+					dataType:"json",
+					data : {"field" : "conc"}
+				}).done(function(result) {
+					$('#activityconc').val(result.activityconc);
+				});
+			});
+			/*var result = ($('#activitycalib').val() / $('#vialvol').val()).toFixed(2);
+			$('#activityconc').val(result);
+			*/
+		});
+	});
+</script>
