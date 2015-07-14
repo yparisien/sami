@@ -154,6 +154,7 @@ return array(
 		),
 		'invokables'	=> array(
 			'my_auth_service'	=> 'Zend\Authentication\AuthenticationService',
+			'RobotService'		=> 'Manager\Robot\RobotService'
 		),
 	),
 );

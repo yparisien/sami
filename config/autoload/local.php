@@ -4,4 +4,7 @@ return array(
 		'username' => 'sami',
 		'password' => 'sami',
 	),
+	'robot' => array(
+		'simulated' => true,
+	),
 );

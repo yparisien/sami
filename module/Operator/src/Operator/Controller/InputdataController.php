@@ -24,6 +24,7 @@ use Bufferspace\Model\Patient;
 use Bufferspace\Model\Injection;
 use Logger\Model\Drug;
 use Logger\Model\Action;
+use Manager\Robot\RobotService;
 
 
 class InputdataController extends AbstractActionController
@@ -163,6 +164,7 @@ class InputdataController extends AbstractActionController
 
 	public function drugAction()
 	{
+		/* @var $robotService RobotService  */
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
 			$r = $this->getRequest();
@@ -207,7 +209,9 @@ class InputdataController extends AbstractActionController
 						"G_MainLogic.cmd.Input_Soft.Load_Medicament" => 0
 
 					);
-     $this->submitData($bDrugData);
+			
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send($bDrugData);
 
 
 			// for the moment, store the log id but use a clever way for final version
@@ -295,6 +299,8 @@ class InputdataController extends AbstractActionController
 
 	public function scankitsourceAction()
 	{
+		/* @var $robotService RobotService  */
+		
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
 			$sourcekitId = $this->getRequest()->getPost('sourcekit-sn');
@@ -331,7 +337,8 @@ class InputdataController extends AbstractActionController
 				$oContainer->sourcekitbarcode = $sourcekitId;
 				$oContainer->sourcekitid = $oKit->id;
 
-				$this->submitData(array("G_MainLogic.cmd.Input_Soft.Load_Sequence" => 1));
+				$robotService = $this->getServiceLocator()->get('RobotService');
+				$robotService->send(array("G_MainLogic.cmd.Input_Soft.Load_Sequence" => 1));
 
 				return $this->redirect()->toRoute('setup', array('action'=>'loadkitsource'));
 			}
@@ -423,6 +430,7 @@ class InputdataController extends AbstractActionController
 
 	public function	loadkitpatientAction()
 	{
+		/* @var $robotService RobotService  */
 		if($this->params('confirm'))
 		{
 			$action = new Action();
@@ -430,7 +438,10 @@ class InputdataController extends AbstractActionController
 			$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$action->action = "User mark patient kit plugged in";
 			$this->getActionTable()->saveAction($action);
-			$this->submitData(array('G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P' => 1));
+			
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P' => 1));
+			
 			return $this->redirect()->toRoute('inject', array('action'=>'purge'));
 		}
 		else
@@ -459,28 +470,6 @@ class InputdataController extends AbstractActionController
 		return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 	}
 
-	public function submitData($toWrite)
-	{
-		foreach ($toWrite as $k => $v)
-		{
-       	         $postdata = http_build_query(array ("redirect" => "response.asp",
-							"variable" => $k,
-							"value" => $v,
-							"write" => "Write"));
-       	         $opts = array('http' =>
-       	             array(
-       	                 'method'  => 'POST',
-       	                 'header'  => 'Content-type: application/x-www-form-urlencoded',
-       	                 'content' => $postdata
-       	             )
-       	         );
-       	         $context  = stream_context_create($opts);
-       	         
-		 file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
-		}
-		return true;
-	}	
-	
 	public function	checkperemptionAction()
 	{
 		$aReferer = json_decode(file_get_contents('http://10.0.0.2/checkperemption.asp'), true);
@@ -581,6 +570,7 @@ class InputdataController extends AbstractActionController
 
 	public function	storecurrentpatientAction()
 	{
+		/* @var $robotService RobotService */
 		$sm = $this->getServiceLocator();
 		if($this->getRequest()->isPost())
 		{
@@ -604,21 +594,24 @@ class InputdataController extends AbstractActionController
 
 			$oDrug = $this->getDrugTable()->getDrug($drug->drugid);
 			$oExamination = $this->getExaminationTable()->getExamination($oRequest->getPost('examinationid'));
+			
 			// Envoi des infos a l'automate
-			$this->submitData(array(
-						'G_Patient.Input.Nom' => $oPatient->lastname,
-						'G_Patient.Input.Prenom' => $oPatient->firstname,
-						'G_Patient.Input.DateN' => $oPatient->birthdate,
-						'G_Patient.Input.Ordonnancier' => $oRequest->getPost('expeditornum'),
-						'G_Patient.Input.ActToInj' => $oRequest->activity,
-						'G_Patient.Input.Med_Name' => $oDrug->name,
-						'G_Patient.Input.Poids' => $oRequest->getPost('weight'),
-						'G_Patient.Input.Type_Exam' => $oExamination->name,
-						'G_Patient.Input.Taux' => $oExamination->rate,
-						'G_Patient.Input.Taux_Min' => $oExamination->min,
-						'G_Patient.Input.Taux_Max' => $oExamination->max,
-						'G_MainLogic.cmd.Input_Soft.Load_Patient' => 0
-						));
+			$dataToSend = array(
+					'G_Patient.Input.Nom' => $oPatient->lastname,
+					'G_Patient.Input.Prenom' => $oPatient->firstname,
+					'G_Patient.Input.DateN' => $oPatient->birthdate,
+					'G_Patient.Input.Ordonnancier' => $oRequest->getPost('expeditornum'),
+					'G_Patient.Input.ActToInj' => $oRequest->activity,
+					'G_Patient.Input.Med_Name' => $oDrug->name,
+					'G_Patient.Input.Poids' => $oRequest->getPost('weight'),
+					'G_Patient.Input.Type_Exam' => $oExamination->name,
+					'G_Patient.Input.Taux' => $oExamination->rate,
+					'G_Patient.Input.Taux_Min' => $oExamination->min,
+					'G_Patient.Input.Taux_Max' => $oExamination->max,
+					'G_MainLogic.cmd.Input_Soft.Load_Patient' => 0
+			);
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send($dataToSend);
 
 			return $this->redirect()->toRoute('setup', array('action'=>'scankitpatient'));
 		}
@@ -634,34 +627,38 @@ class InputdataController extends AbstractActionController
 
 	public function asetactivityAction()
 	{
+		/* @var $robotService RobotService  */
+		
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
+			$robotService = $this->getServiceLocator()->get('RobotService');
 			$r = $this->getRequest();
 
 			if ($r->getPost('min'))
 			{
-				$this->submitData(array('G_Patient.Calculation.Choice_Min' => 1));
+				$robotService->send(array('G_Patient.Calculation.Choice_Min' => 1));
 			}
 			if ($r->getPost('max'))
 			{
-				$this->submitData(array('G_Patient.Calculation.Choice_Max' => 1));
+				$robotService->send(array('G_Patient.Calculation.Choice_Max' => 1));
 			}
 			if ($r->getPost('norm'))
 			{
-				$this->submitData(array('G_Patient.Calculation.Choice_Reco' => 1));
+				$robotService->send(array('G_Patient.Calculation.Choice_Reco' => 1));
 			}
 			if ($r->getPost('activity'))
 			{
-				$this->submitData(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
+				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
 			$result = new JsonModel(array('activity' => $this->readData('G_Patient.Actual.ActToInj')));
-   		return $result;
-			
+   			return $result;
 		}	
 	}
 
 	public function aupdatepatientAction()
 	{
+		/* @var $robotService RobotService  */
+
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
 			$r = $this->getRequest();
@@ -692,7 +689,8 @@ class InputdataController extends AbstractActionController
 			}
 			
 			$aData["G_MainLogic.cmd.Input_Soft.Load_Patient"] = 1;
-			$this->submitData($aData);	
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send($aData);
 		}
 			$result = new JsonModel(array("activity" => $this->readData('G_Patient.Actual.ActToInj')));
    		return $result;
@@ -700,6 +698,7 @@ class InputdataController extends AbstractActionController
 	 
 	public function aupdatedrugAction()
 	{
+		/* @var $robotService RobotService  */
 		
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
@@ -732,7 +731,8 @@ class InputdataController extends AbstractActionController
 			{
 				$aDrugData['"G_Medicament.Input.DT_End"'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
 			}
-			$this->submitData($aDrugData);
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send($aDrugData);
 		}
 		$result = new JsonModel(array());
    	return $result;
@@ -768,8 +768,11 @@ class InputdataController extends AbstractActionController
 
 	public function	agetavailableactivityatAction()
 	{
+		/* @var $robotService RobotService  */
+		
 		$oTime= $this->getRequest()->getPost('wantedat');
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Date_Prev' => $oTime, 'G_Medicament.Calculation.Cast_Prev_Activity' => 1));
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Date_Prev' => $oTime, 'G_Medicament.Calculation.Cast_Prev_Activity' => 1));
 		// make it active with real automate
 		$aParams = array('time'=>date('H:i:s'), 'activity'=>$this->readData('G_Medicament.Calculation.C_Act_Prev'));
 		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);
@@ -779,6 +782,7 @@ class InputdataController extends AbstractActionController
 
 	public function	acheckSourcekitAction()
 	{
+		/* @var $robotService RobotService  */
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$aParams = '';
 		$sourcekitId = $this->getRequest()->getPost('sourcekit-sn');
@@ -810,8 +814,9 @@ class InputdataController extends AbstractActionController
 		}
 		else // sinon on laisse le formulaire être soumis
 		{
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array('G_Kit.Val_Kit_S' => 1));
 			$aParams = array('success'=>1);
-			$this->submitData(array('G_Kit.Val_Kit_S' => 1));
 		}
 
 		$result = new JsonModel($aParams);
@@ -820,6 +825,8 @@ class InputdataController extends AbstractActionController
 
 	public function	acheckPatientkitAction()
 	{
+		/* @var $robotService RobotService  */
+		
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$aParams = '';
 		$patientkitId = $this->getRequest()->getPost('patientkit-sn');
@@ -852,8 +859,9 @@ class InputdataController extends AbstractActionController
 		}
 		else // sinon on laisse le formulaire être soumis
 		{
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array('G_Kit.Val_Kit_P' => 1));
 			$aParams = array('success' => 1);
-			$this->submitData(array('G_Kit.Val_Kit_P' => 1));
 		}
 
 		$result = new JsonModel($aParams);
@@ -862,26 +870,37 @@ class InputdataController extends AbstractActionController
 
 	public function	aloadexaminationAction()
 	{
+		/* @var $robotService RobotService  */
+		
 		$examinationId = $this->getRequest()->getPost('examinationid');
 		$oExamination = $this->getExaminationTable()->getExamination($examinationId);
-		$this->submitData(array(
+
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(
 						'G_Patient.Input.Type_Exam' => $oExamination->name,
 						'G_Patient.Input.Taux' => $oExamination->rate,
 						'G_Patient.Input.Taux_Min' => $oExamination->min,
 						'G_Patient.Input.Taux_Max' => $oExamination->max));
+		
 		$aParams = $oExamination->toArray();
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 	public function	asetdemomodeAction()
 	{
-		$this->submitData(array('G_MainLogic.par.Demo_Mode' => 1));
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.par.Demo_Mode' => 1));
+		
 		$result = new JsonModel(array());
 		return $result;
 	}
 	public function	aunsetdemomodeAction()
 	{
-		$this->submitData(array('G_MainLogic.par.Demo_Mode' => 0));
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.par.Demo_Mode' => 0));
+		
 		$result = new JsonModel(array());
 		return $result;
 	}	
