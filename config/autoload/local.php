@@ -5,6 +5,7 @@ return array(
 		'password' => 'sami',
 	),
 	'robot' => array(
+		//Set to fasle when robot is connected
 		'simulated' => true,
 	),
 );
