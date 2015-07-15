@@ -50,10 +50,10 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="<?php echo $this->url('operator') ?>"><?php echo $this->translate('Operator') ?></a></li>
 						<?php if($this->isAdmin){?>
 						<li><a href="<?php echo $this->url('manager') ?>"><?php echo $this->translate('Manager') ?></a></li>
 						<?php } ?>
+						<li><a href="<?php echo $this->url('operator') ?>"><?php echo $this->translate('Operator') ?></a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
