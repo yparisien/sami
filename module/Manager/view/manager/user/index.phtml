@@ -33,9 +33,9 @@
 								<p><?php echo $this->translate('No');?></p>
 								<?php }?>
 							</td>
-							<td>
-								<a href="<?php echo $this->url('user', array('action'=>'edit', 'id'=>$user->id))?>"><span class="glyphicon glyphicon-pencil"></span></a>
-								<a href="<?php echo $this->url('user', array('action'=>'delete', 'id'=>$user->id))?>"><span class="glyphicon glyphicon-trash"></span></a>
+							<td class="col-md-3">
+								<a href="<?php echo $this->url('user', array('action'=>'edit', 'id'=>$user->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
+								<a href="<?php echo $this->url('user', array('action'=>'delete', 'id'=>$user->id))?>" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?></a>
 							</td>
 						</tr>
 						<?php } ?>

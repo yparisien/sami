@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-16 11:07+0100\n"
-"PO-Revision-Date: 2015-04-16 11:09+0100\n"
+"POT-Creation-Date: 2015-07-15 23:45+0200\n"
+"PO-Revision-Date: 2015-07-15 23:46+0200\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -11,8 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: translate\n"
-"X-Poedit-Basepath: ../../\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.2\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../module/Auth/src/Auth/Controller/AuthController.php:115
@@ -49,12 +49,12 @@ msgstr "L'identifiant et le mot de passe ne correspondent pas"
 msgid "Error during the process, please retry later"
 msgstr "Erreur durant le traitement, merci de réessayer ultérieurement"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:728
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:833
 #, php-format
 msgid "Source kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit source déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:770
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:878
 #, php-format
 msgid "Patient kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit patient déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
@@ -317,6 +317,14 @@ msgstr "Liste des médicaments"
 #: ../module/Manager/view/manager/user/index.phtml:19
 msgid "Action"
 msgstr "Action"
+
+#: ../module/Manager/view/manager/drug/index.phtml:28
+msgid "Edit"
+msgstr "Editer"
+
+#: ../module/Manager/view/manager/drug/index.phtml:29
+msgid "Delete"
+msgstr "Supprimer"
 
 #: ../module/Manager/view/manager/drug/index.phtml:36
 msgid "Add a drug"
@@ -846,6 +854,7 @@ msgstr ""
 
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:14
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:66
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:67
 msgid "Remaining activity at "
 msgstr "Activité restante à "
 
@@ -911,15 +920,15 @@ msgid "Please disconnect the patient kit, trash it and validate."
 msgstr ""
 "Merci de bien vouloir déconnecter le kit patient, de le jeter, et de valider."
 
-#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:71
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:80
 msgid "Injected patients list"
 msgstr "Liste des patients injectés"
 
-#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:74
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:83
 msgid "Launch another injection"
 msgstr "Lancer une nouvelle injection"
 
-#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:77
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:86
 msgid "End of injections"
 msgstr "Fin des injections"
 
@@ -958,11 +967,11 @@ msgstr ""
 "Purge terminée ! Appuyez sur le bouton Lancer la purge pour relancer "
 "l'opération  "
 
-#: ../module/Operator/view/operator/interactrobot/purge.phtml:125
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:130
 msgid "Purge in progress..."
 msgstr "Purge en cours..."
 
-#: ../module/Operator/view/operator/interactrobot/purge.phtml:150
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:155
 msgid "Connected"
 msgstr "Connecté"
 
@@ -987,6 +996,10 @@ msgstr "Activité à injecter"
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:44
 msgid "Sample progression"
 msgstr "Progression du prélèvement"
+
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:59
+msgid "Adjust"
+msgstr "Ajuster"
 
 #: ../module/Operator/view/operator/interactrobot/unload.phtml:3
 msgid "Unload automate"
@@ -1145,13 +1158,13 @@ msgstr "Delphinnove"
 msgid "by Delphinnove. All rights reserved."
 msgstr "par Delphinnove. Tous droits réservés."
 
-#: ../module/Start/view/layout/logged.phtml:53
-msgid "Operator"
-msgstr "Opérateur"
-
-#: ../module/Start/view/layout/logged.phtml:55
+#: ../module/Start/view/layout/logged.phtml:54
 msgid "Manager"
 msgstr "Superviseur"
+
+#: ../module/Start/view/layout/logged.phtml:56
+msgid "Operator"
+msgstr "Opérateur"
 
 #: ../module/Start/view/layout/logged.phtml:62
 msgid "Change password"

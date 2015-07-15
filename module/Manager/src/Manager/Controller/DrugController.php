@@ -65,7 +65,7 @@ class DrugController extends AbstractActionController
 			$oRequest = $this->getRequest();
 			$oDrug = new Drug();
 			$oDrug->name = $oRequest->getPost('name');
-			$oDrug->radionuclideid = $oRequest->getPost('radionuclide');
+			$oDrug->radionuclideid = $oRequest->getPost('radionuclideid');
 			$oDrug->dci = $oRequest->getPost('dci');
 			$this->getDrugTable()->saveDrug($oDrug);
 			return $this->redirect()->toRoute('drug');

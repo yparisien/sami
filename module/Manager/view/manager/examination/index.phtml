@@ -28,16 +28,16 @@
 							<td><?php echo $this->escapeHtml($examination->rate);?> <?php echo $unit?>/Kg</td>
 							<td><?php echo $this->escapeHtml($examination->min);?> <?php echo $unit?></td>
 							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>
-							<td>
-								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>"><span class="glyphicon glyphicon-pencil"></span></a>
-								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>"><span class="glyphicon glyphicon-trash"></span></a>
+							<td class="col-md-3">
+								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
+								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?></a>
 							</td>
 						</tr>
 						<?php } ?>
 					</tbody>
 					<tfoot>
 						<tr>
-							<th colspan="6" class="text-center"><a class="btn btn-primary" href="<?php echo $this->url('examination', array('action'=>'add'));?>"><?php echo $this->translate('Add an examination')?></a></th>
+							<th colspan="6" class="text-center"><a class="btn btn-primary" href="<?php echo $this->url('examination', array('action'=>'add'));?>"><span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate('Add an examination')?></a></th>
 						</tr>
 					</tfoot>
 				</table>
