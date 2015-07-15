@@ -237,9 +237,15 @@ class InputdataController extends AbstractActionController
 			'success'	=> 0,
 			'msg'		=> '',
 		);
+		
 		$destPath = dirname(__DIR__).'/../../../../public/tmp';
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
+			if (class_exists('finfo', false) === false) {
+				$aRetVal['msg'][] = "PHP Fileinfo extension is missing. Contact your administrator.";
+				return new JsonModel($aRetVal);
+			}
+			
 			$file		= $this->params()->fromFiles('SelectedFile');
 			$size		= new Size(array('min'=>'252','max'=>'8MB')); // minimum bytes filesize
 			$type		= new MimeType(array('text/csv','text/plain'));
