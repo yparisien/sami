@@ -3,6 +3,7 @@ namespace Manager\Robot;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\Session\Container;
 
 class RobotService implements ServiceLocatorAwareInterface {
 	
@@ -83,7 +84,35 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = mt_rand(400, 500);
 				break;
 			case "G_Patient.Actual.ActToInj":
+			case "G_MainLogic.cmd.Input_Trasys.Measured_Value":
 				$mRet = 100;
+				break;
+			case "G_MainLogic.cmd.Input_Soft.Inject_Speed":
+				$mRet = 50;
+				break;
+			case "SubPurge.status.Evolution":
+				$fr = new Container('fake_robot');
+				$progress = (isset($fr->purgeEvolutionStatus) && ($fr->purgeEvolutionStatus == 100)) ? 0 : $fr->purgeEvolutionStatus + 25 ;
+				$fr->purgeEvolutionStatus = $progress;
+				$mRet = $progress;
+				break;
+			case "G_MainLogic.status.Sampling_Evolution":
+				$fr = new Container('fake_robot');
+				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 10 ;
+				$fr->samplingEvolutionStatus = $progress;
+				$mRet = $progress;
+				break;
+			case "G_MainLogic.status.Dilution_Evolution":
+				$fr = new Container('fake_robot');
+				$progress = (isset($fr->dilutionEvolutionStatus) && ($fr->dilutionEvolutionStatus == 100)) ? 0 : $fr->dilutionEvolutionStatus + 20 ;
+				$fr->dilutionEvolutionStatus = $progress;
+				$mRet = $progress;
+				break;
+			case "G_MainLogic.status.Injection_Evolution":
+				$fr = new Container('fake_robot');
+				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2 ;
+				$fr->injectionEvolutionStatus = $progress;
+				$mRet = $progress;
 				break;
 		}
 		

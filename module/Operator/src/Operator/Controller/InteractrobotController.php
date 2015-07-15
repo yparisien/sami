@@ -13,7 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
+
 use Logger\Model\Action;
+use Manager\Robot\RobotService;
 
 class InteractrobotController extends AbstractActionController
 {
@@ -145,6 +148,9 @@ class InteractrobotController extends AbstractActionController
 
 	public function readData($toRead)
 	{
+		$this->getResponse()->setStatusCode(Response::STATUS_CODE_500);
+		$this->getResponse()->setReasonPhrase("readData($toRead)");
+		return ;
 		// todo : rendre configuration l'adresse de l'automate
 		$aData =  array("redirect" => "response.asp",
 				"variable" => $toRead,
@@ -162,30 +168,6 @@ class InteractrobotController extends AbstractActionController
                 
 		return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 	}
-
-	public function submitData($toWrite)
-	{
-		foreach ($toWrite as $k => $v)
-		{
-       	         $postdata = http_build_query(array ("redirect" => "response.asp",
-							"variable" => $k,
-							"value" => $v,
-							"write" => "Write"));
-       	         $opts = array('http' =>
-       	             array(
-       	                 'method'  => 'POST',
-       	                 'header'  => 'Content-type: application/x-www-form-urlencoded',
-       	                 'content' => $postdata
-       	             )
-       	         );
-       	         $context  = stream_context_create($opts);
-       	         
-		 file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
-		}
-		return true;
-	}	
-	
-
 
 	/*
 	 * Actions methods below this line
@@ -302,122 +284,187 @@ class InteractrobotController extends AbstractActionController
 	 */
 	public function	agetpurgeprogressAction()
 	{
-		$progress = $this->readData('SubPurge.status.Evolution');
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$progress = $robotService->receive("SubPurge.status.Evolution");
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 	public function	alaunchpurgeAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Load_Purge' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Load_Purge' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	adisconnectpatientAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection' => 1));
+				
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	agetsamplingprogressAction()
 	{
-		$progress = $this->readData('G_MainLogic.status.Sampling_Evolution');
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$progress = $robotService->receive("G_MainLogic.status.Sampling_Evolution");
+		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 	public function	alaunchsamplingAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Sampling_Sequence' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Sampling_Sequence' => 1));
+
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	aadjustsamplingAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Adjust_Sampling' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Adjust_Sampling' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+
 		return $result;
 	}
 	public function	agetsamplingactivityAction()
 	{
-		$progress = $this->readData('G_MainLogic.cmd.Input_Trasys.Measured_Value');
-		$aParams = array("activity" => $progress);
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$activity = $robotService->receive('G_MainLogic.cmd.Input_Trasys.Measured_Value');
+		
+		$aParams = array("activity" => $activity);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 	public function	agetdilutionprogressAction()
 	{
-		$progress = $this->readData('G_MainLogic.status.Dilution_Evolution');
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$progress = $robotService->receive("G_MainLogic.status.Dilution_Evolution");
+		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	alaunchdilutionAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Dilution_Sequence' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Dilution_Sequence' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	agetinjectionprogressAction()
 	{
-		$progress = $this->readData('G_MainLogic.status.Injection_Evolution');
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$progress = $robotService->receive("G_MainLogic.status.Injection_Evolution");
+		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 	public function	alaunchinjectionAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Injection_Sequence' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Injection_Sequence' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+
 		return $result;
 	}
+	
 	/* Pause ou rédémarre l'injection */
 	public function	apauseinjectionAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Stop_Injection' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Stop_Injection' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
 		return $result;
 	}
+	
 	public function	aplayinjectionAction()
 	{
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Play_Injection' => 1));
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Play_Injection' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
+	
 	public function	aspeedinjectionAction()
 	{
+		/* @var $robotService RobotService */
 		$speed = $this->getRequest()->getPost('speed');
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Inject_Speed' => $speed));
+
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Inject_Speed' => $speed));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
+	
 	public function	agetspeedinjectionAction()
 	{
-		$aParams = array("speed" =>$this->readData('G_MainLogic.cmd.Input_Soft.Inject_Speed') / 25);
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$speed = $robotService->receive("G_MainLogic.cmd.Input_Soft.Inject_Speed");
+		
+		$aParams = array("speed" => $speed / 25);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 
 	public function	amarkpatientconnectedAction()
 	{
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
 		$action = new Action();
 		$action->inputdate = date('Y-m-d H:i:s');
 		$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$action->action = "User mark the patient connected to SAMI";
 		$this->getActionTable()->saveAction($action);
 
-		$this->submitData(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Connection' => 1));
+		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Connection' => 1));
+		
 		$aParams = array();
 		$result = new JsonModel($aParams);
+		
 		return $result;
 	}
 
