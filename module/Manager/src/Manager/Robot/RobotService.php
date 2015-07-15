@@ -82,6 +82,9 @@ class RobotService implements ServiceLocatorAwareInterface {
 			case "G_Medicament.Actual.Act_DT":
 				$mRet = mt_rand(400, 500);
 				break;
+			case "G_Patient.Actual.ActToInj":
+				$mRet = 100;
+				break;
 		}
 		
 		return $mRet;

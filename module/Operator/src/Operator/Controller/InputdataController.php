@@ -660,8 +660,8 @@ class InputdataController extends AbstractActionController
 			{
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
-			$robotService->receive();
-			$result = new JsonModel(array('activity' => $this->readData('G_Patient.Actual.ActToInj')));
+			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+			$result = new JsonModel(array('activity' => $activity));
    			return $result;
 		}	
 	}
@@ -703,8 +703,11 @@ class InputdataController extends AbstractActionController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aData);
 		}
-			$result = new JsonModel(array("activity" => $this->readData('G_Patient.Actual.ActToInj')));
-   		return $result;
+		//TODO Vérifier si cette action est toujours appelé en POST ou non pour faire remonter le read dans le IF
+		$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+		$result = new JsonModel(array("activity" => $activity));
+   		
+		return $result;
 	}
 	 
 	public function aupdatedrugAction()
