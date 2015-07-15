@@ -458,6 +458,9 @@ class InputdataController extends AbstractActionController
 
 	public function readData($toRead)
 	{
+		$this->getResponse()->setStatusCode(Response::STATUS_CODE_500);
+		$this->getResponse()->setReasonPhrase("readData($toRead)");
+		return ;
 		// todo : rendre configuration l'adresse de l'automate
 		$aData =  array("redirect" => "response.asp",
 				"variable" => $toRead,
@@ -478,6 +481,7 @@ class InputdataController extends AbstractActionController
 
 	public function	checkperemptionAction()
 	{
+		//TODO Vérifier ce que fait cette méthode
 		$aReferer = json_decode(file_get_contents('http://10.0.0.2/checkperemption.asp'), true);
 		if($aReferer['isperempted'] == 1)
 		{
@@ -656,6 +660,7 @@ class InputdataController extends AbstractActionController
 			{
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
+			$robotService->receive();
 			$result = new JsonModel(array('activity' => $this->readData('G_Patient.Actual.ActToInj')));
    			return $result;
 		}	
@@ -741,44 +746,52 @@ class InputdataController extends AbstractActionController
 			$robotService->send($aDrugData);
 		}
 		$result = new JsonModel(array());
-   	return $result;
+   		
+		return $result;
 	}
 
 
 	public function	arecalcactivityAction()
 	{
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
 		$r = $this->getRequest();
-		// make it active with real automate
 		if ($r->getPost('field') == "conc")
 		{
-			$aParams = array('success'=> 1, "activityconc" => $this->readData('G_Medicament.Actual.Act_Vol'));
+			$activityConc = $robotService->receive('G_Medicament.Actual.Act_Vol');
+			$aParams = array('success' => 1, "activityconc" => $activityConc);
 		}
 		if ($r->getPost('field') == "calib")
 		{
-			$aParams = array('success'=>1, "activitycalib" => $this->readData('G_Medicament.Actual.Act_DT'));
+			$activityCalib = $robotService->receive('G_Medicament.Actual.Act_DT');
+			$aParams = array('success' => 1, "activitycalib" => $activityCalib);
 		}
-		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);
+
 		$result = new JsonModel($aParams);
 		return $result;
 	}
 	
 	public function	agetavailableactivityAction()
 	{
-		// make it active with real automate
-		$aParams = array('time'=>date('H:i:s'), 'activity'=>$this->readData('G_Medicament.Calculation.C_Act_Dispo'));
-		//$aParams = json_decode(file_get_contents('http://10.0.0.2/availableactivity.asp'), true);
-		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$activity = $robotService->receive('G_Medicament.Calculation.C_Act_Dispo');
+		
+		$aParams = array('time' => date('H:i:s'), 'activity' => $activity);
 		$result = new JsonModel($aParams);
+
 		return $result;
 	}
 
 	public function	agetavailableactivityatAction()
 	{
 		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
 		
 		$oTime= $this->getRequest()->getPost('wantedat');
-		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Date_Prev' => $oTime, 'G_Medicament.Calculation.Cast_Prev_Activity' => 1));
+
 		// make it active with real automate
 		$aParams = array('time'=>date('H:i:s'), 'activity'=>$this->readData('G_Medicament.Calculation.C_Act_Prev'));
 		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);

@@ -43,7 +43,47 @@ class RobotService implements ServiceLocatorAwareInterface {
 		return true;
 	}
 	
-	public function receive() {
-		die("RECEIVE");
+	public function receive($variable) {
+		$cfg = $this->sm->get('Config');
+		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
+		
+		if ($simulated) {
+			return $this->fakeReceive($variable);
+		}
+		else {
+			$aData = array(
+					"redirect" => "response.asp",
+					"variable" => $variable,
+					"value" => "",
+					"read" => "Read",
+			);
+	
+			$postdata = http_build_query($aData);
+	        $opts = array(
+	        	'http' => array(
+	        				'method'  => 'POST',
+	                        'header'  => 'Content-type: application/x-www-form-urlencoded',
+	                        'content' => $postdata
+				)
+			);
+	        $context  = stream_context_create($opts);
+	                
+			return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+		}
+	}
+	
+	private function fakeReceive($variable) {
+		$mRet = null;
+		
+		
+		switch ($variable) {
+			case "G_Medicament.Calculation.C_Act_Dispo":
+			case "G_Medicament.Actual.Act_Vol":
+			case "G_Medicament.Actual.Act_DT":
+				$mRet = mt_rand(400, 500);
+				break;
+		}
+		
+		return $mRet;
 	}
 }
