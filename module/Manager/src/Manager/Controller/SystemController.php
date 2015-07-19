@@ -14,6 +14,8 @@ use Zend\View\Model\ConsoleModel;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
+use Manager\Robot\RobotService;
+
 class SystemController extends AbstractActionController
 {
 	protected $systemTable;
@@ -48,11 +50,23 @@ class SystemController extends AbstractActionController
 	 */
 	public function	agetsystemAction()
 	{
+		//TODO Appels multiples: vérifier leur utilité et la possibilité d'en faire plusieurs
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
 		$aParams = array();
-		foreach (array("serialnumber" => "G_MainLogic.par.Serial_Number_SAMI", "activimeterversion" => "G_MainLogic.par.Serial_Number_Activi", "softwareversion" => "G_MainLogic.par.Software_Version", "systemversion" => "G_MainLogic.par.System_Version") as $k => $v)
+		$actions = array(
+				"serialnumber"			=> "G_MainLogic.par.Serial_Number_SAMI", 
+				"activimeterversion"	=> "G_MainLogic.par.Serial_Number_Activi", 
+				"softwareversion"		=> "G_MainLogic.par.Software_Version", 
+				"systemversion"			=> "G_MainLogic.par.System_Version",
+		);
+		
+		foreach ($actions as $k => $v)
 		{
-			$aParams[$k] = $this->readData($v);
+			$aParams[$k] = $robotService->receive($v);
 		}
+		
 		$result = new JsonModel($aParams);
 		return $result;
 	}
@@ -104,46 +118,4 @@ class SystemController extends AbstractActionController
 		$this->getSystemTable()->saveSystem($oSystem);
 		return new JsonModel(array('success'=>1));
 	}
-
-	public function readData($toRead)
-  {
-    // todo : rendre configuration l'adresse de l'automate
-    $aData =  array("redirect" => "response.asp",
-        "variable" => $toRead,
-        "value" => "",
-        "read" => "Read" );
-                $postdata = http_build_query($aData);
-                $opts = array('http' =>
-                    array(
-                        'method'  => 'POST',
-                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => $postdata
-                    )
-                );
-                $context  = stream_context_create($opts);
-
-    return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
-  }
-
-  public function submitData($toWrite)
-  {
-    foreach ($toWrite as $k => $v)
-    {
-                 $postdata = http_build_query(array ("redirect" => "response.asp",
-              "variable" => $k,
-              "value" => $v,
-              "write" => "Write"));
-                 $opts = array('http' =>
-                     array(
-                         'method'  => 'POST',
-                         'header'  => 'Content-type: application/x-www-form-urlencoded',
-                         'content' => $postdata
-                     )
-                 );
-                 $context  = stream_context_create($opts);
-
-     file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
-    }
-    return true;
-  }
 }
