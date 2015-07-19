@@ -30,7 +30,11 @@
 							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>
 							<td class="col-md-3">
 								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
-								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?></a>
+								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>" class="btn btn-danger"
+									role="delete" data-delete-title="<?php echo $this->translate('Delete examination confirmation title');?>" data-delete-content="<?php echo $this->translate('Delete examination confirmation content');?>">
+									<span class="glyphicon glyphicon-trash"></span> 
+									<?php echo $this->translate('Delete');?>
+								</a>
 							</td>
 						</tr>
 						<?php } ?>

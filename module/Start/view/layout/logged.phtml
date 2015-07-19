@@ -78,10 +78,45 @@
 				</ul>
 			</div>
 		</nav>
+		<?php 
+		$this->inlineScript()->appendScript('
+			$(function(){
+				$("input[role=\'delete\'].btn, a[role=\'delete\'].btn").on("click", function() {
+					var title = $(this).data("delete-title");
+					var contenu = $(this).data("delete-content");	
+
+					$("#deleteConfirmationOkButton").attr("href", $(this).attr("href"));
+					$("#deleteConfirmationTitle").html(title);
+					$("#deleteConfirmationBody").html(contenu);
+ 					
+					$("#deleteConfirmation").modal();
+					
+					return false;
+				});
+			});
+		');
+		?>
 		<?php echo $this->inlineScript() ?>
 		<?php if ($this->login == "DelphInnove") {
 				echo '<H1 style="z-index: 5000;position: absolute; top: 0px; left: 40%; border: 2px; border-color: red; border-style: dashed;color:red; margin:3px; padding:3px;"> <u>/!\</u> MODE DEMO <u>/!\ </u></H1>'; 
 		};?>
-		
+		<div id="deleteConfirmation" class="modal fade" tabindex="-1" role="dialog" aria-labbeledby="deleteConfirmationTitle" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="deleteConfirmationTitle"></h4>
+					</div>
+					<div class="modal-body" id="deleteConfirmationBody"></div>
+					<div class="modal-footer">
+						<button class="btn btn-default" data-dismiss="modal">Annuler</button>
+						<a id="deleteConfirmationOkButton" href="#" class="btn btn-primary">OK</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
