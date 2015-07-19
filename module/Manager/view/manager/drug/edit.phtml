@@ -14,7 +14,7 @@
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->drug->name;?>" required />
+							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->drug->name;?>" required autocomplete="off" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -30,7 +30,7 @@
 					<div class="form-group">
 						<label for="dci" class="control-label col-md-2"><?php echo $this->translate("D.C.I.")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="dci" name="dci" value="<?php echo $this->drug->dci;?>" required />
+							<input type="text" class="form-control" id="dci" name="dci" value="<?php echo $this->drug->dci;?>" autocomplete="off" required />
 						</div>
 					</div>
 					<input type="hidden" id="id" name="id" value="<?php echo $this->drug->id;?>" />

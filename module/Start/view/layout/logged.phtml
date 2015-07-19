@@ -81,29 +81,6 @@
 		<?php echo $this->inlineScript() ?>
 		<?php if ($this->login == "DelphInnove") {
 				echo '<H1 style="z-index: 5000;position: absolute; top: 0px; left: 40%; border: 2px; border-color: red; border-style: dashed;color:red; margin:3px; padding:3px;"> <u>/!\</u> MODE DEMO <u>/!\ </u></H1>'; 
-				echo '<script>
-				$(function(){
-	         $.ajax({
-            type: "POST",
-            url: "'. $this->url("setup", array("action"=>"asetdemomode")) . '",
-            dataType: "json",
-            data: {}
-          });
-				});
-				</script>';
-				}
-				else
-				{
-				echo '<script>
-				$(function(){
-	         $.ajax({
-            type: "POST",
-            url: "' . $this->url("setup", array("action"=>"aunsetdemomode")) .'",
-            dataType: "json",
-            data: {}
-          });
-				});
-				</script>';
 		};?>
 		
 	</body>

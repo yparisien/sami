@@ -908,23 +908,4 @@ class InputdataController extends AbstractActionController
 		$result = new JsonModel($aParams);
 		return $result;
 	}
-	public function	asetdemomodeAction()
-	{
-		/* @var $robotService RobotService  */
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.par.Demo_Mode' => 1));
-		
-		$result = new JsonModel(array());
-		return $result;
-	}
-	public function	aunsetdemomodeAction()
-	{
-		/* @var $robotService RobotService  */
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.par.Demo_Mode' => 0));
-		
-		$result = new JsonModel(array());
-		return $result;
-	}	
-
 }
