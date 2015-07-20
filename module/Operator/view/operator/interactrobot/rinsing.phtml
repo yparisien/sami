@@ -17,13 +17,13 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
-							<div class="col-md-3"><input value="<?php echo $patient['lastname']?>" class="form-control" disabled/></div>
+							<div class="col-md-3"><input value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" disabled/></div>
 							<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
-							<div class="col-md-3"><input value="<?php echo $patient['firstname']?>" class="form-control" disabled/></div>
+							<div class="col-md-3"><input value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" disabled/></div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><?php echo $this->translate('Activity injected')?></div>
-							<div class="col-md-3"><div class="input-group"><input value="<?php echo $injection['activity']?>" class="form-control" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
+							<div class="col-md-3"><div class="input-group"><input type="text" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
 							<div class="col-md-2 col-md-offset-3"><button type="button" class="btn btn-primary" id="rinsing-confirm" onClick="launchRinsing()">Lancer le rinçage</button></div>
 						</div>
 					</div>
@@ -59,7 +59,7 @@
 							<div class="col-md-8 text-right">
 								Règlage du débit:
 								<button onClick="rinsingSlowDown()"><span class="glyphicon glyphicon-minus"></span></button>
-								<input type="text" id="debit-controller" value="" data-slider-min="0" data-slider-max="4" data-slider-step="1" data-slider-value="2" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
+								<input type="text" id="debit-controller" value="" data-slider-min="0" data-slider-max="4" data-slider-step="1" data-slider-value="2" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide" autocomplete="off">
 								<button onClick="rinsingSpeedUp()"><span class="glyphicon glyphicon-plus"></span></button>
 							</div>
 						</div>

@@ -14,7 +14,7 @@ echo $flash->render('success',	array('alert', 'alert-dismissable', 'alert-succes
 ?>
 <form class="form-signin" role="form" method="post" action="<?php echo $this->url('log', array('action'=>'signin'))?>">
 	<h2 class="form-signin-heading"><?php echo $this->translate("Please sign in")?></h2>
-	<input id="login" name="login" type="text" class="form-control" placeholder="<?php echo $this->translate("Login")?>" required autofocus />
-	<input id="password" name="password" type="password" class="form-control" placeholder="<?php echo $this->translate("Password")?>" required />
+	<input id="login" name="login" type="text" class="form-control" placeholder="<?php echo $this->translate("Login")?>" autocomplete="off" required autofocus />
+	<input id="password" name="password" type="password" class="form-control" placeholder="<?php echo $this->translate("Password")?>" autocomplete="off" required />
 	<button class="btn btn-lg btn-primary btn-block" type="submit"><?php echo $this->translate("Sign in")?></button>
 </form>

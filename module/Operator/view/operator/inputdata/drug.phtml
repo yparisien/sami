@@ -30,7 +30,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="" tabindex="3" />
+										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="" autocomplete="off" tabindex="3" />
 										<span class="input-group-addon">ml</span>
 									</div>
 								</div>
@@ -39,7 +39,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-calibration">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" tabindex="5" />
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -57,7 +57,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" placeholder=""  tabindex="7" disabled />
+										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" placeholder="" autocomplete="off"  tabindex="7" disabled />
 										<span class="input-group-addon"><?php echo $unit?>/ml</span>
 									</div>
 								</div>
@@ -67,14 +67,14 @@
 							<div class="form-group">
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="" tabindex="2" />
+									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="" autocomplete="off" tabindex="2" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-peremption">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" tabindex="4" />
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -92,7 +92,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" disabled />
+										<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled />
 										<span class="input-group-addon"><?php echo $unit?></span>
 									</div>
 								</div>
@@ -101,7 +101,7 @@
 								<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="text" class="form-control input-sm" id="activity" name="activity" value="???" readonly/>
+										<input type="text" class="form-control input-sm" id="activity" name="activity" value="???" autocomplete="off" readonly/>
 										<span class="input-group-addon"><?php echo $unit?></span>
 									</div>
 								</div>

@@ -14,14 +14,14 @@
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->radionuclide->name;?>" required />
+							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->radionuclide->name;?>" autocomplete="off" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="firstname" class="control-label col-md-2"><?php echo $this->translate("Period")?></label>
 						<div class="col-md-6">
 							<div class="input-group">
-								<input type="text" class="form-control" id="period" name="period" value="<?php echo $this->radionuclide->period;?>" required />
+								<input type="text" class="form-control" id="period" name="period" value="<?php echo $this->radionuclide->period;?>" autocomplete="off" required />
 								<span class="input-group-addon">min</span>
 							</div>
 						</div>
@@ -30,7 +30,7 @@
 						<label for="login" class="control-label col-md-2"><?php echo $this->translate("Coefficient")?></label>
 						<div class="col-md-6">
 							<div class="input-group">
-								<input type="text" class="form-control" id="coefficient" name="coefficient" value="<?php echo $this->radionuclide->coefficient;?>" required />
+								<input type="text" class="form-control" id="coefficient" name="coefficient" value="<?php echo $this->radionuclide->coefficient;?>" autocomplete="off" required />
 								<span class="input-group-addon">%</span>
 							</div>
 						</div>
