@@ -19,7 +19,7 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name')?></label>
 								<div class="col-sm-6">
-									<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1">
+									<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1" required>
 									<?php foreach($this->drugs as $drug) { ?>
 										<option value="<?php echo $drug->id?>"><?php echo $drug->name;?></option>
 									<?php } ?>
@@ -27,19 +27,16 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
 								<div class="col-sm-6">
-									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="" autocomplete="off" tabindex="3" />
-										<span class="input-group-addon">ml</span>
-									</div>
+									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="ex: FG120925A-04" autocomplete="off" tabindex="2" required />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-calibration">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" />
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" required />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -54,10 +51,19 @@
 								</script>
 							</div>
 							<div class="form-group">
+								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="ex: 200" autocomplete="off" tabindex="3"  />
+										<span class="input-group-addon">ml</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" placeholder="" autocomplete="off"  tabindex="7" disabled />
+										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled />
 										<span class="input-group-addon"><?php echo $unit?>/ml</span>
 									</div>
 								</div>
@@ -65,16 +71,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="" autocomplete="off" tabindex="2" />
-								</div>
-							</div>
-							<div class="form-group">
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-peremption">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" />
+										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>

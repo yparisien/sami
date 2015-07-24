@@ -60,3 +60,18 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function	checkForm()
+	{
+		if($("#password").val() == $("#password-confirm").val())
+		{
+			return true;
+		}
+		else
+		{
+			$("#password").parents('.form-group').addClass('has-error');
+			$("#password-confirm").parents('.form-group').addClass('has-error');
+			return false;
+		}
+	}
+</script>

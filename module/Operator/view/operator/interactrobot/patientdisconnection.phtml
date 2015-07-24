@@ -1,22 +1,22 @@
 <ol class="breadcrumb">
-	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
-	<li><?php echo $this->translate('Injection')?></li>
-	<li class="active"><?php echo $this->translate('Patient disconnection')?></li>
+	<li><a href="<?php echo $this->url('operator'); ?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard'); ?></a></li>
+	<li><?php echo $this->translate('Injection'); ?></li>
+	<li class="active"><?php echo $this->translate('Patient disconnection'); ?></li>
 </ol>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<?php echo $this->translate('Patient disconnection')?>
+				<?php echo $this->translate('Patient disconnection'); ?>
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<label for="lastname" class="col-sm-3 control-label"><?php echo $this->translate('Location of injection')?></label>
+					<label for="lastname" class="col-sm-3 control-label"><?php echo $this->translate('Location of injection'); ?></label>
 					<div class="col-sm-6">
 						<input type="text" tabindex="1" class="form-control input-sm" id="location_input" name="location_input" placeholder="" autocomplete="off" />
 					</div>
 					<div class="col-sm-3">
-						<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation')?></button>
+						<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation'); ?></button>
 					</div>
 				</div>
 				<div id="sticker">
@@ -24,29 +24,29 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<?php echo $this->translate('Printing sticker')?>
+									<?php echo $this->translate('Printing sticker'); ?>
 								</div>
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-md-6">
-											<?php echo $patient['lastname']?><br />
-											<?php echo $patient['firstname']?><br />
-											<?php echo $patient['birthdate']?><br />
-											<?php echo $injection['comments']?><br />
-											<?php echo $injection['unique_id']?><br />
-											<?php echo $examination->name?><br />
-											<?php echo $radionuclide->name?><br />
-											<?php echo $patient['weight']?>kg<br />
+											<?php echo $patient['lastname']; ?><br />
+											<?php echo $patient['firstname']; ?><br />
+											<?php echo $patient['birthdate']; ?><br />
+											<?php echo $injection['comments']; ?><br />
+											<?php echo $injection['unique_id']; ?><br />
+											<?php echo $examination->name; ?><br />
+											<?php echo $radionuclide->name; ?><br />
+											<?php echo $patient['weight']; ?>kg<br />
 										</div>
 										<div class="col-md-6">
-											<?php echo $injection['activity']?> <?php echo $unit ?><br />
+											<?php echo $injection['activity']; ?> <?php echo $unit ; ?><br />
 											<span id="location"></span><br />
-											<?php echo strtoupper($operator->lastname)?> <?php echo ucfirst(strtolower($operator->firstname))?><br />
-											<?php echo $injection['injection_time']?><br />
-											<?php echo $drug->name?><br />
-											<?php echo $curdrug->batchnum?><br />
-											<?php echo $sourcekit->serialnumber?><br />
-											<?php echo $patientkit->serialnumber?><br />
+											<?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?><br />
+											<?php echo $injection['injection_time']; ?><br />
+											<?php echo $drug->name; ?><br />
+											<?php echo $curdrug->batchnum; ?><br />
+											<?php echo $sourcekit->serialnumber; ?><br />
+											<?php echo $patientkit->serialnumber; ?><br />
 										</div>
 									</div>
 								</div>
@@ -55,16 +55,16 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<p><?php echo $this->translate('Please disconnect the patient kit, trash it and validate.')?></p>
-							<button class="btn btn-primary" id="showactivityleft"><?php echo $this->translate('Validation')?></button>
+							<p><?php echo $this->translate('Please disconnect the patient kit, trash it and validate.'); ?></p>
+							<button class="btn btn-primary" id="showactivityleft"><?php echo $this->translate('Validation'); ?></button>
 						</div>
 					</div>
 				</div>
 				<div id="nextstep">
 					<div class="row">
 						<div class="col-md-12">
-							<p><?php echo $this->translate('Remaining activity at ')?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit?></p>
-							<p style="float:left;"><?php echo $this->translate('Remaining activity at ')?>
+							<p><?php echo $this->translate('Remaining activity at '); ?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit; ?></p>
+							<p style="float:left;"><?php echo $this->translate('Remaining activity at '); ?>
 								<div id="activity-attime" class="input-group date" style="width: 30%;float: left;">
 									<input name="activityattime" id="activityattime" type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" size="16" autocomplete="off"/>
 									<span class="input-group-addon">
@@ -72,18 +72,18 @@
 									</span>
 								</div>
 							</p>
-									: <span id="activityat"></span><?php echo $unit?>
+									: <span id="activityat"></span><?php echo $unit; ?>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-4">
-							<a href="<?php echo $this->url('bufferspace', array('action'=>'patientlist'))?>" class="btn btn-primary btn-block"><?php echo $this->translate('Injected patients list')?></a>
+							<a href="<?php echo $this->url('bufferspace', array('action'=>'patientlist')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Injected patients list'); ?></a>
 						</div>
 						<div class="col-sm-4">
-							<a href="<?php echo $this->url('auth', array('action'=>'confirmauth'))?>" class="btn btn-primary btn-block"><?php echo $this->translate('Launch another injection')?></a>
+							<a href="<?php echo $this->url('auth', array('action'=>'confirmauth')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Launch another injection'); ?></a>
 						</div>
 						<div class="col-sm-4">
-							<a href="<?php echo $this->url('inject', array('action'=>'endinject'))?>" class="btn btn-primary btn-block"><?php echo $this->translate('End of injections')?></a>
+							<a href="<?php echo $this->url('inject', array('action'=>'endinject')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('End of injections'); ?></a>
 						</div>
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 		$('#location_validation').click(function(){
 			$.ajax({
 				type: "POST",
-				url: "<?php echo $this->url('inject', array('action'=>'storelocation'))?>",
+				url: "<?php echo $this->url('inject', array('action'=>'storelocation')); ?>",
 				data: { location: $('#location_input').val()}
 			});
 			$('#location').html($('#location_input').val());
@@ -116,7 +116,7 @@
 					{
 						$.ajax({
 							type: "POST",
-							url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivityat'))?>",
+							url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivityat')); ?>",
 							dataType: "json",
 							data: {wantedat : "DT#" + $("#activityattime").val().replace(" ", "-") + ":00"}
 						}).done(function(result) {
@@ -130,7 +130,7 @@
 			loadActivityData();
 			$.ajax({
 				type: "POST",
-				url: "<?php echo $this->url('inject', array('action'=>'adisconnectpatient'))?>"
+				url: "<?php echo $this->url('inject', array('action'=>'adisconnectpatient')); ?>"
 			});
 
 			$('#nextstep').show();
