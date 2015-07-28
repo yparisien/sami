@@ -85,6 +85,7 @@
 			</div>
 		</nav>
 		<?php 
+		$this->inlineScript()->appendScript("history.pushState(null, null, location.href); window.onpopstate = function(event) { history.go(1); };");
 		$this->inlineScript()->appendScript('
 			$(function(){
 				$("input[role=\'delete\'].btn, a[role=\'delete\'].btn").on("click", function() {
