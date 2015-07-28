@@ -12,7 +12,7 @@ echo $flash->render('info',		array('alert', 'alert-dismissable', 'alert-info'));
 echo $flash->render('default',	array('alert', 'alert-dismissable', 'alert-warning'));
 echo $flash->render('success',	array('alert', 'alert-dismissable', 'alert-success'));
 ?>
-<form class="form-signin" role="form" method="post" action="<?php echo $this->url('log', array('action'=>'signin'))?>">
+<form class="form-signin" role="form" method="post" action="<?php echo $this->url('log', array('action'=>'signin'))?>" autocomplete="off">
 	<h2 class="form-signin-heading"><?php echo $this->translate("Please sign in")?></h2>
 	<input id="login" name="login" type="text" class="form-control" placeholder="<?php echo $this->translate("Login")?>" autocomplete="off" required autofocus />
 	<input id="password" name="password" type="password" class="form-control" placeholder="<?php echo $this->translate("Password")?>" autocomplete="off" required />

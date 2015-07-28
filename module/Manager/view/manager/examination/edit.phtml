@@ -31,7 +31,7 @@
 						<label for="rate" class="control-label col-md-2"><?php echo $this->translate("Rate")?></label>
 						<div class="col-md-6">
 							<div class="input-group">
-								<input type="text" class="form-control" id="rate" name="rate" value="<?php echo $this->examination->rate;?>" autocomplete="off" required />
+								<input type="number" min="1" step="1" class="form-control" id="rate" name="rate" value="<?php echo $this->examination->rate;?>" autocomplete="off" required />
 								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
 							</div>
 						</div>
@@ -40,8 +40,8 @@
 						<label for="min" class="control-label col-md-2"><?php echo $this->translate("Min.")?></label>
 						<div class="col-md-6">
 							<div class="input-group">
-								<input type="text" class="form-control" id="min" name="min" value="<?php echo $this->examination->min;?>" autocomplete="off" required />
-								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
+								<input type="number" min="1" step="1" class="form-control" id="min" name="min" value="<?php echo $this->examination->min;?>" autocomplete="off" required />
+								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 					</div>
@@ -49,8 +49,8 @@
 						<label for="max" class="control-label col-md-2"><?php echo $this->translate("Max.")?></label>
 						<div class="col-md-6">
 							<div class="input-group">
-								<input type="text" class="form-control" id="max" name="max" value="<?php echo $this->examination->max;?>" autocomplete="off" required />
-								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
+								<input type="number" min="1" step="1"class="form-control" id="max" name="max" value="<?php echo $this->examination->max;?>" autocomplete="off" required />
+								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 					</div>

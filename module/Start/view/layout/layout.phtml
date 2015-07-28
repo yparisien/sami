@@ -11,6 +11,8 @@
 
 		<!-- Le styles -->
 		<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/injection.ico'))
+						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
+						->prependStylesheet($this->basepath() . '/css/keyboard.css')
 						->prependStylesheet($this->basePath() . '/css/style.css')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-patch.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
@@ -22,12 +24,13 @@
 
 		<!-- Scripts -->
 		<?php echo $this->headScript()
+			->prependFile($this->basepath() . '/js/jquery.keyboard.layout-french.js')
+			->prependFile($this->basepath() . '/js/jquery.keyboard.extension-all.js')
+			->prependFile($this->basepath() . '/js/jquery.keyboard.js')
 			->prependFile($this->basepath() . '/js/jquery-barcode.min.js')
-			->prependFile($this->basepath() . '/js/bootstrap-slider.min.js')
-			->prependFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
+			->prependFile($this->basePath() . '/js/jquery-ui.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
-			->prependFile($this->basepath() . '/js/moment-with-langs.min.js')
 			->prependFile($this->basePath() . '/js/respond.min.js',	'text/javascript', array('conditional' => 'lt IE 9',))
 			->prependFile($this->basePath() . '/js/html5shiv.js', 	'text/javascript', array('conditional' => 'lt IE 9',))
 		?>
@@ -64,6 +67,24 @@
 				</ul>
 			</div>
 		</nav>
+		<?php
+		if (1 == 1) {
+			$this->inlineScript()->appendScript('
+				$(function(){
+					$("input[type=text].form-control,input[type=password].form-control").keyboard({
+						autoAccept: true, 
+						layout: "french-azerty-1",
+						position     : {
+    						of : $("form.form-signin"),
+    						my : "center top",
+    						at : "center bottom",
+    						at2: "center bottom",
+  						},
+					});
+				});
+			');
+		}
+		?>
 		<?php echo $this->inlineScript() ?>
 	</body>
 </html>

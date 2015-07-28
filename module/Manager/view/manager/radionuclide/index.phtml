@@ -1,3 +1,4 @@
+<?php //TODO Virer les actions CRUD Radionculeides ?>
 <ol class="breadcrumb">
 	<li><a href="<?php echo $this->url('manager')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></a></li>
 	<li class="active"><?php echo $this->translate('Radionuclide management')?></li>
@@ -15,33 +16,17 @@
 							<th><?php echo $this->translate('Name');?></th>
 							<th><?php echo $this->translate('Period');?></th>
 							<th><?php echo $this->translate('Coefficient');?></th>
-							<th><?php echo $this->translate('Action');?></th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php foreach($radionuclides as $radionuclide) { ?>
 						<tr>
-
 							<td><?php echo $this->escapeHtml($radionuclide->name);?></td>
 							<td><?php echo $this->escapeHtml($radionuclide->period);?> min</td>
 							<td><?php echo $this->escapeHtml($radionuclide->coefficient);?> %</td>
-							<td class="col-md-3">
-								<a href="<?php echo $this->url('radionuclide', array('action'=>'edit', 'id'=>$radionuclide->id))?>" class="btn btn-primary">
-									<span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?>
-								</a>
-								<a href="<?php echo $this->url('radionuclide', array('action'=>'delete', 'id'=>$radionuclide->id))?>" class="btn btn-danger"
-									role="delete" data-delete-title="<?php echo $this->translate('Delete radionuclide confirmation title');?>" data-delete-content="<?php echo $this->translate('Delete radionuclide confirmation content');?>">
-									<span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?>
-								</a>
-							</td>
 						</tr>
 						<?php } ?>
 					</tbody>
-					<tfoot>
-						<tr>
-							<th colspan="5" class="text-center"><a class="btn btn-primary" href="<?php echo $this->url('radionuclide', array('action'=>'add'));?>"><span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate('Add a radionuclide')?></a></th>
-						</tr>
-					</tfoot>
 				</table>
 			</div>
 		</div>

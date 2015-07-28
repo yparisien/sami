@@ -84,6 +84,8 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = mt_rand(400, 500);
 				break;
 			case "G_Patient.Actual.ActToInj":
+				$mRet = 300;
+				break;
 			case "G_MainLogic.cmd.Input_Trasys.Measured_Value":
 				$mRet = 100;
 				break;

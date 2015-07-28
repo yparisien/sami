@@ -12,25 +12,31 @@
 
 		<!-- Le styles -->
 		<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/injection.ico'))
+						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
+						->prependStylesheet($this->basepath() . '/css/keyboard.css')
 						->prependStylesheet($this->basePath() . '/css/style.css')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-patch.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
 						->prependStylesheet($this->basePath() . '/css/signin.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-datetimepicker.min.css')
-						->prependStylesheet($this->basepath() . '/css/bootstrap-slider.css')
+						->prependStylesheet($this->basepath() . '/css/bootstrap-slider.css');
 		?>
 
 		<!-- Scripts -->
 		<?php echo $this->headScript()
+			->prependFile($this->basepath() . '/js/jquery.keyboard.layout-french.js')
+			->prependFile($this->basepath() . '/js/jquery.keyboard.extension-all.js')
+			->prependFile($this->basepath() . '/js/jquery.keyboard.js')
 			->prependFile($this->basepath() . '/js/jquery-barcode.min.js')
 			->prependFile($this->basepath() . '/js/bootstrap-slider.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
+			->prependFile($this->basePath() . '/js/jquery-ui.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
 			->prependFile($this->basepath() . '/js/moment-with-langs.min.js')
 			->prependFile($this->basePath() . '/js/respond.min.js',	'text/javascript', array('conditional' => 'lt IE 9',))
-			->prependFile($this->basePath() . '/js/html5shiv.js', 	'text/javascript', array('conditional' => 'lt IE 9',))
+			->prependFile($this->basePath() . '/js/html5shiv.js', 	'text/javascript', array('conditional' => 'lt IE 9',));
 		; ?>
 	</head>
 	<body>
@@ -95,6 +101,39 @@
 				});
 			});
 		');
+		//TODO Rajouter une variable de configuration
+		if (1 == 1) {
+			$this->inlineScript()->appendScript('
+				$(function(){
+					$("input[type=text].form-control").not(".input-date").keyboard({autoAccept: true, layout: "french-azerty-1"});
+					$("textarea.form-control").keyboard({autoAccept: true, lockInput: true, layout: "french-azerty-1"});
+					$("input[type=number].form-control").keyboard({
+						layout : "custom",
+						customLayout: {
+							"normal" : [
+								"7 8 9 {b}",
+								"4 5 6 {clear}",
+								"1 2 3 {a}",
+								"0 {dec} - {c}"
+							]
+						}, 
+						autoAccept: true,
+					});
+					$("input[type=text].input-date").keyboard({
+						layout : "custom",
+						customLayout: {
+							"normal" : [
+								"7 8 9 {b}",
+								"4 5 6 {clear}",
+								"1 2 3 {a}",
+								"0 - : {c}"
+							]
+						}, 
+						autoAccept: true,
+					});
+				});
+			');
+		}
 		?>
 		<?php echo $this->inlineScript() ?>
 		<?php if ($this->login == "DelphInnove") {

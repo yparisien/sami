@@ -36,7 +36,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-calibration">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" required />
+										<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" required />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -54,7 +54,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" placeholder="ex: 200" autocomplete="off" tabindex="3"  />
+										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3"  />
 										<span class="input-group-addon">ml</span>
 									</div>
 								</div>
@@ -74,7 +74,7 @@
 								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
 								<div class="col-sm-6">
 									<div class="input-group date" id="datetimepicker-peremption">
-										<input type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" />
+										<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" />
 										<span class="input-group-addon">
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
