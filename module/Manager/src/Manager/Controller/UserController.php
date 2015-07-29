@@ -66,6 +66,9 @@ class UserController extends AbstractActionController
 			$oUser->firstname = $oRequest->getPost('firstname');
 			$oUser->login = $oRequest->getPost('login');
 			$oUser->admin = ($oRequest->getPost('admin'))? 1 : 0;
+			if ($oRequest->getPost('password') == $oRequest->getPost('password-confirm')) {
+				$oUser->password = sha1($oRequest->getPost('password'));
+			}
 			$this->getUserTable()->saveUser($oUser);
 			return $this->redirect()->toRoute('user');
 		}
