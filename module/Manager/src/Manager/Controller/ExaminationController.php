@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 use Manager\Model\Drug;
 use Manager\Model\Examination;
 use Manager\View\VExamination;
+use Manager\Model\ExaminationTable;
 
 class ExaminationController extends AbstractActionController
 {
@@ -32,6 +33,10 @@ class ExaminationController extends AbstractActionController
 		return $this->drugTable;
 	}
 
+	/**
+	 * 
+	 * @return ExaminationTable
+	 */
 	public function getExaminationTable()
 	{
 		if(!$this->examinationTable)
@@ -123,8 +128,8 @@ class ExaminationController extends AbstractActionController
 	public function	deleteAction()
 	{
 		$oRequest = $this->getRequest();
-		$drugId = $this->params('id');
-		$this->getDrugTable()->deleteDrug($drugId);
-		return $this->redirect()->toRoute('drug');
+		$examinationID = $this->params('id');
+		$this->getExaminationTable()->deleteExamination($examinationID);
+		return $this->redirect()->toRoute('examination');
 	}
 }
