@@ -75,7 +75,7 @@ class LoginController extends AbstractActionController
 	public function	signinAction()
 	{
 		$oSetup = new Container('automate_setup');
-		if($oContainer->issetup = true)
+		if($oSetup->issetup == true)
 		{
 			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 			// grab datas from submitted form
