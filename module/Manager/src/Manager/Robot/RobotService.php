@@ -76,7 +76,6 @@ class RobotService implements ServiceLocatorAwareInterface {
 	private function fakeReceive($variable) {
 		$mRet = null;
 		
-		
 		switch ($variable) {
 			case "G_Medicament.Calculation.C_Act_Dispo":
 			case "G_Medicament.Actual.Act_Vol":
@@ -115,6 +114,18 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2 ;
 				$fr->injectionEvolutionStatus = $progress;
 				$mRet = $progress;
+				break;
+			case "G_MainLogic.par.Serial_Number_SAMI":
+				$mRet = "DI-SAMI-V.0.1";
+				break;
+			case "G_MainLogic.par.Serial_Number_Activi":
+				$mRet = "SN-A12345-123";
+				break;
+			case "G_MainLogic.par.Software_Version":
+				$mRet = "Version 0.1a";
+				break;
+			case "G_MainLogic.par.System_Version":
+				$mRet = "Version 0.1b";
 				break;
 		}
 		
