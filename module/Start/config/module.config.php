@@ -11,6 +11,16 @@ return array(
 
 	'router' => array(
 		'routes' => array(
+			'init' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/init',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'init',
+					),
+				),
+			),
 			'home' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(
@@ -18,6 +28,16 @@ return array(
 					'defaults' => array(
 						'controller' => 'Start\Controller\Index',
 						'action'	 => 'index',
+					),
+				),
+			),
+			'restart' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/restart',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'restart',
 					),
 				),
 			),

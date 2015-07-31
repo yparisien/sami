@@ -24,41 +24,27 @@ class RadionuclideTable
 		$id  = (int) $id;
 		$rowset = $this->tableGateway->select(array('id' => $id));
 		$row = $rowset->current();
-		if (!$row)
-		{
-			throw new \Exception("Could not find row $id");
-		}
 		return $row;
 	}
 
 	public function saveRadionuclide(Radionuclide $radionuclide)
 	{
 		$data = array(
+			'id'			=> (int) $radionuclide->id,
 			'name'			=> $radionuclide->name,
-			'period'		=> $radionuclide->period,
-			'coefficient'	=> $radionuclide->coefficient,
+			'period'		=> (int) $radionuclide->period,
+			'coefficient'	=> (float) $radionuclide->coefficient,
 		);
 
-		$id = (int) $radionuclide->id;
-		if ($id == 0)
+		if ($this->getRadionuclide($radionuclide->id))
 		{
-			$this->tableGateway->insert($data);
+			//TODO Rajouter log fichier
+			$this->tableGateway->update($data, array('id' => $radionuclide->id));
 		}
 		else
 		{
-			if ($this->getRadionuclide($id))
-			{
-				$this->tableGateway->update($data, array('id' => $id));
-			}
-			else
-			{
-				throw new \Exception('Radionuclide id does not exist');
-			}
+			//TODO Rajouter log fichier
+			$this->tableGateway->insert($data);
 		}
-	}
-
-	public function deleteRadionuclide($id)
-	{
-		$this->tableGateway->delete(array('id' => (int) $id));
 	}
 }

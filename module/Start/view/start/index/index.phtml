@@ -8,28 +8,41 @@
 
 <script type="text/javascript">
 	var value = 0;
-	function moveProgressBar()
+	
+	function moveProgressBar(valToAdd)
 	{
-		if(value < 100)
-		{
-			value += 10;
-			$("#loading-progress").css('width', value+'%');
-			window.setTimeout(function(){moveProgressBar();}, 500);
+		if (typeof(valToAdd) !== 'undefined') {
+			value += valToAdd;
 		}
-		else
-		{
+		
+		if(value < 100) {
+			$("#loading-progress").css('width', value+'%');
+		} else {
 			$("#loading-progress").addClass("progress-bar-success");
 			$("#loading-success").show();
-			window.setTimeout(function(){gotoindex();}, 2000);
+			window.setTimeout(function(){gotoindex();}, 500);
 		}
 	}
-	function gotoindex()
-	{
+	
+	function gotoindex() {
 		$(location).attr('href',<?php echo $this->url('log')?>);
 	}
 
 	$(function(){
-		window.setTimeout(function(){moveProgressBar();}, 500);
+		//Vérification du point de départ du démarrage
+		//TODO A implémenter
+		
+		//Chargement des radionuclides
+		$.ajax({
+			url: "<?php echo $this->url('init', array())?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(50);
+			}
+			else {
+				
+			}
+		});
 	});
 
 </script>

@@ -77,57 +77,88 @@ class RobotService implements ServiceLocatorAwareInterface {
 		$mRet = null;
 		
 		switch ($variable) {
-			case "G_Medicament.Calculation.C_Act_Dispo":
-			case "G_Medicament.Actual.Act_Vol":
-			case "G_Medicament.Actual.Act_DT":
+			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
+			case RobotConstants::MEDICAMENT_ACTUAL_ACTVOL:
+			case RobotConstants::MEDICAMENT_ACTUAL_ACTDT:
 				$mRet = mt_rand(400, 500);
 				break;
-			case "G_Patient.Actual.ActToInj":
+			case RobotConstants::PATIENT_ACTUAL_ACTTOINJ:
 				$mRet = 300;
 				break;
-			case "G_MainLogic.cmd.Input_Trasys.Measured_Value":
+			case RobotConstants::MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE:
 				$mRet = 100;
 				break;
-			case "G_MainLogic.cmd.Input_Soft.Inject_Speed":
+			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED:
 				$mRet = 50;
 				break;
-			case "SubPurge.status.Evolution":
+			case RobotConstants::SUBPURGE_STATUS_EVOLUTION:
 				$fr = new Container('fake_robot');
 				$progress = (isset($fr->purgeEvolutionStatus) && ($fr->purgeEvolutionStatus == 100)) ? 0 : $fr->purgeEvolutionStatus + 25 ;
 				$fr->purgeEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
-			case "G_MainLogic.status.Sampling_Evolution":
+			case RobotConstants::MAINLOGIC_STATUS_SAMPLINGEVOLUTION:
 				$fr = new Container('fake_robot');
 				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 10 ;
 				$fr->samplingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
-			case "G_MainLogic.status.Dilution_Evolution":
+			case RobotConstants::MAINLOGIC_STATUS_DILUTIONEVOLUTION:
 				$fr = new Container('fake_robot');
 				$progress = (isset($fr->dilutionEvolutionStatus) && ($fr->dilutionEvolutionStatus == 100)) ? 0 : $fr->dilutionEvolutionStatus + 20 ;
 				$fr->dilutionEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
-			case "G_MainLogic.status.Injection_Evolution":
+			case RobotConstants::MAINLOGIC_STATUS_INJECTIONEVOLUTION:
 				$fr = new Container('fake_robot');
 				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2 ;
 				$fr->injectionEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
-			case "G_MainLogic.par.Serial_Number_SAMI":
+			case RobotConstants::MAINLOGIC_PAR_SERIALNUMBERSAMI:
 				$mRet = "DI-SAMI-V.0.1";
 				break;
-			case "G_MainLogic.par.Serial_Number_Activi":
+			case RobotConstants::MAINLOGIC_PAR_SERIALNUMBERACTIVI:
 				$mRet = "SN-A12345-123";
 				break;
-			case "G_MainLogic.par.Software_Version":
+			case RobotConstants::MAINLOGIC_PAR_SOFTWAREVERSION:
 				$mRet = "Version 0.1a";
 				break;
-			case "G_MainLogic.par.System_Version":
+			case RobotConstants::MAINLOGIC_PAR_SYSTEMVERSION:
 				$mRet = "Version 0.1b";
 				break;
+			case RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE:
+				$mRet = 1;
+				break;
+			case RobotConstants::ISOTOPES_NB:
+				$mRet = 4;
+				break;
+			case stripos($variable, 'Isotopes['):
+				$rnitems = [
+					'Isotopes[1].ID_Isotope' 	=> '1',
+					'Isotopes[1].ShortName' 	=> 'T99',
+					'Isotopes[1].Name' 			=> 'Technetium 99',
+					'Isotopes[1].HalfLife' 		=> '360',
+					'Isotopes[2].ID_Isotope' 	=> '2',
+					'Isotopes[2].ShortName' 	=> 'F18',
+					'Isotopes[2].Name' 			=> 'Fluorine 18',
+					'Isotopes[2].HalfLife' 		=> '109',
+					'Isotopes[3].ID_Isotope' 	=> '3',
+					'Isotopes[3].ShortName' 	=> 'TH201',
+					'Isotopes[3].Name' 			=> 'Thallium 201',
+					'Isotopes[3].HalfLife' 		=> '691200',
+					'Isotopes[4].ID_Isotope' 	=> '4',
+					'Isotopes[4].ShortName' 	=> 'I131',
+					'Isotopes[4].Name' 			=> 'Iodine 131',
+					'Isotopes[4].HalfLife' 		=> '692928',
+				];
+				$mRet = $rnitems[$variable];
+				break;
+			default:
+				die($variable);
+				break;
 		}
+		
 		
 		return $mRet;
 	}
