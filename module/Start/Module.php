@@ -26,6 +26,15 @@ class Module
 		$eventManager	= $e->getApplication()->getEventManager();
 		$oSystem		= $e->getApplication()->getServiceManager()->get('Manager\Model\SystemTable')->getSystem();
 		$e->getApplication()->getServiceManager()->get('translator')->setLocale($oSystem->language);
+
+		//get the layout
+		$layoutViewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+		
+		// initialize global configuration values
+		$serviceManager = $e->getApplication()->getServiceManager();
+		$config = $serviceManager->get('config');
+		$layoutViewModel->virtualkeyboardEnable = $config['virtualkeyboard']['enable'];
+		
 		$moduleRouteListener = new ModuleRouteListener();
 		$moduleRouteListener->attach($eventManager);
 	}

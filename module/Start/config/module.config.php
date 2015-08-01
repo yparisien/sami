@@ -11,13 +11,23 @@ return array(
 
 	'router' => array(
 		'routes' => array(
-			'init' => array(
+			'initrn' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(
-					'route'	=> '/init',
+					'route'	=> '/initrn',
 					'defaults' => array(
 						'controller' => 'Start\Controller\Index',
-						'action'	 => 'init',
+						'action'	 => 'initrn',
+					),
+				),
+			),
+			'initsp' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/initsp',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'initsp',
 					),
 				),
 			),

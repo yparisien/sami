@@ -1,6 +1,9 @@
 <div class="jumbotron">
 	<h1><?php echo sprintf($this->translate('S.A.M.I. v %s'), $this->version) ?></h1>
-	<p><?php echo sprintf($this->translate('Loading...')) ?> <span id="loading-success" style="display:none"><?php echo sprintf($this->translate('Done')) ?></span></p>
+	<p><?php echo sprintf($this->translate('Loading...')) ?> 
+		<span id="loading-success" style="display:none"><?php echo sprintf($this->translate('Done')); ?></span>
+		<span id="loading-error" style="display:none"></span>
+	</p>
 	<div class="progress progress-striped active">
 		<div id="loading-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
 	</div>
@@ -12,15 +15,16 @@
 	function moveProgressBar(valToAdd)
 	{
 		if (typeof(valToAdd) !== 'undefined') {
-			value += valToAdd;
+			value = value + valToAdd;
 		}
 		
 		if(value < 100) {
 			$("#loading-progress").css('width', value+'%');
 		} else {
+			$("#loading-progress").css('width', '100%');
 			$("#loading-progress").addClass("progress-bar-success");
 			$("#loading-success").show();
-			window.setTimeout(function(){gotoindex();}, 500);
+			window.setTimeout(function(){gotoindex();}, 2000);
 		}
 	}
 	
@@ -30,17 +34,29 @@
 
 	$(function(){
 		//Vérification du point de départ du démarrage
-		//TODO A implémenter
-		
-		//Chargement des radionuclides
 		$.ajax({
-			url: "<?php echo $this->url('init', array())?>",
+			url: "<?php echo $this->url('initsp', array())?>",
 		}).done(function(result){
 			if (result.error === false) {
 				moveProgressBar(50);
 			}
 			else {
-				
+				//TODO Rajouter message d'erreur
+			}
+		});
+		//TODO A implémenter
+		
+		//Chargement des radionuclides
+		$.ajax({
+			url: "<?php echo $this->url('initrn', array())?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(50);
+			}
+			else {
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Loading of radionuclides failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
 			}
 		});
 	});

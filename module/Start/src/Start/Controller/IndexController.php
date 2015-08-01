@@ -42,12 +42,31 @@ class IndexController extends AbstractActionController
 		return $this->storage;
 	}
 	
-	public function initAction() {
+	public function initspAction() {
+		/* @var $robotService RobotService */
+		
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
+		$error = false;
+		$errorMessage = '';
+		
+		$restartType = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE);
+		//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
+		
+		return $jsonModel;
+	}	
+	
+	public function initrnAction() {
 		/* @var $robotService RobotService */
 		/* @var $rnTable RadionuclideTable */
 		$config = $this->getServiceLocator()->get('config');
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$rnTable = $this->getServiceLocator()->get('Manager\Model\RadionuclideTable');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		
 		$error = false;
 		$errorMessage = '';
@@ -56,7 +75,7 @@ class IndexController extends AbstractActionController
 		
 		if ($nbRN < 1) {
 			$error = true;
-			$errorMessage = "No radionuclide found in the robot. Contact support.";
+			$errorMessage = $translate("No radionuclide found in the robot. Contact support.");
 		}
 		else {
 			for ($n = 0; $n < $nbRN; $n++) {
@@ -127,6 +146,7 @@ class IndexController extends AbstractActionController
 	public function indexAction()
 	{
 		$oContainer = new Container('automate_setup');
+		$config = $this->getServiceLocator()->get('config');
 
 		// on skip le chargement si déjà setup
 		if(isset($oContainer->issetup) && $oContainer->issetup == true)
@@ -164,8 +184,10 @@ class IndexController extends AbstractActionController
 			$oBarcodetry->patientkittry = 0;
 
 			$viewModel = new ViewModel();
-			$config = $this->getServiceLocator()->get('config');
-			$viewModel->setVariables(array('version'=>$config['version']));
+			$viewModel->setVariables(array(
+				'version' 					=> $config['version'],
+			));
+			
 			return $viewModel;
 		}
 	}

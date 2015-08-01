@@ -8,4 +8,7 @@ return array(
 		//Set to fasle when robot is connected
 		'simulated' => true,
 	),
+	'virtualkeyboard' => array (
+		'enable'	=> false,	
+	),
 );
