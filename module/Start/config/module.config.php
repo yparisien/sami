@@ -31,6 +31,16 @@ return array(
 					),
 				),
 			),
+			'initsd' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/initsd',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'initsd',
+					),
+				),
+			),
 			'home' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(

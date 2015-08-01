@@ -42,9 +42,26 @@ class IndexController extends AbstractActionController
 		return $this->storage;
 	}
 	
+	public function initsdAction() {
+		$error = false;
+		$errorMessage = '';
+
+		//TODO Check that all inits are OK
+
+		if ($error === false) {
+			$oContainer = new Container('automate_setup');
+			$oContainer->issetup = true;
+		}
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
+	
+		return $jsonModel;
+	}
+	
 	public function initspAction() {
 		/* @var $robotService RobotService */
-		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		
 		$error = false;
@@ -65,6 +82,7 @@ class IndexController extends AbstractActionController
 		/* @var $rnTable RadionuclideTable */
 		$config = $this->getServiceLocator()->get('config');
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		
 		$rnTable = $this->getServiceLocator()->get('Manager\Model\RadionuclideTable');
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		

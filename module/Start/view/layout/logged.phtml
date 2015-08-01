@@ -103,7 +103,7 @@
 			});
 		');
 		//TODO Rajouter une variable de configuration
-		if (1 == 1) {
+		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("input[type=text].form-control").not(".input-date").keyboard({autoAccept: true, layout: "french-azerty-1"});

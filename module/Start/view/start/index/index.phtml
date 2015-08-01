@@ -21,10 +21,21 @@
 		if(value < 100) {
 			$("#loading-progress").css('width', value+'%');
 		} else {
-			$("#loading-progress").css('width', '100%');
-			$("#loading-progress").addClass("progress-bar-success");
-			$("#loading-success").show();
-			window.setTimeout(function(){gotoindex();}, 2000);
+			$.ajax({
+				url: "<?php echo $this->url('initsd', array())?>",
+			}).done(function(result){
+				if (result.error === false) {
+					$("#loading-progress").css('width', '100%');
+					$("#loading-progress").addClass("progress-bar-success");
+					$("#loading-success").show();
+					window.setTimeout(function(){gotoindex();}, 1000);
+				}
+				else {
+					$("#loading-progress").addClass("progress-bar-danger");
+					$("#loading-error").html("<?php echo sprintf($this->translate('An error occured during setup. Please retry.')); ?><br />" + result.errorMessage);
+					$("#loading-error").show();
+				}
+			});
 		}
 	}
 	
