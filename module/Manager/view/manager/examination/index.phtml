@@ -30,11 +30,18 @@
 							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>
 							<td class="col-md-3">
 								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
+								<?php if ($examination->nbExamsInProgress == 0) { ?>
 								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>" class="btn btn-danger"
 									role="delete" data-delete-title="<?php echo $this->translate('Delete examination confirmation title');?>" data-delete-content="<?php echo $this->translate('Delete examination confirmation content');?>">
 									<span class="glyphicon glyphicon-trash"></span> 
 									<?php echo $this->translate('Delete');?>
 								</a>
+								<?php } else { ?>
+								<a href="javascript: void(0);" class="btn btn-danger disabled" style="pointer-events: inherit !important" title="<?php echo sprintf($this->translate('%s examination(s) actually in progress.'), $examination->nbExamsInProgress);?>">
+									<span class="glyphicon glyphicon-trash"></span> 
+									<?php echo $this->translate('Delete');?>
+								</a>
+								<?php } ?>
 							</td>
 						</tr>
 						<?php } ?>

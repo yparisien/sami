@@ -26,10 +26,16 @@
 							<td><?php echo $this->escapeHtml($drug->dci);?></td>
 							<td class="col-md-3">
 								<a href="<?php echo $this->url('drug', array('action'=>'edit', 'id'=>$drug->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
+							<?php if ($drug->nbExams == 0) { ?>
 								<a href="<?php echo $this->url('drug', array('action'=>'delete', 'id'=>$drug->id))?>" class="btn btn-danger" 
 									role="delete" data-delete-title="<?php echo $this->translate('Delete drug confirmation title');?>" data-delete-content="<?php echo $this->translate('Delete drug confirmation content');?>">
 									<span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?>
 								</a>
+							<?php } else { ?>
+								<a href="javascript: void(0);" class="btn btn-danger disabled" style="pointer-events: inherit !important" title="<?php echo sprintf($this->translate('%s examination(s) use this drug.'), $drug->nbExams);?>">
+									<span class="glyphicon glyphicon-trash"></span> <?php echo $this->translate('Delete');?>
+								</a>
+							<?php } ?>
 							</td>
 						</tr>
 						<?php } ?>

@@ -61,7 +61,7 @@ class UserTable
 			'admin'		=> $user->admin,
 			'firstname'	=> $user->firstname,
 			'lastname'	=> $user->lastname,
-			'visible' => $user->visible
+			'visible' 	=> $user->visible
 		);
 
 		$id = (int) $user->id;

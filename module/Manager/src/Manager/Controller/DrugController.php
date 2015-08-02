@@ -16,6 +16,7 @@ use Manager\Model\Radionuclide;
 
 class DrugController extends AbstractActionController
 {
+	//TODO Rajouter une colonne killed car on ne pas perdre des données du fait que tous les input drug sont sauvegardés
 	protected	$drugTable;
 	protected	$radionuclideTable;
 	protected	$vdrugTable;
@@ -60,6 +61,7 @@ class DrugController extends AbstractActionController
 
 	public function	addAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		if($this->getRequest()->isPost())
 		{
 			$oRequest = $this->getRequest();
@@ -68,6 +70,10 @@ class DrugController extends AbstractActionController
 			$oDrug->radionuclideid = $oRequest->getPost('radionuclideid');
 			$oDrug->dci = $oRequest->getPost('dci');
 			$this->getDrugTable()->saveDrug($oDrug);
+			
+			$message = sprintf($translate("Drug (%s) has been created."), $oDrug->name);
+			$this->flashMessenger()->addSuccessMessage($message);
+			
 			return $this->redirect()->toRoute('drug');
 		}
 		else
@@ -80,6 +86,7 @@ class DrugController extends AbstractActionController
 
 	public function	editAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		if($this->getRequest()->isPost())
 		{
 			$oRequest = $this->getRequest();
@@ -89,6 +96,10 @@ class DrugController extends AbstractActionController
 			$oDrug->radionuclideid	= $oRequest->getPost('radionuclideid');
 			$oDrug->dci				= $oRequest->getPost('dci');
 			$this->getDrugTable()->saveDrug($oDrug);
+			
+			$message = sprintf($translate("Drug (%s) has been modified."), $oDrug->name);
+			$this->flashMessenger()->addInfoMessage($message);
+			
 			return $this->redirect()->toRoute('drug');
 		}
 		else
@@ -103,9 +114,21 @@ class DrugController extends AbstractActionController
 
 	public function	deleteAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$oRequest = $this->getRequest();
 		$drugId = $this->params('id');
-		$this->getDrugTable()->deleteDrug($drugId);
+		$vdrug = $this->getVDrugTable()->getVDrug($drugId);
+		
+		if ($vdrug->nbExams == 0) {
+			$this->getDrugTable()->deleteDrug($drugId);
+			$message = sprintf($translate("Drug (%s) has been deleted."), $vdrug->drug_name);
+			$this->flashMessenger()->addSuccessMessage($message);
+		}
+		else {
+			$message = sprintf($translate("Drug (%s) can't be deleted. Already in use in %s examinations"), $vdrug->drug_name, $vdrug->nbExams);
+			$this->flashMessenger()->addErrorMessage($message);
+		}
+		
 		return $this->redirect()->toRoute('drug');
 	}
 }

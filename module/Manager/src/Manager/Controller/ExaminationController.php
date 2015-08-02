@@ -15,9 +15,11 @@ use Manager\Model\Drug;
 use Manager\Model\Examination;
 use Manager\View\VExamination;
 use Manager\Model\ExaminationTable;
+use Manager\View\VExaminationTable;
 
 class ExaminationController extends AbstractActionController
 {
+	//TODO Rajouter un champ killed comme pour drug (input_patient)
 	protected $drugTable;
 	protected $examinationTable;
 	protected $systemTable;
@@ -57,6 +59,10 @@ class ExaminationController extends AbstractActionController
 		return $this->systemTable;
 	}
 
+	/**
+	 * 
+	 * @return VExaminationTable 
+	 */
 	public function getVExaminationTable()
 	{
 		if(!$this->vexaminationTable)
@@ -78,6 +84,7 @@ class ExaminationController extends AbstractActionController
 
 	public function	addAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		if($this->getRequest()->isPost())
 		{
 			$oRequest = $this->getRequest();
@@ -88,6 +95,10 @@ class ExaminationController extends AbstractActionController
 			$oExamination->min		= $oRequest->getPost('min');
 			$oExamination->max		= $oRequest->getPost('max');
 			$this->getExaminationTable()->saveExamination($oExamination);
+			
+			$message = sprintf($translate("Examination (%s) has been created."), $oExamination->name);
+			$this->flashMessenger()->addSuccessMessage($message);
+			
 			return $this->redirect()->toRoute('examination');
 		}
 		else
@@ -101,6 +112,7 @@ class ExaminationController extends AbstractActionController
 
 	public function	editAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		if($this->getRequest()->isPost())
 		{
 			$oRequest = $this->getRequest();
@@ -112,6 +124,10 @@ class ExaminationController extends AbstractActionController
 			$oExamination->min		= $oRequest->getPost('min');
 			$oExamination->max		= $oRequest->getPost('max');
 			$this->getExaminationTable()->saveExamination($oExamination);
+			
+			$message = sprintf($translate("Examination (%s) has been modified."), $oExamination->name);
+			$this->flashMessenger()->addInfoMessage($message);
+			
 			return $this->redirect()->toRoute('examination');
 		}
 		else
@@ -127,9 +143,22 @@ class ExaminationController extends AbstractActionController
 
 	public function	deleteAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+		
 		$oRequest = $this->getRequest();
 		$examinationID = $this->params('id');
-		$this->getExaminationTable()->deleteExamination($examinationID);
+		$examination = $this->getVExaminationTable()->getVExamination($examinationID);
+		
+		if ($examination->nbExamsInProgress == 0) {
+			$this->getExaminationTable()->deleteExamination($examinationID);
+			$message = sprintf($translate("Examination (%s) has been deleted."), $examination->examination_name);
+			$this->flashMessenger()->addSuccessMessage($message);
+		}
+		else {
+			$message = sprintf($translate("Examination (%s) can't be deleted. Already %s examinations in progress."), $examination->examination_name, $examination->nbExamsInProgress);
+			$this->flashMessenger()->addErrorMessage($message);
+		}
+		
 		return $this->redirect()->toRoute('examination');
 	}
 }
