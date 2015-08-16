@@ -3,21 +3,6 @@
 	<li><span class=" glyphicon glyphicon-home"></span> Gestion du compte</li>
 	<li class="active">Modification du mot de passe</li>
 </ol>
-<?php
-$flash = $this->flashMessenger();
-$flash->setMessageOpenFormat('<div%s>
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-		&times;
-	</button>
-	<ul><li>')
-	->setMessageSeparatorString('</li><li>')
-	->setMessageCloseString('</li></ul></div>');
-
-echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-?>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div class="panel panel-primary">
@@ -25,7 +10,7 @@ echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-succes
 				<span class="glyphicon glyphicon-edit"></span> Modification du mot de passe
 			</div>
 			<div class="panel-body">
-				<form class="form-horizontal" role="form" action="<?php echo $this->url('log', array('action'=>'changepwd'))?>" method="POST">
+				<form class="form-horizontal" role="form" action="<?php echo $this->url('log', array('action'=>'changepwd')); ?>" method="POST">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">

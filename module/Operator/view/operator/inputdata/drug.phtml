@@ -148,7 +148,7 @@
 			$("#activity-time").html(data.time);
 			$("#activity").val(data.activity);
 		});
-		setTimeout(function(){loadActivityData();}, 5000);
+		setTimeout(function(){loadActivityData();}, 10000);
 	}
 
 	$(function() {
@@ -160,15 +160,17 @@
 		});
 
 		$("#calibrationtime").change(function() {
-     $.ajax({
-        type: "POST",
-        url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
-        dataType: "json",
-        data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), '#calibrationtime': $("#calibrationtime").val() }
-      });
+			console.log('calibrationtime');
+	    	$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), 'calibrationtime': $("#calibrationtime").val() }
+	      });
 		});
 
 		$("#activityconc").change(function() {
+			console.log('activityconc');
 			$.ajax({
 				type: "POST",
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",

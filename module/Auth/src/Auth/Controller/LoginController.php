@@ -148,21 +148,20 @@ class LoginController extends AbstractActionController
 					$user->password = sha1($new);
 					$this->getUserTable()->saveUser($user);
 					$this->flashmessenger()->addSuccessMessage('New password is setted.');
+					return $this->redirect()->toRoute('home');
 				}
 				else // bad "old" password, we don't change it
 				{
 					$this->flashmessenger()->addErrorMessage('Old password don\'t match with current password please retry.');
+					return $this->redirect()->toRoute('log', array('action'=>'changepwd'));
 				}
 			}
 			else // the pwd confirmation don't match, we don't change the pwd
 			{
 				$this->flashmessenger()->addErrorMessage('New password is not confirmed, no match with confirmation, please retry.');
+				return $this->redirect()->toRoute('log', array('action'=>'changepwd'));
 			}
 
-		}
-		else // no form submitted
-		{
-			return new ViewModel();
 		}
 	}
 
