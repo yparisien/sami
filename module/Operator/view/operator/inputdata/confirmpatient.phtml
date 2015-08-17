@@ -50,6 +50,7 @@
 									<label for="examinationid" class="col-sm-4 control-label"><?php echo $this->translate('Examination')?></label>
 									<div class="col-sm-8">
 										<select class="form-control" id="examination" name="examinationid">
+											<option><?php echo $this->translate('Choisir un examen'); ?></option>
 										<?php foreach($examinations as $examination) {?>
 											<option value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>"><?php echo $examination->name;?></option>
 										<?php } ?>
@@ -60,6 +61,7 @@
 									<label for="drugs" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
 									<div class="col-sm-8">
 										<select class="form-control" id="drugs" name="drugid" disabled>
+											<option></option>
 										<?php foreach($drugs as $drug) {?>
 											<option value="<?php echo $drug->id;?>"><?php echo $drug->name;?></option>
 										<?php } ?>
@@ -90,8 +92,8 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="activity" class="col-sm-4 control-label"><?php echo $this->translate('Activity for examination');?></label>
-									<div class="col-sm-8">
+									<label for="activity" class="col-sm-8 control-label"><?php echo $this->translate('Activity for examination');?></label>
+									<div class="col-sm-4">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="activity" autocomplete="off" name="activity" />
 											<span class="input-group-addon"><?php echo $unit?></span>
@@ -99,8 +101,8 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
-									<div class="col-sm-6">
+									<label for="activity" class="col-sm-8 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
+									<div class="col-sm-4">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="activityavailable" name="activityavailable" value="???" autocomplete="off" readonly />
 											<span class="input-group-addon"><?php echo $unit?></span>
@@ -111,7 +113,7 @@
 						</div>
 						<div class="row well">
 							<div class="col-md-4">
-							<div class="form-group">
+								<div class="form-group">
 									<label for="averageactivity" class="col-sm-4 control-label"><?php echo $this->translate('Average activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
@@ -122,7 +124,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-							<div class="form-group">
+								<div class="form-group">
 									<label for="minactivity" class="col-sm-4 control-label"><?php echo $this->translate('Minimal activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
@@ -133,7 +135,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-							<div class="form-group">
+								<div class="form-group">
 									<label for="maxactivity" class="col-sm-4 control-label"><?php echo $this->translate('Maximal activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
@@ -149,16 +151,16 @@
 								<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next');?>" />
 							</div>
 							<div class="col-md-2">
-								<button type="button" class="btn btn-primary btn-block" onClick="setMinActivity()"><?php echo $this->translate('Min Activity')?></button>
+								<button type="button" class="btn btn-primary btn-block" onclick="setMinActivity()"><?php echo $this->translate('Min Activity')?></button>
 							</div>
 							<div class="col-md-2">
-								<button type="button" class="btn btn-primary btn-block" onClick="setMaxActivity()"><?php echo $this->translate('Max Activity')?></button>
+								<button type="button" class="btn btn-primary btn-block" onclick="setMaxActivity()"><?php echo $this->translate('Max Activity')?></button>
 							</div>
 							<div class="col-md-2">
-								<button type="button" class="btn btn-primary btn-block" onClick="setNormActivity()"><?php echo $this->translate('Rate')?></button>
+								<button type="button" class="btn btn-primary btn-block" onclick="setNormActivity()"><?php echo $this->translate('Rate')?></button>
 							</div>
 							<div class="col-md-2">
-								<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort');?></button>
+								<button type="button" class="btn btn-danger btn-block" onclick="cancelPatient();"><?php echo $this->translate('Abort');?></button>
 							</div>
 						</div>
 					</form>
@@ -185,6 +187,17 @@
 	</div>
 </div>
 <script type="text/javascript">
+function	cancelPatient()
+	{
+		$.ajax({
+			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
+			type: "GET",
+			dataType: "json",
+		}).done(function(result) {
+			location.href = '<?php echo $this->url('operator'); ?>';
+		});
+	}
+									
 	function	setMinActivity()
 	{
 		$.ajax({
@@ -260,6 +273,7 @@
 			}
 			if (result.examinationid > 0)  {
 				$('#examination').val(result.examinationid);
+				loadExamination(result.examinationid);
 			}
 			$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
@@ -328,6 +342,7 @@
 		loadPatient(<?php echo $patientid;?>);
 		loadInjection(<?php echo $patientid;?>);
 		loadActivityData();
+		
 		$('#examination').change(function(){
 			loadExamination($('#examination').val());
 		});

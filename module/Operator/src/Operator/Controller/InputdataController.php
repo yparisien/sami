@@ -7,6 +7,8 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+//TODO Transformer les appels robots
+
 namespace Operator\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -25,6 +27,7 @@ use Bufferspace\Model\Injection;
 use Logger\Model\Drug;
 use Logger\Model\Action;
 use Manager\Robot\RobotService;
+use Manager\Robot\RobotConstants;
 
 
 class InputdataController extends AbstractActionController
@@ -197,18 +200,17 @@ class InputdataController extends AbstractActionController
 			
 			//Envoi a l'automate
 			$bDrugData = array(
-						"G_Medicament.Input.DT_Calib" => str_replace(" ", "-" ,"DT#" . $aDrugData['calibrationtime'] . ":00"),
-						"G_Medicament.Input.Vol" => $aDrugData['vialvol'],
-						"G_Medicament.Input.Act" => $aDrugData['activity'],
-						"G_Medicament.Input.Act_Vol" => $aDrugData['activityconc'],
-						"G_Medicament.Input.Act_DT" => $aDrugData['activitycalib'],
-						"G_Medicament.Input.DT_End" => str_replace(" ", "-","DT#" . $aDrugData['expirationtime'] . ":00"),
-						"G_Medicament.Input.N_Lot" => $aDrugData['batchnum'],
-						"G_Medicament.Input.Name" => $drug->name,
-						"G_Medicament.Input.Period" => $radionucleide->period * 60,
-						"G_MainLogic.cmd.Input_Soft.Load_Medicament" => 0
-
-					);
+				RobotConstants::MEDICAMENT_INPUT_DTCALIB => str_replace(" ", "-" ,"DT#" . $aDrugData['calibrationtime'] . ":00"),
+				RobotConstants::MEDICAMENT_INPUT_VOL => $aDrugData['vialvol'],
+				RobotConstants::MEDICAMENT_INPUT_ACT => $aDrugData['activity'],
+				RobotConstants::MEDICAMENT_INPUT_ACTVOL => $aDrugData['activityconc'],
+				RobotConstants::MEDICAMENT_INPUT_ACTDT => $aDrugData['activitycalib'],
+				RobotConstants::MEDICAMENT_INPUT_DTEND => str_replace(" ", "-","DT#" . $aDrugData['expirationtime'] . ":00"),
+				RobotConstants::MEDICAMENT_INPUT_NLOT => $aDrugData['batchnum'],
+				RobotConstants::MEDICAMENT_INPUT_NAME => $drug->name,
+				RobotConstants::MEDICAMENT_INPUT_PERIOD => $radionucleide->period * 60,
+				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0
+			);
 			
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($bDrugData);
@@ -344,7 +346,7 @@ class InputdataController extends AbstractActionController
 				$oContainer->sourcekitid = $oKit->id;
 
 				$robotService = $this->getServiceLocator()->get('RobotService');
-				$robotService->send(array("G_MainLogic.cmd.Input_Soft.Load_Sequence" => 1));
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 
 				return $this->redirect()->toRoute('setup', array('action'=>'loadkitsource'));
 			}
@@ -446,7 +448,7 @@ class InputdataController extends AbstractActionController
 			$this->getActionTable()->saveAction($action);
 			
 			$robotService = $this->getServiceLocator()->get('RobotService');
-			$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P' => 1));
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP => 1));
 			
 			return $this->redirect()->toRoute('inject', array('action'=>'purge'));
 		}
@@ -454,29 +456,6 @@ class InputdataController extends AbstractActionController
 		{
 			return array();
 		}
-	}
-
-	public function readData($toRead)
-	{
-		$this->getResponse()->setStatusCode(Response::STATUS_CODE_500);
-		$this->getResponse()->setReasonPhrase("readData($toRead)");
-		return ;
-		// todo : rendre configuration l'adresse de l'automate
-		$aData =  array("redirect" => "response.asp",
-				"variable" => $toRead,
-				"value" => "",
-				"read" => "Read" );
-                $postdata = http_build_query($aData);
-                $opts = array('http' =>
-                    array(
-                        'method'  => 'POST',
-                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => $postdata
-                    )
-                );
-                $context  = stream_context_create($opts);
-                
-		return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 	}
 
 	public function	checkperemptionAction()
@@ -794,7 +773,7 @@ class InputdataController extends AbstractActionController
 		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Date_Prev' => $oTime, 'G_Medicament.Calculation.Cast_Prev_Activity' => 1));
 
 		// make it active with real automate
-		$aParams = array('time'=>date('H:i:s'), 'activity'=>$this->readData('G_Medicament.Calculation.C_Act_Prev'));
+		$aParams = array('time'=>date('H:i:s'), 'activity' => $robotService->receive('G_Medicament.Calculation.C_Act_Prev'));
 		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);
 		$result = new JsonModel($aParams);
 		return $result;
@@ -903,6 +882,16 @@ class InputdataController extends AbstractActionController
 						'G_Patient.Input.Taux_Max' => $oExamination->max));
 		
 		$aParams = $oExamination->toArray();
+		$result = new JsonModel($aParams);
+		return $result;
+	}
+	
+	public function acancelpatientAction() 
+	{
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_EXIT => 1));
+		$aParams = array('success' => 1);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
