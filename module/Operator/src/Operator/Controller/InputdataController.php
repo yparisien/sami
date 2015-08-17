@@ -214,7 +214,7 @@ class InputdataController extends AbstractActionController
 			$robotService->send($bDrugData);
 
 
-			// for the moment, store the log id but use a clever way for final version
+			// TODO Changer si necessaire for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->drugspecified = true;
 			$oContainer->drugid = $logdrug->id;
@@ -482,15 +482,15 @@ class InputdataController extends AbstractActionController
 	public function	checkperemptionAction()
 	{
 		//TODO Vérifier ce que fait cette méthode
-		$aReferer = json_decode(file_get_contents('http://10.0.0.2/checkperemption.asp'), true);
-		if($aReferer['isperempted'] == 1)
-		{
-			return new ViewModel();
-		}
-		else
-		{
+// 		$aReferer = json_decode(file_get_contents('http://10.0.0.2/checkperemption.asp'), true);
+// 		if($aReferer['isperempted'] == 1)
+// 		{
+// 			return new ViewModel();
+// 		}
+// 		else
+// 		{
 			return $this->redirect()->toRoute('setup', array('action'=>'selectpatient'));
-		}
+// 		}
 	}
 
 	public function	selectpatientAction()
@@ -506,12 +506,15 @@ class InputdataController extends AbstractActionController
 		$sm = $this->getServiceLocator();
 		if($this->getRequest()->isPost())
 		{
+			$oExaminationTable = $this->getExaminationTable();
 			$oRequest = $this->getRequest();
 			$oPatient = new Patient();
 			$date = new \DateTime($oRequest->getPost('birthdate'));
 			$now = new \DateTime();
 			$interval = $now->diff($date);
 			$age = (int)$interval->y;
+			$examination = $oExaminationTable->getExamination($oRequest->getPost('examination'));
+			
 
 			$oPatient->id = null;
 			$oPatient->patient_id = 0;
@@ -535,18 +538,13 @@ class InputdataController extends AbstractActionController
 			$oInjection->vial_id		= '';
 			$oInjection->location		= '';
 			$oInjection->comments		= $oRequest->getPost('comment');
+			$oInjection->drugid			= $examination->drugid;
+			$oInjection->examinationid	= $examination->id;
 
 			$this->getInjectionTable()->saveInjection($oInjection);
 
-			$oContainer = new Container('automate_setup');
-			$drug = $this->getLogDrugTable()->getDrug($oContainer->drugid);
-
 			$oInjection = new Container('injection_profile');
-			$oInjection->drugid = $drug->drugid;
-			$oInjection->examinationid = $oRequest->getPost('examinationid');
-			$oInjection->patientid = $oPatient->id;
 			$oInjection->operatorid = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
-			//return $this->redirect()->toRoute('setup', array('action'=>'scankitpatient'));
 			return $this->redirect()->toRoute('setup', array('action'=>'selectpatient'));
 		}
 		else
