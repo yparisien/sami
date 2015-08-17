@@ -51,13 +51,13 @@
 									<div class="col-sm-8">
 										<select class="form-control" id="examination" name="examinationid">
 										<?php foreach($examinations as $examination) {?>
-											<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
+											<option value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>"><?php echo $examination->name;?></option>
 										<?php } ?>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="drugid" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
+									<label for="drugs" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
 									<div class="col-sm-8">
 										<select class="form-control" id="drugs" name="drugid" disabled>
 										<?php foreach($drugs as $drug) {?>
@@ -90,7 +90,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="comments" class="col-sm-4 control-label"><?php echo $this->translate('Activity for examination');?></label>
+									<label for="activity" class="col-sm-4 control-label"><?php echo $this->translate('Activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="activity" autocomplete="off" name="activity" />
@@ -112,7 +112,7 @@
 						<div class="row well">
 							<div class="col-md-4">
 							<div class="form-group">
-									<label for="comments" class="col-sm-4 control-label"><?php echo $this->translate('Average activity for examination');?></label>
+									<label for="averageactivity" class="col-sm-4 control-label"><?php echo $this->translate('Average activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="averageactivity" name="averageactivity" autocomplete="off" disabled />
@@ -123,7 +123,7 @@
 							</div>
 							<div class="col-md-4">
 							<div class="form-group">
-									<label for="comments" class="col-sm-4 control-label"><?php echo $this->translate('Minimal activity for examination');?></label>
+									<label for="minactivity" class="col-sm-4 control-label"><?php echo $this->translate('Minimal activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="minactivity" name="minactivity" autocomplete="off" disabled />
@@ -134,7 +134,7 @@
 							</div>
 							<div class="col-md-4">
 							<div class="form-group">
-									<label for="comments" class="col-sm-4 control-label"><?php echo $this->translate('Maximal activity for examination');?></label>
+									<label for="maxactivity" class="col-sm-4 control-label"><?php echo $this->translate('Maximal activity for examination');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="maxactivity" name="maxactivity" autocomplete="off" disabled />
@@ -232,6 +232,7 @@
 			$('#averageactivity').val(result.rate);
 			$('#minactivity').val(result.min);
 			$('#maxactivity').val(result.max);
+			$('#drugs').val(result.drugid);
 			$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
 				type: "POST",
@@ -252,7 +253,14 @@
 			dataType: "json"
 		}).done(function(result) {
 			$('#activity').val(result.activity);
+			$('#comments').val(result.comments);
 			$('#expeditornum').val(result.unique_id);
+			if (result.drugid > 0) {
+				$('#drugs').val(result.drugid);
+			}
+			if (result.examinationid > 0)  {
+				$('#examination').val(result.examinationid);
+			}
 			$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
 				type: "POST",
@@ -320,7 +328,6 @@
 		loadPatient(<?php echo $patientid;?>);
 		loadInjection(<?php echo $patientid;?>);
 		loadActivityData();
-		loadExamination($('#examination').val());
 		$('#examination').change(function(){
 			loadExamination($('#examination').val());
 		});
