@@ -5,7 +5,8 @@ class Patient
 {
 	public	$id;
 	public	$patient_id;
-	public	$name;
+	public	$lastname;
+	public	$firstname;
 	public	$gender;
 	public	$birthdate;
 	public	$age;
@@ -14,6 +15,7 @@ class Patient
 	public	$patienttype;
 	public	$doctorname;
 	public	$injected;
+	public	$comments;
 
 	public function	exchangeArray($data)
 	{
@@ -29,11 +31,16 @@ class Patient
 		$this->patienttype	= (!empty($data['patienttype']))	? $data['patienttype']	: null;
 		$this->doctorname	= (!empty($data['doctorname']))		? $data['doctorname']	: null;
 		$this->injected		= (!empty($data['injected']))		? $data['injected']		: null;
+		$this->comments		= (!empty($data['comments']))		? $data['comments']		: null;
 	}
 
+	/**
+	 * @deprecated No used
+	 * @param array $data
+	 */
 	public function	overloadData($data)
 	{
-		$aField = array('id', 'patient_id', 'name', 'gender', 'birthdate', 'age', 'weight', 'height', 'injected');
+		$aField = array('id', 'patient_id', 'lastname', 'firstname', 'gender', 'birthdate', 'age', 'weight', 'height', 'patienttype', 'doctorname', 'injected', 'comments');
 		foreach($aField as $field)
 		{
 			if(array_key_exists($field, $data) && !empty($data[$field]))
@@ -55,7 +62,10 @@ class Patient
 		$data['age']		= $this->age;
 		$data['weight']		= $this->weight;
 		$data['height']		= $this->height;
+		$data['patienttype']= $this->patienttype;
+		$data['doctorname']	= $this->doctorname;
 		$data['injected']	= $this->injected;
+		$data['comments']	= $this->comments;
 		return $data;
 	}
 }
