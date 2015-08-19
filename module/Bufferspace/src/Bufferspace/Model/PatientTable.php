@@ -30,6 +30,12 @@ class PatientTable
 		return $rowset;
 	}
 
+	/**
+	 * Get Patient
+	 * @param integer $id
+	 * @throws \Exception
+	 * @return Patient
+	 */
 	public function getPatient($id)
 	{
 		$id  = (int) $id;

@@ -19,6 +19,12 @@ class DrugTable
 		return $resultSet;
 	}
 
+	/**
+	 * 
+	 * @param integer $id
+	 * @throws \Exception
+	 * @return Drug
+	 */
 	public function getDrug($id)
 	{
 		$id  = (int) $id;

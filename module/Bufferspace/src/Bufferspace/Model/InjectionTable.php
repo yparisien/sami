@@ -30,6 +30,12 @@ class InjectionTable
 		return $row;
 	}
 
+	/**
+	 * 
+	 * @param integer $patientId
+	 * @throws \Exception
+	 * @return Injection
+	 */
 	public function searchByPatientId($patientId)
 	{
 		//$patientId  = (int) $patientId;
