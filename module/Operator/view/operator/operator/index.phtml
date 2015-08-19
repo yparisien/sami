@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="list-group">
-				<?php if($step->fileloaded) {?>
+				<?php if ($step->fileloaded) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-import"></span>
@@ -19,7 +19,7 @@
 				</a>
 				<?php } ?>
 
-				<?php if($step->drugspecified) {?>
+				<?php if ($step->drugspecified) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-file"></span>
@@ -33,8 +33,7 @@
 				</a>
 				<?php } ?>
 
-				<?php if($needScan){?>
-				<?php if($step->sourcekitscanned) {?>
+				<?php if ($step->sourcekitscanned) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-barcode"></span>
@@ -47,22 +46,28 @@
 					<?php echo $this->translate('Scan source kit barcode')?>
 				</a>
 				<?php } ?>
-				<?php } ?>
 
-				<?php if($step->sourcekitloaded) {?>
+				<?php if ($step->sourcekitloaded) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-download"></span>
 					<?php echo $this->translate('Loading Source kit & Source')?>
 				</a>
-				<?php } else { ?>
+				<?php } else if ($step->sourcekitscanned && $step->drugspecified) { ?>
 				<a href="<?php echo $this->url('setup', array('action'=>'loadkitsource'))?>" class="list-group-item list-group-item-danger">
 					<span class="badge badge-danger" title="<?php echo $this->translate('Action required')?>">!</span>
 					<span class="glyphicon glyphicon-download"></span>
 					<?php echo $this->translate('Loading Source kit & Source')?>
 				</a>
+				<?php } else { ?>
+				<a href="#" class="list-group-item">
+					<span class="glyphicon glyphicon-download"></span>
+					<span class="badge"><span class="glyphicon glyphicon-lock"></span></span>
+					<?php echo $this->translate('Loading Source kit & Source')?>
+				</a>
 				<?php } ?>
-				<?php if($canInject) { ?>
+				
+				<?php if ($canInject) { ?>
 				<a href="<?php echo $this->url('auth', array('action'=>'confirmauth'))?>" class="list-group-item active">
 					<span class="glyphicon glyphicon-user"></span>
 					<?php echo $this->translate('Injection - Operator Authentification')?>
@@ -80,7 +85,7 @@
 					<?php echo $this->translate('List of patients injected')?>
 				</a>
 
-				<?php if($canUnload) {?>
+				<?php if ($canUnload) { ?>
 				<a href="<?php echo $this->url('inject', array('action'=>'unload'))?>" class="list-group-item">
 					<span class="badge" title="<?php echo $this->translate('Action required')?>"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
 					<span class="glyphicon glyphicon-upload"></span>
@@ -94,12 +99,12 @@
 				</a>
 				<?php } ?>
 
-				<?php if($canExport) {?>
+				<?php if ($canExport) { ?>
 				<a href="<?php echo $this->url('exportbuffer', array('action'=>'index'))?>" class="list-group-item">
 					<span class="glyphicon glyphicon-export"></span>
 					<?php echo $this->translate('Transferting patient\'s data to software')?>
 				</a>
-				<?php } else {?>
+				<?php } else { ?>
 				<a href="#" class="list-group-item">
 					<span class="badge"><span class="glyphicon glyphicon-lock"></span></span>
 					<span class="glyphicon glyphicon-export"></span>
