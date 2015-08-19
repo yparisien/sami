@@ -16,13 +16,27 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient', 'confirm'=>1))?>'"><?php echo $this->translate('Next')?></button>
+						<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient', 'confirm'=>1))?>'"><?php echo $this->translate('Next')?></button>
 					</div>
 					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelPatient();"><?php echo $this->translate('Abort')?></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+
+	function	cancelPatient()
+	{
+		$.ajax({
+			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
+			type: "GET",
+			dataType: "json",
+		}).done(function(result) {
+			location.href = '<?php echo $this->url('operator'); ?>';
+		});
+	}
+</script>
+				

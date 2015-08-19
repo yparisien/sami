@@ -72,7 +72,7 @@
 									$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
 									$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
 									$('#btn-next').removeAttr('disabled');
-									$('#scankitsource').submit();
+ 									$('#scankitsource').submit();
 									return false;
 								}
 								else if(result.success == 0)
@@ -86,7 +86,7 @@
 								}
 								else
 								{
-									$(location).attr('href', result.redirect);
+ 									$(location).attr('href', result.redirect);
 								}
 							});
 						}

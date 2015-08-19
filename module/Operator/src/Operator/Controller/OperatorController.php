@@ -45,9 +45,7 @@ class OperatorController extends AbstractActionController
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
 		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
-
-		$system = $this->getSystemTable()->getSystem();
-		$aParam['needScan'] = ($system->genuinekit) ? true : false;
+		$aParam['needScan'] = true;
 
 		return new ViewModel($aParam);
 	}

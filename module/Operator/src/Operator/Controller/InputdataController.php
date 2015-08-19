@@ -28,6 +28,10 @@ use Logger\Model\Drug;
 use Logger\Model\Action;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
+use Bufferspace\Model\PatientTable;
+use Bufferspace\Model\InjectionTable;
+use Logger\Model\DrugTable;
+use Manager\Model\ExaminationTable;
 
 
 class InputdataController extends AbstractActionController
@@ -57,6 +61,10 @@ class InputdataController extends AbstractActionController
 		return $this->actionTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\DrugTable
+	 */
 	public function getDrugTable()
 	{
 		if(!$this->drugTable)
@@ -67,6 +75,10 @@ class InputdataController extends AbstractActionController
 		return $this->drugTable;
 	}
 
+	/**
+	 * @return ExaminationTable
+	 * 
+	 */
 	public function getExaminationTable()
 	{
 		if(!$this->examinationTable)
@@ -77,6 +89,9 @@ class InputdataController extends AbstractActionController
 		return $this->examinationTable;
 	}
 
+	/**
+	 * @return InjectionTable
+	 */
 	public function getInjectionTable()
 	{
 		if(!$this->injectionTable)
@@ -87,6 +102,9 @@ class InputdataController extends AbstractActionController
 		return $this->injectionTable;
 	}
 
+	/**
+	 * @return DrugTable
+	 */
 	public function	getLogDrugTable()
 	{
 		if(!$this->logdrugTable)
@@ -97,6 +115,9 @@ class InputdataController extends AbstractActionController
 		return $this->logdrugTable;
 	}
 
+	/**
+	 * @return PatientTable
+	 */
 	public function getPatientTable()
 	{
 		if(!$this->patientTable)
@@ -221,7 +242,7 @@ class InputdataController extends AbstractActionController
 			$oContainer->drugspecified = true;
 			$oContainer->drugid = $logdrug->id;
 
-			return $this->redirect()->toRoute('setup', array('action'=>'scankitsource'));
+			return $this->redirect()->toRoute('operator');
 		}
 		else // simply display the form
 		{
@@ -348,23 +369,12 @@ class InputdataController extends AbstractActionController
 				$robotService = $this->getServiceLocator()->get('RobotService');
 				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 
-				return $this->redirect()->toRoute('setup', array('action'=>'loadkitsource'));
+				return $this->redirect()->toRoute('operator');
 			}
 		}
-		else // pas de post, on affiche simplement la page
+		else
 		{
-// Le kit source delphinnove est maintenant obligatoire
-//			$system = $this->getSystemTable()->getSystem();
-//			if($system->genuinekit)
-//			{
-				return array();
-//			}
-//			else
-//			{
-//				$oContainer = new Container('automate_setup');
-//				$oContainer->sourcekitscanned = true;
-//				return $this->redirect()->toRoute('setup', array('action'=>'loadkitsource'));
-//			}
+			return array();
 		}
 	}
 
@@ -563,24 +573,27 @@ class InputdataController extends AbstractActionController
 		{
 			$oRequest = $this->getRequest();
 			$oPatient = $this->getPatientTable()->getPatient($oRequest->getPost('patient_id'));
+			$oExamination = $this->getExaminationTable()->getExamination($oRequest->getPost('examinationid'));
+			$oDrug = $this->getDrugTable()->getDrug($oExamination->drugid);
+			
+			$oPatient->lastname = $oRequest->getPost('lastname');
+			$oPatient->birthdate = $oRequest->getPost('birthdate');
+			$oPatient->firstname = $oRequest->getPost('firstname');
 			$oPatient->weight = $oRequest->getPost('weight');
 			$this->getPatientTable()->savePatient($oPatient);
 
 			$oInjection = $this->getInjectionTable()->searchByPatientId($oPatient->id);
 			$oInjection->activity = $oRequest->getPost('activity');
+			$oInjection->examinationid = $oRequest->getPost('examinationid');
+			$oInjection->drugid = $oDrug->id;
 			$this->getInjectionTable()->saveInjection($oInjection);
 
-			$oContainer = new Container('automate_setup');
-			$drug = $this->getLogDrugTable()->getDrug($oContainer->drugid);
-
 			$oInjection = new Container('injection_profile');
-			$oInjection->drugid = $drug->drugid;
+			$oInjection->drugid = $oDrug->id;
 			$oInjection->examinationid = $oRequest->getPost('examinationid');
 			$oInjection->patientid = $oPatient->id;
 			$oInjection->operatorid = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
 
-			$oDrug = $this->getDrugTable()->getDrug($drug->drugid);
-			$oExamination = $this->getExaminationTable()->getExamination($oRequest->getPost('examinationid'));
 			
 			// Envoi des infos a l'automate
 			$dataToSend = array(
@@ -815,7 +828,7 @@ class InputdataController extends AbstractActionController
 		{
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send(array('G_Kit.Val_Kit_S' => 1));
-			$aParams = array('success'=>1);
+			$aParams = array('success' => 1);
 		}
 
 		$result = new JsonModel($aParams);

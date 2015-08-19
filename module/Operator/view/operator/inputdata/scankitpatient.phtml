@@ -30,7 +30,7 @@
 										<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
 										<input type="text" class="form-control" id="patientkit-sn" name="patientkit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
 										<span class="input-group-btn">
-											<button class="btn btn-default" type="button" onClick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
+											<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
 										</span>
 									</div>
 								</div>
@@ -39,10 +39,10 @@
 					</div>
 					<div class="row">
 						<div class="col-md-2 col-md-offset-4">
-							<button id="btn-next" type="submit" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient'))?>'" disabled>Suivant</button>
+							<button id="btn-next" type="submit" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient'))?>'" disabled>Suivant</button>
 						</div>
 						<div class="col-md-2">
-							<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+							<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelPatient();">Annuler</button>
 						</div>
 					</div>
 				</form>
@@ -52,6 +52,17 @@
 					$('#patientkit-sn').change(function(){checkInputVal();});
 					$('#patientkit-sn').focus();
 				});
+
+				function	cancelPatient()
+				{
+					$.ajax({
+						url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
+						type: "GET",
+						dataType: "json",
+					}).done(function(result) {
+						location.href = '<?php echo $this->url('operator'); ?>';
+					});
+				}
 
 				function checkInputVal()
 				{
