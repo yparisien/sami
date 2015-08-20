@@ -19,6 +19,12 @@ class DrugTable
 		return $resultSet;
 	}
 
+	/**
+	 * Get a single InputDrug
+	 * @param unknown $id
+	 * @throws \Exception
+	 * @return Drug
+	 */
 	public function getDrug($id)
 	{
 		$id  = (int) $id;

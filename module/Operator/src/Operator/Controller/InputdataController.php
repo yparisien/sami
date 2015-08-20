@@ -392,7 +392,7 @@ class InputdataController extends AbstractActionController
 			$oContainer = new Container('automate_setup');
 			$oContainer->sourcekitloaded = true;
 
-			return $this->redirect()->toRoute('auth', array('action'=>'confirmauth'));
+			return $this->redirect()->toRoute('operator');
 		}
 		else
 		{
@@ -470,16 +470,23 @@ class InputdataController extends AbstractActionController
 
 	public function	checkperemptionAction()
 	{
-		//TODO Vérifier ce que fait cette méthode
-// 		$aReferer = json_decode(file_get_contents('http://10.0.0.2/checkperemption.asp'), true);
-// 		if($aReferer['isperempted'] == 1)
-// 		{
-// 			return new ViewModel();
-// 		}
-// 		else
-// 		{
+		$oContainer = new Container('automate_setup');
+		$drugid = $oContainer->drugid;
+		$inputDrug = $this->getLogDrugTable()->getDrug($drugid);
+		
+		$now = new \DateTime();
+		$dateExpiration = new \DateTime($inputDrug->expirationtime);
+		
+		$perempted = ($now > $dateExpiration);
+		
+ 		if($perempted)
+		{
+			return new ViewModel();
+		}
+		else
+		{
 			return $this->redirect()->toRoute('setup', array('action'=>'selectpatient'));
-// 		}
+		}
 	}
 
 	public function	selectpatientAction()
