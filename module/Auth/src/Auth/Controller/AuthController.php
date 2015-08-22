@@ -77,6 +77,7 @@ class AuthController extends AbstractActionController
 	 */
 	public function	confirmauthAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$oContainer = new Container('automate_setup');
 		$ready = ($oContainer->drugspecified == true
 			&& $oContainer->fileloaded == true
@@ -87,7 +88,6 @@ class AuthController extends AbstractActionController
 		if($ready)
 		{
 			$allowedtry = 3;
-			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 
 			if($this->getRequest()->isPost())
 			{
@@ -135,6 +135,8 @@ class AuthController extends AbstractActionController
 		}
 		else
 		{
+			$message = sprintf($translate("You are not authorized to perform this action for the moment"));
+			$this->flashmessenger()->addErrorMessage($message);
 			$this->redirect()->toRoute('operator');
 		}
 	}

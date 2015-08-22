@@ -272,11 +272,19 @@ class InteractrobotController extends AbstractActionController
 		}
 	}
 
-	function	endinjectAction()
+	public function	endinjectAction()
 	{
-		$aParams = array();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
-		return new ViewModel($aParams);
+		$oContainer = new Container('automate_setup');
+		if ($oContainer->sourcekitloaded) {
+			$aParams = array();
+			$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+			return new ViewModel($aParams);
+		} else {
+			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+			$message = sprintf($translate("You are not authorized to perform this action : Access page '%s'"), $page);
+			$this->flashmessenger()->addErrorMessage($message);
+			$this->redirect()->toRoute('operator');
+		}
 	}
 
 	/*
