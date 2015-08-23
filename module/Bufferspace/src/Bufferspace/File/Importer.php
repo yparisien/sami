@@ -135,13 +135,10 @@ class	Importer
 			$patientTable->deletePatient($oPatient->id);
 		}
 
-		/*
-		 * Useless because of the external key constraint setted on cascade
 		$aInjection = $injectionTable->fetchAll();
 		foreach($aInjection as $oInjection)
 		{
 			$injectionTable->deleteInjection($oInjection->id);
 		}
-		*/
 	}
 }
