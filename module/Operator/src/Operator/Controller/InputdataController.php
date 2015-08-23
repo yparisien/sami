@@ -635,6 +635,10 @@ class InputdataController extends AbstractActionController
 	public function asetactivityAction()
 	{
 		/* @var $robotService RobotService  */
+		$sm = $this->getServiceLocator();
+		$cfg = $this->sm->get('Config');
+		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
+		
 		
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
@@ -657,8 +661,14 @@ class InputdataController extends AbstractActionController
 			{
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
-			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+			
+			if ($simulated) {
+				$activity = $r->getPost('activity');
+			} else {
+				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+			}
 			$result = new JsonModel(array('activity' => $activity));
+			
    			return $result;
 		}	
 	}
