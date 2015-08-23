@@ -175,14 +175,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-warning-sign"></span> Activité insuffisante</h4>
+				<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
 			</div>
 			<div class="modal-body">
-				Activité insuffisante - Correction ?
+				<?php echo $this->translate('Insufficient activity. Do you want to correct it ?');?>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onClick="movetoactivity()">OUI</button>
-				<button type="button" class="btn btn-danger" onClick="$('#alertlowactivity').modal('hide')">NON</button>
+				<button type="button" class="btn btn-success" onclick="lowActivityOperatorResponse('correct');"><?php echo $this->translate('YES');?></button>
+				<button type="button" class="btn btn-danger" onclick="lowActivityOperatorResponse('ignore');"><?php echo $this->translate('NO');?></button>
 			</div>
 		</div>
 	</div>
@@ -332,11 +332,16 @@
 		});
 		setTimeout(function(){loadActivityData();}, 5000);
 	}
-	function	movetoactivity()
+	
+	function	lowActivityOperatorResponse(response)
 	{
+		if (response == 'correct') {
+			$('#activity').val('');
+			$('#activity').focus();
+		}
+		//TODO Appel pour mettre un log en base de donnée
 		$('#alertlowactivity').modal('hide');
-		$('#activity').val('');
-		$('#activity').focus();
+		
 	}
 
 	$(function(){
