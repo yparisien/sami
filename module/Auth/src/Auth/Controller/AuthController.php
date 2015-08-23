@@ -80,7 +80,6 @@ class AuthController extends AbstractActionController
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$oContainer = new Container('automate_setup');
 		$ready = ($oContainer->drugspecified == true
-			&& $oContainer->fileloaded == true
 			&& $oContainer->sourcekitscanned == true
 			&& $oContainer->sourcekitloaded == true
 			&& $oContainer->markedasended == false) ?
