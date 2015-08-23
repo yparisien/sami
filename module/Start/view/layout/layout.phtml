@@ -36,6 +36,16 @@
 		?>
 	</head>
 	<body>
+		<noscript style="width: 100%; height: 100%; position: absolute; background-color: white; z-index: 10000;">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="alert alert-danger" role="alert">
+					<p><?php echo $this->translate('The Javascript of your browser seems to be desactivated.'); ?></p>
+					<p><?php echo $this->translate('Please enable it to use S.A.M.I or contact the support.'); ?></p>
+				</div>
+			</div>
+			<div class="col-md-3"></div>
+		</noscript>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -63,7 +73,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
 			<div class="container">
 				<ul class="nav navbar-nav navbar-right">
-					<li><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></li>
+					<li><p class="navbar-text"><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></p></li>
 				</ul>
 			</div>
 		</nav>
