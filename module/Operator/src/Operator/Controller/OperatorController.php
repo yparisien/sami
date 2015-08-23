@@ -36,7 +36,6 @@ class OperatorController extends AbstractActionController
 		$aParam['step'] = $oContainer;
 
 		$ready = ($oContainer->drugspecified == true
-			&& $oContainer->fileloaded == true
 			&& $oContainer->sourcekitscanned == true
 			&& $oContainer->sourcekitloaded == true
 			&& $oContainer->markedasended == false) ?

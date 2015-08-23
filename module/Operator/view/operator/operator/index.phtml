@@ -12,10 +12,10 @@
 					<?php echo $this->translate("Transfering patient's data to robot")?>
 				</a>
 				<?php } else { ?>
-				<a href="<?php echo $this->url('setup', array('action'=>'loadpatient'))?>" class="list-group-item list-group-item-danger">
-					<span class="badge badge-danger">!</span>
+				<a href="<?php echo $this->url('setup', array('action'=>'loadpatient'))?>" class="list-group-item list-group-item-info">
+					<span class="badge badge-info"><?php echo $this->translate("Optionnal")?></span>
 					<span class="glyphicon glyphicon-import"></span>
-					<?php echo $this->translate("Transfering patient's data to robot")?>
+					<?php echo $this->translate("Transfering patient's data to robot"); ?>
 				</a>
 				<?php } ?>
 
