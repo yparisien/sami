@@ -15,20 +15,20 @@ class	Importer
 	protected	$_patients		= array();
 	protected	$_checksum		= array();
 
-	function	__construct($servicelocator)
+	public function	__construct($servicelocator)
 	{
 		$this->_servicelocator = $servicelocator;
 	}
 
-	function	getPathFile()	{ return $this->_pathfile; }
-	function	getFd()			{ return $this->_fd; }
+	public function	getPathFile()	{ return $this->_pathfile; }
+	public function	getFd()			{ return $this->_fd; }
 
-	function	getHeader()		{ return $this->_header; }
-	function	getDataStruct()	{ return $this->_datastruct; }
-	function	getPatients()	{ return $this->_patients; }
-	function	getChecksum()	{ return $this->_checksum; }
+	public function	getHeader()		{ return $this->_header; }
+	public function	getDataStruct()	{ return $this->_datastruct; }
+	public function	getPatients()	{ return $this->_patients; }
+	public function	getChecksum()	{ return $this->_checksum; }
 
-	function	setPathFile($pathfile)
+	public function	setPathFile($pathfile)
 	{
 		if(file_exists($pathfile))
 		{
@@ -40,7 +40,7 @@ class	Importer
 		}
 	}
 
-	function	loadFile($file)
+	public function	loadFile($file)
 	{
 		if(file_exists($this->_pathfile . '/' . $file))
 		{
@@ -82,7 +82,7 @@ class	Importer
 		}
 	}
 
-	function	fillDataBase()
+	public function	fillDataBase()
 	{
 		$patientTable = $this->_servicelocator->get('Bufferspace\Model\PatientTable');
 		$injectionTable = $this->_servicelocator->get('Bufferspace\Model\InjectionTable');
@@ -124,7 +124,7 @@ class	Importer
 		}
 	}
 
-	function	cleanDataBase()
+	public function	cleanDataBase()
 	{
 		$patientTable = $this->_servicelocator->get('Bufferspace\Model\PatientTable');
 		$injectionTable = $this->_servicelocator->get('Bufferspace\Model\InjectionTable');
