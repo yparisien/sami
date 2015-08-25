@@ -10,11 +10,15 @@
 namespace Manager\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class ManagerController extends AbstractActionController
 {
 	public function indexAction()
 	{
-		return array();
+		$sm = $this->getServiceLocator();
+		$config = $sm->get('Config');
+		
+		return new ViewModel(array('supervisorTimeout' => $config['timeout']['supervisor']));
 	}
 }

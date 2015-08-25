@@ -17,7 +17,7 @@ return array(
 		'export_archive_path'	=> __DIR__ . '/../../data/export_archives',
 	),
 	'timeout' => array(
-			'operator'		=> 10, 
-			'supervisor'	=> 5,
+			'operator'		=> 3 * 60, 
+			'supervisor'	=> 1 * 60,
 	),
 );
