@@ -74,6 +74,7 @@ class	Importer
 						$this->_patients[] = $aCurPatient;
 					}
 				}
+				fclose($this->_fd);
 			}
 		}
 		else
