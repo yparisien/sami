@@ -189,6 +189,7 @@ class InputdataController extends AbstractActionController
 	public function drugAction()
 	{
 		/* @var $robotService RobotService  */
+		
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
 			$r = $this->getRequest();
@@ -256,12 +257,15 @@ class InputdataController extends AbstractActionController
 
 	public function loadpatientAction()
 	{
+		$sm = $this->getServiceLocator();
+		$config = $sm->get('Config');
+
 		$aRetVal = array(
 			'success'	=> 0,
 			'msg'		=> '',
 		);
 		
-		$destPath = dirname(__DIR__).'/../../../../public/tmp';
+		$destPath = $config['import_export']['upload_path'];
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
 			if (class_exists('finfo', false) === false) {
@@ -275,8 +279,11 @@ class InputdataController extends AbstractActionController
 			$exist		= new NotExists($destPath);
 			$adapter	= new \Zend\File\Transfer\Adapter\Http();
 			$adapter->setValidators(array($size,$type,$exist), $file['name']);
+			
+			
 			if ($adapter->isValid())
 			{
+				//DEPRECATED
 				$adapter->setDestination($destPath);
 				if ($adapter->receive($file['name']))
 				{
@@ -301,12 +308,31 @@ class InputdataController extends AbstractActionController
 					$oContainer = new Container('automate_setup');
 					$oContainer->fileloaded = true;
 					$oContainer->loadedfilename = $file['name'];
+
+					//Copy file too archive
+					$source = realpath($destPath . DIRECTORY_SEPARATOR . $file['name']);
+					$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
+
+					if (!is_dir($pathname)) {
+						mkdir($pathname, 0644, true);
+					}
+					
+					if (is_dir($pathname) === true) {
+						$archive = realpath($pathname) . DIRECTORY_SEPARATOR . basename($file['name'], '.csv') . '_' . date('Ymd-His') . '.csv';
+						if (copy($source, $archive) === true) {
+							//Delete file
+							if (file_exists($source)) {
+								unlink($source);
+							}
+						}
+					}
 				}
 				else
 				{
 					// error!
 					$aRetVal['msg'] = "Can't store to ".$destPath."/".$file['name'];
 				}
+				
 			}
 			else
 			{

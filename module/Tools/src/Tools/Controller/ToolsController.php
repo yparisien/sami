@@ -23,12 +23,20 @@ class ToolsController extends AbstractActionController
 
     public function	fileAction()
     {
-		$oImporter = new Importer($this->getServiceLocator());
-		$oImporter->setPathFile(dirname(__DIR__).'../../../../../public/tmp');
-		$oImporter->loadFile('export.csv');
+    	$sm = $this->getServiceLocator();
+    	$config = $sm->get('Config');
+    	
+    	//TODO Faire un nom dynamique pour archivage.
+    	//Créer arbo de fichier par mois et par année
+    	$archiveFileName = 'export.csv';
+    	
+		$oImporter = new Importer($sm);
+		$oImporter->setPathFile($config['import_export']['export_archive_path']);
+		$oImporter->loadFile($archiveFileName);
 		$oImporter->cleanDataBase();
 		$oImporter->fillDataBase();
 		//$oImporter->cleanDataBase();
-    	return new ViewModel(array('importer'=>$oImporter));
+		
+    	return new ViewModel(array('importer' => $oImporter));
     }
 }
