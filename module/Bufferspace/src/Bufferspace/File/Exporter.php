@@ -83,12 +83,4 @@ class	Exporter
 			}
 		}
 	}
-
-	public function	removeSourcefile($filename)
-	{
-		if(file_exists($this->_pathfile . '/' . $filename))
-		{
-			unlink($this->_pathfile . '/' . $filename);
-		}
-	}
 }
