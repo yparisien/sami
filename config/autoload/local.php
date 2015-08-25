@@ -16,4 +16,8 @@ return array(
 		'import_archive_path'	=> __DIR__ . '/../../data/import_archives',
 		'export_archive_path'	=> __DIR__ . '/../../data/export_archives',
 	),
+	'timeout' => array(
+			'operator'		=> 10, 
+			'supervisor'	=> 5,
+	),
 );

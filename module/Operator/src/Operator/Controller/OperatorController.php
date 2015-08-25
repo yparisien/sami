@@ -29,6 +29,9 @@ class OperatorController extends AbstractActionController
 
 	public function indexAction()
 	{
+		$sm = $this->getServiceLocator();
+		$config = $sm->get('Config');
+		
 		$aParam = array();
 
 		// for the moment, retrieve steps status but use a clever way for final version
@@ -45,6 +48,7 @@ class OperatorController extends AbstractActionController
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
 		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
 		$aParam['needScan'] = true;
+		$aParam['operatorTimeout'] = $config['timeout']['operator'];
 
 		return new ViewModel($aParam);
 	}

@@ -115,3 +115,40 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modalAutoLogout" tabindex="-1" role="dialog" aria-labelledby="autologoutModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="autologoutModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('Locking protection system'); ?></h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning" role="alert">
+					<p><?php echo sprintf($this->translate('No activity has been detect on this screen since %s seconds.'), $operatorTimeout); ?></p>
+					<p><?php echo $this->translate('You have been deconnected.'); ?></p>
+					<br />
+					<p><?php echo $this->translate('Please proceed to Sign-In button to be reconnected.'); ?></p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log'); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Sign In'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+$this->inlineScript()->appendScript('
+	$(function() {
+		setTimeout(function(){
+			$.ajax({
+				url: "'. $this->url('log', array('action'=>'autologout')) . '",
+			}).done(function(result){
+				$("#modalAutoLogout").modal({
+					backdrop: "static",
+					keyboard: false,
+					show: true,
+				});
+			});
+		}, ' . $operatorTimeout . '000);
+	});
+');

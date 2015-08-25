@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Session\Container;
 use Logger\Model\Action;
+use Zend\View\Model\JsonModel;
 
 class LoginController extends AbstractActionController
 {
@@ -133,32 +134,36 @@ class LoginController extends AbstractActionController
 	{
 		if($this->getRequest()->isPost()) // form was submitted, process it then show form w/ statut msg
 		{
+			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+			
 			// retrieve datas from submitted form
 			$old = $this->getRequest()->getPost('oldpwd');
 			$new = $this->getRequest()->getPost('newpwd');
 			$conf = $this->getRequest()->getPost('confpwd');
+
 			// retrieve the current user datas (login, pwd)
 			$sm = $this->getServiceLocator();
 			$login = $sm->get('AuthService')->getIdentity();
 			$user = $this->getUserTable()->searchByLogin($login);
+			
 			if($new == $conf) // if new and confirm pwd matched...
 			{
 				if(sha1($old) == $user->password) // and if the "old" pwd is correct (match with the current pwd)
 				{
 					$user->password = sha1($new);
 					$this->getUserTable()->saveUser($user);
-					$this->flashmessenger()->addSuccessMessage('New password is setted.');
+					$this->flashmessenger()->addSuccessMessage($translate('New password is setted.'));
 					return $this->redirect()->toRoute('home');
 				}
 				else // bad "old" password, we don't change it
 				{
-					$this->flashmessenger()->addErrorMessage('Old password don\'t match with current password please retry.');
+					$this->flashmessenger()->addErrorMessage($translate('Old password don\'t match with current password please retry.'));
 					return $this->redirect()->toRoute('log', array('action'=>'changepwd'));
 				}
 			}
 			else // the pwd confirmation don't match, we don't change the pwd
 			{
-				$this->flashmessenger()->addErrorMessage('New password is not confirmed, no match with confirmation, please retry.');
+				$this->flashmessenger()->addErrorMessage($translate('New password is not confirmed, no match with confirmation, please retry.'));
 				return $this->redirect()->toRoute('log', array('action'=>'changepwd'));
 			}
 
@@ -167,15 +172,41 @@ class LoginController extends AbstractActionController
 
 	public function	logoutAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+		
 		// drop session's data about current user
 		$this->getSessionStorage()->forgetMe();
 		$this->getAuthService()->clearIdentity();
+
 		// drop session's data about trys
 		$oContainer = new Container('barcodetry');
 		$oContainer->getManager()->getStorage()->clear('barcodetry');
 		$oContainer->getManager()->getStorage()->clear('authtry');
+		
 		// add nice msg to explain all is clear (displayed into the login form)
-		$this->flashmessenger()->addInfoMessage("You have been logged out");
+		$this->flashmessenger()->addInfoMessage($translate("You have been logged out."));
+		
 		return $this->redirect()->toRoute('log');
+	}
+	
+	public function	autologoutAction()
+	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+		
+		$oModel = new JsonModel();
+		
+		// drop session's data about current user
+		$this->getSessionStorage()->forgetMe();
+		$this->getAuthService()->clearIdentity();
+		
+		// drop session's data about trys
+		$oContainer = new Container('barcodetry');
+		$oContainer->getManager()->getStorage()->clear('barcodetry');
+		$oContainer->getManager()->getStorage()->clear('authtry');
+		
+		// return Message
+		$oModel->setVariable('message', $translate("You have been logged out."));
+		
+		return $oModel;
 	}
 }
