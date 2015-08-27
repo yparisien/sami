@@ -102,7 +102,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="activity" class="col-sm-8 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
+									<label for="activityavailable" class="col-sm-8 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
 									<div class="col-sm-4">
 										<div class="input-group">
 											<input type="text" class="form-control input-sm" id="activityavailable" name="activityavailable" value="???" autocomplete="off" readonly />
@@ -175,7 +175,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
 			</div>
 			<div class="modal-body">
 				<?php echo $this->translate('Insufficient activity. Do you want to correct it ?');?>
@@ -183,6 +183,27 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success" onclick="lowActivityOperatorResponse('correct');"><?php echo $this->translate('YES');?></button>
 				<button type="button" class="btn btn-danger" onclick="lowActivityOperatorResponse('ignore');"><?php echo $this->translate('NO');?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="alertchoosepatient" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
+			</div>
+			<div class="modal-body">
+				<p><?php echo $this->translate('Insufficient activity. You have choose to don\'t change the activity.'); ?></p>
+				<div class="alert alert-info">
+					<i class="glyphicon glyphicon-question-sign"></i>
+					<?php echo $this->translate('Do you want to create / choose another patient ?'); ?>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="lowActivityOperatorResponse('choose');"><?php echo $this->translate('YES');?></button>
+				<button type="button" class="btn btn-danger" onclick="lowActivityOperatorResponse('abort');"><?php echo $this->translate('NO');?></button>
 			</div>
 		</div>
 	</div>
@@ -330,17 +351,25 @@
 				$("#alertlowactivity").modal('show');
 			}
 		});
-		setTimeout(function(){loadActivityData();}, 5000);
+		//setTimeout(function(){loadActivityData();}, 5000);
 	}
 	
 	function	lowActivityOperatorResponse(response)
 	{
+		$('#alertlowactivity').modal('hide');
+		$('#alertchoosepatient').modal('hide');
+		
 		if (response == 'correct') {
 			$('#activity').val('');
 			$('#activity').focus();
+		} else if (response == 'ignore') {
+			$("#alertchoosepatient").modal('show');
+		} else if (response == 'choose') {
+			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient'));?>';
+		} else if (response == 'abort') {
+			location.href = '<?php echo $this->url('operator');?>';
 		}
 		//TODO Appel pour mettre un log en base de donnée
-		$('#alertlowactivity').modal('hide');
 		
 	}
 
@@ -352,6 +381,7 @@
 		$('#examination').change(function(){
 			loadExamination($('#examination').val());
 		});
+		
 		$('#activity').change(function (){
 				$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'asetactivity'));?>",
@@ -360,8 +390,14 @@
 				dataType: "json"
 			}).done(function(result) {
 				$('#activity').val(result.activity);
+				loadActivityData();
 			});	
 		});
+
+		$('#alertlowactivity').on('hidden.bs.modal', function (e) {
+			  // do something...
+		});
+		
 		$('#weight').change(function (){
 				$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",

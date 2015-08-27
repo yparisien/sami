@@ -662,7 +662,7 @@ class InputdataController extends AbstractActionController
 	{
 		/* @var $robotService RobotService  */
 		$sm = $this->getServiceLocator();
-		$cfg = $this->sm->get('Config');
+		$cfg = $sm->get('Config');
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		
 		
