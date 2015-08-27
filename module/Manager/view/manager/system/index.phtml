@@ -10,40 +10,40 @@
 			</div>
 			<div class="panel-body">
 				<form role="form">
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label class="col-sm-4"><?php echo $this->translate('Language')?></label>
-								<div class="col-sm-8">
-									<select class="form-control" id="language">
-										<option value="de_DE"><?php echo $this->translate('German')?></option>
-										<option value="en_US"><?php echo $this->translate('English')?></option>
-										<option value="es_ES"><?php echo $this->translate('Spanish')?></option>
-										<option value="fr_FR"><?php echo $this->translate('French')?></option>
-										<option value="it_IT"><?php echo $this->translate('Italian')?></option>
-									</select>
+					<div class="panel panel-default">
+  						<div class="panel-body">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="col-sm-4"><?php echo $this->translate('Language')?></label>
+									<div class="col-sm-8">
+										<select class="form-control" id="language">
+											<option value="de_DE"><?php echo $this->translate('German')?></option>
+											<option value="en_US"><?php echo $this->translate('English')?></option>
+											<option value="es_ES"><?php echo $this->translate('Spanish')?></option>
+											<option value="fr_FR"><?php echo $this->translate('French')?></option>
+											<option value="it_IT"><?php echo $this->translate('Italian')?></option>
+										</select>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label class="col-sm-3"><?php echo $this->translate('Mode')?></label>
-								<div class="col-sm-9">
-									<select class="form-control" id="mode">
-										<option value="prod"><?php echo $this->translate('Exploitation')?></option>
-										<!-- <option value="demo"><?php echo $this->translate('Demonstration')?></option> -->
-									</select>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="col-sm-7"><?php echo $this->translate('Use DelphInnove Kit')?></label>
+									<div class="col-sm-5">
+										<select class="form-control" id="genuinekit">
+											<option value="0"><?php echo $this->translate('No')?></option>
+											<option value="1"><?php echo $this->translate('Yes')?></option>
+										</select>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label class="col-sm-6"><?php echo $this->translate('Unit of measurement')?></label>
-								<div class="col-sm-6">
-									<select class="form-control" id="unit" disabled>
-										<option value="mbq"><?php echo $this->translate('MBq')?></option>
-										<option value="mci"><?php echo $this->translate('mCi')?></option>
-									</select>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="col-sm-6"><?php echo $this->translate('Max activity')?></label>
+									<div class="input-group">
+										<input type="number" min="1" step="1" class="form-control" id="maxactivity" name="maxactivity" value="<?php echo $maxactivity; ?>" autocomplete="off" required>
+										<span class="input-group-addon"><?php echo $unit; ?></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -97,17 +97,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-6">
-							<p><?php echo $this->translate('Use genuine patient kit from DelphInnove')?></p>
-						</div>
-						<div class="col-sm-2">
-							<select class="form-control" id="genuinekit">
-								<option value="0"><?php echo $this->translate('No')?></option>
-								<option value="1"><?php echo $this->translate('Yes')?></option>
-							</select>
-						</div>
-					</div>
 				</form>
 			</div>
 		</div>
@@ -117,10 +106,11 @@
 	function	presetSelectors()
 	{
 		$("#language").val("<?php echo $locale;?>");
-		$("#mode").val("<?php echo $mode;?>");
 		$("#unit").val("<?php echo $unit;?>");
 		$("#genuinekit").val(<?php echo (int)$genuinekit;?>);
+		$("#maxactivity").val(<?php echo (int)$maxactivity;?>);
 	}
+	
 	function	loadSystemData()
 	{
 		$.ajax({
@@ -135,10 +125,12 @@
 			$("#software-version").val(data.softwareversion);
 		});
 	}
+	
 	$(function(){
 		presetSelectors();
 		loadSystemData();
 	});
+	
 	$("#language").change(function(){
 		$.ajax({
 			type: "POST",
@@ -152,12 +144,13 @@
 			}
 		});
 	});
-	$("#mode").change(function(){
+	
+	$("#maxactivity").change(function(){
 		$.ajax({
 			type: "POST",
-			url: "<?php echo $this->url('system', array('action'=>'asetmodesystem'));?>",
+			url: "<?php echo $this->url('system', array('action'=>'asetmaxactivity'));?>",
 			dataType:"json",
-			data: {"mode": $("#mode").val() },
+			data: {"maxactivity": $("#maxactivity").val() },
 		}).done(function(result) {
 			if(result.success == 1)
 			{
@@ -165,6 +158,7 @@
 			}
 		});
 	});
+	
 	$("#genuinekit").change(function(){
 		$.ajax({
 			type: "POST",
@@ -178,17 +172,4 @@
 			}
 		});
 	});
-	/*$("#unit").change(function(){
-		$.ajax({
-			type: "POST",
-			url: "<?php echo $this->url('system', array('action'=>'asetunitsystem'));?>",
-			dataType:"json",
-			data: {"unit": $("#unit").val() },
-		}).done(function(result) {
-			if(result.success == 1)
-			{
-				window.location.reload();
-			}
-		});
-	});*/
 </script>

@@ -20,6 +20,10 @@ class SystemController extends AbstractActionController
 {
 	protected $systemTable;
 
+	/**
+	 * 
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -36,9 +40,9 @@ class SystemController extends AbstractActionController
 
 		return new ViewModel(array(
 			'locale'		=> $oSystem->language,
-			'mode'			=> $oSystem->mode,
 			'unit'			=> $oSystem->unit,
 			'genuinekit'	=> $oSystem->genuinekit,
+			'maxactivity'	=> $oSystem->maxactivity,
 		));
 	}
 
@@ -83,29 +87,6 @@ class SystemController extends AbstractActionController
 		return new JsonModel(array('success'=>1));
 	}
 
-	/**
-	 * @todo insert http call to robot (set unit)
-	 * @return \Zend\View\Model\JsonModel
-	 */
-	public function	asetunitsystemAction()
-	{
-		$oSystem = $this->getSystemTable()->getSystem();
-		$oSystem->unit = $this->getRequest()->getPost("unit");
-		$this->getSystemTable()->saveSystem($oSystem);
-		return new JsonModel(array('success'=>1));
-	}
-
-	/**
-	 * @todo insert http call to robot (set mode)
-	 * @return \Zend\View\Model\JsonModel
-	 */
-	public function	asetmodesystemAction()
-	{
-		$oSystem = $this->getSystemTable()->getSystem();
-		$oSystem->mode = $this->getRequest()->getPost("mode");
-		$this->getSystemTable()->saveSystem($oSystem);
-		return new JsonModel(array('success'=>1));
-	}
 
 	/**
 	 * @todo insert http call to robot (set mode)
@@ -115,6 +96,17 @@ class SystemController extends AbstractActionController
 	{
 		$oSystem = $this->getSystemTable()->getSystem();
 		$oSystem->genuinekit = $this->getRequest()->getPost("genuinekit");
+		$this->getSystemTable()->saveSystem($oSystem);
+		return new JsonModel(array('success'=>1));
+	}
+	
+	/**
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function	asetmaxactivityAction()
+	{
+		$oSystem = $this->getSystemTable()->getSystem();
+		$oSystem->maxactivity = $this->getRequest()->getPost("maxactivity");
 		$this->getSystemTable()->saveSystem($oSystem);
 		return new JsonModel(array('success'=>1));
 	}

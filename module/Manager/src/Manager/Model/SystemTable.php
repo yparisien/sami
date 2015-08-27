@@ -19,6 +19,12 @@ class SystemTable
 		return $resultSet;
 	}
 
+	/**
+	 * 
+	 * @param integer $id
+	 * @throws \Exception if system not found
+	 * @return System
+	 */
 	public function getSystem($id = 1)
 	{
 		$id  = (int) $id;
@@ -35,15 +41,14 @@ class SystemTable
 	{
 		$data = array(
 			'language'		=> $system->language,
-			'mode'			=> $system->mode,
-			'unit'			=> $system->unit,
 			'genuinekit'	=> $system->genuinekit,
+			'maxactivity'	=> $system->maxactivity,
 		);
 
 		$id = (int) $system->id;
 		if ($id == 0)
 		{
-			$this->tableGateway->insert($data);
+			throw new \Exception('System id does not exist');
 		}
 		else
 		{
@@ -55,14 +60,6 @@ class SystemTable
 			{
 				throw new \Exception('System id does not exist');
 			}
-		}
-	}
-
-	public function deleteSystem($id)
-	{
-		if($id != 1) // can't remove the root system profile
-		{
-			$this->tableGateway->delete(array('id' => (int) $id));
 		}
 	}
 }
