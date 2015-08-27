@@ -40,7 +40,7 @@ class SystemController extends AbstractActionController
 
 		return new ViewModel(array(
 			'locale'		=> $oSystem->language,
-			'unit'			=> $oSystem->unit,
+			'unit'			=> ($oSystem->unit == 'mbq') ? 'MBq' : 'mCi',
 			'genuinekit'	=> $oSystem->genuinekit,
 			'maxactivity'	=> $oSystem->maxactivity,
 		));
