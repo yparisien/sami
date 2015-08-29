@@ -238,7 +238,6 @@ msgstr ""
 #: ../module/Manager/view/manager/examination/add.phtml:2
 #: ../module/Manager/view/manager/examination/edit.phtml:2
 #: ../module/Manager/view/manager/examination/index.phtml:2
-#: ../module/Manager/view/manager/injector/index.phtml:2
 #: ../module/Manager/view/manager/manager/index.phtml:2
 #: ../module/Manager/view/manager/radionuclide/add.phtml:2
 #: ../module/Manager/view/manager/radionuclide/edit.phtml:2
@@ -373,13 +372,6 @@ msgstr ""
 msgid "Add an examination"
 msgstr ""
 
-#: ../module/Manager/view/manager/injector/index.phtml:3
-#: ../module/Manager/view/manager/injector/index.phtml:9
-#: ../module/Manager/view/manager/manager/index.phtml:34
-msgid "Injector management"
-msgstr ""
-
-#: ../module/Manager/view/manager/injector/index.phtml:79
 #: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:127
 #: ../module/Operator/view/operator/interactrobot/unload.phtml:120
 msgid "Continue"
