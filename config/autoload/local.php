@@ -9,7 +9,7 @@ return array(
 		'simulated' => true,
 	),
 	'virtualkeyboard' => array(
-		'enable'	=> false,	
+		'enable'	=> true,	
 	),
 	'import_export' => array(
 		'upload_path'			=> __DIR__ . '/../../public/tmp',
@@ -17,7 +17,7 @@ return array(
 		'export_archive_path'	=> __DIR__ . '/../../data/export_archives',
 	),
 	'timeout' => array(
-			'operator'		=> 3 * 60, 
-			'supervisor'	=> 1 * 60,
+			'operator'		=> 30 * 60, 
+			'supervisor'	=> 10 * 60,
 	),
 );

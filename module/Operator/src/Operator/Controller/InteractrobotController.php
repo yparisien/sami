@@ -46,6 +46,10 @@ class InteractrobotController extends AbstractActionController
 		return $this->actionTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\DrugTable
+	 */
 	public function getDrugTable()
 	{
 		if(!$this->drugTable)
@@ -76,6 +80,10 @@ class InteractrobotController extends AbstractActionController
 		return $this->injectionTable;
 	}
 
+	/**
+	 * 
+	 * @return \Logger\Model\DrugTable
+	 */
 	public function	getLogDrugTable()
 	{
 		if(!$this->logdrugTable)
@@ -232,6 +240,7 @@ class InteractrobotController extends AbstractActionController
 		$aParams = array();
 		$injection = new Container('injection_profile');
 		$setup = new Container('automate_setup');
+		
 		$drug = $this->getLogDrugTable()->getDrug($injection->drugid);
 
 		$aParams['patient'] = $this->getPatientTable()->getPatient($injection->patientid)->toArray();
@@ -501,13 +510,15 @@ class InteractrobotController extends AbstractActionController
 		$oPatient = $this->getPatientTable()->getPatient($injectionProfile->patientid);
 		$oPatient->injected = true;
 		$this->getPatientTable()->savePatient($oPatient);
-
+		$oInputDrug = $this->getLogDrugTable()->getDrug($injectionProfile->drugid);
+		
 		$oInjection = $this->getInjectionTable()->searchByPatientId($oPatient->id);
 		$oInjection->injection_time = date('H:i:s'); // heure automate ou ihm?
-		$oInjection->drugid = $injectionProfile->drugid;
+		$oInjection->drugid = $oInputDrug->drugid;
 		$oInjection->examinationid = $injectionProfile->examinationid;
 		$oInjection->operatorid = $injectionProfile->operatorid;
 		$this->getInjectionTable()->saveInjection($oInjection);
+		
 		return new JsonModel(array('success'=>true));
 	}
 
