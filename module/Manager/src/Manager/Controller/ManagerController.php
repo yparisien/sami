@@ -16,9 +16,6 @@ class ManagerController extends AbstractActionController
 {
 	public function indexAction()
 	{
-		$sm = $this->getServiceLocator();
-		$config = $sm->get('Config');
-		
-		return new ViewModel(array('supervisorTimeout' => $config['timeout']['supervisor']));
+		return new ViewModel();
 	}
 }

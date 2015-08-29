@@ -73,10 +73,23 @@ class Module implements AutoloaderProviderInterface
 
 	public function onBootstrap(MvcEvent $e)
 	{
-		// You may not need to do this if you're doing it elsewhere in your
-		// application
-		$eventManager		= $e->getApplication()->getEventManager();
+		$layoutViewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+		$eventManager = $e->getApplication()->getEventManager();
 		$moduleRouteListener = new ModuleRouteListener();
 		$moduleRouteListener->attach($eventManager);
+		
+		$appendOperatorJsTimeout = false;
+		$matchRoute = $e->getRouter()->match($e->getRequest());
+		$timeout = $matchRoute->getParam('timeout', null);
+		
+		$serviceManager = $e->getApplication()->getServiceManager();
+		$config = $serviceManager->get('config');
+		
+		if ($timeout == 'operator') {
+			$appendOperatorJsTimeout = true;
+			$layoutViewModel->operatorTimeout = $config['timeout']['operator'];
+		}
+		
+		$layoutViewModel->appendOperatorJsTimeout = $appendOperatorJsTimeout;
 	}
 }

@@ -22,6 +22,7 @@ return array(
 						'__NAMESPACE__' => 'Operator\Controller',
 						'controller'	=> 'Operator',
 						'action'		=> 'index',
+						'timeout'		=> 'operator',
 					),
 				),
 			),
