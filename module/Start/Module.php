@@ -34,6 +34,7 @@ class Module
 		$serviceManager = $e->getApplication()->getServiceManager();
 		$config = $serviceManager->get('config');
 		$layoutViewModel->virtualkeyboardEnable = $config['virtualkeyboard']['enable'];
+		$layoutViewModel->virtualkeyboardSize = $config['virtualkeyboard']['size'];
 		
 		$moduleRouteListener = new ModuleRouteListener();
 		$moduleRouteListener->attach($eventManager);

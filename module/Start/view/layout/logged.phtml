@@ -1,4 +1,9 @@
 <?php echo $this->doctype(); ?>
+<?php
+if ($virtualkeyboardEnable === true) {
+	$this->headStyle()->appendStyle('.ui-keyboard { font-size: ' . $virtualkeyboardSize . 'em; }');
+}
+?>
 <?php //TODO Trad high prio ?>
 <html lang="en">
 	<head>
@@ -38,6 +43,7 @@
 			->prependFile($this->basePath() . '/js/respond.min.js',	'text/javascript', array('conditional' => 'lt IE 9',))
 			->prependFile($this->basePath() . '/js/html5shiv.js', 	'text/javascript', array('conditional' => 'lt IE 9',));
 		; ?>
+		<?php echo $this->headStyle(); ?>
 	</head>
 	<body>
 		<noscript style="width: 100%; height: 100%; position: absolute; background-color: white; z-index: 10000;">
@@ -131,7 +137,7 @@
 		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
-					$("input[type=text].form-control").not(".input-date").keyboard({autoAccept: true, layout: "french-azerty-1"});
+					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").keyboard({autoAccept: true, layout: "french-azerty-1"});
 					$("textarea.form-control").keyboard({autoAccept: true, lockInput: true, layout: "french-azerty-1"});
 					$("input[type=number].form-control").keyboard({
 						layout : "custom",

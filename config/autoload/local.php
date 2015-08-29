@@ -9,7 +9,8 @@ return array(
 		'simulated' => true,
 	),
 	'virtualkeyboard' => array(
-		'enable'	=> true,	
+		'enable'	=> true,
+		'size'		=> 1.75,	
 	),
 	'import_export' => array(
 		'upload_path'			=> __DIR__ . '/../../public/tmp',
