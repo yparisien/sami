@@ -51,6 +51,11 @@ class InputdataController extends AbstractActionController
 	/*
 	 * Some handy functions / proxies for access to models
 	 */
+	
+	/**
+	 * 
+	 * @return \Logger\Model\ActionTable
+	 */
 	public function getActionTable()
 	{
 		if(!$this->actionTable)
@@ -76,8 +81,8 @@ class InputdataController extends AbstractActionController
 	}
 
 	/**
-	 * @return ExaminationTable
 	 * 
+	 * @return \Manager\Model\ExaminationTable
 	 */
 	public function getExaminationTable()
 	{
@@ -90,7 +95,8 @@ class InputdataController extends AbstractActionController
 	}
 
 	/**
-	 * @return InjectionTable
+	 * 
+	 * @return \Bufferspace\Model\InjectionTable
 	 */
 	public function getInjectionTable()
 	{
@@ -103,7 +109,8 @@ class InputdataController extends AbstractActionController
 	}
 
 	/**
-	 * @return DrugTable
+	 * 
+	 * @return \Logger\Model\DrugTable
 	 */
 	public function	getLogDrugTable()
 	{
@@ -116,7 +123,8 @@ class InputdataController extends AbstractActionController
 	}
 
 	/**
-	 * @return PatientTable
+	 * 
+	 * @return \Bufferspace\Model\PatientTable
 	 */
 	public function getPatientTable()
 	{
@@ -128,6 +136,10 @@ class InputdataController extends AbstractActionController
 		return $this->patientTable;
 	}
 
+	/**
+	 * 
+	 * @return \Operator\Model\PatientkitTable
+	 */
 	public function getPatientkitTable()
 	{
 		if(!$this->patientkitTable)
@@ -138,6 +150,10 @@ class InputdataController extends AbstractActionController
 		return $this->patientkitTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\RadionuclideTable
+	 */
 	public function getRadionuclideTable()
 	{
 		if(!$this->radionuclideTable)
@@ -148,6 +164,10 @@ class InputdataController extends AbstractActionController
 		return $this->radionuclideTable;
 	}
 
+	/**
+	 * 
+	 * @return \Operator\Model\SourcekitTable
+	 */
 	public function getSourcekitTable()
 	{
 		if(!$this->sourcekitTable)
@@ -158,6 +178,10 @@ class InputdataController extends AbstractActionController
 		return $this->sourcekitTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -168,6 +192,10 @@ class InputdataController extends AbstractActionController
 		return $this->systemTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\UserTable
+	 */
 	public function getUserTable()
 	{
 		if(!$this->userTable)
@@ -517,9 +545,12 @@ class InputdataController extends AbstractActionController
 
 	public function	selectpatientAction()
 	{
+		$patients = $this->getPatientTable()->getToInject();
+		
 		$aParam = array(
-			'patients'	=>	$this->getPatientTable()->getToInject(),
+			'patients'	=> $patients,
 		);
+		
 		return new ViewModel($aParam);
 	}
 

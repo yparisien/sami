@@ -14,19 +14,20 @@
 						<table class="table table-condensed <?php if (count($patients) > 0) { echo 'table-hover'; } ?>">
 							<thead>
 								<tr>
-									<th colspan="2"><?php echo $this->translate('Patients list')?></th>
+									<th colspan="3"><?php echo $this->translate('Patients list')?></th>
 								</tr>
 							</thead>
 							<tbody>
 							<?php if (count($patients) > 0) { ?>
 							<?php 	foreach($patients as $patient) { ?>
-								<tr id="patient-<?php echo $patient->id;?>" style="cursor:pointer" onClick="loadPatient(<?php echo $patient->id?>);">
+								<tr id="patient-<?php echo $patient->id;?>" style="cursor:pointer" onclick="loadPatient(<?php echo $patient->id?>);">
 									<td><?php echo $patient->lastname;?></td>
 									<td><?php echo $patient->firstname;?></td>
+									<td></td>
 								</tr>
 							<?php 	} ?>
 							<?php } else { ?>
-								<tr><td colspan="2"><div class="alert alert-warning" role="alert"><?php echo $this->translate('No patient loaded. Try to load a file or to create a new one.')?></p></td></tr>
+								<tr><td colspan="3"><div class="alert alert-warning" role="alert"><?php echo $this->translate('No patient loaded. Try to load a file or to create a new one.')?></p></td></tr>
 							<?php } ?>
 							</tbody>
 						</table>

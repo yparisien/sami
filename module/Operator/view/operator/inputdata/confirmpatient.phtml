@@ -187,6 +187,23 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="alerthighactivity" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Maximum activity reached');?></h4>
+			</div>
+			<div class="modal-body">
+				<?php echo $this->translate('You have reached the maximum acivity. Do you want to correct it ?');?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="highActivityOperatorResponse('correct');"><?php echo $this->translate('YES');?></button>
+				<button type="button" class="btn btn-danger" onclick="highActivityOperatorResponse('ignore');"><?php echo $this->translate('NO');?></button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="alertchoosepatient" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -350,6 +367,7 @@
 			{
 				$("#alertlowactivity").modal('show');
 			}
+// 			else if ($)
 		});
 		//setTimeout(function(){loadActivityData();}, 5000);
 	}
@@ -373,6 +391,10 @@
 		
 	}
 
+	function	highActivityOperatorResponse(response)
+	{
+	}
+
 	$(function(){
 		loadPatient(<?php echo $patientid;?>);
 		loadInjection(<?php echo $patientid;?>);
@@ -394,10 +416,6 @@
 			});	
 		});
 
-		$('#alertlowactivity').on('hidden.bs.modal', function (e) {
-			  // do something...
-		});
-		
 		$('#weight').change(function (){
 				$.ajax({
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
