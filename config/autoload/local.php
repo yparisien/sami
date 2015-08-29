@@ -9,7 +9,7 @@ return array(
 		'simulated' => true,
 	),
 	'virtualkeyboard' => array(
-		'enable'	=> true,
+		'enable'	=> false,
 		'size'		=> 1.75,	
 	),
 	'import_export' => array(
