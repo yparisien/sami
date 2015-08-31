@@ -15,12 +15,12 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
 
-use Logger\Model\Action;
+use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
 
 class InteractrobotController extends AbstractActionController
 {
-	protected $actionTable;
+	protected $inputActionTable;
 	protected $drugTable;
 	protected $examinationTable;
 	protected $injectionTable;
@@ -36,14 +36,14 @@ class InteractrobotController extends AbstractActionController
 	/*
 	 * Some handy functions / proxies for access to models
 	 */
-	public function getActionTable()
+	public function getInputActionTable()
 	{
-		if(!$this->actionTable)
+		if(!$this->inputActionTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->actionTable = $sm->get('Logger\Model\ActionTable');
+			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
-		return $this->actionTable;
+		return $this->inputActionTable;
 	}
 
 	/**
@@ -268,11 +268,11 @@ class InteractrobotController extends AbstractActionController
 			$oContainer->sourcekitloaded = false;
 			$oContainer->markedasended = false;
 
-			$action = new Action();
-			$action->inputdate = date('Y-m-d H:i:s');
-			$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$action->action = "User mark automate unloaded";
-			$this->getActionTable()->saveAction($action);
+			$inputaction = new InputAction();
+			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+			$inputaction->action = "User mark automate unloaded";
+			$this->getInputActionTable()->saveInputAction($inputaction);
 			return $this->redirect()->toRoute('operator');
 		}
 		else
@@ -471,11 +471,11 @@ class InteractrobotController extends AbstractActionController
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		
-		$action = new Action();
-		$action->inputdate = date('Y-m-d H:i:s');
-		$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-		$action->action = "User mark the patient connected to SAMI";
-		$this->getActionTable()->saveAction($action);
+		$inputaction = new InputAction();
+		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+		$inputaction->action = "User mark the patient connected to SAMI";
+		$this->getInputActionTable()->saveInputAction($inputaction);
 
 		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Connection' => 1));
 		
@@ -488,11 +488,11 @@ class InteractrobotController extends AbstractActionController
 	public function	aupdateactivityAction()
 	{
 		$newActivity = $this->getRequest()->getPost('activity');
-		$action = new Action();
-		$action->inputdate = date('Y-m-d H:i:s');
-		$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-		$action->action = "New injected activity value: ".$newActivity;
-		$this->getActionTable()->saveAction($action);
+		$inputaction = new InputAction();
+		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+		$inputaction->action = "New injected activity value: ".$newActivity;
+		$this->getInputActionTable()->saveInputAction($inputaction);
 
 		$injectionProfile = new Container('injection_profile');
 		$injection = $this->getInjectionTable()->searchByPatientId($injectionProfile->patientid);

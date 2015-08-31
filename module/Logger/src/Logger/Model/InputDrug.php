@@ -1,7 +1,7 @@
 <?php
 namespace Logger\Model;
 
-class Drug
+class InputDrug
 {
 	public	$id;
 	public	$inputdate;

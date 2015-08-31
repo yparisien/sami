@@ -4,7 +4,7 @@ namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class DrugTable
+class InputDrugTable
 {
 	protected $tableGateway;
 
@@ -25,7 +25,7 @@ class DrugTable
 	 * @throws \Exception
 	 * @return Drug
 	 */
-	public function getDrug($id)
+	public function getInputDrug($id)
 	{
 		$id  = (int) $id;
 		$rowset = $this->tableGateway->select(array('id' => $id));
@@ -37,7 +37,7 @@ class DrugTable
 		return $row;
 	}
 
-	public function saveDrug(Drug &$drug)
+	public function saveInputDrug(Drug &$drug)
 	{
 		$data = array(
 			'inputdate'			=> $drug->inputdate,
@@ -60,7 +60,7 @@ class DrugTable
 		}
 		else
 		{
-			if ($this->getDrug($id))
+			if ($this->getInputDrug($id))
 			{
 				$this->tableGateway->update($data, array('id' => $id));
 			}
@@ -71,7 +71,7 @@ class DrugTable
 		}
 	}
 
-	public function deleteDrug($id)
+	public function deleteInputDrug($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}

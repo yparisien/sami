@@ -14,8 +14,8 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Logger\Model\Action;
-use Logger\Model\ActionTable;
+use Logger\Model\InputAction;
+use Logger\Model\InputActionTable;
 use Logger\Model\Drug;
 use Logger\Model\DrugTable;
 
@@ -55,26 +55,26 @@ class Module implements AutoloaderProviderInterface
 	{
 		return array(
 			'factories' => array(
-				'Logger\Model\ActionTable' =>  function($sm) {
-					$tableGateway = $sm->get('LogActionTableGateway');
-					$table = new ActionTable($tableGateway);
+				'Logger\Model\InputActionTable' =>  function($sm) {
+					$tableGateway = $sm->get('LogInputActionTableGateway');
+					$table = new InputActionTable($tableGateway);
 					return $table;
 				},
-				'LogActionTableGateway' => function ($sm) {
+				'LogInputActionTableGateway' => function ($sm) {
 					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new Action());
+					$resultSetPrototype->setArrayObjectPrototype(new InputAction());
 					return new TableGateway('input_action', $dbAdapter, null, $resultSetPrototype);
 				},
-				'Logger\Model\DrugTable' =>  function($sm) {
-					$tableGateway = $sm->get('LogDrugTableGateway');
+				'Logger\Model\InputDrugTable' =>  function($sm) {
+					$tableGateway = $sm->get('LogInputDrugTableGateway');
 					$table = new DrugTable($tableGateway);
 					return $table;
 				},
-				'LogDrugTableGateway' => function ($sm) {
+				'LogInputDrugTableGateway' => function ($sm) {
 					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new Drug());
+					$resultSetPrototype->setArrayObjectPrototype(new InputDrug());
 					return new TableGateway('input_drug', $dbAdapter, null, $resultSetPrototype);
 				},
 			),

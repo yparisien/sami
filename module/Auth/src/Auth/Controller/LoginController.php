@@ -13,14 +13,14 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Session\Container;
-use Logger\Model\Action;
+use Logger\Model\InputAction;
 use Zend\View\Model\JsonModel;
 
 class LoginController extends AbstractActionController
 {
 	protected $storage;
 	protected $authservice;
-	protected $actionTable;
+	protected $inputActionTable;
 	protected $userTable;
 
 	public function getAuthService()
@@ -41,14 +41,14 @@ class LoginController extends AbstractActionController
 		return $this->storage;
 	}
 
-	public function getActionTable()
+	public function getInputActionTable()
 	{
-		if(!$this->actionTable)
+		if(!$this->inputActionTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->actionTable = $sm->get('Logger\Model\ActionTable');
+			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
-		return $this->actionTable;
+		return $this->inputActionTable;
 	}
 
 	public function getUserTable()
@@ -90,21 +90,21 @@ class LoginController extends AbstractActionController
 			if($result->isValid()) // if credential is valid
 			{
 				$this->getSessionStorage()->storeAuth();
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = $translate("Auth success");
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = $translate("Auth success");
+				$this->getInputActionTable()->saveAction($inputaction);
 
 				return $this->redirect()->toRoute('operator');
 			}
 			else // then go back to the login form and display error msg
 			{
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = 0;
-				$action->action = "Auth failure on login ".$sLogin;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = 0;
+				$inputaction->action = "Auth failure on login ".$sLogin;
+				$this->getInputActionTable()->saveAction($inputaction);
 
 				$message = '';
 				switch($result->getCode())

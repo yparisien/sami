@@ -4,7 +4,7 @@ namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class ActionTable
+class InputActionTable
 {
 	protected $tableGateway;
 
@@ -19,7 +19,7 @@ class ActionTable
 		return $resultSet;
 	}
 
-	public function getAction($id)
+	public function getInputAction($id)
 	{
 		$id  = (int) $id;
 		$rowset = $this->tableGateway->select(array('id' => $id));
@@ -31,19 +31,12 @@ class ActionTable
 		return $row;
 	}
 
-	public function saveAction(Action $action)
+	public function saveInputAction(InputAction $action)
 	{
 		$data = array(
 			'inputdate'			=> $action->inputdate,
 			'userid'			=> $action->userid,
 			'action'			=> $action->action,
-			/*'batchnum'			=> $action->batchnum,
-			'calibrationtime'	=> $action->calibrationtime,
-			'expirationtime'	=> $action->expirationtime,
-			'vialvol'			=> $action->vialvol,
-			'activity'			=> $action->activity,
-			'activityconc'		=> $action->activityconc,
-			'activitycalib'		=> $action->activitycalib,*/
 		);
 
 		$id = (int) $action->id;
@@ -53,18 +46,18 @@ class ActionTable
 		}
 		else
 		{
-			if ($this->getAction($id))
+			if ($this->getInputAction($id))
 			{
 				$this->tableGateway->update($data, array('id' => $id));
 			}
 			else
 			{
-				throw new \Exception('Action id does not exist');
+				throw new \Exception('InputAction id does not exist');
 			}
 		}
 	}
 
-	public function deleteAction($id)
+	public function deleteInputAction($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}

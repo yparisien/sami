@@ -25,7 +25,7 @@ use Bufferspace\File\Importer;
 use Bufferspace\Model\Patient;
 use Bufferspace\Model\Injection;
 use Logger\Model\Drug;
-use Logger\Model\Action;
+use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Bufferspace\Model\PatientTable;
@@ -36,7 +36,7 @@ use Manager\Model\ExaminationTable;
 
 class InputdataController extends AbstractActionController
 {
-	protected $actionTable;
+	protected $inputActionTable;
 	protected $drugTable;
 	protected $examinationTable;
 	protected $injectionTable;
@@ -54,16 +54,16 @@ class InputdataController extends AbstractActionController
 	
 	/**
 	 * 
-	 * @return \Logger\Model\ActionTable
+	 * @return \Logger\Model\InputActionTable
 	 */
-	public function getActionTable()
+	public function getInputActionTable()
 	{
-		if(!$this->actionTable)
+		if(!$this->inputActionTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->actionTable = $sm->get('Logger\Model\ActionTable');
+			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
-		return $this->actionTable;
+		return $this->inputActionTable;
 	}
 
 	/**
@@ -239,11 +239,11 @@ class InputdataController extends AbstractActionController
 			$this->getLogDrugTable()->saveDrug($logdrug);
 
 			// log action
-			$action = new Action();
-			$action->inputdate = date('Y-m-d H:i:s');
-			$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$action->action = "Specify drug profile #".$logdrug->id;
-			$this->getActionTable()->saveAction($action);
+			$inputaction = new InputAction();
+			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+			$inputaction->action = "Specify drug profile #".$logdrug->id;
+			$this->getInputActionTable()->saveInputAction($inputaction);
 
 			$drug = $this->getDrugTable()->getDrug($aDrugData['drugid']);
 			$radionucleide = $this->getRadionuclideTable()->getRadionuclide($drug->radionuclideid);
@@ -326,11 +326,11 @@ class InputdataController extends AbstractActionController
 					$oImporter->fillDataBase();
 
 					// log action
-					$action = new Action();
-					$action->inputdate = date('Y-m-d H:i:s');
-					$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-					$action->action = "Import new patients file";
-					$this->getActionTable()->saveAction($action);
+					$inputaction = new InputAction();
+					$inputaction->inputdate = date('Y-m-d H:i:s');
+					$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+					$inputaction->action = "Import new patients file";
+					$this->getInputActionTable()->saveInputAction($inputaction);
 
 					// for the moment, store the log id but use a clever way for final version
 					$oContainer = new Container('automate_setup');
@@ -390,11 +390,11 @@ class InputdataController extends AbstractActionController
 			$kit = $this->getSourcekitTable()->searchBySerialNumber($sourcekitId);
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = "Try to rescan sourcekit #".$kit->serialnumber;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Try to rescan sourcekit #".$kit->serialnumber;
+				$this->getInputActionTable()->saveInputAction($inputaction);
 				return $this->redirect()->toRoute('setup', array('action'=>'scankitsource'));
 			}
 			else // sinon on valide la saisie et on passe à la suite
@@ -408,11 +408,11 @@ class InputdataController extends AbstractActionController
 				$oKit->operatorid = $oUser->id;
 				$this->getSourcekitTable()->saveSourcekit($oKit);
 
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = "Scan source barcode #".$oKit->id;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Scan source barcode #".$oKit->id;
+				$this->getInputActionTable()->saveInputAction($inputaction);
 
 				// for the moment, store the log id but use a clever way for final version
 				$oContainer = new Container('automate_setup');
@@ -436,11 +436,11 @@ class InputdataController extends AbstractActionController
 	{
 		if($this->params('confirm'))
 		{
-			$action = new Action();
-			$action->inputdate = date('Y-m-d H:i:s');
-			$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$action->action = "User mark source kit loaded";
-			$this->getActionTable()->saveAction($action);
+			$inputaction = new InputAction();
+			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+			$inputaction->action = "User mark source kit loaded";
+			$this->getInputActionTable()->saveInputAction($inputaction);
 
 			// for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
@@ -462,11 +462,11 @@ class InputdataController extends AbstractActionController
 			$kit = $this->getPatientkitTable()->searchBySerialNumber($patientkitId);
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = "Try to rescan patientkit #".$kit->serialnumber;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Try to rescan patientkit #".$kit->serialnumber;
+				$this->getInputActionTable()->saveInputAction($inputaction);
 				return $this->redirect()->toRoute('setup', array('action'=>'scankitpatient'));
 			}
 			else // sinon c'est cool, on peut foncer
@@ -505,11 +505,11 @@ class InputdataController extends AbstractActionController
 		/* @var $robotService RobotService  */
 		if($this->params('confirm'))
 		{
-			$action = new Action();
-			$action->inputdate = date('Y-m-d H:i:s');
-			$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$action->action = "User mark patient kit plugged in";
-			$this->getActionTable()->saveAction($action);
+			$inputaction = new InputAction();
+			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+			$inputaction->action = "User mark patient kit plugged in";
+			$this->getInputActionTable()->saveInputAction($inputaction);
 			
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP => 1));
@@ -888,11 +888,11 @@ class InputdataController extends AbstractActionController
 			}
 			else
 			{
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = "Try to rescan sourcekit #".$kit->serialnumber;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Try to rescan sourcekit #".$kit->serialnumber;
+				$this->getInputActionTable()->saveInputAction($inputaction);
 				$oUser = $this->getUserTable()->getUser($kit->operatorid);
 				$aParams = array(
 					'success'	=> 0,
@@ -933,11 +933,11 @@ class InputdataController extends AbstractActionController
 			}
 			else
 			{
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = "Try to rescan patientkit #".$kit->serialnumber;
-				$this->getActionTable()->saveAction($action);
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Try to rescan patientkit #".$kit->serialnumber;
+				$this->getInputActionTable()->saveInputAction($inputaction);
 				$oUser = $this->getUserTable()->getUser($kit->operatorid);
 				$aParams = array(
 					'success'	=> 0,

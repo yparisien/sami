@@ -13,13 +13,13 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Session\Container;
-use Logger\Model\Action;
+use Logger\Model\InputAction;
 
 class AuthController extends AbstractActionController
 {
 	protected $storage;
 	protected $authservice;
-	protected $actionTable;
+	protected $inputActionTable;
 	protected $userTable;
 
 	public function getAuthService()
@@ -40,14 +40,14 @@ class AuthController extends AbstractActionController
 		return $this->storage;
 	}
 
-	public function getActionTable()
+	public function getInputActionTable()
 	{
-		if(!$this->actionTable)
+		if(!$this->inputActionTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->actionTable = $sm->get('Logger\Model\ActionTable');
+			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
-		return $this->actionTable;
+		return $this->inputActionTable;
 	}
 
 	public function getUserTable()
@@ -120,11 +120,11 @@ class AuthController extends AbstractActionController
 			else
 			{
 				$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = $translate("Confirm his/her identity");
-				$this->getActionTable()->saveAction($action);
+				$inputAction = new InputAction();
+				$inputAction->inputdate = date('Y-m-d H:i:s');
+				$inputAction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputAction->action = $translate("Confirm his/her identity");
+				$this->getInputActionTable()->saveInputAction($inputAction);
 
 				$aParam = array(
 					'current_user'	=> $this->getAuthService()->getIdentity(),
@@ -164,11 +164,11 @@ class AuthController extends AbstractActionController
 				$result = $this->getAuthService()->authenticate();
 
 				$oContainer->swaptrynumber = 0;
-				$action = new Action();
-				$action->inputdate = date('Y-m-d H:i:s');
-				$action->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-				$action->action = $translate("Switching user successfull");
-				$this->getActionTable()->saveAction($action);
+				$inputAction = new InputAction();
+				$inputAction->inputdate = date('Y-m-d H:i:s');
+				$inputAction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputAction->action = $translate("Switching user successfull");
+				$this->getInputActionTable()->saveInputAction($inputAction);
 				$this->getSessionStorage()->storeAuth();
 				return $this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
 			}
