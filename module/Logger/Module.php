@@ -16,8 +16,8 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Logger\Model\InputAction;
 use Logger\Model\InputActionTable;
-use Logger\Model\Drug;
-use Logger\Model\DrugTable;
+use Logger\Model\InputDrug;
+use Logger\Model\InputDrugTable;
 
 
 class Module implements AutoloaderProviderInterface
@@ -68,7 +68,7 @@ class Module implements AutoloaderProviderInterface
 				},
 				'Logger\Model\InputDrugTable' =>  function($sm) {
 					$tableGateway = $sm->get('LogInputDrugTableGateway');
-					$table = new DrugTable($tableGateway);
+					$table = new InputDrugTable($tableGateway);
 					return $table;
 				},
 				'LogInputDrugTableGateway' => function ($sm) {

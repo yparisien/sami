@@ -23,7 +23,7 @@ class InputDrugTable
 	 * Get a single InputDrug
 	 * @param unknown $id
 	 * @throws \Exception
-	 * @return Drug
+	 * @return InputDrug
 	 */
 	public function getInputDrug($id)
 	{
@@ -37,26 +37,26 @@ class InputDrugTable
 		return $row;
 	}
 
-	public function saveInputDrug(Drug &$drug)
+	public function saveInputDrug(InputDrug &$inputdrug)
 	{
 		$data = array(
-			'inputdate'			=> $drug->inputdate,
-			'userid'			=> $drug->userid,
-			'drugid'			=> $drug->drugid,
-			'batchnum'			=> $drug->batchnum,
-			'calibrationtime'	=> $drug->calibrationtime,
-			'expirationtime'	=> $drug->expirationtime,
-			'vialvol'			=> $drug->vialvol,
-			'activity'			=> $drug->activity,
-			'activityconc'		=> $drug->activityconc,
-			'activitycalib'		=> $drug->activitycalib,
+			'inputdate'			=> $inputdrug->inputdate,
+			'userid'			=> $inputdrug->userid,
+			'drugid'			=> $inputdrug->drugid,
+			'batchnum'			=> $inputdrug->batchnum,
+			'calibrationtime'	=> $inputdrug->calibrationtime,
+			'expirationtime'	=> $inputdrug->expirationtime,
+			'vialvol'			=> $inputdrug->vialvol,
+			'activity'			=> $inputdrug->activity,
+			'activityconc'		=> $inputdrug->activityconc,
+			'activitycalib'		=> $inputdrug->activitycalib,
 		);
 
-		$id = (int) $drug->id;
+		$id = (int) $inputdrug->id;
 		if ($id == 0)
 		{
 			$this->tableGateway->insert($data);
-			$drug->id = $this->tableGateway->lastInsertValue;
+			$inputdrug->id = $this->tableGateway->lastInsertValue;
 		}
 		else
 		{
@@ -66,7 +66,7 @@ class InputDrugTable
 			}
 			else
 			{
-				throw new \Exception('Drug id does not exist');
+				throw new \Exception('InputDrug id does not exist');
 			}
 		}
 	}

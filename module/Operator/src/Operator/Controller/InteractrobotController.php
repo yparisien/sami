@@ -24,7 +24,7 @@ class InteractrobotController extends AbstractActionController
 	protected $drugTable;
 	protected $examinationTable;
 	protected $injectionTable;
-	protected $logdrugTable;
+	protected $inputdrugTable;
 	protected $patientTable;
 	protected $patientkitTable;
 	protected $radionuclideTable;
@@ -82,16 +82,16 @@ class InteractrobotController extends AbstractActionController
 
 	/**
 	 * 
-	 * @return \Logger\Model\DrugTable
+	 * @return \Logger\Model\InputDrugTable
 	 */
-	public function	getLogDrugTable()
+	public function	getInputDrugTable()
 	{
-		if(!$this->logdrugTable)
+		if(!$this->inputdrugTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->logdrugTable = $sm->get('Logger\Model\DrugTable');
+			$this->inputdrugTable = $sm->get('Logger\Model\InputDrugTable');
 		}
-		return $this->logdrugTable;
+		return $this->inputdrugTable;
 	}
 
 	public function getPatientTable()
@@ -241,14 +241,15 @@ class InteractrobotController extends AbstractActionController
 		$injection = new Container('injection_profile');
 		$setup = new Container('automate_setup');
 		
-		$drug = $this->getLogDrugTable()->getDrug($injection->drugid);
+		$inputdrug = $this->getInputDrugTable()->getInputDrug($injection->inputdrugid);
 
+		//TODO Verifier l'utilité
 		$aParams['patient'] = $this->getPatientTable()->getPatient($injection->patientid)->toArray();
 		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($injection->patientid)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 		$aParams['examination'] = $this->getExaminationTable()->getExamination($injection->examinationid);
 		$aParams['operator'] = $this->getUserTable()->getUser($injection->operatorid);
-		$aParams['curdrug'] = $drug;
+		$aParams['curdrug'] = $inputdrug;
 		$aParams['drug'] = $this->getDrugTable()->getDrug($drug->drugid);
 		$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid);
 		$aParams['radionuclide'] = $this->getRadionuclideTable()->getRadionuclide($aParams['drug']->radionuclideid);
@@ -510,11 +511,11 @@ class InteractrobotController extends AbstractActionController
 		$oPatient = $this->getPatientTable()->getPatient($injectionProfile->patientid);
 		$oPatient->injected = true;
 		$this->getPatientTable()->savePatient($oPatient);
-		$oInputDrug = $this->getLogDrugTable()->getDrug($injectionProfile->drugid);
+		$oInputDrug = $this->getLogDrugTable()->getDrug($injectionProfile->inputdrugid);
 		
 		$oInjection = $this->getInjectionTable()->searchByPatientId($oPatient->id);
 		$oInjection->injection_time = date('H:i:s'); // heure automate ou ihm?
-		$oInjection->drugid = $oInputDrug->drugid;
+		$oInjection->inputdrugid = $oInputDrug->drugid;
 		$oInjection->examinationid = $injectionProfile->examinationid;
 		$oInjection->operatorid = $injectionProfile->operatorid;
 		$this->getInjectionTable()->saveInjection($oInjection);

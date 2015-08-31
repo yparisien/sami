@@ -24,13 +24,13 @@ use Operator\Model\Patientkit;
 use Bufferspace\File\Importer;
 use Bufferspace\Model\Patient;
 use Bufferspace\Model\Injection;
-use Logger\Model\Drug;
+use Logger\Model\InputDrug;
 use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Bufferspace\Model\PatientTable;
 use Bufferspace\Model\InjectionTable;
-use Logger\Model\DrugTable;
+use Logger\Model\InputDrugTable;
 use Manager\Model\ExaminationTable;
 
 
@@ -40,7 +40,7 @@ class InputdataController extends AbstractActionController
 	protected $drugTable;
 	protected $examinationTable;
 	protected $injectionTable;
-	protected $logdrugTable;
+	protected $inputdrugTable;
 	protected $patientTable;
 	protected $patientkitTable;
 	protected $radionuclideTable;
@@ -110,16 +110,16 @@ class InputdataController extends AbstractActionController
 
 	/**
 	 * 
-	 * @return \Logger\Model\DrugTable
+	 * @return \Logger\Model\InputDrugTable
 	 */
-	public function	getLogDrugTable()
+	public function	getInputDrugTable()
 	{
-		if(!$this->logdrugTable)
+		if(!$this->inputdrugTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->logdrugTable = $sm->get('Logger\Model\DrugTable');
+			$this->inputdrugTable = $sm->get('Logger\Model\InputDrugTable');
 		}
-		return $this->logdrugTable;
+		return $this->inputdrugTable;
 	}
 
 	/**
@@ -234,15 +234,15 @@ class InputdataController extends AbstractActionController
 				'activitycalib'		=> $r->getPost('activitycalib'),
 				'expirationtime'	=> $r->getPost('expirationtime'),
 			);
-			$logdrug = new Drug();
-			$logdrug->exchangeArray($aDrugData);
-			$this->getLogDrugTable()->saveDrug($logdrug);
+			$inputdrug = new InputDrug();
+			$inputdrug->exchangeArray($aDrugData);
+			$this->getInputDrugTable()->saveInputDrug($inputdrug);
 
 			// log action
 			$inputaction = new InputAction();
 			$inputaction->inputdate = date('Y-m-d H:i:s');
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$inputaction->action = "Specify drug profile #".$logdrug->id;
+			$inputaction->action = "Specify drug profile #".$inputdrug->id;
 			$this->getInputActionTable()->saveInputAction($inputaction);
 
 			$drug = $this->getDrugTable()->getDrug($aDrugData['drugid']);
@@ -269,7 +269,7 @@ class InputdataController extends AbstractActionController
 			// TODO Changer si necessaire for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->drugspecified = true;
-			$oContainer->drugid = $logdrug->id;
+			$oContainer->drugid = $drug->id;
 
 			return $this->redirect()->toRoute('operator');
 		}
@@ -525,8 +525,8 @@ class InputdataController extends AbstractActionController
 	public function	checkperemptionAction()
 	{
 		$oContainer = new Container('automate_setup');
-		$drugid = $oContainer->drugid;
-		$inputDrug = $this->getLogDrugTable()->getDrug($drugid);
+		$inputdrugid = $oContainer->inputdrugid;
+		$inputDrug = $this->getInputDrugTable()->getInputDrug($inputdrugid);
 		
 		$now = new \DateTime();
 		$dateExpiration = new \DateTime($inputDrug->expirationtime);
@@ -618,13 +618,13 @@ class InputdataController extends AbstractActionController
 		// on récup l'id en post et on la renvoit ds l'interface, on chargera les données en ajax
 		$patientId = $this->getRequest()->getPost('patient-id');
 		$oContainer = new Container('automate_setup');
-		$drug = $this->getLogDrugTable()->getDrug($oContainer->drugid);
+		$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
 		$aParam = array(
 			'patientid'		=> $patientId,
 			'examinations'	=> $this->getExaminationTable()->fetchAll(),
 			'drugs'			=> $this->getDrugTable()->fetchAll(),
-			'drugid'		=> $drug->drugid,
-			'unit' => ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
+			'drugid'		=> $inputdrug->drugid,
+			'unit' 			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
 		);
 		return new ViewModel($aParam);
 	}
