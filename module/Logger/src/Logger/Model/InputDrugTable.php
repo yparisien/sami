@@ -70,9 +70,4 @@ class InputDrugTable
 			}
 		}
 	}
-
-	public function deleteInputDrug($id)
-	{
-		$this->tableGateway->delete(array('id' => (int) $id));
-	}
 }

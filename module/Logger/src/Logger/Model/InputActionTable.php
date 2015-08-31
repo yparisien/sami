@@ -56,9 +56,4 @@ class InputActionTable
 			}
 		}
 	}
-
-	public function deleteInputAction($id)
-	{
-		$this->tableGateway->delete(array('id' => (int) $id));
-	}
 }

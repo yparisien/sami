@@ -31,6 +31,10 @@ class DrugController extends AbstractActionController
 		return $this->radionuclideTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\DrugTable
+	 */
 	public function getDrugTable()
 	{
 		if(!$this->drugTable)

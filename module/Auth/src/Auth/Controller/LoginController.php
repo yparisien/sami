@@ -41,6 +41,10 @@ class LoginController extends AbstractActionController
 		return $this->storage;
 	}
 
+	/**
+	 * 
+	 * @return \Logger\Model\InputActionTable
+	 */
 	public function getInputActionTable()
 	{
 		if(!$this->inputActionTable)
@@ -94,7 +98,7 @@ class LoginController extends AbstractActionController
 				$inputaction->inputdate = date('Y-m-d H:i:s');
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = $translate("Auth success");
-				$this->getInputActionTable()->saveAction($inputaction);
+				$this->getInputActionTable()->saveInputAction($inputaction);
 
 				return $this->redirect()->toRoute('operator');
 			}
@@ -104,7 +108,7 @@ class LoginController extends AbstractActionController
 				$inputaction->inputdate = date('Y-m-d H:i:s');
 				$inputaction->userid = 0;
 				$inputaction->action = "Auth failure on login ".$sLogin;
-				$this->getInputActionTable()->saveAction($inputaction);
+				$this->getInputActionTable()->saveInputAction($inputaction);
 
 				$message = '';
 				switch($result->getCode())
