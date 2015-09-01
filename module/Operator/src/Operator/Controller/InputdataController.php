@@ -242,7 +242,7 @@ class InputdataController extends AbstractActionController
 			$inputaction = new InputAction();
 			$inputaction->inputdate = date('Y-m-d H:i:s');
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$inputaction->action = "Specify drug profile #".$inputdrug->id;
+			$inputaction->action = "Specify inputdrug #".$inputdrug->id;
 			$this->getInputActionTable()->saveInputAction($inputaction);
 
 			$drug = $this->getDrugTable()->getDrug($aDrugData['drugid']);
@@ -270,6 +270,7 @@ class InputdataController extends AbstractActionController
 			$oContainer = new Container('automate_setup');
 			$oContainer->drugspecified = true;
 			$oContainer->drugid = $drug->id;
+			$oContainer->inputdrugid = $inputdrug->id;
 
 			return $this->redirect()->toRoute('operator');
 		}
@@ -603,12 +604,27 @@ class InputdataController extends AbstractActionController
 		else
 		{
 			$oContainer = new Container('automate_setup');
-			$drug = $this->getLogDrugTable()->getDrug($oContainer->drugid);
+			$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
+			
+			$examinations = $this->getExaminationTable()->fetchAll();
+			$drugs = $this->getDrugTable()->fetchAll();
+			
+			$compatibleExams = [];
+			$otherExams = [];
+			
+			foreach ($examinations as $exam) {
+				if ($inputdrug->drugid == $exam->drugid) {
+					$compatibleExams[] = $exam;
+				} else {
+					$otherExams[] = $exam;
+				}
+			}
+			
 			$aParam = array(
-				'examinations'	=> $this->getExaminationTable()->fetchAll(),
-				'drugs'			=> $this->getDrugTable()->fetchAll(),
-				'drugid'		=> $drug->drugid,
+				'examinations'	=> array('compatible' => $compatibleExams, 'others' => $otherExams),
+				'drugs'			=> $drugs,
 			);
+			
 			return new ViewModel($aParam);
 		}
 	}
@@ -619,11 +635,26 @@ class InputdataController extends AbstractActionController
 		$patientId = $this->getRequest()->getPost('patient-id');
 		$oContainer = new Container('automate_setup');
 		$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
+		
+		$examinations = $this->getExaminationTable()->fetchAll();
+		$drugs = $this->getDrugTable()->fetchAll();
+		
+		$compatibleExams = [];
+		$otherExams = [];
+		
+		foreach ($examinations as $exam) {
+			if ($inputdrug->drugid == $exam->drugid) {
+				$compatibleExams[] = $exam;
+			} else {
+				$otherExams[] = $exam;
+			}
+		}
+		
 		$aParam = array(
 			'patientid'		=> $patientId,
-			'examinations'	=> $this->getExaminationTable()->fetchAll(),
-			'drugs'			=> $this->getDrugTable()->fetchAll(),
-			'drugid'		=> $inputdrug->drugid,
+			'examinations'	=> array('compatible' => $compatibleExams, 'others' => $otherExams),
+			'drugs'			=> $drugs,
+			'machinedrugid'	=> $inputdrug->drugid,
 			'unit' 			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
 		);
 		return new ViewModel($aParam);
@@ -635,7 +666,7 @@ class InputdataController extends AbstractActionController
 		$sm = $this->getServiceLocator();
 		if($this->getRequest()->isPost())
 		{
-			$setup = new Container('automate_setup');
+			$oContainer = new Container('automate_setup');
 			
 			$oRequest = $this->getRequest();
 			$oPatient = $this->getPatientTable()->getPatient($oRequest->getPost('patient_id'));
@@ -655,7 +686,7 @@ class InputdataController extends AbstractActionController
 			$this->getInjectionTable()->saveInjection($oInjection);
 
 			$oInjection = new Container('injection_profile');
-			$oInjection->drugid = $setup->drugid;
+			$oInjection->drugid = $oContainer->drugid;
 			$oInjection->examinationid = $oRequest->getPost('examinationid');
 			$oInjection->patientid = $oPatient->id;
 			$oInjection->operatorid = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
@@ -958,19 +989,19 @@ class InputdataController extends AbstractActionController
 
 	public function	aloadexaminationAction()
 	{
-		/* @var $robotService RobotService  */
-		
+		$aParams = array();
 		$examinationId = $this->getRequest()->getPost('examinationid');
 		$oExamination = $this->getExaminationTable()->getExamination($examinationId);
-
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array(
-						'G_Patient.Input.Type_Exam' => $oExamination->name,
-						'G_Patient.Input.Taux' => $oExamination->rate,
-						'G_Patient.Input.Taux_Min' => $oExamination->min,
-						'G_Patient.Input.Taux_Max' => $oExamination->max));
 		
-		$aParams = $oExamination->toArray();
+		$oContainer = new Container('automate_setup');
+		
+		if ($oExamination->drugid == $oContainer->drugid) {
+			$aParams['error'] = false;
+			$aParams['examination'] = $oExamination->toArray();
+		} else {
+			$aParams['error'] = true;
+		}
+		
 		$result = new JsonModel($aParams);
 		return $result;
 	}

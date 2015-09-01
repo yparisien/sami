@@ -3,6 +3,7 @@
 namespace Manager\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Select;
 
 class ExaminationTable
 {
@@ -15,10 +16,19 @@ class ExaminationTable
 
 	public function fetchAll()
 	{
-		$resultSet = $this->tableGateway->select();
+		$resultSet = $this->tableGateway->select(function (Select $select) {
+     		$select->order('name ASC');
+		});
+		
 		return $resultSet;
 	}
 
+	/**
+	 * 
+	 * @param integer $id
+	 * @throws \Exception
+	 * @return Examination
+	 */
 	public function getExamination($id)
 	{
 		$id  = (int) $id;

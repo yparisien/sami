@@ -14,6 +14,7 @@ class Injection
 	public	$location;
 	public	$comments;
 	public	$drugid;
+	public	$inputdrugid;
 	public	$examinationid;
 	public	$operatorid;
 
@@ -30,6 +31,7 @@ class Injection
 		$this->location			= (!empty($data['location'])) ? $data['location'] : null;
 		$this->comments			= (!empty($data['comments'])) ? $data['comments'] : null;
 		$this->drugid			= (!empty($data['drugid'])) ? $data['drugid'] : null;
+		$this->inputdrugid		= (!empty($data['inputdrugid'])) ? $data['inputdrugid'] : null;
 		$this->examinationid	= (!empty($data['examinationid'])) ? $data['examinationid'] : null;
 		$this->operatorid		= (!empty($data['operatorid'])) ? $data['operatorid'] : null;
 	}
@@ -37,6 +39,7 @@ class Injection
 	public function	toArray()
 	{
 		$data					= array();
+		
 		$data['id']				= $this->id;
 		$data['patient_id']		= $this->patient_id;
 		$data['type']			= $this->type;
@@ -48,8 +51,10 @@ class Injection
 		$data['location']		= $this->location;
 		$data['comments']		= $this->comments;
 		$data['drugid']			= $this->drugid;
+		$data['inputdrugid']	= $this->inputdrugid;
 		$data['examinationid']	= $this->examinationid;
 		$data['operatorid']		= $this->operatorid;
+		
 		return $data;
 	}
 }

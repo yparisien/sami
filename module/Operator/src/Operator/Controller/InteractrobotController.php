@@ -70,6 +70,10 @@ class InteractrobotController extends AbstractActionController
 		return $this->examinationTable;
 	}
 
+	/**
+	 * 
+	 * @return \Bufferspace\Model\InjectionTable
+	 */
 	public function getInjectionTable()
 	{
 		if(!$this->injectionTable)
@@ -194,50 +198,63 @@ class InteractrobotController extends AbstractActionController
 	public function	sampleAction()
 	{
 		$aParams = array();
+		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
+		
 		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
 		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		
 		return new ViewModel($aParams);
 	}
 
 	public function	dilutionAction()
 	{
 		$aParams = array();
+		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
+		
 		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
 		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		
 		return new ViewModel($aParams);
 	}
 
 	public function	injectionAction()
 	{
 		$aParams = array();
+		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
+		
 		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
 		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		
 		return new ViewModel($aParams);
 	}
 
 	public function	rinsingAction()
 	{
 		$aParams = array();
+		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
+		
 		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
 		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		
 		return new ViewModel($aParams);
 	}
 
 	public function	patientdisconnectionAction()
 	{
 		$aParams = array();
+		
 		$injection = new Container('injection_profile');
 		$setup = new Container('automate_setup');
 		
@@ -255,6 +272,7 @@ class InteractrobotController extends AbstractActionController
 		$aParams['radionuclide'] = $this->getRadionuclideTable()->getRadionuclide($aParams['drug']->radionuclideid);
 		$aParams['sourcekit'] = $this->getSourcekitTable()->getSourcekit($setup->sourcekitid);
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		
 		return new ViewModel($aParams);
 	}
 
@@ -511,11 +529,13 @@ class InteractrobotController extends AbstractActionController
 		$oPatient = $this->getPatientTable()->getPatient($injectionProfile->patientid);
 		$oPatient->injected = true;
 		$this->getPatientTable()->savePatient($oPatient);
-		$oInputDrug = $this->getLogDrugTable()->getDrug($injectionProfile->inputdrugid);
+		
+		$oInputDrug = $this->getInputDrugTable()->getInputDrug($injectionProfile->inputdrugid);
 		
 		$oInjection = $this->getInjectionTable()->searchByPatientId($oPatient->id);
 		$oInjection->injection_time = date('H:i:s'); // heure automate ou ihm?
-		$oInjection->inputdrugid = $oInputDrug->drugid;
+		$oInjection->drugid = $oInputDrug->drugid;
+		$oInjection->inputdrugid = $oInputDrug->id;
 		$oInjection->examinationid = $injectionProfile->examinationid;
 		$oInjection->operatorid = $injectionProfile->operatorid;
 		$this->getInjectionTable()->saveInjection($oInjection);

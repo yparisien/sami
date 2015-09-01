@@ -62,6 +62,7 @@ class InjectionTable
 			'location'			=> $injection->location,
 			'comments'			=> $injection->comments,
 			'drugid'			=> $injection->drugid,
+			'inputdrugid'		=> $injection->inputdrugid,
 			'examinationid'		=> $injection->examinationid,
 			'operatorid'		=> $injection->operatorid,
 		);

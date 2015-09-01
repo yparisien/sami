@@ -23,12 +23,14 @@ class Examination
 	public function	toArray()
 	{
 		$data			= array();
+		
 		$data['id']		= $this->id;
 		$data['name']	= $this->name;
 		$data['drugid']	= $this->drugid;
 		$data['rate']	= $this->rate;
 		$data['min']	= $this->min;
 		$data['max']	= $this->max;
+		
 		return $data;
 	}
 }
