@@ -267,7 +267,7 @@ class InteractrobotController extends AbstractActionController
 		$aParams['examination'] = $this->getExaminationTable()->getExamination($injection->examinationid);
 		$aParams['operator'] = $this->getUserTable()->getUser($injection->operatorid);
 		$aParams['curdrug'] = $inputdrug;
-		$aParams['drug'] = $this->getDrugTable()->getDrug($drug->drugid);
+		$aParams['drug'] = $this->getDrugTable()->getDrug($inputdrug->drugid);
 		$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid);
 		$aParams['radionuclide'] = $this->getRadionuclideTable()->getRadionuclide($aParams['drug']->radionuclideid);
 		$aParams['sourcekit'] = $this->getSourcekitTable()->getSourcekit($setup->sourcekitid);

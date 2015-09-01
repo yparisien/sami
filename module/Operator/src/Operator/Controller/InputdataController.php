@@ -686,6 +686,7 @@ class InputdataController extends AbstractActionController
 			$this->getInjectionTable()->saveInjection($oInjection);
 
 			$oInjection = new Container('injection_profile');
+			$oInjection->inputdrugid = $oContainer->inputdrugid;
 			$oInjection->drugid = $oContainer->drugid;
 			$oInjection->examinationid = $oRequest->getPost('examinationid');
 			$oInjection->patientid = $oPatient->id;

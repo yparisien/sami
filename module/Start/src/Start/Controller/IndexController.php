@@ -131,6 +131,7 @@ class IndexController extends AbstractActionController
 		$oSetup = new Container('automate_setup');
 		$oSetup->drugspecified = false;
 		$oSetup->drugid = 0;
+		$oSetup->inputdrugid = 0;
 		$oSetup->fileloaded = false;
 		$oSetup->loadedfilename = "";
 		$oSetup->sourcekitscanned = false;
@@ -142,6 +143,7 @@ class IndexController extends AbstractActionController
 		
 		//Reinitialisation du patient en cours d'injection
 		$oInject = new Container('injection_profile');
+		$oInject->drugid = 0;
 		$oInject->inputdrugid = 0;
 		$oInject->examinationid = 0;
 		$oInject->patientid = 0;
@@ -177,6 +179,7 @@ class IndexController extends AbstractActionController
 			// on initialise divers trucs en session
 			$oContainer->drugspecified = false;
 			$oContainer->drugid = 0;
+			$oContainer->inputdrugid = 0;
 			$oContainer->fileloaded = false;
 			$oContainer->loadedfilename = "";
 			$oContainer->sourcekitscanned = false;
@@ -187,6 +190,7 @@ class IndexController extends AbstractActionController
 			$oContainer->issetup = false;
 
 			$oInject = new Container('injection_profile');
+			$oInject->drugid = 0;
 			$oInject->inputdrugid = 0;
 			$oInject->examinationid = 0;
 			$oInject->patientid = 0;
