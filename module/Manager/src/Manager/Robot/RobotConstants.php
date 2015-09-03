@@ -20,6 +20,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE		= 'G_MainLogic.cmd.Input_Soft.Load_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP	= 'G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P';
 	const MAINLOGIC_CMD_INPUTSOFT_KITPATIENTSERIAL	= 'G_MainLogic.cmd.Input_Soft.Kit_Patient_Serial';
+	const MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL	= 'G_MainLogic.cmd.Input_Soft.Kit_Source_Serial';
 	
 	const MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE 	= 'G_MainLogic.cmd.Input_Trasys.Measured_Value';
 	

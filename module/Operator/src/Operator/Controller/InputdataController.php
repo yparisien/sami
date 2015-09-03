@@ -423,6 +423,7 @@ class InputdataController extends AbstractActionController
 
 				$robotService = $this->getServiceLocator()->get('RobotService');
 				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL => $oKit->serialnumber));
 
 				return $this->redirect()->toRoute('operator');
 			}
