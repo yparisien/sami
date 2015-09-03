@@ -21,6 +21,16 @@ return array(
 					),
 				),
 			),
+			'initping' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/initping',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'initping',
+					),
+				),
+			),
 			'initsp' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(

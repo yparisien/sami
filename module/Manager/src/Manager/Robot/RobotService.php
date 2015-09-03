@@ -64,12 +64,15 @@ class RobotService implements ServiceLocatorAwareInterface {
 	        	'http' => array(
 	        				'method'  => 'POST',
 	                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-	                        'content' => $postdata
+	                        'content' => $postdata,
+	        				'timeout' => 5,
 				)
 			);
 	        $context  = stream_context_create($opts);
 	                
-			return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+			$ret = @file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+			
+			return $ret;
 		}
 	}
 	
@@ -153,6 +156,16 @@ class RobotService implements ServiceLocatorAwareInterface {
 					'Isotopes[4].HalfLife' 		=> '692928',
 				];
 				$mRet = $rnitems[$variable];
+				break;
+			case RobotConstants::MAINLOGIC_STATUS_ACTIVE:
+				sleep(5);
+				$fr = new Container('fake_robot');
+				$mRet = false;
+				if ($fr->tryconnect == 3) {
+					$mRet = true;
+				}
+				$try = (isset($fr->tryconnect) && ($fr->tryconnect == 5)) ? 0 : $fr->tryconnect + 1 ;
+				$fr->tryconnect = $try;
 				break;
 			default:
 				die($variable);

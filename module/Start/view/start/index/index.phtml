@@ -11,11 +11,16 @@
 
 <script type="text/javascript">
 	var value = 0;
+	var nbConnectionAttempt = 0;
+	var nbConnectionTry = 5;
 	
-	function moveProgressBar(valToAdd)
+	function moveProgressBar(valToAdd, valueToSet)
 	{
 		if (typeof(valToAdd) !== 'undefined') {
 			value = value + valToAdd;
+		}
+		if (typeof(valToAdd) !== 'undefined' && valToAdd == 0) {
+			value = valueToSet;
 		}
 		
 		if(value < 100) {
@@ -40,29 +45,51 @@
 	}
 	
 	function gotoindex() {
-		$(location).attr('href',<?php echo $this->url('log')?>);
+		$(location).attr('href',<?php echo $this->url('log'); ?>);
 	}
 
-	$(function(){
-		//Vérification du point de départ du démarrage
+	/*
+	 * Vérification de la mise sous tension de l'automate
+	 */
+	function initping() {
+		if (nbConnectionAttempt > nbConnectionTry) {
+			$("#loading-progress").removeClass("progress-bar-warning");
+			$("#loading-progress").addClass("progress-bar-danger");
+			$("#loading-error").html("<?php echo sprintf($this->translate('An error occured during setup. Robot is not responding. Please retry or restart system.')); ?>");
+			$("#loading-error").show();
+			return false;
+		}
+		
 		$.ajax({
-			url: "<?php echo $this->url('initsp', array())?>",
+			url: "<?php echo $this->url('initping', array()); ?>",
 		}).done(function(result){
-			if (result.error === false) {
-				moveProgressBar(50);
-			}
-			else {
-				//TODO Rajouter message d'erreur
+			if (result.active === false) {
+				nbConnectionAttempt++;
+				moveProgressBar(0, 10);
+				$("#loading-progress").removeClass("progress-bar-warning");
+				$("#loading-progress").addClass("progress-bar-warning");
+				$("#loading-error").html(nbConnectionAttempt + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
+				$("#loading-error").show();
+				initping();
+			} else {
+				$("#loading-progress").removeClass("progress-bar-warning");
+				$("#loading-error").hide();
+				moveProgressBar(0, 20);
+				initrn();
 			}
 		});
-		//TODO A implémenter
-		
-		//Chargement des radionuclides
+	}
+
+	/*
+	 * Chargement des radionucléides
+	 */
+	function initrn() {
 		$.ajax({
-			url: "<?php echo $this->url('initrn', array())?>",
+			url: "<?php echo $this->url('initrn', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(50);
+				moveProgressBar(40);
+				initsp();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
@@ -70,6 +97,27 @@
 				$("#loading-error").show();
 			}
 		});
+	}
+
+	/*
+	 * Vérification du point de démarrage
+	 * PROBABLEMT OBSOLETE
+	 */
+	function initsp() {
+		$.ajax({
+			url: "<?php echo $this->url('initsp', array()); ?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(40);
+			}
+			else {
+				//TODO Rajouter message d'erreur
+			}
+		});
+	}
+
+	$(function() {
+		initping();
 	});
 
 </script>

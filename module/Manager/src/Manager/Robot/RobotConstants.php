@@ -29,6 +29,7 @@ class RobotConstants {
 	const MAINLOGIC_PAR_SOFTWAREVERSION 			= 'G_MainLogic.par.Software_Version';
 	const MAINLOGIC_PAR_SYSTEMVERSION 				= 'G_MainLogic.par.System_Version';
 
+	const MAINLOGIC_STATUS_ACTIVE 					= 'G_MainLogic.status.Active';
 	const MAINLOGIC_STATUS_DILUTIONEVOLUTION 		= 'G_MainLogic.status.Dilution_Evolution';
 	const MAINLOGIC_STATUS_INJECTIONEVOLUTION 		= 'G_MainLogic.status.Injection_Evolution';
 	const MAINLOGIC_STATUS_RESTARTTYPE 				= 'G_MainLogic.status.Restart_Type';

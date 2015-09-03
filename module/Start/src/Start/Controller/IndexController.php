@@ -60,6 +60,17 @@ class IndexController extends AbstractActionController
 		return $jsonModel;
 	}
 	
+	public function initpingAction() {
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$active = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ACTIVE);
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('active', (!$active) ? false : true);
+		
+		return $jsonModel;
+	}
+	
 	public function initspAction() {
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
