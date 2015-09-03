@@ -30,4 +30,22 @@ class InputDrug
 		$this->activityconc = (!empty($data['activityconc'])) ? $data['activityconc'] : null;
 		$this->activitycalib = (!empty($data['activitycalib'])) ? $data['activitycalib'] : null;
 	}
+	
+	public function toArray() {
+		$data = [];
+		
+		$data['id'] = $this->id;
+		$data['inputdate'] = $this->inputdate;
+		$data['userid'] = $this->userid;
+		$data['drugid'] = $this->drugid;
+		$data['batchnum'] = $this->batchnum;
+		$data['calibrationtime'] = $this->calibrationtime;
+		$data['expirationtime'] = $this->expirationtime;
+		$data['vialvol'] = $this->vialvol;
+		$data['activity'] = $this->activity;
+		$data['activityconc'] = $this->activityconc;
+		$data['activitycalib'] = $this->activitycalib;
+		
+		return $data;
+	}
 }

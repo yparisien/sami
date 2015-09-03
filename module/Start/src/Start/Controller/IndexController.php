@@ -103,7 +103,7 @@ class IndexController extends AbstractActionController
 				$keyPeriod 		= str_ireplace('@@n@@', $n+1, RobotConstants::ISOTOPES_N_HALFLIFE);
 				
 				$id = $robotService->receive($keyID);
-// 				$shortName = $robotService->receive($keyShortName);
+ 				$shortName = $robotService->receive($keyShortName);
 				$name = $robotService->receive($keyName);
 				$period = $robotService->receive($keyPeriod);
 // 				$coefficient = $robotService->receive("Isotopes[$n].coefficient");
@@ -111,6 +111,7 @@ class IndexController extends AbstractActionController
 				
 				$rn = new Radionuclide();
  				$rn->id = (int) $id;
+ 				$rn->code = $shortName;
 				$rn->name = $name;
 				$rn->period = (int) $period;
 				$rn->coefficient = (float) $coefficient;

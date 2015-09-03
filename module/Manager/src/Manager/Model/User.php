@@ -21,4 +21,18 @@ class User
 		$this->lastname		= (!empty($data['lastname'])) ? $data['lastname'] : null;
 		$this->visible		= (!empty($data['visible'])) ? $data['visible'] : null;
 	}
+	
+	public function toArray() {
+		$tab = [];
+		
+		$tab['id'] = $this->id;
+		$tab['login'] = $this->login;
+		$tab['password'] = $this->password;
+		$tab['admin'] = $this->admin;
+		$tab['firstname'] = $this->firstname;
+		$tab['lastname'] = $this->lastname;
+		$tab['visible'] = $this->visible;
+		
+		return $tab;
+	}
 }

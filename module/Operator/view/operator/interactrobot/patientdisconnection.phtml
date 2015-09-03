@@ -44,27 +44,24 @@
 											</tr>
 											<tr>
 												<td><?php echo $injection['comments']; ?></td>
-												<td><?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?></td>
+												<td><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></td>
 											</tr>
 											<tr>
 												<td><?php echo $injection['unique_id']; ?></td>
 												<td><?php echo $injection['injection_time']; ?></td>
 											</tr>
 											<tr>
-												<td><?php echo $examination->name; ?></td>
-												<td><?php echo $curdrug->batchnum; ?></td>
+												<td><?php echo $examination['name']; ?></td>
+												<td><?php echo $curdrug['batchnum']; ?></td>
 											</tr>
 											<tr>
-												<td><?php echo $drug->name; ?></td>
-												<td><div style="word-break: break-all;"><?php echo $sourcekit->serialnumber . ':' . $patientkit->serialnumber; ?></div></td>
+												<td><?php echo $drug['name']; ?></td>
+												<td><div style="word-break: break-all;"><?php echo $sourcekit['serialnumber'] . ':' . $patientkit['serialnumber']; ?></div></td>
 											</tr>
 										</table>
 									</div>
 								</div>
 							</div>
-							
-							<?php var_dump($injection); ?>
-							
 							
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -81,19 +78,18 @@
 									    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;"><?php echo $timeInjection->format('H:i'); ?></div>
 									  		</div>
 											<div class="row">
-												<div class="col-xs-10 col-xs-offset-2 no-padding">Metatrace FDG</div>
+												<div class="col-xs-10 col-xs-offset-2 no-padding"><?php echo $drug['name']; ?></div>
 											</div>
 											<div class="row">
-												<div class="col-xs-5 col-xs-offset-2 no-padding">124,23 MBq</div>
-												<div class="col-xs-5 no-padding">345,08 MBq</div>
+												<div class="col-xs-7 col-xs-offset-5 no-padding"><?php echo $injection['activity'] . ' ' . $unit; ?></div>
 											</div>
 											<div class="row">
-												<div class="col-xs-5 no-padding"><?php echo $radionuclide['']; ?></div>
-												<div class="col-xs-7 no-padding">Lot:<span><?php echo $curdrug['batchnum']; ?></span></div>
+												<div class="col-xs-5 no-padding"><?php echo $radionuclide['code']; ?></div>
+												<div class="col-xs-7 no-padding"><?php echo $this->translate('Serial : '); ?><span><?php echo $curdrug['batchnum']; ?></span></div>
 											</div>
 											<div class="row">
 												<div class="col-xs-5 no-padding">N&ordm; <span><?php echo $injection['unique_id']; ?></span></div>
-												<div class="col-xs-7 no-padding"><?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?></div>
+												<div class="col-xs-7 no-padding"><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></div>
 											</div>
 										</div>
 									</div>
