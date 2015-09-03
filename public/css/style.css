@@ -35,3 +35,44 @@ div.container a.brand {
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+
+
+.non-printable {
+	display: inherit;
+}
+ 
+#printSection {
+	display: none;
+}
+
+.no-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.print-container {
+	border: 1px solid black;
+	width: 51mm;
+	height: 28mm;
+	font-size: 2.5mm;
+	font-family: sans-serif;
+	margin-left: auto;
+	margin-right: auto;
+	zoom: 1.5;
+}
+
+.content {
+	margin: 5mm;
+}
+
+.print-container:before {
+	content: " ";
+	display: table;
+}
+
+.print-container:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+

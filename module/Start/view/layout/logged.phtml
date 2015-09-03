@@ -20,6 +20,7 @@ if ($virtualkeyboardEnable === true) {
 						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
 						->prependStylesheet($this->basepath() . '/css/keyboard.css')
 						->prependStylesheet($this->basePath() . '/css/style.css')
+						->prependStylesheet($this->basePath() . '/css/print.css', 'print')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-patch.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
@@ -46,75 +47,77 @@ if ($virtualkeyboardEnable === true) {
 		<?php echo $this->headStyle(); ?>
 	</head>
 	<body>
-		<noscript style="width: 100%; height: 100%; position: absolute; background-color: white; z-index: 10000;">
-			<div class="col-md-3"></div>
-			<div class="col-md-6">
-				<div class="alert alert-danger" role="alert">
-					<p><?php echo $this->translate('The Javascript of your browser seems to be desactivated.'); ?></p>
-					<p><?php echo $this->translate('Please enable it to use S.A.M.I or contact the support.'); ?></p>
+		<div class="non-printable">
+			<noscript style="width: 100%; height: 100%; position: absolute; background-color: white; z-index: 10000;">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<div class="alert alert-danger" role="alert">
+						<p><?php echo $this->translate('The Javascript of your browser seems to be desactivated.'); ?></p>
+						<p><?php echo $this->translate('Please enable it to use S.A.M.I or contact the support.'); ?></p>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-3"></div>
-		</noscript>
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="col-md-3"></div>
+			</noscript>
+			
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only"><?php echo $this->translate('Delphinnove')?></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="<?php echo $this->url('home') ?>">
+							<img src="/img/delphinnove_logo.png" style="width:90px;height:30px;position:relative;bottom:2px;"/>
+							<?php echo $this->translate('S.A.M.I.'); ?>
+						</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<?php if($this->isAdmin){?>
+							<li><a href="<?php echo $this->url('manager') ?>"><?php echo $this->translate('Manager') ?></a></li>
+							<?php } ?>
+							<li><a href="<?php echo $this->url('operator') ?>"><?php echo $this->translate('Operator') ?></a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $this->login;?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo $this->url('log', array('action'=>'changepwd')) ?>"><span class="glyphicon glyphicon-edit"></span> <?php echo $this->translate('Change password') ?></a></li>
+									<li><a href="<?php echo $this->url('log', array('action'=>'logout'))?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->translate('Logout') ?></a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
 			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only"><?php echo $this->translate('Delphinnove')?></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="<?php echo $this->url('home') ?>">
-						<img src="/img/delphinnove_logo.png" style="width:90px;height:30px;position:relative;bottom:2px;"/>
-						<?php echo $this->translate('S.A.M.I.'); ?>
-					</a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<?php if($this->isAdmin){?>
-						<li><a href="<?php echo $this->url('manager') ?>"><?php echo $this->translate('Manager') ?></a></li>
-						<?php } ?>
-						<li><a href="<?php echo $this->url('operator') ?>"><?php echo $this->translate('Operator') ?></a></li>
-					</ul>
+				<?php $flash = $this->flashMessenger(); ?>
+				<?php 
+					$flash->setMessageOpenFormat('<div%s>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+							&times;
+						</button>
+						<ul><li>')
+					->setMessageSeparatorString('</li><li>')
+					->setMessageCloseString('</li></ul></div>');
+					
+					echo $flash->render('error',	array('alert', 'alert-dismissable', 'alert-danger'));
+					echo $flash->render('info',		array('alert', 'alert-dismissable', 'alert-info'));
+					echo $flash->render('default',	array('alert', 'alert-dismissable', 'alert-warning'));
+					echo $flash->render('success',	array('alert', 'alert-dismissable', 'alert-success'));
+				?>
+				<?php echo $this->content; ?>
+				<hr>
+			</div> <!-- /container -->
+			<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+				<div class="container">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $this->login;?> <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="<?php echo $this->url('log', array('action'=>'changepwd')) ?>"><span class="glyphicon glyphicon-edit"></span> <?php echo $this->translate('Change password') ?></a></li>
-								<li><a href="<?php echo $this->url('log', array('action'=>'logout'))?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->translate('Logout') ?></a></li>
-							</ul>
-						</li>
+						<li><p class="navbar-text"><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></p></li>
 					</ul>
-				</div><!--/.nav-collapse -->
-			</div>
-		</nav>
-		<div class="container">
-			<?php $flash = $this->flashMessenger(); ?>
-			<?php 
-				$flash->setMessageOpenFormat('<div%s>
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-						&times;
-					</button>
-					<ul><li>')
-				->setMessageSeparatorString('</li><li>')
-				->setMessageCloseString('</li></ul></div>');
-				
-				echo $flash->render('error',	array('alert', 'alert-dismissable', 'alert-danger'));
-				echo $flash->render('info',		array('alert', 'alert-dismissable', 'alert-info'));
-				echo $flash->render('default',	array('alert', 'alert-dismissable', 'alert-warning'));
-				echo $flash->render('success',	array('alert', 'alert-dismissable', 'alert-success'));
-			?>
-			<?php echo $this->content; ?>
-			<hr>
-		</div> <!-- /container -->
-		<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-			<div class="container">
-				<ul class="nav navbar-nav navbar-right">
-					<li><p class="navbar-text"><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></p></li>
-				</ul>
-			</div>
-		</nav>
+				</div>
+			</nav>
 		<?php 
 		$this->inlineScript()->appendScript("history.pushState(null, null, location.href); window.onpopstate = function(event) { history.go(1); };");
 		$this->inlineScript()->appendScript('
@@ -133,6 +136,34 @@ if ($virtualkeyboardEnable === true) {
 				});
 			});
 		');
+		
+		$this->inlineScript()->appendScript('
+			function printElement(elem, append, delimiter) 
+			{
+				var domClone = elem.cloneNode(true);
+			
+			    var $printSection = document.getElementById("printSection");
+			
+			    if (!$printSection) {
+			        $printSection = document.createElement("div");
+			        $printSection.id = "printSection";
+			        document.body.appendChild($printSection);
+			    }
+			
+			    if (append !== true) {
+			        $printSection.innerHTML = "";
+			    } else if (append === true) {
+			        if (typeof(delimiter) === "string") {
+			            $printSection.innerHTML += delimiter;
+			        }
+			        else if (typeof(delimiter) === "object") {
+			            $printSection.appendChlid(delimiter);
+			        }
+			    }
+			
+			    $printSection.appendChild(domClone);
+				
+			}');
 		
 		if ($appendSupervisorJsTimeout === true) {
 			$this->inlineScript()->appendScript('
@@ -315,5 +346,6 @@ if ($virtualkeyboardEnable === true) {
 </div>
 <?php } ?>
 <?php var_dump($_SESSION); ?>
+		</div>
 	</body>
 </html>

@@ -1,3 +1,4 @@
+<?php $timeInjection = DateTime::createFromFormat('d-m-Y H:i:s', date('d-m-Y') . ' ' . $injection['injection_time']); ?>
 <ol class="breadcrumb">
 	<li><a href="<?php echo $this->url('operator'); ?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard'); ?></a></li>
 	<li><?php echo $this->translate('Injection'); ?></li>
@@ -19,34 +20,81 @@
 						<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation'); ?></button>
 					</div>
 				</div>
-				<div id="sticker">
+				<div id="resume">
 					<div class="row">
 						<div class="col-sm-10 col-sm-offset-1">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<?php echo $this->translate('Printing sticker'); ?>
+									<?php echo $this->translate('Informations resume'); ?>
 								</div>
 								<div class="panel-body">
-									<div class="row">
-										<div class="col-md-6">
-											<?php echo $patient['lastname']; ?><br />
-											<?php echo $patient['firstname']; ?><br />
-											<?php echo $patient['birthdate']; ?><br />
-											<?php echo $injection['comments']; ?><br />
-											<?php echo $injection['unique_id']; ?><br />
-											<?php echo $examination->name; ?><br />
-											<?php echo $radionuclide->name; ?><br />
-											<?php echo $patient['weight']; ?>kg<br />
-										</div>
-										<div class="col-md-6">
-											<?php echo $injection['activity']; ?> <?php echo $unit ; ?><br />
-											<span id="location"></span><br />
-											<?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?><br />
-											<?php echo $injection['injection_time']; ?><br />
-											<?php echo $drug->name; ?><br />
-											<?php echo $curdrug->batchnum; ?><br />
-											<?php echo $sourcekit->serialnumber; ?><br />
-											<?php echo $patientkit->serialnumber; ?><br />
+									<div class="row table-responsive">
+										<table class="table table-bordered table-condensed">
+											<tr>
+												<td style="width: 50%;"><?php echo $patient['lastname']; ?></td>
+												<td style="width: 50%;"><?php echo $patient['weight']; ?>kg</td>
+											</tr>
+											<tr>
+												<td><?php echo $patient['firstname']; ?></td>
+												<td><?php echo $injection['activity']; ?> <?php echo $unit ; ?></td>
+											</tr>
+											<tr>
+												<td><?php echo $patient['birthdate']; ?></td>
+												<td><?php echo $injection['location']; ?></td>
+											</tr>
+											<tr>
+												<td><?php echo $injection['comments']; ?></td>
+												<td><?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?></td>
+											</tr>
+											<tr>
+												<td><?php echo $injection['unique_id']; ?></td>
+												<td><?php echo $injection['injection_time']; ?></td>
+											</tr>
+											<tr>
+												<td><?php echo $examination->name; ?></td>
+												<td><?php echo $curdrug->batchnum; ?></td>
+											</tr>
+											<tr>
+												<td><?php echo $drug->name; ?></td>
+												<td><div style="word-break: break-all;"><?php echo $sourcekit->serialnumber . ':' . $patientkit->serialnumber; ?></div></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							
+							<?php var_dump($injection); ?>
+							
+							
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<?php echo $this->translate('Printing sticker'); ?>
+									<button class="btn btn-primary pull-right" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="panel-body">
+									<div class="print-container" id="sticker">
+										<div class="content">
+											<div class="row">
+									    		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 1em;">&#9762;</span></div>
+									    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
+									    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;"><?php echo $timeInjection->format('H:i'); ?></div>
+									  		</div>
+											<div class="row">
+												<div class="col-xs-10 col-xs-offset-2 no-padding">Metatrace FDG</div>
+											</div>
+											<div class="row">
+												<div class="col-xs-5 col-xs-offset-2 no-padding">124,23 MBq</div>
+												<div class="col-xs-5 no-padding">345,08 MBq</div>
+											</div>
+											<div class="row">
+												<div class="col-xs-5 no-padding"><?php echo $radionuclide['']; ?></div>
+												<div class="col-xs-7 no-padding">Lot:<span><?php echo $curdrug['batchnum']; ?></span></div>
+											</div>
+											<div class="row">
+												<div class="col-xs-5 no-padding">N&ordm; <span><?php echo $injection['unique_id']; ?></span></div>
+												<div class="col-xs-7 no-padding"><?php echo strtoupper($operator->lastname); ?> <?php echo ucfirst(strtolower($operator->firstname)); ?></div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -93,7 +141,7 @@
 </div>
 <script type="text/javascript">
 	$(function(){
-		$('#sticker').hide();
+		$('#resume').hide();
 		$('#nextstep').hide();
 		$('#location_validation').click(function(){
 			$.ajax({
@@ -102,7 +150,7 @@
 				data: { location: $('#location_input').val()}
 			});
 			$('#location').html($('#location_input').val());
-			$('#sticker').show();
+			$('#resume').show();
 		});
 		$('#activity-attime').datetimepicker({
 			language: 'en',
@@ -149,5 +197,11 @@
 			$("#activity").html(data.activity);
 		});
 		//setTimeout(function(){loadActivityData();}, 5000);
+	}
+
+
+	function	printSticker() {
+		printElement(document.getElementById("sticker"));
+		window.print();
 	}
 </script>

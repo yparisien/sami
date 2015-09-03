@@ -699,7 +699,7 @@ class InputdataController extends AbstractActionController
 					'G_Patient.Input.Prenom' => $oPatient->firstname,
 					'G_Patient.Input.DateN' => $oPatient->birthdate,
 					'G_Patient.Input.Ordonnancier' => $oRequest->getPost('expeditornum'),
-					'G_Patient.Input.ActToInj' => $oRequest->activity,
+					'G_Patient.Input.ActToInj' => $oRequest->getPost('activity'),
 					'G_Patient.Input.Med_Name' => $oDrug->name,
 					'G_Patient.Input.Poids' => $oRequest->getPost('weight'),
 					'G_Patient.Input.Type_Exam' => $oExamination->name,
