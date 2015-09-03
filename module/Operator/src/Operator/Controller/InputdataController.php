@@ -483,6 +483,9 @@ class InputdataController extends AbstractActionController
 
 				$oContainer = new Container('injection_profile');
 				$oContainer->patientkitid = $oKit->id;
+				
+				$robotService = $this->getServiceLocator()->get('RobotService');
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_KITPATIENTSERIAL => $oKit->serialnumber));
 
 				return $this->redirect()->toRoute('setup', array('action'=>'loadkitpatient'));
 			}
