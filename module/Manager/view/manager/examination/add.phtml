@@ -20,7 +20,8 @@
 					<div class="form-group">
 						<label for="drugid" class="control-label col-md-2"><?php echo $this->translate("Drug")?></label>
 						<div class="col-md-6">
-							<select class="form-control" id="drugid" name="drugid">
+							<select class="form-control" id="drugid" name="drugid" required>
+								<option value=""><?php echo $this->translate("Select a drug")?></option>
 							<?php foreach ($this->drugs as $drug) { ?>
 								<option value="<?php echo $drug->id;?>"><?php echo $drug->name;?></option>
 							<?php } ?>

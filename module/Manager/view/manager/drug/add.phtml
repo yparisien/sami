@@ -20,7 +20,8 @@
 					<div class="form-group">
 						<label for="radionuclideid" class="control-label col-md-2"><?php echo $this->translate("Radionuclide")?></label>
 						<div class="col-md-6">
-							<select class="form-control" id="radionuclideid" name="radionuclideid">
+							<select class="form-control" id="radionuclideid" name="radionuclideid" required>
+								<option value=""><?php echo $this->translate('Choose a radionuclide'); ?></option>
 							<?php foreach ($this->radionuclides as $radionuclide) { ?>
 								<option value="<?php echo $radionuclide->id;?>"><?php echo $radionuclide->name;?></option>
 							<?php } ?>
