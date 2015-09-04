@@ -47,4 +47,10 @@ class RadionuclideTable
 			$this->tableGateway->insert($data);
 		}
 	}
+	
+	public function count()
+	{
+		$resultSet = $this->tableGateway->select();
+		return $resultSet->count();
+	}
 }

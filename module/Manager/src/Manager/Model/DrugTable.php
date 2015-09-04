@@ -67,4 +67,10 @@ class DrugTable
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}
+	
+	public function count()
+	{
+		$resultSet = $this->tableGateway->select();
+		return $resultSet->count();
+	}
 }
