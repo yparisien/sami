@@ -16,7 +16,13 @@ use Zend\View\Model\ViewModel;
 class OperatorController extends AbstractActionController
 {
 	protected $systemTable;
+	protected $drugTable;
+	protected $examinationTable;
 
+	/**
+	 * 
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -26,6 +32,20 @@ class OperatorController extends AbstractActionController
 		}
 		return $this->systemTable;
 	}
+	
+	/**
+	 * 
+	 * @return \Manager\Model\ExaminationTable
+	 */
+	public function getExaminationTable()
+	{
+		if(!$this->examinationTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->examinationTable = $sm->get('Manager\Model\ExaminationTable');
+		}
+		return $this->examinationTable;
+	}	
 
 	public function indexAction()
 	{
@@ -33,7 +53,9 @@ class OperatorController extends AbstractActionController
 		$config = $sm->get('Config');
 		
 		$aParam = array();
-
+		
+		$nbExams = $this->getExaminationTable()->count();
+		
 		// for the moment, retrieve steps status but use a clever way for final version
 		$oContainer = new Container('automate_setup');
 		$aParam['step'] = $oContainer;
@@ -48,7 +70,15 @@ class OperatorController extends AbstractActionController
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
 		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
 		$aParam['needScan'] = true;
-
+		$aParam['hasExams'] = true;
+		$aParam['nbDrugs'] = $nbDrugs;
+		$aParam['nbExams'] = $nbExams;
+		
+		
+		if ($nbDrugs == 0 || $nbExams == 0) {
+			$aParam['hasExams'] = false;
+		}
+		
 		return new ViewModel($aParam);
 	}
 	
