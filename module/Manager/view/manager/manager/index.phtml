@@ -1,6 +1,25 @@
 <ol class="breadcrumb">
 	<li class="active"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Supervior dashboard');?></li>
 </ol>
+<?php if ($noRadioNuclides === true) { ?>
+<div class="alert alert-danger" role="alert">
+	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
+	<p><?php echo sprintf('%s <a href="' . $this->url("restart") . '" class="alert-link">%s</a> %s', $this->translate('No radionuclides found in database. Please '), $this->translate('restart the application'), $this->translate(' or (if it fails) reboot completely the system.')); ?></p>
+	<p><?php echo $this->translate('');?></p>
+</div>
+<?php } ?>
+<?php if ($noDrugs === true) { ?>
+<div class="alert alert-warning" role="alert">
+	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
+	<p><?php echo sprintf('%s <a href="' . $this->url("drug", array("action" => "add")) . '" class="alert-link">%s</a> %s', $this->translate('No drugs found in database. Please '), $this->translate('create'), $this->translate(' at least one drug.')); ?></p>
+</div>
+<?php } ?>
+<?php if ($noExams === true) { ?>
+<div class="alert alert-warning" role="alert">
+	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
+	<p><?php echo sprintf('%s <a href="' . $this->url("examination", array("action" => "add")) . '" class="alert-link">%s</a> %s', $this->translate('No exam found in database. Please '), $this->translate('create'), $this->translate(' at least one exam.')); ?></p>
+</div>
+<?php } ?>
 <div class="well">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">

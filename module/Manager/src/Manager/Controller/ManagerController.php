@@ -16,6 +16,20 @@ class ManagerController extends AbstractActionController
 {
 	public function indexAction()
 	{
-		return new ViewModel();
+		/* @var $radionuclideTable \Manager\Model\RadionuclideTable */
+		/* @var $drugTable \Manager\Model\DrugTable */
+		/* @var $examinationTable \Manager\Model\ExaminationTable */
+		
+		$sm = $this->getServiceLocator();
+		$radioTable = $sm->get('Manager\Model\RadionuclideTable');
+		$drugTable  = $sm->get('Manager\Model\DrugTable');
+		$examTable  = $sm->get('Manager\Model\ExaminationTable');
+		
+		$noRadios = ($radioTable->count() > 0) ? false : true;
+		$noDrugs  = ($drugTable->count() > 0)  ? false : true;
+		$noExams  = ($examTable->count() > 0)  ? false : true;
+		
+		return new ViewModel(array("noRadioNuclides" => $noRadios, "noDrugs" => $noDrugs, "noExams" => $noExams));
 	}
 }
+
