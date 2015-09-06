@@ -1,6 +1,13 @@
 <ol class="breadcrumb">
 	<li class="active"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></li>
 </ol>
+<?php if ($hasExams === false) { ?>
+<div class="alert alert-danger" role="alert">
+	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
+	<p><?php echo sprintf('%s <a href="' . $this->url("examination", array("action" => "add")) . '" class="alert-link">%s</a> %s', $this->translate('No exams found in database. Please '), $this->translate('create an exam'), $this->translate(' to start injections.')); ?></p>
+	<p><?php echo $this->translate('');?></p>
+</div>
+<?php } else { ?>
 <div class="well">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
@@ -115,3 +122,4 @@
 		</div>
 	</div>
 </div>
+<?php } ?>

@@ -70,14 +70,7 @@ class OperatorController extends AbstractActionController
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
 		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
 		$aParam['needScan'] = true;
-		$aParam['hasExams'] = true;
-		$aParam['nbDrugs'] = $nbDrugs;
-		$aParam['nbExams'] = $nbExams;
-		
-		
-		if ($nbDrugs == 0 || $nbExams == 0) {
-			$aParam['hasExams'] = false;
-		}
+		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
 		
 		return new ViewModel($aParam);
 	}
