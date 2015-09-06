@@ -31,6 +31,7 @@ class RadionuclideTable
 	{
 		$data = array(
 			'id'			=> (int) $radionuclide->id,
+			'code'			=> $radionuclide->code,
 			'name'			=> $radionuclide->name,
 			'period'		=> (int) $radionuclide->period,
 			'coefficient'	=> (float) $radionuclide->coefficient,
