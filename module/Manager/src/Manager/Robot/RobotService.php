@@ -167,6 +167,9 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$try = (isset($fr->tryconnect) && ($fr->tryconnect == 5)) ? 0 : $fr->tryconnect + 1 ;
 				$fr->tryconnect = $try;
 				break;
+			case RobotConstants::MAINLOGIC_STATUS_MEASUREUNIT:
+				$mRet = 'mbq';
+				break;
 			default:
 				die($variable);
 				break;

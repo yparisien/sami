@@ -70,16 +70,38 @@
 				$("#loading-progress").addClass("progress-bar-warning");
 				$("#loading-error").html(nbConnectionAttempt + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
 				$("#loading-error").show();
+				//GOTO STEP 1 LOOP
 				initping();
 			} else {
 				$("#loading-progress").removeClass("progress-bar-warning");
 				$("#loading-error").hide();
 				moveProgressBar(0, 20);
-				initrn();
+				//GOTO STEP 2
+				initmu();
 			}
 		});
 	}
 
+	/*
+	 * Chargement de l'unité de mesure
+	 */
+	function initmu() {
+		$.ajax({
+			url: "<?php echo $this->url('initmu', array()); ?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(10);
+				//GOTO STEP 2
+				initrn();
+			}
+			else {
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Loading of measure unit failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
+			}
+		});
+	}
+	
 	/*
 	 * Chargement des radionucléides
 	 */
@@ -88,7 +110,7 @@
 			url: "<?php echo $this->url('initrn', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(40);
+				moveProgressBar(30);
 				initsp();
 			}
 			else {
@@ -117,6 +139,7 @@
 	}
 
 	$(function() {
+		//GOTO STEP 1
 		initping();
 	});
 

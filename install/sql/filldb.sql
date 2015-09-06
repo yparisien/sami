@@ -147,16 +147,16 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE `system` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(10) NOT NULL,
-  `mode` enum('demo','prod') NOT NULL,
   `unit` enum('mbq','mci') NOT NULL,
   `genuinekit` tinyint(1) NOT NULL,
+  `maxactivity` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 --
 -- Dumping data for table `system`
 --
 
-INSERT INTO `system` VALUES (1,'fr_FR','prod','mbq',1);
+INSERT INTO `system` VALUES (1,'fr_FR','mbq',1, 0);
 
 --
 -- Table structure for table `tmp_injection`

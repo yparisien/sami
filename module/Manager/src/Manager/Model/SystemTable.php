@@ -43,6 +43,7 @@ class SystemTable
 			'language'		=> $system->language,
 			'genuinekit'	=> $system->genuinekit,
 			'maxactivity'	=> $system->maxactivity,
+			'unit'			=> $system->unit,
 		);
 
 		$id = (int) $system->id;

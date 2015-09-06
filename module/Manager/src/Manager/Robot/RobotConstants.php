@@ -32,6 +32,7 @@ class RobotConstants {
 	const MAINLOGIC_STATUS_ACTIVE 					= 'G_MainLogic.status.Active';
 	const MAINLOGIC_STATUS_DILUTIONEVOLUTION 		= 'G_MainLogic.status.Dilution_Evolution';
 	const MAINLOGIC_STATUS_INJECTIONEVOLUTION 		= 'G_MainLogic.status.Injection_Evolution';
+	const MAINLOGIC_STATUS_MEASUREUNIT				= 'G_MainLogic.status.Measure_Unit';
 	const MAINLOGIC_STATUS_RESTARTTYPE 				= 'G_MainLogic.status.Restart_Type';
 	const MAINLOGIC_STATUS_SAMPLINGEVOLUTION 		= 'G_MainLogic.status.Sampling_Evolution';
 	

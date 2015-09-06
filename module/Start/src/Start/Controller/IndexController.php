@@ -20,8 +20,9 @@ use Manager\Model\Radionuclide;
 
 class IndexController extends AbstractActionController
 {
-	protected $storage;
 	protected $authservice;
+	protected $storage;
+	protected $systemTable;
 
 	
 	public function getAuthService()
@@ -42,26 +43,29 @@ class IndexController extends AbstractActionController
 		return $this->storage;
 	}
 	
-	public function initsdAction() {
-		$error = false;
-		$errorMessage = '';
-
-		//TODO Check that all inits are OK
-
-		if ($error === false) {
-			$oContainer = new Container('automate_setup');
-			$oContainer->issetup = true;
+	/**
+	 *
+	 * @return \Manager\Model\SystemTable
+	 */
+	public function getSystemTable()
+	{
+		if(!$this->systemTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->systemTable = $sm->get('Manager\Model\SystemTable');
 		}
-		
-		$jsonModel = new JsonModel();
-		$jsonModel->setVariable('error', $error);
-		$jsonModel->setVariable('errorMessage', $errorMessage);
-	
-		return $jsonModel;
+		return $this->systemTable;
 	}
 	
+	
+	/**
+	 * Initialisation Ping (Vérification activité automate) (STEP 1)
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function initpingAction() {
 		/* @var $robotService RobotService */
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$active = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ACTIVE);
 		
@@ -71,23 +75,12 @@ class IndexController extends AbstractActionController
 		return $jsonModel;
 	}
 	
-	public function initspAction() {
-		/* @var $robotService RobotService */
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		
-		$error = false;
-		$errorMessage = '';
-		
-		$restartType = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE);
-		//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
-		
-		$jsonModel = new JsonModel();
-		$jsonModel->setVariable('error', $error);
-		$jsonModel->setVariable('errorMessage', $errorMessage);
-		
-		return $jsonModel;
-	}	
 	
+	/**
+	 * Initialisation des radionucléides (STEP 2)
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function initrnAction() {
 		/* @var $robotService RobotService */
 		/* @var $rnTable RadionuclideTable */
@@ -137,7 +130,82 @@ class IndexController extends AbstractActionController
 		
 		return $jsonModel;
 	}
+	
+	/**
+	 * Initialisation Unité de mesure (STEP 3)
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function initmuAction() {
+		/* @var $robotService RobotService */
+	
+		$error = false;
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$measureUnit = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_MEASUREUNIT);
 
+		$oSystem = $this->getSystemTable()->getSystem();
+		
+		if ($measureUnit == 'mbq' || $measureUnit == 'mci') {
+			$oSystem->unit = $measureUnit;
+			$this->getSystemTable()->saveSystem($oSystem);
+		} else {
+			$error = true;
+		}
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+	
+		return $jsonModel;
+	}
+
+	/**
+	 * Initialisation de la position de démarrage du système
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function initspAction() {
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
+		$error = false;
+		$errorMessage = '';
+		
+		$restartType = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE);
+		//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
+		
+		return $jsonModel;
+	}	
+
+	/**
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function initsdAction() {
+		$error = false;
+		$errorMessage = '';
+
+		//TODO Check that all inits are OK
+
+		if ($error === false) {
+			$oContainer = new Container('automate_setup');
+			$oContainer->issetup = true;
+		}
+		
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
+	
+		return $jsonModel;
+	}
+
+	/**
+	 * 
+	 * @return \Zend\Http\Response
+	 */
 	public function restartAction() {
 		//Reinitilise les session du setup Automate à vide
 		$oSetup = new Container('automate_setup');
@@ -175,6 +243,10 @@ class IndexController extends AbstractActionController
 		return $this->redirect()->toRoute('home');
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+	 */
 	public function indexAction()
 	{
 		$oContainer = new Container('automate_setup');
