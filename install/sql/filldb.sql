@@ -232,7 +232,7 @@ INSERT INTO `user` VALUES (1,'DelphInnove','1eaa1c5c50a7ceb103fcb8eae65395a5372a
 -- Final view structure for view `view_drug`
 --
 
-DROP TABLE IF EXISTS `view_drug`;
+DROP VIEW IF EXISTS `view_drug`;
 CREATE VIEW `view_drug` AS
     SELECT 
         `d`.`id` AS `id`,
@@ -253,7 +253,7 @@ CREATE VIEW `view_drug` AS
 -- Final view structure for view `view_examination`
 --
 
-DROP TABLE IF EXISTS `view_examination`;
+DROP VIEW IF EXISTS `view_examination`;
 CREATE VIEW `view_examination` AS
     SELECT 
         `e`.`id` AS `id`,
@@ -273,7 +273,7 @@ CREATE VIEW `view_examination` AS
 -- Final view structure for view `view_export`
 --
 
-DROP TABLE IF EXISTS `view_export`;
+DROP VIEW IF EXISTS `view_export`;
 CREATE VIEW `view_export` AS 
 SELECT 	`i`.`type` AS `type`,
 		`i`.`injection_time` AS `injectiontime`,
@@ -297,7 +297,7 @@ SELECT 	`i`.`type` AS `type`,
 -- Final view structure for view `view_injected`
 --
 
-DROP TABLE IF EXISTS `view_injected`;
+DROP VIEW IF EXISTS `view_injected`;
 CREATE VIEW `view_injected` AS
     SELECT 
         `i`.`type` AS `type`,
