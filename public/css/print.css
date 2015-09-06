@@ -1,5 +1,7 @@
 body {
 	color: black;
+	padding: 0;
+	margin: 0;
 }
 
 .bootstrap-datetimepicker-widget {
@@ -24,10 +26,9 @@ body {
 }
 
 .print-container {
-	border: 1px solid black;
 	width: 51mm;
 	height: 28mm;
-	font-size: 2.5mm;
+	font-size: 3mm;
 	font-family: sans-serif;
 }
 
@@ -43,11 +44,11 @@ body {
 }
 
 .content {
-	margin: 5mm;
+	margin: 3mm;
 }
 
-.row {
-	
+.row.spacer {
+	height: 1mm;
 }
 
 .row:before {
