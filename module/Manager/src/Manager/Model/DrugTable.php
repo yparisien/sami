@@ -36,6 +36,23 @@ class DrugTable
 		}
 		return $row;
 	}
+	
+	/**
+	 *
+	 * @param string $dci
+	 * @throws \Exception
+	 * @return Drug
+	 */
+	public function getDrugByDci($dci)
+	{
+		$rowset = $this->tableGateway->select(array('dci' => $dci));
+		$row = $rowset->current();
+		if (!$row)
+		{
+			throw new \Exception("Could not find drug with dci $dci");
+		}
+		return $row;
+	}
 
 	public function saveDrug(Drug $drug)
 	{

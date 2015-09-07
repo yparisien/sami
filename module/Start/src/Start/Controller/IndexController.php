@@ -17,11 +17,15 @@ use Manager\Robot\RobotConstants;
 use Manager\Robot\RobotService;
 use Manager\Model\RadionuclideTable;
 use Manager\Model\Radionuclide;
+use Manager\Model\Drug;
+use Logger\Model\InputDrug;
 
 class IndexController extends AbstractActionController
 {
 	protected $authservice;
 	protected $storage;
+	protected $drugTable;
+	protected $inputdrugTable;
 	protected $systemTable;
 
 	
@@ -57,6 +61,34 @@ class IndexController extends AbstractActionController
 		return $this->systemTable;
 	}
 	
+	
+	/**
+	 *
+	 * @return \Manager\Model\DrugTable
+	 */
+	public function getDrugTable()
+	{
+		if(!$this->drugTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->drugTable = $sm->get('Manager\Model\DrugTable');
+		}
+		return $this->drugTable;
+	}
+	
+	/**
+	 *
+	 * @return \Logger\Model\InputDrugTable
+	 */
+	public function getInputdrugTable()
+	{
+		if(!$this->inputdrugTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->inputdrugTable = $sm->get('Logger\Model\InputDrugTable');
+		}
+		return $this->inputdrugTable;
+	}
 	
 	/**
 	 * Initialisation Ping (Vérification activité automate) (STEP 1)
@@ -158,6 +190,45 @@ class IndexController extends AbstractActionController
 		return $jsonModel;
 	}
 
+	/**
+	 * Initialisation présence Médicament (Vérification médicament chargé) (STEP 4 4.1)
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function inithmlAction() {
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+	
+		$error = false;
+	
+		$oContainer = new Container('automate_setup');
+		
+		$hasMed = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED);
+		if ($hasMed) {
+			$medcode = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
+			
+			$drug = $this->getDrugTable()->getDrugByDci($medcode);
+			$inputdrug = $this->getInputdrugTable()->getLastByDrugId($drug->id);
+			
+			if ($drug instanceof Drug && $inputdrug instanceof InputDrug) {
+				$oContainer->drugspecified = true;
+				$oContainer->drugid = $drug->id;
+				$oContainer->inputdrugid = $inputdrug->id;
+			}
+		}
+		
+// 		'sourcekitscanned' => boolean true
+// 		'sourcekitbarcode' => string '90830284902384238904823098402398402' (length=35)
+// 		'sourcekitid' => string '1' (length=1)
+// 		'sourcekitloaded' => boolean true
+	
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('hasmed', $hasMed);
+	
+		return $jsonModel;
+	}
+	
 	/**
 	 * Initialisation de la position de démarrage du système
 	 * 

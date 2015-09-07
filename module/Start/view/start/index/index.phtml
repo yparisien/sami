@@ -90,8 +90,8 @@
 			url: "<?php echo $this->url('initmu', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(10);
-				//GOTO STEP 2
+				moveProgressBar(20);
+				//GOTO STEP 3
 				initrn();
 			}
 			else {
@@ -110,12 +110,33 @@
 			url: "<?php echo $this->url('initrn', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(30);
-				initsp();
+				moveProgressBar(20);
+				//GOTO STEP 4
+				inithml();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Loading of radionuclides failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
+			}
+		});
+	}
+
+	/*
+	 * Vérification et chargement du médicament
+	 */
+	 function inithml() {
+		$.ajax({
+			url: "<?php echo $this->url('inithml', array()); ?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(20);
+				//GOTO STEP 5
+				initsp();
+			}
+			else {
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Check of loaded drug failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
 			}
 		});
@@ -130,7 +151,7 @@
 			url: "<?php echo $this->url('initsp', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(40);
+				moveProgressBar(20);
 			}
 			else {
 				//TODO Rajouter message d'erreur

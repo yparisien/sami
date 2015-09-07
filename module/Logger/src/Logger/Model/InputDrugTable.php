@@ -3,6 +3,7 @@
 namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Select;
 
 class InputDrugTable
 {
@@ -21,7 +22,7 @@ class InputDrugTable
 
 	/**
 	 * Get a single InputDrug
-	 * @param unknown $id
+	 * @param integer $id
 	 * @throws \Exception
 	 * @return InputDrug
 	 */
@@ -33,6 +34,27 @@ class InputDrugTable
 		if (!$row)
 		{
 			throw new \Exception("Could not find row $id");
+		}
+		return $row;
+	}
+	
+	/**
+	 * Get a single InputDrug
+	 * @param integer $drugid
+	 * @throws \Exception
+	 * @return InputDrug
+	 */
+	public function getLastByDrugId($drugid)
+	{
+		$drugid  = (int) $drugid;
+		$rowset = $this->tableGateway->select(function (Select $select) use ($drugid) {
+     		$select->where->equalTo('drugid', $drugid);
+			$select->order('inputdate DESC')->limit(1);
+		});
+		$row = $rowset->current();
+		if (!$row)
+		{
+			throw new \Exception("Could not find lastest row with drugid $drugid");
 		}
 		return $row;
 	}
