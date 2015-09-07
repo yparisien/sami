@@ -212,8 +212,8 @@ CREATE TABLE `tmp_patient` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(40) NOT NULL,
-  `password` varchar(40) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
