@@ -1732,7 +1732,7 @@ fieldset[disabled] .form-control {
 textarea.form-control {
   height: auto;
 }
-input[type="date"] {
+input[type="text"] {
   line-height: 34px;
 }
 .form-group {

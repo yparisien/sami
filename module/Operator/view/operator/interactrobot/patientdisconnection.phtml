@@ -14,7 +14,7 @@
 				<div class="row">
 					<label for="lastname" class="col-sm-3 control-label"><?php echo $this->translate('Location of injection'); ?></label>
 					<div class="col-sm-6">
-						<input type="text" tabindex="1" class="form-control input-sm" id="location_input" name="location_input" placeholder="" autocomplete="off" />
+						<input type="text" tabindex="1" class="form-control input-sm" id="location_input" name="location_input" placeholder="" maxlength="200" autocomplete="off" />
 					</div>
 					<div class="col-sm-3">
 						<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation'); ?></button>
@@ -112,7 +112,7 @@
 							<p><?php echo $this->translate('Remaining activity at '); ?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit; ?></p>
 							<p style="float:left;"><?php echo $this->translate('Remaining activity at '); ?>
 								<div id="activity-attime" class="input-group date" style="width: 30%;float: left;">
-									<input name="activityattime" id="activityattime" type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" size="16" autocomplete="off"/>
+									<input name="activityattime" id="activityattime" type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" size="16" maxlength="10" autocomplete="off"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>

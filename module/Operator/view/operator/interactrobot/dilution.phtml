@@ -22,13 +22,13 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
-									<div class="col-md-3"><input  type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" disabled/></div>
+									<div class="col-md-3"><input type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
 									<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
-									<div class="col-md-3"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" disabled/></div>
+									<div class="col-md-3"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
 								</div>
 								<div class="row">
 									<div class="col-md-3">Activité prélevée</div>
-									<div class="col-md-3"><div class="input-group"><input type="text" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
+									<div class="col-md-3"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
 									<div class="col-md-6"></div>
 								</div>
 								<div class="row">
