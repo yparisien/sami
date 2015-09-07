@@ -12,9 +12,9 @@
 			<div class="panel-body">
 				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('examination', array('action'=>'edit'))?>" onsubmit="return checkForm()">
 					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
+						<label for="name" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->examination->name;?>" autocomplete="off" required />
+							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->examination->name;?>" autocomplete="off" maxlength="100" required />
 						</div>
 					</div>
 					<div class="form-group">

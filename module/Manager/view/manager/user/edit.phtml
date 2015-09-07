@@ -14,31 +14,31 @@
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Lastname")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $this->user->lastname;?>" autocomplete="off" required />
+							<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $this->user->lastname;?>" autocomplete="off" maxlength="100" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Firstname")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $this->user->firstname;?>" autocomplete="off" required />
+							<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $this->user->firstname;?>" autocomplete="off" maxlength="100" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Login")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="login" name="login" value="<?php echo $this->user->login;?>" autocomplete="off" required />
+							<input type="text" class="form-control" id="login" name="login" value="<?php echo $this->user->login;?>" autocomplete="off" maxlength="100" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("New Password (let it empty if not modified)")?></label>
 						<div class="col-md-6">
-							<input type="password" class="form-control" id="password" name="password" value="" autocomplete="off"/>
+							<input type="password" class="form-control" id="password" name="password" value="" autocomplete="off" maxlength="100" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Confirm password (let it empty if not modified)")?></label>
 						<div class="col-md-6">
-							<input type="password" class="form-control" id="password-confirm" name="password-confirm" value="" autocomplete="off"/>
+							<input type="password" class="form-control" id="password-confirm" name="password-confirm" value="" autocomplete="off" maxlength="100" />
 						</div>
 					</div>
 					<div class="form-group">
