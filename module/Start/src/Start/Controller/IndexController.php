@@ -19,13 +19,15 @@ use Manager\Model\RadionuclideTable;
 use Manager\Model\Radionuclide;
 use Manager\Model\Drug;
 use Logger\Model\InputDrug;
+use Operator\Model\Sourcekit;
 
 class IndexController extends AbstractActionController
 {
 	protected $authservice;
-	protected $storage;
 	protected $drugTable;
 	protected $inputdrugTable;
+	protected $sourcekitTable;
+	protected $storage;
 	protected $systemTable;
 
 	
@@ -88,6 +90,20 @@ class IndexController extends AbstractActionController
 			$this->inputdrugTable = $sm->get('Logger\Model\InputDrugTable');
 		}
 		return $this->inputdrugTable;
+	}
+	
+	/**
+	 *
+	 * @return \Operator\Model\SourcekitTable
+	 */
+	public function getSourcekitTable()
+	{
+		if(!$this->sourcekitTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->sourcekitTable = $sm->get('Operator\Model\SourcekitTable');
+		}
+		return $this->sourcekitTable;
 	}
 	
 	/**
@@ -216,15 +232,45 @@ class IndexController extends AbstractActionController
 				$oContainer->inputdrugid = $inputdrug->id;
 			}
 		}
-		
-// 		'sourcekitscanned' => boolean true
-// 		'sourcekitbarcode' => string '90830284902384238904823098402398402' (length=35)
-// 		'sourcekitid' => string '1' (length=1)
-// 		'sourcekitloaded' => boolean true
 	
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
 		$jsonModel->setVariable('hasmed', $hasMed);
+	
+		return $jsonModel;
+	}
+	
+	/**
+	 * Initialisation Kit Source Chargé (Vérification Kit source chargé) (STEP 5 5.1)
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function initsksAction() {
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+	
+		$error = false;
+	
+		$oContainer = new Container('automate_setup');
+	
+		$hasScan = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED);
+		if ($hasScan) {
+			$serial = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETSERIALKITSOURCE);
+				
+			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($serial);
+				
+			if ($sourcekit instanceof Sourcekit) {
+				$oContainer->sourcekitscanned = true;
+				$oContainer->sourcekitbarcode = $sourcekit->serialnumber;
+			}
+		}
+	
+		// 		'sourcekitid' => string '1' (length=1)
+		// 		'sourcekitloaded' => boolean true
+	
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('hasscan', $hasScan);
 	
 		return $jsonModel;
 	}

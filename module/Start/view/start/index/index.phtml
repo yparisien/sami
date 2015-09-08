@@ -49,10 +49,10 @@
 	}
 
 	/*
-	 * Vérification de la mise sous tension de l'automate
+	 * Vérification de la mise sous tension de l'automate STEP 1
 	 */
 	function initping() {
-		if (nbConnectionAttempt > nbConnectionTry) {
+		if (nbConnectionAttempt >= nbConnectionTry) {
 			$("#loading-progress").removeClass("progress-bar-warning");
 			$("#loading-progress").addClass("progress-bar-danger");
 			$("#loading-error").html("<?php echo sprintf($this->translate('An error occured during setup. Robot is not responding. Please retry or restart system.')); ?>");
@@ -68,7 +68,7 @@
 				moveProgressBar(0, 10);
 				$("#loading-progress").removeClass("progress-bar-warning");
 				$("#loading-progress").addClass("progress-bar-warning");
-				$("#loading-error").html(nbConnectionAttempt + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
+				$("#loading-error").html(nbConnectionAttempt + 1 + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
 				$("#loading-error").show();
 				//GOTO STEP 1 LOOP
 				initping();
@@ -83,14 +83,14 @@
 	}
 
 	/*
-	 * Chargement de l'unité de mesure
+	 * Chargement de l'unité de mesure STEP 2
 	 */
 	function initmu() {
 		$.ajax({
 			url: "<?php echo $this->url('initmu', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(20);
+				moveProgressBar(15);
 				//GOTO STEP 3
 				initrn();
 			}
@@ -103,14 +103,14 @@
 	}
 	
 	/*
-	 * Chargement des radionucléides
+	 * Chargement des radionucléides STEP 3
 	 */
 	function initrn() {
 		$.ajax({
 			url: "<?php echo $this->url('initrn', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(20);
+				moveProgressBar(15);
 				//GOTO STEP 4
 				inithml();
 			}
@@ -123,16 +123,16 @@
 	}
 
 	/*
-	 * Vérification et chargement du médicament
+	 * Vérification et chargement du médicament STEP 4
 	 */
 	 function inithml() {
 		$.ajax({
 			url: "<?php echo $this->url('inithml', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(20);
+				moveProgressBar(15);
 				//GOTO STEP 5
-				initsp();
+				initsks();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
@@ -142,8 +142,28 @@
 		});
 	}
 
+	 /*
+	 * Vérification et chargement du médicament STEP 5
+	 */
+	 function initsks() {
+		$.ajax({
+			url: "<?php echo $this->url('initsks', array()); ?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(15);
+				//GOTO STEP 6
+				initsp();
+			}
+			else {
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Check of kit source serial failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
+			}
+		});
+	}
+
 	/*
-	 * Vérification du point de démarrage
+	 * Vérification du point de démarrage STEP 6
 	 * PROBABLEMT OBSOLETE
 	 */
 	function initsp() {

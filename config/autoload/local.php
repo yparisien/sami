@@ -7,6 +7,12 @@ return array(
 	'robot' => array(
 		//Set to fasle when robot is connected
 		'simulated' => true,
+		'simulation' => array(
+			'init' => array(
+				'hasmed' 	=> true,
+				'loadedmed'	=> 'GLU',
+			)	
+		),
 	),
 	'virtualkeyboard' => array(
 		'enable'	=> false,

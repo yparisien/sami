@@ -176,6 +176,12 @@ class RobotService implements ServiceLocatorAwareInterface {
 			case RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED:
 				$mRet = "GLU";
 				break;
+			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED:
+				$mRet = 1;
+				break;
+			case RobotConstants::MAINLOGIC_STATUS_GETSERIALKITSOURCE:
+				$mRet = '90830284902384238904823098402398402';
+				break;
 			default:
 				die($variable);
 				break;
