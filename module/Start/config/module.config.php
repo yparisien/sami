@@ -71,6 +71,16 @@ return array(
 					),
 				),
 			),
+			'initlks' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/initlks',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'initlks',
+					),
+				),
+			),
 			'initsd' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(

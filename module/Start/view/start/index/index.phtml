@@ -75,7 +75,7 @@
 			} else {
 				$("#loading-progress").removeClass("progress-bar-warning");
 				$("#loading-error").hide();
-				moveProgressBar(0, 20);
+				moveProgressBar(0, 15);
 				//GOTO STEP 2
 				initmu();
 			}
@@ -142,17 +142,17 @@
 		});
 	}
 
-	 /*
+	/*
 	 * Vérification et chargement du médicament STEP 5
 	 */
-	 function initsks() {
+	function initsks() {
 		$.ajax({
 			url: "<?php echo $this->url('initsks', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
 				moveProgressBar(15);
 				//GOTO STEP 6
-				initsp();
+				initlks();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
@@ -163,7 +163,27 @@
 	}
 
 	/*
-	 * Vérification du point de démarrage STEP 6
+	 * Vérification et chargement du médicament STEP 5
+	 */
+	function initlks() {
+		$.ajax({
+			url: "<?php echo $this->url('initlks', array()); ?>",
+		}).done(function(result){
+			if (result.error === false) {
+				moveProgressBar(15);
+				//GOTO STEP 6
+				initsp();
+			}
+			else {
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Check of kit source loading failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
+			}
+		});
+	}
+
+	/*
+	 * Vérification du point de démarrage STEP 7
 	 * PROBABLEMT OBSOLETE
 	 */
 	function initsp() {
@@ -171,7 +191,7 @@
 			url: "<?php echo $this->url('initsp', array()); ?>",
 		}).done(function(result){
 			if (result.error === false) {
-				moveProgressBar(20);
+				moveProgressBar(10);
 			}
 			else {
 				//TODO Rajouter message d'erreur

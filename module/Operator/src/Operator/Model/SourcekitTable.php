@@ -30,6 +30,11 @@ class SourcekitTable
 		return $row;
 	}
 
+	/**
+	 * 
+	 * @param string $sn
+	 * @return Sourcekit
+	 */
 	public function	searchBySerialNumber($sn)
 	{
 		//$sn = (int) $sn;

@@ -9,8 +9,11 @@ return array(
 		'simulated' => true,
 		'simulation' => array(
 			'init' => array(
-				'hasmed' 	=> true,
-				'loadedmed'	=> 'GLU',
+				'hasmed' 			=> true,
+				'loadedmed'			=> 'GLU',
+				'sourcekitscanned'	=> true,
+				'sourcekitserial'	=> '',
+				'loadedsourcekit'	=> true,	
 			)	
 		),
 	),

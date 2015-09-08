@@ -241,7 +241,7 @@ class IndexController extends AbstractActionController
 	}
 	
 	/**
-	 * Initialisation Kit Source Chargé (Vérification Kit source chargé) (STEP 5 5.1)
+	 * Initialisation Kit Source Scanné (Vérification Kit source scanné) (STEP 5 5.1)
 	 *
 	 * @return \Zend\View\Model\JsonModel
 	 */
@@ -271,6 +271,32 @@ class IndexController extends AbstractActionController
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
 		$jsonModel->setVariable('hasscan', $hasScan);
+	
+		return $jsonModel;
+	}
+	
+	/**
+	 * Initialisation Kit Source Chargé (Vérification Kit source chargé) (STEP 6)
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function initlksAction() {
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+	
+		$error = false;
+	
+		$oContainer = new Container('automate_setup');
+	
+		$isLoaded = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
+		if ($isLoaded) {
+			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($oContainer->sourcekitbarcode);
+			$oContainer->sourcekitid = $sourcekit->id;
+			$oContainer->sourcekitloaded = true;
+		}
+	
+		$jsonModel = new JsonModel();
+		$jsonModel->setVariable('error', $error);
 	
 		return $jsonModel;
 	}
