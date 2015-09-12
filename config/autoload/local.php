@@ -28,7 +28,7 @@ return array(
 	),
 	'virtualkeyboard' => array(
 		'enable'	=> false,
-		'size'		=> 1.75,	
+		'size'		=> 1.95,	
 	),
 	'import_export' => array(
 		'upload_path'			=> __DIR__ . '/../../public/tmp',

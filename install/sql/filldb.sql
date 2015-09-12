@@ -120,8 +120,7 @@ CREATE TABLE `radionuclide` (
   `name` varchar(255) NOT NULL,
   `period` int(11) NOT NULL,
   `coefficient` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
