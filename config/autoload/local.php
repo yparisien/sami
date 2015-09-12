@@ -11,10 +11,19 @@ return array(
 			'init' => array(
 				'hasmed' 			=> true,
 				'loadedmed'			=> 'GLU',
-				'sourcekitscanned'	=> true,
-				'sourcekitserial'	=> '',
 				'loadedsourcekit'	=> true,	
-			)	
+				'sourcekitscanned'	=> true,
+				'sourcekitserial'	=> '90830284902384238904823098402398402',
+				'unit'				=> 'mbq',
+			),
+// 			'init' => array(
+// 				'hasmed' 			=> false,
+// 				'loadedmed'			=> null,
+// 				'loadedsourcekit'	=> false,
+// 				'sourcekitscanned'	=> false,
+// 				'sourcekitserial'	=> null,
+// 				'unit'				=> null,
+// 			),
 		),
 	),
 	'virtualkeyboard' => array(

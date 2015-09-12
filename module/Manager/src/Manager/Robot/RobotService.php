@@ -78,7 +78,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 	
 	private function fakeReceive($variable) {
 		$mRet = null;
-		
+		$cfg = $this->sm->get('Config');
 		switch ($variable) {
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
 			case RobotConstants::MEDICAMENT_ACTUAL_ACTVOL:
@@ -168,22 +168,22 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$fr->tryconnect = $try;
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_MEASUREUNIT:
-				$mRet = 'mbq';
+				$mRet = $cfg['robot']['simulation']['init']['unit'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED:
-				$mRet = 1;
+				$mRet = $cfg['robot']['simulation']['init']['hasmed'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED:
-				$mRet = "GLU";
+				$mRet = $cfg['robot']['simulation']['init']['loadedmed'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED:
-				$mRet = 1;
+				$mRet = $cfg['robot']['simulation']['init']['sourcekitscanned'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_GETSERIALKITSOURCE:
-				$mRet = '90830284902384238904823098402398402';
+				$mRet = $cfg['robot']['simulation']['init']['sourcekitserial'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED:
-				$mRet = true;
+				$mRet = $cfg['robot']['simulation']['init']['loadedsourcekit'];
 				break;
 			default:
 				die($variable);
