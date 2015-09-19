@@ -14,10 +14,10 @@ return array(
 		'simulated'		=> true, //Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
 			'init' => array( //Paramètres de la séquence de démarrage
-				'hasmed' 			=> true, //Un médicament est chargé (true) ou non (false) dans le robot
+				'hasmed' 			=> false, //Un médicament est chargé (true) ou non (false) dans le robot
 				'loadedmed'			=> 'GLU', //Nom DCI du médicament chargé dans le robot
-				'loadedsourcekit'	=> true, //Kit source chargé (true) ou non (false)
-				'sourcekitscanned'	=> true, //Kit source scanné (true) ou non (false)
+				'loadedsourcekit'	=> false, //Kit source chargé (true) ou non (false)
+				'sourcekitscanned'	=> false, //Kit source scanné (true) ou non (false)
 				'sourcekitserial'	=> '90830284902384238904823098402398402', //Numéro de série du kit source chargé et scanné
 				'unit'				=> 'mbq', //Unit de mesure du robot mbq ou mci
 			),
