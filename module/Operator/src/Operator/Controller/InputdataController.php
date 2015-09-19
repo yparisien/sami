@@ -343,7 +343,10 @@ class InputdataController extends AbstractActionController
 					$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
 
 					if (!is_dir($pathname)) {
-						mkdir($pathname, 0644, true);
+						if (mkdir($pathname, 0644, true) === false) {
+							$aRetVal['success'] = 0;
+							$aRetVal['msg'] = "Can't create directory " . $pathname;
+						}
 					}
 					
 					if (is_dir($pathname) === true) {
@@ -353,6 +356,10 @@ class InputdataController extends AbstractActionController
 							if (file_exists($source)) {
 								unlink($source);
 							}
+						}
+						else {
+							$aRetVal['success'] = 0;
+							$aRetVal['msg'] = "Can't copy file " . $source . " to " . $archive;
 						}
 					}
 				}
