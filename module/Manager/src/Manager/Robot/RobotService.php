@@ -158,11 +158,12 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = $rnitems[$variable];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ACTIVE:
-				sleep(5);
+				sleep($cfg['timeout']['robot']);
 				$fr = new Container('fake_robot');
 				$mRet = false;
-				if ($fr->tryconnect == 3) {
+				if ($fr->tryconnect == $cfg['robot']['simulation']['init']['trytogood']) {
 					$mRet = true;
+					$fr->tryconnect = 0;
 				}
 				$try = (isset($fr->tryconnect) && ($fr->tryconnect == 5)) ? 0 : $fr->tryconnect + 1 ;
 				$fr->tryconnect = $try;
