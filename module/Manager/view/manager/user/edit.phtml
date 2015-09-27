@@ -11,47 +11,51 @@
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('user', array('action'=>'edit'))?>" onsubmit="return checkForm()">
-					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Lastname")?></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $this->user->lastname;?>" autocomplete="off" maxlength="100" required />
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Lastname")?></label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $this->user->lastname;?>" autocomplete="off" maxlength="100" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Login")?></label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="login" name="login" value="<?php echo $this->user->login;?>" autocomplete="off" maxlength="100" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("New Password (let it empty if not modified)")?></label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control" id="password" name="password" value="" autocomplete="off" maxlength="100" />
+							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Firstname")?></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $this->user->firstname;?>" autocomplete="off" maxlength="100" required />
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Firstname")?></label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $this->user->firstname;?>" autocomplete="off" maxlength="100" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="admin" class="control-label col-sm-8"><?php echo $this->translate('User is manager'); ?></label>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default <?php if(!$this->user->admin){echo "active";}?>">
+									<input type="radio" name="admin" id="no" autocomplete="off" value="0" <?php if (!$this->user->admin) { echo "checked"; }?> /> <?php echo $this->translate('No'); ?>
+								</label>
+								<label class="btn btn-default <?php if($this->user->admin){echo "active";}?>">
+									<input type="radio" name="admin" id="yes" autocomplete="off" value="1" <?php if ($this->user->admin) { echo "checked"; }?> /> <?php echo $this->translate('Yes'); ?>
+								</label>
+							</div>
+						</div>	
+						<div class="form-group">
+							<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Confirm password (let it empty if not modified)")?></label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control" id="password-confirm" name="password-confirm" value="" autocomplete="off" maxlength="100" />
+							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Login")?></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" id="login" name="login" value="<?php echo $this->user->login;?>" autocomplete="off" maxlength="100" required />
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("New Password (let it empty if not modified)")?></label>
-						<div class="col-md-6">
-							<input type="password" class="form-control" id="password" name="password" value="" autocomplete="off" maxlength="100" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="lastname" class="control-label col-md-2"><?php echo $this->translate("Confirm password (let it empty if not modified)")?></label>
-						<div class="col-md-6">
-							<input type="password" class="form-control" id="password-confirm" name="password-confirm" value="" autocomplete="off" maxlength="100" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="admin" class="control-label col-md-2"><?php echo $this->translate('User is manager'); ?></label>
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-default <?php if(!$this->user->admin){echo "active";}?>">
-								<input type="radio" name="admin" id="no" autocomplete="off" value="0" <?php if (!$this->user->admin) { echo "checked"; }?> /> <?php echo $this->translate('No'); ?>
-							</label>
-							<label class="btn btn-default <?php if($this->user->admin){echo "active";}?>">
-								<input type="radio" name="admin" id="yes" autocomplete="off" value="1" <?php if ($this->user->admin) { echo "checked"; }?> /> <?php echo $this->translate('Yes'); ?>
-							</label>
-						</div>
-					</div>	
 					<input type="hidden" id="id" name="id" value="<?php echo $this->user->id;?>" />
 					<button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit")?></button>
 					<button type="button" class="btn btn-danger" onClick="window.location='<?php echo $this->url('user')?>'"><?php echo $this->translate("Abort")?></button>

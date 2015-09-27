@@ -4,174 +4,172 @@
 	<li class="active"><?php echo $this->translate('Purge')?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<?php echo $this->translate('Purge')?>
-			</div>
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-10">
-						<p><?php echo $this->translate('Put the patient kit in the container provided for this purpose')?></p>
-					</div>
-					<div class="col-md-2">
-						<p><button class="btn btn-primary btn-block btn-sm" onClick="launchPurge()" id="purge-confirm"><?php echo $this->translate('Launch the purge')?></button></p>
-					</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<?php echo $this->translate('Purge')?>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-10">
+					<p><?php echo $this->translate('Put the patient kit in the container provided for this purpose')?></p>
 				</div>
-				<div class="panel panel-danger" id="statut-block">
-					<div class="panel-heading">
-						<?php echo $this->translate('Purge progression')?>
-					</div>
-					<div class="panel-body">
-						<p><strong><?php echo $this->translate('Status')?> :</strong> <span id="purge-statut"><?php echo $this->translate('Waiting for the purge launch...')?></span></p>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="progress">
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-1">
-										<span class="sr-only"></span>
-									</div>
-									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-2">
-										<span class="sr-only"></span>
-									</div>
-									<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="purge-progress-3">
-										<span class="sr-only"></span>
-									</div>
+				<div class="col-md-2">
+					<p><button class="btn btn-primary btn-block btn-sm" onClick="launchPurge()" id="purge-confirm"><?php echo $this->translate('Launch the purge')?></button></p>
+				</div>
+			</div>
+			<div class="panel panel-danger" id="statut-block">
+				<div class="panel-heading">
+					<?php echo $this->translate('Purge progression')?>
+				</div>
+				<div class="panel-body">
+					<p><strong><?php echo $this->translate('Status')?> :</strong> <span id="purge-statut"><?php echo $this->translate('Waiting for the purge launch...')?></span></p>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="progress">
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-1">
+									<span class="sr-only"></span>
+								</div>
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-2">
+									<span class="sr-only"></span>
+								</div>
+								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="purge-progress-3">
+									<span class="sr-only"></span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-9 text-right">
-						<p><strong><?php echo $this->translate('Patient kit connection to the patient')?></strong></p>
-					</div>
-					<div class="col-md-3">
-						<div class="btn-group btn-block">
-							<button class="btn btn-sm btn-primary" id="connect-btn" onClick="connectPatient()"><?php echo $this->translate('Connection')?></button>
-							<button class="btn btn-sm btn-danger" disabled id="connect-statut"><span id="connect-statut-picto" class="glyphicon glyphicon-remove-sign"></span></button>
-						</div>
-					</div>
-				</div>
-				<div class="row" style="margin-top:10px">
-					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('inject', array('action'=>'sample'))?>'" disabled><?php echo $this->translate('Next')?></button>
-					</div>
-					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
-					</div>
-				</div>
-
-				<script type="text/javascript">
-					var value1 = 0;
-					var value2 = 0;
-					var value3 = 100;
-					var way = 0;
-					var patientConnected = 0;
-					var purged = 0;
-					function moveProgressBar()
-					{
-							$.ajax({
-							type: "POST",
-							url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
-							dataType: "json",
-							data: {}
-						}).done(function (result) {
-					if(way == 0)
-						{
-							value2 = result.progress;
-							value3 = 100 - Number(result.progress);
-						}
-						else
-						{
-							value1 = result.progress;
-							value2 = 100 - Number(result.progress);
-						}
-						$("#purge-progress-1").css('width', value1+'%');
-						$("#purge-progress-2").css('width', value2+'%');
-						$("#purge-progress-3").css('width', value3+'%');
-
-						if(value1 == 100 && way == 1)
-						{
-							$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
-							$("#purge-confirm").removeAttr('disabled');
-							$('#purge-statut').html("<?php echo $this->translate('Purge completed! Press the start purge button to restart purge.')?>");
-							purged = 1;
-							$("#connect-btn").removeAttr('disabled');
-							checkEnableNext();
-						}
-						else
-						{
-							if(value2 == 100)
-							{
-								way = 1;
-							}
-							window.setTimeout(function(){moveProgressBar();}, 2000);
-						}
-						if (value1 == 100)
-						{
-								checkEnableNext();
-						}
-						});
-					}
-
-					function launchPurge()
-					{
-						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
-						$("#purge-progress-1").css('width', '0%');
-						$("#purge-progress-2").css('width', '0%');
-						$("#purge-progress-3").css('width', '100%');
-						value1 = 0;
-						value2 = 0;
-						value3 = 100;
-						way = 0;
-						purged = 0;
-						$("#purge-confirm").attr('disabled', 1);
-						blockNextStep();
-						$('#purge-statut').html('<?php echo $this->translate('Purge in progress...')?>');
-						$.ajax({
-							type: "POST",
-							url: "<?php echo $this->url('inject', array('action'=>'alaunchpurge'))?>",
-							dataType: "json",
-							data: {}
-						});
-
-						window.setTimeout(function(){moveProgressBar();}, 500);
-					}
-
-					function	connectPatient()
-					{
-						blockNextStep();
-						$('#connect-statut-picto').removeClass('glyphicon-remove-sign glyphicon-ok-sign').addClass('glyphicon-time');
-						$('#connect-statut').removeClass('btn-danger btn-success ').addClass('btn-warning');
-						$.ajax({
-							type: "POST",
-							url: "<?php echo $this->url('inject', array('action'=>'amarkpatientconnected'))?>",
-							dataType: "json",
-							data: {}
-						}).done(function (result) {
-							$('#connect-statut-picto').removeClass('glyphicon-time').addClass('glyphicon-ok-sign');
-							$('#connect-statut').removeClass('btn-warning').addClass('btn-success');
-							$('#connect-btn').attr('disabled', 1);
-							$('#connect-btn').html('<?php echo $this->translate('Connected')?>');
-							patientConnected = 1;
-							checkEnableNext();
-						});
-					}
-					function	checkEnableNext()
-					{
-						if(purged == 1 && patientConnected == 1)
-						{
-							$("#btn-next").removeAttr('disabled');
-						}
-					}
-
-					function	blockNextStep()
-					{
-						$("#btn-next").attr('disabled', 1);
-					}
-							$('#connect-btn').attr('disabled', 1);
-				</script>
 			</div>
+			<div class="row">
+				<div class="col-md-9 text-right">
+					<p><strong><?php echo $this->translate('Patient kit connection to the patient')?></strong></p>
+				</div>
+				<div class="col-md-3">
+					<div class="btn-group btn-block">
+						<button class="btn btn-sm btn-primary" id="connect-btn" onClick="connectPatient()"><?php echo $this->translate('Connection')?></button>
+						<button class="btn btn-sm btn-danger" disabled id="connect-statut"><span id="connect-statut-picto" class="glyphicon glyphicon-remove-sign"></span></button>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:10px">
+				<div class="col-md-2 col-md-offset-4">
+					<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('inject', array('action'=>'sample'))?>'" disabled><?php echo $this->translate('Next')?></button>
+				</div>
+				<div class="col-md-2">
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				var value1 = 0;
+				var value2 = 0;
+				var value3 = 100;
+				var way = 0;
+				var patientConnected = 0;
+				var purged = 0;
+				function moveProgressBar()
+				{
+						$.ajax({
+						type: "POST",
+						url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
+						dataType: "json",
+						data: {}
+					}).done(function (result) {
+				if(way == 0)
+					{
+						value2 = result.progress;
+						value3 = 100 - Number(result.progress);
+					}
+					else
+					{
+						value1 = result.progress;
+						value2 = 100 - Number(result.progress);
+					}
+					$("#purge-progress-1").css('width', value1+'%');
+					$("#purge-progress-2").css('width', value2+'%');
+					$("#purge-progress-3").css('width', value3+'%');
+
+					if(value1 == 100 && way == 1)
+					{
+						$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+						$("#purge-confirm").removeAttr('disabled');
+						$('#purge-statut').html("<?php echo $this->translate('Purge completed! Press the start purge button to restart purge.')?>");
+						purged = 1;
+						$("#connect-btn").removeAttr('disabled');
+						checkEnableNext();
+					}
+					else
+					{
+						if(value2 == 100)
+						{
+							way = 1;
+						}
+						window.setTimeout(function(){moveProgressBar();}, 2000);
+					}
+					if (value1 == 100)
+					{
+							checkEnableNext();
+					}
+					});
+				}
+
+				function launchPurge()
+				{
+					$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+					$("#purge-progress-1").css('width', '0%');
+					$("#purge-progress-2").css('width', '0%');
+					$("#purge-progress-3").css('width', '100%');
+					value1 = 0;
+					value2 = 0;
+					value3 = 100;
+					way = 0;
+					purged = 0;
+					$("#purge-confirm").attr('disabled', 1);
+					blockNextStep();
+					$('#purge-statut').html('<?php echo $this->translate('Purge in progress...')?>');
+					$.ajax({
+						type: "POST",
+						url: "<?php echo $this->url('inject', array('action'=>'alaunchpurge'))?>",
+						dataType: "json",
+						data: {}
+					});
+
+					window.setTimeout(function(){moveProgressBar();}, 500);
+				}
+
+				function	connectPatient()
+				{
+					blockNextStep();
+					$('#connect-statut-picto').removeClass('glyphicon-remove-sign glyphicon-ok-sign').addClass('glyphicon-time');
+					$('#connect-statut').removeClass('btn-danger btn-success ').addClass('btn-warning');
+					$.ajax({
+						type: "POST",
+						url: "<?php echo $this->url('inject', array('action'=>'amarkpatientconnected'))?>",
+						dataType: "json",
+						data: {}
+					}).done(function (result) {
+						$('#connect-statut-picto').removeClass('glyphicon-time').addClass('glyphicon-ok-sign');
+						$('#connect-statut').removeClass('btn-warning').addClass('btn-success');
+						$('#connect-btn').attr('disabled', 1);
+						$('#connect-btn').html('<?php echo $this->translate('Connected')?>');
+						patientConnected = 1;
+						checkEnableNext();
+					});
+				}
+				function	checkEnableNext()
+				{
+					if(purged == 1 && patientConnected == 1)
+					{
+						$("#btn-next").removeAttr('disabled');
+					}
+				}
+
+				function	blockNextStep()
+				{
+					$("#btn-next").attr('disabled', 1);
+				}
+						$('#connect-btn').attr('disabled', 1);
+			</script>
 		</div>
 	</div>
 </div>

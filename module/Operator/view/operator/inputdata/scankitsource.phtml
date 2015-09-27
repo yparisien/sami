@@ -3,67 +3,66 @@
 	<li class="active"><?php echo $this->translate('Registrer the source kit')?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-barcode"></span> <?php echo $this->translate('Registrer the source kit')?>
-			</div>
-			<div class="panel-body">
-				<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST">
-					<div class="row">
-						<div class="col-md-12">
-							<p><?php echo $this->translate('Please scan the barcode of the source kit or write it manually');?></p>
-						</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-barcode"></span> <?php echo $this->translate('Registrer the source kit')?>
+		</div>
+		<div class="panel-body">
+			<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST">
+				<div class="row">
+					<div class="col-md-12">
+						<p><?php echo $this->translate('Please scan the barcode of the source kit or write it manually');?></p>
 					</div>
-					<div class="row">
-						<div class="col-md-10 col-md-offset-1 alert alert-danger" style="display:none" id="errormsg">
-							<span class="glyphicon glyphicon-exclamation-sign"></span> <strong><?php echo $this->translate('Error')?> : </strong>
-							<span id="errormsg-content"></span>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 alert alert-danger" style="display:none" id="errormsg">
+						<span class="glyphicon glyphicon-exclamation-sign"></span> <strong><?php echo $this->translate('Error')?> : </strong>
+						<span id="errormsg-content"></span>
 					</div>
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3">
-							<div id="inputgroup1" class="form-group has-error">
-								<label for="sourcekit-sn">Kit n°</label>
-								<div class="input-group">
-									<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
-									<input type="text" class="form-control" id="sourcekit-sn" name="sourcekit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" onClick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
-									</span>
-								</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div id="inputgroup1" class="form-group has-error">
+							<label for="sourcekit-sn">Kit n°</label>
+							<div class="input-group">
+								<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
+								<input type="text" class="form-control" id="sourcekit-sn" name="sourcekit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" onClick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
+								</span>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-2 col-md-offset-4">
-							<button id="btn-next" type="submit" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitsource'))?>'" disabled>Suivant</button>
-						</div>
-						<div class="col-md-2">
-							<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-4">
+						<button id="btn-next" type="submit" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitsource'))?>'" disabled>Suivant</button>
 					</div>
-				</form>
-				<script type="text/javascript">
-					$(function() {
-						$('#sourcekit-sn').change(function(){checkInputVal();});
-						$('#sourcekit-sn').focus();
-					});
+					<div class="col-md-2">
+						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+					</div>
+				</div>
+			</form>
+			<script type="text/javascript">
+				$(function() {
+					$('#sourcekit-sn').change(function(){checkInputVal();});
+					$('#sourcekit-sn').focus();
+				});
 
-					function checkInputVal()
+				function checkInputVal()
+				{
+					$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
+					$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
+					var code = $('#sourcekit-sn').val();
+					if(code.length == 35)
 					{
-						$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
-						$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
-						var code = $('#sourcekit-sn').val();
-						if(code.length == 35)
-						{
-							var sn = $('#sourcekit-sn').val();
-							var postdata = {
-								"sourcekit-sn": sn,
-							};
-							$.ajax({
-								type: "POST",
-								url: "<?php echo $this->url('setup', array('action'=>'achecksourcekit'));?>",
+						var sn = $('#sourcekit-sn').val();
+						var postdata = {
+							"sourcekit-sn": sn,
+						};
+						$.ajax({
+							type: "POST",
+							url: "<?php echo $this->url('setup', array('action'=>'achecksourcekit'));?>",
 								dataType: "json",
 								data: postdata,
 							}).done(function(result) {
@@ -96,20 +95,19 @@
 							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 							$('#btn-next').attr('disabled', 'disabled');
 							$('#errormsg-content').html("<?php echo $this->translate("Invalid barcode")?>");
-							$('#errormsg').slideToggle();
-							setTimeout(function(){$('#errormsg').slideToggle();},3000);
-							return false;
-						}
+						$('#errormsg').slideToggle();
+						setTimeout(function(){$('#errormsg').slideToggle();},3000);
+						return false;
 					}
-					function resetInputVal()
-					{
-						$('#sourcekit-sn').val('');
-						$('#sourcekit-sn').popover('hide');
-						$('#sourcekit-sn').focus();
-						checkInputVal();
-					}
-				</script>
-			</div>
+				}
+				function resetInputVal()
+				{
+					$('#sourcekit-sn').val('');
+					$('#sourcekit-sn').popover('hide');
+					$('#sourcekit-sn').focus();
+					checkInputVal();
+				}
+			</script>
 		</div>
 	</div>
 </div>

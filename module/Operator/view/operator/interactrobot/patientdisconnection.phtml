@@ -5,132 +5,130 @@
 	<li class="active"><?php echo $this->translate('Patient disconnection'); ?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<?php echo $this->translate('Patient disconnection'); ?>
-			</div>
-			<div class="panel-body">
-				<div class="row">
-					<label for="lastname" class="col-sm-3 control-label"><?php echo $this->translate('Location of injection'); ?></label>
-					<div class="col-sm-6">
-						<input type="text" tabindex="1" class="form-control input-sm" id="location_input" name="location_input" placeholder="" maxlength="200" autocomplete="off" />
-					</div>
-					<div class="col-sm-3">
-						<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation'); ?></button>
-					</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<?php echo $this->translate('Patient disconnection'); ?>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<label for="lastname" class="col-sm-3 control-label"><?php echo $this->translate('Location of injection'); ?></label>
+				<div class="col-sm-6">
+					<input type="text" tabindex="1" class="form-control input-sm" id="location_input" name="location_input" placeholder="" maxlength="200" autocomplete="off" />
 				</div>
-				<div id="resume">
-					<div class="row">
-						<div class="col-sm-10 col-sm-offset-1">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<?php echo $this->translate('Informations resume'); ?>
-								</div>
-								<div class="panel-body">
-									<div class="row table-responsive">
-										<table class="table table-bordered table-condensed">
-											<tr>
-												<td style="width: 50%;"><?php echo $patient['lastname']; ?></td>
-												<td style="width: 50%;"><?php echo $patient['weight']; ?>kg</td>
-											</tr>
-											<tr>
-												<td><?php echo $patient['firstname']; ?></td>
-												<td><?php echo $injection['activity']; ?> <?php echo $unit ; ?></td>
-											</tr>
-											<tr>
-												<td><?php echo $patient['birthdate']; ?></td>
-												<td><?php echo $injection['location']; ?></td>
-											</tr>
-											<tr>
-												<td><?php echo $injection['comments']; ?></td>
-												<td><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></td>
-											</tr>
-											<tr>
-												<td><?php echo $injection['unique_id']; ?></td>
-												<td><?php echo $injection['injection_time']; ?></td>
-											</tr>
-											<tr>
-												<td><?php echo $examination['name']; ?></td>
-												<td><?php echo $curdrug['batchnum']; ?></td>
-											</tr>
-											<tr>
-												<td><?php echo $drug['name']; ?></td>
-												<td><div style="word-break: break-all;"><?php echo $sourcekit['serialnumber'] . ':' . $patientkit['serialnumber']; ?></div></td>
-											</tr>
-										</table>
-									</div>
+				<div class="col-sm-3">
+					<button id="location_validation" class="btn btn-primary btn-block"><?php echo $this->translate('Validation'); ?></button>
+				</div>
+			</div>
+			<div id="resume">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<?php echo $this->translate('Informations resume'); ?>
+							</div>
+							<div class="panel-body">
+								<div class="row table-responsive">
+									<table class="table table-bordered table-condensed">
+										<tr>
+											<td style="width: 50%;"><?php echo $patient['lastname']; ?></td>
+											<td style="width: 50%;"><?php echo $patient['weight']; ?>kg</td>
+										</tr>
+										<tr>
+											<td><?php echo $patient['firstname']; ?></td>
+											<td><?php echo $injection['activity']; ?> <?php echo $unit ; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo $patient['birthdate']; ?></td>
+											<td><?php echo $injection['location']; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo $injection['comments']; ?></td>
+											<td><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></td>
+										</tr>
+										<tr>
+											<td><?php echo $injection['unique_id']; ?></td>
+											<td><?php echo $injection['injection_time']; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo $examination['name']; ?></td>
+											<td><?php echo $curdrug['batchnum']; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo $drug['name']; ?></td>
+											<td><div style="word-break: break-all;"><?php echo $sourcekit['serialnumber'] . ':' . $patientkit['serialnumber']; ?></div></td>
+										</tr>
+									</table>
 								</div>
 							</div>
-							
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<?php echo $this->translate('Printing sticker'); ?>
-									<button class="btn btn-primary pull-right" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button>
-									<div style="clear: both;"></div>
-								</div>
-								<div class="panel-body">
-									<div class="print-container" id="sticker">
-										<div class="content">
-											<div class="row">
-									    		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 0.8em;">&#9762;</span></div>
-									    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
-									    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;"><?php echo $timeInjection->format('H:i'); ?></div>
-									  		</div>
-											<div class="row">
-												<div class="col-xs-10 col-xs-offset-2 no-padding"><?php echo $drug['name']; ?></div>
-											</div>
-											<div class="row">
-												<div class="col-xs-7 col-xs-offset-5 no-padding"><?php echo $injection['activity'] . ' ' . $unit; ?></div>
-											</div>
-											<div class="row spacer"></div>
-											<div class="row">
-												<div class="col-xs-5 no-padding"><?php echo $radionuclide['code']; ?></div>
-												<div class="col-xs-7 no-padding"><?php echo $this->translate('Serial : '); ?><span><?php echo $curdrug['batchnum']; ?></span></div>
-											</div>
-											<div class="row spacer"></div>
-											<div class="row">
-												<div class="col-xs-5 no-padding">N&ordm; <span><?php echo $injection['unique_id']; ?></span></div>
-												<div class="col-xs-7 no-padding"><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></div>
-											</div>
+						</div>
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<?php echo $this->translate('Printing sticker'); ?>
+								<button class="btn btn-primary pull-right" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="panel-body">
+								<div class="print-container" id="sticker">
+									<div class="content">
+										<div class="row">
+								    		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 0.8em;">&#9762;</span></div>
+								    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
+								    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;"><?php echo $timeInjection->format('H:i'); ?></div>
+								  		</div>
+										<div class="row">
+											<div class="col-xs-10 col-xs-offset-2 no-padding"><?php echo $drug['name']; ?></div>
+										</div>
+										<div class="row">
+											<div class="col-xs-7 col-xs-offset-5 no-padding"><?php echo $injection['activity'] . ' ' . $unit; ?></div>
+										</div>
+										<div class="row spacer"></div>
+										<div class="row">
+											<div class="col-xs-5 no-padding"><?php echo $radionuclide['code']; ?></div>
+											<div class="col-xs-7 no-padding"><?php echo $this->translate('Serial : '); ?><span><?php echo $curdrug['batchnum']; ?></span></div>
+										</div>
+										<div class="row spacer"></div>
+										<div class="row">
+											<div class="col-xs-5 no-padding">N&ordm; <span><?php echo $injection['unique_id']; ?></span></div>
+											<div class="col-xs-7 no-padding"><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<p><?php echo $this->translate('Please disconnect the patient kit, trash it and validate.'); ?></p>
-							<button class="btn btn-primary" id="showactivityleft"><?php echo $this->translate('Validation'); ?></button>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<p><?php echo $this->translate('Please disconnect the patient kit, trash it and validate.'); ?></p>
+						<button class="btn btn-primary" id="showactivityleft"><?php echo $this->translate('Validation'); ?></button>
 					</div>
 				</div>
-				<div id="nextstep">
-					<div class="row">
-						<div class="col-md-12">
-							<p><?php echo $this->translate('Remaining activity at '); ?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit; ?></p>
-							<p style="float:left;"><?php echo $this->translate('Remaining activity at '); ?>
-								<div id="activity-attime" class="input-group date" style="width: 30%;float: left;">
-									<input name="activityattime" id="activityattime" type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" size="16" maxlength="10" autocomplete="off"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-								</div>
-							</p>
-									: <span id="activityat"></span><?php echo $unit; ?>
-						</div>
+			</div>
+			<div id="nextstep">
+				<div class="row">
+					<div class="col-md-12">
+						<p><?php echo $this->translate('Remaining activity at '); ?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit; ?></p>
+						<p style="float:left;"><?php echo $this->translate('Remaining activity at '); ?>
+							<div id="activity-attime" class="input-group date" style="width: 30%;float: left;">
+								<input name="activityattime" id="activityattime" type="text" class="form-control input-sm" data-format="YYYY-MM-DD HH:mm" size="16" maxlength="10" autocomplete="off"/>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</p>
+								: <span id="activityat"></span><?php echo $unit; ?>
 					</div>
-					<div class="row">
-						<div class="col-sm-4">
-							<a href="<?php echo $this->url('bufferspace', array('action'=>'patientlist')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Injected patients list'); ?></a>
-						</div>
-						<div class="col-sm-4">
-							<a href="<?php echo $this->url('auth', array('action'=>'confirmauth')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Launch another injection'); ?></a>
-						</div>
-						<div class="col-sm-4">
-							<a href="<?php echo $this->url('inject', array('action'=>'endinject')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('End of injections'); ?></a>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<a href="<?php echo $this->url('bufferspace', array('action'=>'patientlist')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Injected patients list'); ?></a>
+					</div>
+					<div class="col-sm-4">
+						<a href="<?php echo $this->url('auth', array('action'=>'confirmauth')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('Launch another injection'); ?></a>
+					</div>
+					<div class="col-sm-4">
+						<a href="<?php echo $this->url('inject', array('action'=>'endinject')); ?>" class="btn btn-primary btn-block"><?php echo $this->translate('End of injections'); ?></a>
 					</div>
 				</div>
 			</div>

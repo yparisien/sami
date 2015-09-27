@@ -3,121 +3,119 @@
 	<li class="active"><?php echo $this->translate('Filling drug\'s informations')?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-file"></span> <?php echo $this->translate('Filling drug\'s informations')?>
-			</div>
-			<div class="panel-body">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-file"></span> <?php echo $this->translate('Filling drug\'s informations')?>
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal" role="form" action="<?php echo $this->url('setup', array('action'=>'drug'))?>" method="POST" onSubmit="return checkForm();">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name')?></label>
+							<div class="col-sm-6">
+								<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1" required>
+								<?php foreach($this->drugs as $drug) { ?>
+									<option value="<?php echo $drug->id?>"><?php echo $drug->name;?></option>
+								<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
+							<div class="col-sm-6">
+								<div class="input-group date" id="datetimepicker-calibration">
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="10" required />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#datetimepicker-calibration').datetimepicker({
+										language: 'en'
+									});
+								});
+							</script>
+						</div>
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3"  />
+									<span class="input-group-addon">ml</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled />
+									<span class="input-group-addon"><?php echo $unit?>/ml</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="ex: FG120925A-04" autocomplete="off" tabindex="2" maxlength="100" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
+							<div class="col-sm-6">
+								<div class="input-group date" id="datetimepicker-peremption">
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="10" required />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#datetimepicker-peremption').datetimepicker({
+										language: 'en'
+									});
+								});
+							</script>
+						</div>
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled />
+									<span class="input-group-addon"><?php echo $unit?></span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="number" class="form-control input-sm" id="activity" name="activity" value="???" autocomplete="off" readonly/>
+									<span class="input-group-addon"><?php echo $unit?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="alert alert-info">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
 					<?php echo $this->translate('Fill the vial volume field to enable fields about activity')?>
 				</div>
-				<form class="form-horizontal" role="form" action="<?php echo $this->url('setup', array('action'=>'drug'))?>" method="POST" onSubmit="return checkForm();">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name')?></label>
-								<div class="col-sm-6">
-									<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1" required>
-									<?php foreach($this->drugs as $drug) { ?>
-										<option value="<?php echo $drug->id?>"><?php echo $drug->name;?></option>
-									<?php } ?>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="ex: FG120925A-04" autocomplete="off" tabindex="2" maxlength="100" required />
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
-								<div class="col-sm-6">
-									<div class="input-group date" id="datetimepicker-calibration">
-										<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="10" required />
-										<span class="input-group-addon">
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<script type="text/javascript">
-									$(function() {
-										$('#datetimepicker-calibration').datetimepicker({
-											language: 'en'
-										});
-									});
-								</script>
-							</div>
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
-								<div class="col-sm-6">
-									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3"  />
-										<span class="input-group-addon">ml</span>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
-								<div class="col-sm-6">
-									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled />
-										<span class="input-group-addon"><?php echo $unit?>/ml</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
-								<div class="col-sm-6">
-									<div class="input-group date" id="datetimepicker-peremption">
-										<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="10" required />
-										<span class="input-group-addon">
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<script type="text/javascript">
-									$(function() {
-										$('#datetimepicker-peremption').datetimepicker({
-											language: 'en'
-										});
-									});
-								</script>
-							</div>
-							<div class="form-group">
-								<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
-								<div class="col-sm-6">
-									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled />
-										<span class="input-group-addon"><?php echo $unit?></span>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
-								<div class="col-sm-6">
-									<div class="input-group">
-										<input type="number" class="form-control input-sm" id="activity" name="activity" value="???" autocomplete="off" readonly/>
-										<span class="input-group-addon"><?php echo $unit?></span>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-4">
+						<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next')?>"/>
 					</div>
-					<div class="row">
-						<div class="col-md-2 col-md-offset-4">
-							<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next')?>"/>
-						</div>
-						<div class="col-md-2">
-							<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
-						</div>
+					<div class="col-md-2">
+						<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
 					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

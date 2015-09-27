@@ -343,7 +343,7 @@ class InputdataController extends AbstractActionController
 					$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
 
 					if (!is_dir($pathname)) {
-						if (mkdir($pathname, 0644, true) === false) {
+						if (@mkdir($pathname, 0644, true) === false) {
 							$aRetVal['success'] = 0;
 							$aRetVal['msg'] = "Can't create directory " . $pathname;
 						}
@@ -351,7 +351,7 @@ class InputdataController extends AbstractActionController
 					
 					if (is_dir($pathname) === true) {
 						$archive = realpath($pathname) . DIRECTORY_SEPARATOR . basename($file['name'], '.csv') . '_' . date('Ymd-His') . '.csv';
-						if (copy($source, $archive) === true) {
+						if (@copy($source, $archive) === true) {
 							//Delete file
 							if (file_exists($source)) {
 								unlink($source);

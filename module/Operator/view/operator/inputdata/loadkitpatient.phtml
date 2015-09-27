@@ -3,24 +3,22 @@
 	<li class="active"><?php echo $this->translate("Automate setup for the injection")?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-cog"></span> <?php echo $this->translate("Automate setup for the injection")?>
-			</div>
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-12">
-						<p><strong><?php echo $this->translate("Please connect the patient kit and validate to continue")?></strong></p>
-					</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-cog"></span> <?php echo $this->translate("Automate setup for the injection")?>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<p><strong><?php echo $this->translate("Please connect the patient kit and validate to continue")?></strong></p>
 				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient', 'confirm'=>1))?>'"><?php echo $this->translate('Next')?></button>
-					</div>
-					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelPatient();"><?php echo $this->translate('Abort')?></button>
-					</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-4">
+					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient', 'confirm'=>1))?>'"><?php echo $this->translate('Next')?></button>
+				</div>
+				<div class="col-md-2">
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelPatient();"><?php echo $this->translate('Abort')?></button>
 				</div>
 			</div>
 		</div>

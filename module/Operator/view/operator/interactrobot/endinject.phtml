@@ -4,22 +4,20 @@
 	<li class="active"><?php echo $this->translate('End of injection')?></li>
 </ol>
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<?php echo $this->translate('End of injection')?>
-			</div>
-			<div class="panel-body">
-				<p><?php echo $this->translate('End of injections mean rinsing the needle and reinject the content into the source vial.')?></p>
-				<p><?php echo $this->translate('Remaining activity at ')?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit?></p>
-				<p><?php echo $this->translate('Confirm the end of injection?')?></p>
-				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-3 text-center"><button class="btn btn-primary" id="btnconfirm"><?php echo $this->translate('YES')?></button></div>
-					<div class="col-md-3 text-center"><button class="btn btn-danger"  id="btncancel"><?php echo $this->translate('NO')?></button></div>
-					<div class="col-md-3"></div>
-						
-				</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<?php echo $this->translate('End of injection')?>
+		</div>
+		<div class="panel-body">
+			<p><?php echo $this->translate('End of injections mean rinsing the needle and reinject the content into the source vial.')?></p>
+			<p><?php echo $this->translate('Remaining activity at ')?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit?></p>
+			<p><?php echo $this->translate('Confirm the end of injection?')?></p>
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3 text-center"><button class="btn btn-primary" id="btnconfirm"><?php echo $this->translate('YES')?></button></div>
+				<div class="col-md-3 text-center"><button class="btn btn-danger"  id="btncancel"><?php echo $this->translate('NO')?></button></div>
+				<div class="col-md-3"></div>
+					
 			</div>
 		</div>
 	</div>

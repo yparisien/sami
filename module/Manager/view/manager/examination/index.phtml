@@ -35,7 +35,7 @@
 							<td><?php echo $this->escapeHtml($examination->rate);?> <?php echo $unit?>/Kg</td>
 							<td><?php echo $this->escapeHtml($examination->min);?> <?php echo $unit?></td>
 							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>
-							<td class="col-md-3">
+							<td class="col-md-4">
 								<a href="<?php echo $this->url('examination', array('action'=>'edit', 'id'=>$examination->id))?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $this->translate('Edit');?></a>
 								<?php if ($examination->nbExamsInProgress == 0) { ?>
 								<a href="<?php echo $this->url('examination', array('action'=>'delete', 'id'=>$examination->id))?>" class="btn btn-danger"
