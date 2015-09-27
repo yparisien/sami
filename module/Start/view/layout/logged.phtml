@@ -1,7 +1,15 @@
 <?php echo $this->doctype(); ?>
 <?php
 if ($virtualkeyboardEnable === true) {
-	$this->headStyle()->appendStyle('.ui-keyboard { font-size: ' . $virtualkeyboardSize . 'em; }');
+	$this->headStyle()->appendStyle('
+			.ui-keyboard-button span { font-size: ' . $virtualkeyboardSize . 'em; }
+			.ui-keyboard-button { 
+				height: ' . (2 * $virtualkeyboardSize) .'em;
+			    min-width: ' . (2 * $virtualkeyboardSize) .'em;
+			    margin: ' . (0.1 * $virtualkeyboardSize) .'em;
+			    line-height: ' . (2 * $virtualkeyboardSize) .'em;
+			}
+	');
 }
 ?>
 <?php //TODO Trad high prio ?>
@@ -206,6 +214,7 @@ if ($virtualkeyboardEnable === true) {
 					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").keyboard({
 						autoAccept: true, 
 						layout: "french-azerty-1",
+						maxInsert : true,
 						css: {
 					        input: "form-control input-sm",
 					        container: "center-block dropdown-menu",
@@ -220,6 +229,7 @@ if ($virtualkeyboardEnable === true) {
 						autoAccept: true, 
 						lockInput: true, 
 						layout: "french-azerty-1",
+						maxInsert : true,
 						css: {
 					        input: "form-control input-sm",
 					        container: "center-block dropdown-menu",
@@ -232,6 +242,7 @@ if ($virtualkeyboardEnable === true) {
 					
 					$("input[type=number].form-control").keyboard({
 						layout : "custom",
+						maxInsert : true,
 						customLayout: {
 							"normal" : [
 								"7 8 9 {b}",
@@ -253,6 +264,7 @@ if ($virtualkeyboardEnable === true) {
 					
 					$("input[type=text].input-date").keyboard({
 						layout : "custom",
+						maxInsert : true,
 						customLayout: {
 							"normal" : [
 								"7 8 9 {b}",

@@ -27,8 +27,8 @@ return array(
 	 * Configuration du clavier virtuel
 	 */
 	'virtualkeyboard' => array(
-		'enable'	=> false, //Clavier virtuel activé (true) ou non (false)
-		'size'		=> 1.75, //Taille du clavier
+		'enable'	=> true, //Clavier virtuel activé (true) ou non (false)
+		'size'		=> 1.55, //Taille du clavier
 	),
 	/**
 	 * Configuration des imports/exports de fichiers
@@ -42,7 +42,7 @@ return array(
 	 * Configuration des locks-screen (en secondes)
 	 */
 	'timeout' => array(
-			'operator'		=> 3 * 60, //Temps d'inactivité avec lock des écrans opérateurs
-			'supervisor'	=> 1 * 60, //Temps d'inactivité avec lock des écrans superviseurs
+			'operator'		=> 30 * 60, //Temps d'inactivité avec lock des écrans opérateurs
+			'supervisor'	=> 10 * 60, //Temps d'inactivité avec lock des écrans superviseurs
 	),
 );
