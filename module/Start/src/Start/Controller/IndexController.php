@@ -213,9 +213,13 @@ class IndexController extends AbstractActionController
 	 */
 	public function inithmlAction() {
 		/* @var $robotService RobotService */
+		/* @var $translate \Zend\I18n\View\Helper\Translate */
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 	
 		$error = false;
+		$errorMessage = null;
 	
 		$oContainer = new Container('automate_setup');
 		
@@ -223,8 +227,15 @@ class IndexController extends AbstractActionController
 		if ($hasMed) {
 			$medcode = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
 			
-			$drug = $this->getDrugTable()->getDrugByDci($medcode);
-			$inputdrug = $this->getInputdrugTable()->getLastByDrugId($drug->id);
+			try {
+				$drug = $this->getDrugTable()->getDrugByDci($medcode);
+				$inputdrug = $this->getInputdrugTable()->getLastByDrugId($drug->id);
+			} catch (\Exception $e) {
+				$error = true;
+				$errorMessage = sprintf($translate('%s drug not found in database.'), $medcode);
+				$drug = null;
+				$inputdrug = null;
+			}
 			
 			if ($drug instanceof Drug && $inputdrug instanceof InputDrug) {
 				$oContainer->drugspecified = true;
@@ -236,6 +247,7 @@ class IndexController extends AbstractActionController
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
 		$jsonModel->setVariable('hasmed', $hasMed);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
 	
 		return $jsonModel;
 	}

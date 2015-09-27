@@ -16,8 +16,8 @@ return array(
 			'init' => array( //Paramètres de la séquence de démarrage
 				'hasmed' 			=> false, //Un médicament est chargé (true) ou non (false) dans le robot
 				'loadedmed'			=> 'GLU', //Nom DCI du médicament chargé dans le robot
-				'loadedsourcekit'	=> false, //Kit source chargé (true) ou non (false)
-				'sourcekitscanned'	=> false, //Kit source scanné (true) ou non (false)
+				'loadedsourcekit'	=> true, //Kit source chargé (true) ou non (false)
+				'sourcekitscanned'	=> true, //Kit source scanné (true) ou non (false)
 				'sourcekitserial'	=> '90830284902384238904823098402398402', //Numéro de série du kit source chargé et scanné
 				'unit'				=> 'mbq', //Unit de mesure du robot mbq ou mci
 			),
@@ -27,7 +27,7 @@ return array(
 	 * Configuration du clavier virtuel
 	 */
 	'virtualkeyboard' => array(
-		'enable'	=> true, //Clavier virtuel activé (true) ou non (false)
+		'enable'	=> false, //Clavier virtuel activé (true) ou non (false)
 		'size'		=> 1.55, //Taille du clavier
 	),
 	/**
@@ -42,7 +42,7 @@ return array(
 	 * Configuration des locks-screen (en secondes)
 	 */
 	'timeout' => array(
-			'operator'		=> 30 * 60, //Temps d'inactivité avec lock des écrans opérateurs
-			'supervisor'	=> 10 * 60, //Temps d'inactivité avec lock des écrans superviseurs
+			'operator'		=> 60 * 60, //Temps d'inactivité avec lock des écrans opérateurs
+			'supervisor'	=> 60 * 60, //Temps d'inactivité avec lock des écrans superviseurs
 	),
 );
