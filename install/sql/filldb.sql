@@ -273,31 +273,7 @@ CREATE VIEW `view_examination` AS
 --
 
 DROP VIEW IF EXISTS `view_export`;
-CREATE VIEW `view_export` AS 
-SELECT 	`i`.`type` AS `type`,
-		`i`.`injection_time` AS `injectiontime`,
-		`i`.`activity` AS `activity`,
-		`i`.`dose_status` AS `dosestatus`,
-		`i`.`unique_id` AS `uniqueid`,
-		`d`.`batchnum` AS `batchnum`,
-		`p`.`patient_id` AS `patientid`,
-		CONCAT(`p`.`lastname`,',',`p`.`firstname`) AS `patientname`,
-		`p`.`gender` AS `gender`,
-		`p`.`birthdate` AS `birthdate`,
-		`p`.`age` AS `age`,
-		`p`.`weight` AS `weight`,
-		`p`.`height` AS `height`,
-		`p`.`patienttype` AS `patienttype`,
-		`p`.`doctorname` AS `doctorname`,
-		`i`.`location` AS `emplacement` 
-		FROM ((`tmp_patient` `p` JOIN `tmp_injection` `i` ON ((`p`.`id` = `i`.`patient_id`))) LEFT JOIN `input_drug` `d` ON ((`i`.`drugid` = `d`.`id`)));
-
---
--- Final view structure for view `view_injected`
---
-
-DROP VIEW IF EXISTS `view_injected`;
-CREATE VIEW `view_injected` AS
+CREATE VIEW `view_export` AS
     SELECT 
         `i`.`type` AS `type`,
         `i`.`injection_time` AS `injectiontime`,
@@ -316,8 +292,46 @@ CREATE VIEW `view_injected` AS
         `p`.`doctorname` AS `doctorname`,
         `i`.`location` AS `emplacement`
     FROM
-        ((`tmp_patient` `p`
-        JOIN `tmp_injection` `i` ON ((`p`.`id` = `i`.`patient_id`)))
-        LEFT JOIN `input_drug` `d` ON ((`i`.`drugid` = `d`.`id`)))
-    WHERE `p`.`injected` = 1;
+        `tmp_patient` `p`
+            JOIN
+        `tmp_injection` `i` ON `p`.`id` = `i`.`patient_id`
+            LEFT JOIN
+        `input_drug` `d` ON `i`.`drugid` = `d`.`id`;
 
+--
+-- Final view structure for view `view_injected`
+--
+
+DROP VIEW IF EXISTS `view_injected`;
+CREATE VIEW `view_injected` AS
+    SELECT 
+        `p`.`patient_id` AS `patientid`,
+        `p`.`lastname` AS `patientlastname`,
+        `p`.`firstname` AS `patientfirstname`,
+        `p`.`gender` AS `gender`,
+        `p`.`birthdate` AS `birthdate`,
+        `p`.`age` AS `age`,
+        `p`.`weight` AS `weight`,
+        `p`.`height` AS `height`,
+        `p`.`patienttype` AS `patienttype`,
+        `p`.`doctorname` AS `doctorname`,
+        `i`.`location` AS `emplacement`,
+        `i`.`type` AS `type`,
+        `i`.`injection_time` AS `injectiontime`,
+        `i`.`activity` AS `activity`,
+        `i`.`dose_status` AS `dosestatus`,
+        `i`.`unique_id` AS `uniqueid`,
+        `i`.`operatorid` AS `operatorid`,
+        `u`.`lastname` AS `operatorlastname`,
+        `u`.`firstname` AS `operatorfirstname`,
+        `d`.`batchnum` AS `batchnum`
+    FROM
+        `tmp_patient` `p`
+            JOIN
+        `tmp_injection` `i` ON `p`.`id` = `i`.`patient_id`
+            JOIN
+        `user` `u` ON `u`.`id` = `i`.`operatorid`
+            LEFT JOIN
+        `input_drug` `d` ON `i`.`drugid` = `d`.`id`
+    WHERE
+        `p`.`injected` = 1;
