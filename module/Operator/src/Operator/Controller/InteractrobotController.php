@@ -17,6 +17,7 @@ use Zend\Http\Response;
 
 use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
+use Manager\Robot\RobotConstants;
 
 class InteractrobotController extends AbstractActionController
 {
@@ -163,22 +164,6 @@ class InteractrobotController extends AbstractActionController
 		$this->getResponse()->setStatusCode(Response::STATUS_CODE_500);
 		$this->getResponse()->setReasonPhrase("readData($toRead)");
 		return ;
-		// todo : rendre configuration l'adresse de l'automate
-		$aData =  array("redirect" => "response.asp",
-				"variable" => $toRead,
-				"value" => "",
-				"read" => "Read" );
-                $postdata = http_build_query($aData);
-                $opts = array('http' =>
-                    array(
-                        'method'  => 'POST',
-                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => $postdata
-                    )
-                );
-                $context  = stream_context_create($opts);
-                
-		return file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 	}
 
 	/*
@@ -322,7 +307,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$progress = $robotService->receive("SubPurge.status.Evolution");
+		$progress = $robotService->receive(RobotConstants::SUBPURGE_STATUS_EVOLUTION);
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
 		return $result;
@@ -331,7 +316,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Load_Purge' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADPURGE => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -342,7 +327,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALPATIENTDISCONNECTION => 1));
 				
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -353,7 +338,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$progress = $robotService->receive("G_MainLogic.status.Sampling_Evolution");
+		$progress = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_SAMPLINGEVOLUTION);
 		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
@@ -363,7 +348,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Sampling_Sequence' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_SAMPLINGSEQUENCE => 1));
 
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -374,7 +359,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Adjust_Sampling' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_ADJUSTSAMPLING => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -385,7 +370,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$activity = $robotService->receive('G_MainLogic.cmd.Input_Trasys.Measured_Value');
+		$activity = $robotService->receive(RobotConstants::MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE);
 		
 		$aParams = array("activity" => $activity);
 		$result = new JsonModel($aParams);
@@ -395,7 +380,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$progress = $robotService->receive("G_MainLogic.status.Dilution_Evolution");
+		$progress = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_DILUTIONEVOLUTION);
 		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
@@ -406,7 +391,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Dilution_Sequence' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DILUTIONSEQUENCE => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -417,7 +402,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$progress = $robotService->receive("G_MainLogic.status.Injection_Evolution");
+		$progress = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_INJECTIONEVOLUTION);
 		
 		$aParams = array("progress" => $progress);
 		$result = new JsonModel($aParams);
@@ -428,7 +413,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Injection_Sequence' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -441,7 +426,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Stop_Injection' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_STOPINJECTION => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -452,7 +437,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Play_Injection' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_PLAYINJECTION => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -466,7 +451,7 @@ class InteractrobotController extends AbstractActionController
 		$speed = $this->getRequest()->getPost('speed');
 
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Inject_Speed' => $speed));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED => $speed));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
@@ -478,7 +463,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$speed = $robotService->receive("G_MainLogic.cmd.Input_Soft.Inject_Speed");
+		$speed = $robotService->receive(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED);
 		
 		$aParams = array("speed" => $speed / 25);
 		$result = new JsonModel($aParams);
@@ -496,7 +481,7 @@ class InteractrobotController extends AbstractActionController
 		$inputaction->action = "User mark the patient connected to SAMI";
 		$this->getInputActionTable()->saveInputAction($inputaction);
 
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Val_Patient_Connection' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALPATIENTCONNECTION => 1));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
