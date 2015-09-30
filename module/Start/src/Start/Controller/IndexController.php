@@ -115,10 +115,20 @@ class IndexController extends AbstractActionController
 		/* @var $robotService RobotService */
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$active = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ACTIVE);
 		
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('active', (!$active) ? false : true);
+		
+		if ($active) {
+			$isError = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
+			if ($isError === true) {
+				$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
+				$jsonModel->setVariable('error', true);
+				$jsonModel->setVariable('errorMessage', $translate(constant('\Manager\Robot\RobotConstants::ERROR_CODE_' . $errorID)));
+			}
+		}
 		
 		return $jsonModel;
 	}
