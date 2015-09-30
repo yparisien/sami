@@ -186,6 +186,12 @@ class RobotService implements ServiceLocatorAwareInterface {
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED:
 				$mRet = $cfg['robot']['simulation']['init']['loadedsourcekit'];
 				break;
+			case RobotConstants::MAINLOGIC_STATUS_ERROR:
+				$mRet = $cfg['robot']['simulation']['init']['robotinerror'];
+				break;
+			case RobotConstants::MAINLOGIC_STATUS_ERRORID:
+				$mRet = $cfg['robot']['simulation']['init']['roboterrorcode'];
+				break;
 			default:
 				die($variable);
 				break;
