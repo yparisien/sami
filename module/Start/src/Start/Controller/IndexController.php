@@ -199,7 +199,7 @@ class IndexController extends AbstractActionController
 	
 		$error = false;
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$measureUnit = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_MEASUREUNIT);
+		$measureUnit = $robotService->receive(RobotConstants::MAINLOGIC_PAR_MEASUREUNIT);
 
 		$oSystem = $this->getSystemTable()->getSystem();
 		
