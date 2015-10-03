@@ -1,25 +1,25 @@
 <button class="btn btn-primary pull-right" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button>
 <div class="panel-body">
-	<div class="print-container" id="sticker">
-		<div class="content">
-			<div class="row">
+	<div class="print-container" id="sticker" style="background-color: gray;">
+		<div class="content" style="background-color: yellow;">
+			<div class="row" style="background-color: red;">
 	    		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 0.8em;">&#9762;</span></div>
 	    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
 	    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;"><?php echo $timeInjection->format('H:i'); ?></div>
 	  		</div>
-			<div class="row">
+			<div class="row" style="background-color: blue;">
 				<div class="col-xs-10 col-xs-offset-2 no-padding"><?php echo $drug['name']; ?></div>
 			</div>
-			<div class="row">
+			<div class="row" style="background-color: green;">
 				<div class="col-xs-7 col-xs-offset-5 no-padding"><?php echo $injection['activity'] . ' ' . $unit; ?></div>
 			</div>
 			<div class="row spacer"></div>
-			<div class="row">
+			<div class="row" style="background-color: violet; ">
 				<div class="col-xs-5 no-padding"><?php echo $radionuclide['code']; ?></div>
 				<div class="col-xs-7 no-padding"><?php echo $this->translate('Serial : '); ?><span><?php echo $curdrug['batchnum']; ?></span></div>
 			</div>
 			<div class="row spacer"></div>
-			<div class="row">
+			<div class="row" style="background-color: orange;">
 				<div class="col-xs-5 no-padding">N&ordm; <span><?php echo $injection['unique_id']; ?></span></div>
 				<div class="col-xs-7 no-padding"><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></div>
 			</div>
