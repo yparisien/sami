@@ -9,6 +9,17 @@ return array(
 	),
 	'router' => array(
 		'routes' => array(
+			'testprint' => array(
+				'type'    => 'Literal',
+				'options' => array(
+					'route'    => '/testprint',
+					'defaults' => array(
+						'__NAMESPACE__' => 'Operator\Controller',
+						'controller'    => 'Operator',
+						'action'        => 'testprint',
+					),
+				),
+			),
 			'operator' => array(
 				'type'	=> 'segment',
 				'options' => array(

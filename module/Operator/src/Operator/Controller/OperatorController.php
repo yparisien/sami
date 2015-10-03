@@ -75,4 +75,25 @@ class OperatorController extends AbstractActionController
 		return new ViewModel($aParam);
 	}
 	
+	
+	public function testprintAction() {
+		$aParam = array();
+		
+		$drug = array('name' => 'GLUSCAN');
+		$injection = array('activity' => 100, 'unique_id' => '345345');
+		$radionuclide = array('code' => 'F18');
+		$curdrug = array('batchnum' => 1738273);
+		$operator = array('lastname' => 'HENRI', 'firstname' => 'Michel');
+		
+		$aParam['timeInjection'] = new \DateTime();
+		$aParam['drug'] = $drug;
+		$aParam['injection'] = $injection;
+		$aParam['unit'] = 'MBq';
+		$aParam['radionuclide'] = $radionuclide;
+		$aParam['curdrug'] = $curdrug;
+		$aParam['radionuclide'] = $radionuclide;
+		$aParam['operator'] = $operator;
+		
+		return new ViewModel($aParam);
+	}
 }
