@@ -30,7 +30,7 @@ return array(
 	 * Configuration du clavier virtuel
 	 */
 	'virtualkeyboard' => array(
-		'enable'	=> false,	//Clavier virtuel activé (true) ou non (false)
+		'enable'	=> true,	//Clavier virtuel activé (true) ou non (false)
 		'size'		=> 1.55,	//Taille du clavier
 	),
 	/**

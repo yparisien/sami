@@ -14,7 +14,6 @@
 				<div class="alert alert-danger" role="alert">
 					<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
 					<p><?php echo sprintf('%s <a href="' . $this->url("restart") . '" class="alert-link">%s</a> %s', $this->translate('No radionuclides found in database. Please '), $this->translate('restart the application'), $this->translate(' or (if it fails) reboot completely the system.')); ?></p>
-					<p><?php echo $this->translate('');?></p>
 				</div>
 				<?php } else { ?>
 				<table class="table table-striped table-hover">

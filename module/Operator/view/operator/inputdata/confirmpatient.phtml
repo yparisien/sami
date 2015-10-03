@@ -1,14 +1,12 @@
-<?php //TODO Trad high prio ?>
-<?php //TODO Empecher la validation si les données sont pas settées ?>
 <ol class="breadcrumb">
-	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
-	<li class="active"><?php echo $this->translate('Confirmation of patient\'s datas')?></li>
+	<li><a href="<?php echo $this->url('operator')?>"><span class="glyphicon glyphicon-home"></span> <?php echo $this->translate("Operator dashboard");?></a></li>
+	<li class="active"><?php echo $this->translate("Confirmation of patient's datas"); ?></li>
 </ol>
 <div class="row">
 	<div class="panel-body">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate('Confirmation of patient\'s datas')?>
+				<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate("Confirmation of patient's datas")?>
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" role="form" onsubmit="" action="<?php echo $this->url('setup', array('action'=>'storecurrentpatient'))?>" method="POST">
@@ -221,7 +219,7 @@
 				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
 			</div>
 			<div class="modal-body">
-				<p><?php echo $this->translate('Insufficient activity. You have choose to don\'t change the activity.'); ?></p>
+				<p><?php echo $this->translate("Insufficient activity. You have choose to don't change the activity."); ?></p>
 				<div class="alert alert-info">
 					<i class="glyphicon glyphicon-question-sign"></i>
 					<?php echo $this->translate('Do you want to create / choose another patient ?'); ?>
