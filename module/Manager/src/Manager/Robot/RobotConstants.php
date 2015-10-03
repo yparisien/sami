@@ -12,7 +12,7 @@ class RobotConstants {
 	const ISOTOPES_N_SHORTNAME								= 'Isotopes[@@n@@].ShortName';
 	const ISOTOPES_N_NAME									= 'Isotopes[@@n@@].Name';
 	const ISOTOPES_N_HALFLIFE								= 'Isotopes[@@n@@].HalfLife';
-	const ISOTOPES_NB										= 'Isotopes.Nb';
+	const ISOTOPES_NB										= 'Isotopes_Nb';
 	
 	const MAINLOGIC_CMD_INPUTSOFT_ADJUSTSAMPLING			= 'G_MainLogic.cmd.Input_Soft.Adjust_Sampling';
 	const MAINLOGIC_CMD_INPUTSOFT_DILUTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Dilution_Sequence';
