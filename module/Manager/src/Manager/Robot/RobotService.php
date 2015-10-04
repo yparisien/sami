@@ -20,7 +20,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 	public function send($toWrite) {
 		/* @var $log \Zend\Log\Logger */
 		
-		$log = $sm->get('Log\App');
+		$log = $this->sm->get('Log\App');
 		$cfg = $this->sm->get('Config');
 		
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
@@ -55,7 +55,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 	public function receive($variable) {
 		/* @var $log \Zend\Log\Logger */
 		
-		$log = $sm->get('Log\App');
+		$log = $this->sm->get('Log\App');
 		$cfg = $this->sm->get('Config');
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		
