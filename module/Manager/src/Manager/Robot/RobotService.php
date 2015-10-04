@@ -18,27 +18,35 @@ class RobotService implements ServiceLocatorAwareInterface {
 	}
 	
 	public function send($toWrite) {
+		/* @var $log \Zend\Log\Logger */
+		
 		$cfg = $this->sm->get('Config');
+		$log = $sm->get('Log\App');
+		
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		
 		if (!$simulated)
 		{
 			foreach ($toWrite as $k => $v)
 			{
-	       	         $postdata = http_build_query(array ("redirect" => "response.asp",
-								"variable" => $k,
-								"value" => $v,
-								"write" => "Write"));
-	       	         $opts = array('http' =>
-	       	             array(
-	       	                 'method'  => 'POST',
-	       	                 'header'  => 'Content-type: application/x-www-form-urlencoded',
-	       	                 'content' => $postdata
-	       	             )
-	       	         );
-	       	         $context  = stream_context_create($opts);
-	       	         
-			 file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+				$postdata = http_build_query(array(
+						"redirect" => "response.asp",
+						"variable" => $k,
+						"value" => $v,
+						"write" => "Write"
+				));
+				
+				$opts = array('http' => array(
+						'method'  => 'POST',
+       	                'header'  => 'Content-type: application/x-www-form-urlencoded',
+       	                'content' => $postdata
+       	             )
+       	        );
+				
+       	        $context  = stream_context_create($opts);
+       	        $log->info('Send to robot [' . $k . '] : ' . $v);
+       	         
+				file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 			}
 		}
 		return true;
@@ -71,6 +79,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 	        $context  = stream_context_create($opts);
 	                
 			$ret = @file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+			$log->info('Get from robot [' . $variable . '] : ' . $ret);
 			
 			return $ret;
 		}

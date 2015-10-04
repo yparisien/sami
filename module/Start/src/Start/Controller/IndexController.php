@@ -236,13 +236,15 @@ class IndexController extends AbstractActionController
 		$hasMed = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED);
 		if ($hasMed === 1) {
 			$hasMed = true;
+		} else if ($hasMed === 0) {
+			$hasMed = false;
 		} else {
 			$error = true;
-			$errorMessage = sprintf($translate('Dont know if a drug is loaded %s.'), $hasMed);
+			$errorMessage = sprintf($translate('Dont know if a drug is loaded, %s.'), $hasMed);
 		}
 		
 		
-		if ($hasMed) {
+		if ($hasMed == true) {
 			$medcode = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
 			
 			try {
