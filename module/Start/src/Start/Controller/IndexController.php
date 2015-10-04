@@ -149,7 +149,7 @@ class IndexController extends AbstractActionController
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		
 		$error = false;
-		$errorMessage = '';
+		$errorMessage = null;
 		
 		$nbRN = $robotService->receive(RobotConstants::ISOTOPES_NB);
 		
@@ -230,21 +230,12 @@ class IndexController extends AbstractActionController
 	
 		$error = false;
 		$errorMessage = null;
-	
 		$oContainer = new Container('automate_setup');
 		
 		$hasMed = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED);
+		
 		if ($hasMed === '1') {
 			$hasMed = true;
-		} else if ($hasMed === '0') {
-			$hasMed = false;
-		} else {
-			$error = true;
-			$errorMessage = sprintf($translate('Dont know if a drug is loaded, %s.'), $hasMed);
-		}
-		
-		
-		if ($hasMed == true) {
 			$medcode = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
 			
 			try {
@@ -262,6 +253,15 @@ class IndexController extends AbstractActionController
 				$oContainer->drugid = $drug->id;
 				$oContainer->inputdrugid = $inputdrug->id;
 			}
+		} else if ($hasMed === '0') {
+			$hasMed = false;
+			$oContainer->drugspecified = false;
+			$oContainer->drugid = null;
+			$oContainer->inputdrugid = null;
+		} else {
+			$error = true;
+			$errorMessage = sprintf($translate('Dont know if a drug is loaded (%s).'), $hasMed);
+			$hasMed = null;
 		}
 	
 		$jsonModel = new JsonModel();
@@ -279,14 +279,19 @@ class IndexController extends AbstractActionController
 	 */
 	public function initsksAction() {
 		/* @var $robotService RobotService */
+		/* @var $translate \Zend\I18n\View\Helper\Translate */
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 	
 		$error = false;
+		$errorMessage = null;
 	
 		$oContainer = new Container('automate_setup');
 	
-		$hasScan = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED);
-		if ($hasScan) {
+		$hasScan = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED);
+		if ($hasScan === '1') {
+			$hasScan = true;
 			$serial = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETSERIALKITSOURCE);
 				
 			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($serial);
@@ -295,14 +300,22 @@ class IndexController extends AbstractActionController
 				$oContainer->sourcekitscanned = true;
 				$oContainer->sourcekitbarcode = $sourcekit->serialnumber;
 			}
+			
+			//TODO Rajouter verif retour robot et comparer entrée base sinon erreur
+		} else if ($hasScan === '0') {
+			$hasScan = false;
+			$oContainer->sourcekitscanned = false;
+			$oContainer->sourcekitbarcode = null;
+		} else {
+			$error = true;
+			$errorMessage = sprintf($translate("Don't know if kitsource has been scanned (%s)."), $hasScan);
+			$hasScan = null;
 		}
-	
-		// 		'sourcekitid' => string '1' (length=1)
-		// 		'sourcekitloaded' => boolean true
 	
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
 		$jsonModel->setVariable('hasscan', $hasScan);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
 	
 		return $jsonModel;
 	}
@@ -314,21 +327,32 @@ class IndexController extends AbstractActionController
 	 */
 	public function initlksAction() {
 		/* @var $robotService RobotService */
+		/* @var $translate \Zend\I18n\View\Helper\Translate */
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 	
 		$error = false;
+		$errorMessage = null;
 	
 		$oContainer = new Container('automate_setup');
 	
-		$isLoaded = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
-		if ($isLoaded) {
+		$isLoaded = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
+		if ($isLoaded === '1') {
 			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($oContainer->sourcekitbarcode);
 			$oContainer->sourcekitid = $sourcekit->id;
 			$oContainer->sourcekitloaded = true;
+		} else if ($isLoaded === '0') {
+			$oContainer->sourcekitid = null;
+			$oContainer->sourcekitloaded = false;
+		} else {
+			$error = true;
+			$errorMessage = sprintf($translate("Don't know if kitsource & source has been loaded (%s)."), $isLoaded);
 		}
 	
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
+		$jsonModel->setVariable('errorMessage', $errorMessage);
 	
 		return $jsonModel;
 	}
@@ -340,13 +364,21 @@ class IndexController extends AbstractActionController
 	 */
 	public function initspAction() {
 		/* @var $robotService RobotService */
+		/* @var $translate \Zend\I18n\View\Helper\Translate */
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		
 		$error = false;
-		$errorMessage = '';
+		$errorMessage = null;
 		
 		$restartType = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE);
-		//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
+		if (is_numeric($restartType)) {
+			//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
+		} else {
+			$error = true;
+			$errorMessage = sprintf($translate("Don't know if kitsource & source has been loaded (%s)."), $restartType);
+		}
 		
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
@@ -361,7 +393,7 @@ class IndexController extends AbstractActionController
 	 */
 	public function initsdAction() {
 		$error = false;
-		$errorMessage = '';
+		$errorMessage = null;
 
 		//TODO Check that all inits are OK
 
