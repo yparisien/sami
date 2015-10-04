@@ -234,8 +234,6 @@ class IndexController extends AbstractActionController
 		$oContainer = new Container('automate_setup');
 		
 		$hasMed = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED);
-		var_dump($hasMed);
-		die();
 		if ($hasMed === '1') {
 			$hasMed = true;
 		} else if ($hasMed === '0') {
