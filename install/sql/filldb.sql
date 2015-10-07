@@ -77,7 +77,7 @@ CREATE TABLE `input_drug` (
 DROP TABLE IF EXISTS `input_patient`;
 CREATE TABLE `input_patient` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `patient_id` varchar(8) NOT NULL,
+  `patient_id` varchar(8) NULL,
   `lastname` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `gender` enum('M','F') NOT NULL,
@@ -164,7 +164,7 @@ INSERT INTO `system` VALUES (1,'fr_FR','mbq',1, 0);
 DROP TABLE IF EXISTS `tmp_injection`;
 CREATE TABLE `tmp_injection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `patient_id` int(11) NOT NULL,
+  `patient_id` int(11) NULL,
   `type` varchar(6) NOT NULL DEFAULT 'infuse',
   `injection_time` time NOT NULL,
   `activity` int(11) NOT NULL,
@@ -189,7 +189,7 @@ CREATE TABLE `tmp_injection` (
 DROP TABLE IF EXISTS `tmp_patient`;
 CREATE TABLE `tmp_patient` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `patient_id` varchar(25) NOT NULL,
+  `patient_id` varchar(25) NULL,
   `lastname` varchar(100) NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `gender` enum('M','F','U') NOT NULL,

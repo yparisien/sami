@@ -66,6 +66,7 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_NLOT								= 'G_Medicament.Input.N_Lot';
 	const MEDICAMENT_INPUT_PERIOD							= 'G_Medicament.Input.Period';
 	const MEDICAMENT_INPUT_VOL								= 'G_Medicament.Input.Vol';
+	const MEDICAMENT_INPUT_RADIONUCLIDEID					= 'G_Medicament.Input.ID';
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	
