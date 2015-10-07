@@ -41,7 +41,7 @@
 						<button id="btn-next" type="submit" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient'))?>'" disabled>Suivant</button>
 					</div>
 					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelPatient();">Annuler</button>
+						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancel();">Annuler</button>
 					</div>
 				</div>
 			</form>
@@ -52,10 +52,10 @@
 				$('#patientkit-sn').focus();
 			});
 
-			function	cancelPatient()
+			function	cancel()
 			{
 				$.ajax({
-					url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
+					url: "<?php echo $this->url('setup', array('action' => 'ainputsoftexit'));?>",
 					type: "GET",
 					dataType: "json",
 				}).done(function(result) {

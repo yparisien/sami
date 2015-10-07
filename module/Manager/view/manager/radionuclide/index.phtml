@@ -28,7 +28,7 @@
 						<?php foreach($radionuclides as $radionuclide) { ?>
 						<tr>
 							<td><?php echo $this->escapeHtml($radionuclide->name);?></td>
-							<td><?php echo $this->escapeHtml($radionuclide->period);?> min</td>
+							<td><?php echo $this->escapeHtml($radionuclide->period);?> <?php echo $this->translate('sec');?></td>
 							<td><?php echo $this->escapeHtml($radionuclide->coefficient);?> %</td>
 						</tr>
 						<?php } ?>

@@ -14,13 +14,13 @@ return array(
 		'simulated'		=> true,				//Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
 			'init' => array( 					//Paramètres de la séquence de démarrage
-				'trytogood'			=> 1,		//Nb d'essai avant OK
-				'robotinerror'		=> 0,		//Déamarrage du robot en erreur 1=Erreur 0=OK
-				'roboterrorcode'	=> 2,		//Code de démarrage renvoyé par le robot en cas  d'erreur au démarrage
-				'hasmed' 			=> false,	//Un médicament est chargé (true) ou non (false) dans le robot
+				'trytogood'			=> '1',		//Nb d'essai avant OK
+				'robotinerror'		=> '0',		//Déamarrage du robot en erreur 1=Erreur 0=OK
+				'roboterrorcode'	=> '2',		//Code de démarrage renvoyé par le robot en cas  d'erreur au démarrage
+				'hasmed' 			=> '0',	//Un médicament est chargé (1) ou non (0) dans le robot
 				'loadedmed'			=> 'GLU',	//Nom DCI du médicament chargé dans le robot
-				'loadedsourcekit'	=> false,	//Kit source chargé (true) ou non (false)
-				'sourcekitscanned'	=> false,	//Kit source scanné (true) ou non (false)
+				'loadedsourcekit'	=> '0',	//Kit source chargé (1) ou non (0)
+				'sourcekitscanned'	=> '0',	//Kit source scanné (1) ou non (0)
 				'sourcekitserial'	=> '90830284902384238904823098402398402', //Numéro de série du kit source chargé et scanné
 				'unit'				=> 'mbq',	//Unit de mesure du robot mbq ou mci
 			),

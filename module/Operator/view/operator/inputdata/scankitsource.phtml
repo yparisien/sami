@@ -8,7 +8,7 @@
 			<span class="glyphicon glyphicon-barcode"></span> <?php echo $this->translate('Registrer the source kit')?>
 		</div>
 		<div class="panel-body">
-			<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST">
+			<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST" onsubmit="checkInputVal(true);">
 				<div class="row">
 					<div class="col-md-12">
 						<p><?php echo $this->translate('Please scan the barcode of the source kit or write it manually');?></p>
@@ -28,7 +28,7 @@
 								<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
 								<input type="text" class="form-control" id="sourcekit-sn" name="sourcekit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" type="button" onClick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
+									<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
 								</span>
 							</div>
 						</div>
@@ -36,20 +36,20 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="submit" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitsource'))?>'" disabled>Suivant</button>
+						<button id="btn-next" type="submit" class="btn btn-success btn-block" disabled>Suivant</button>
 					</div>
 					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
 					</div>
 				</div>
 			</form>
 			<script type="text/javascript">
 				$(function() {
-					$('#sourcekit-sn').change(function(){checkInputVal();});
+					$('#sourcekit-sn').change(function(){checkInputVal(false);});
 					$('#sourcekit-sn').focus();
 				});
 
-				function checkInputVal()
+				function checkInputVal(submitForm)
 				{
 					$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
 					$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
@@ -71,7 +71,9 @@
 									$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
 									$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
 									$('#btn-next').removeAttr('disabled');
- 									$('#scankitsource').submit();
+									if (submitForm === true) {
+	 									$('#scankitsource').submit();
+									}
 									return false;
 								}
 								else if(result.success == 0)
@@ -100,12 +102,13 @@
 						return false;
 					}
 				}
+				
 				function resetInputVal()
 				{
 					$('#sourcekit-sn').val('');
 					$('#sourcekit-sn').popover('hide');
 					$('#sourcekit-sn').focus();
-					checkInputVal();
+					checkInputVal(false);
 				}
 			</script>
 		</div>

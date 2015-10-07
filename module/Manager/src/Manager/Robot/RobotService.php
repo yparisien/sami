@@ -49,6 +49,13 @@ class RobotService implements ServiceLocatorAwareInterface {
 				file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
 			}
 		}
+		else {
+			foreach ($toWrite as $k => $v)
+			{
+				$log->debug('[SIMULATED] Send to robot [' . $k . '] : ' . $v);
+			}
+		}
+		
 		return true;
 	}
 	
@@ -60,7 +67,9 @@ class RobotService implements ServiceLocatorAwareInterface {
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		
 		if ($simulated) {
-			return $this->fakeReceive($variable);
+			$retsim = $this->fakeReceive($variable);
+			$log->debug('[SIMULATED] Get from robot [' . $variable . '] : ' . $retsim);
+			return $retsim;
 		}
 		else {
 			$aData = array(
@@ -146,23 +155,27 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = 1;
 				break;
 			case RobotConstants::ISOTOPES_NB:
-				$mRet = 4;
+				$mRet = 5;
 				break;
 			case stripos($variable, 'Isotopes['):
 				$rnitems = [
-					'Isotopes[1].ID_Isotope' 	=> '1',
+					'Isotopes[0].ID_Isotope' 	=> '1',
+					'Isotopes[0].ShortName' 	=> 'C11',
+					'Isotopes[0].Name' 			=> 'Carbon 11',
+					'Isotopes[0].HalfLife' 		=> '1222.8',
+					'Isotopes[1].ID_Isotope' 	=> '2',
 					'Isotopes[1].ShortName' 	=> 'T99',
 					'Isotopes[1].Name' 			=> 'Technetium 99',
 					'Isotopes[1].HalfLife' 		=> '360',
-					'Isotopes[2].ID_Isotope' 	=> '2',
+					'Isotopes[2].ID_Isotope' 	=> '3',
 					'Isotopes[2].ShortName' 	=> 'F18',
 					'Isotopes[2].Name' 			=> 'Fluorine 18',
 					'Isotopes[2].HalfLife' 		=> '109',
-					'Isotopes[3].ID_Isotope' 	=> '3',
+					'Isotopes[3].ID_Isotope' 	=> '4',
 					'Isotopes[3].ShortName' 	=> 'TH201',
 					'Isotopes[3].Name' 			=> 'Thallium 201',
 					'Isotopes[3].HalfLife' 		=> '691200',
-					'Isotopes[4].ID_Isotope' 	=> '4',
+					'Isotopes[4].ID_Isotope' 	=> '5',
 					'Isotopes[4].ShortName' 	=> 'I131',
 					'Isotopes[4].Name' 			=> 'Iodine 131',
 					'Isotopes[4].HalfLife' 		=> '692928',

@@ -112,7 +112,7 @@
 						<input type="submit" class="btn btn-success btn-block" value="<?php echo $this->translate('Next')?>"/>
 					</div>
 					<div class="col-md-2">
-						<button type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+						<button type="button" class="btn btn-danger btn-block" onclick="cancel();"><?php echo $this->translate('Abort')?></button>
 					</div>
 				</div>
 			</form>
@@ -134,6 +134,18 @@
 			return false;
 		}
 	}
+
+	function	cancel()
+	{
+		$.ajax({
+			url: "<?php echo $this->url('setup', array('action' => 'ainputsoftexit'));?>",
+			type: "GET",
+			dataType: "json",
+		}).done(function(result) {
+			location.href = '<?php echo $this->url('operator'); ?>';
+		});
+	}
+	
 
 	function	loadActivityData()
 	{

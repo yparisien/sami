@@ -429,7 +429,6 @@ class InputdataController extends AbstractActionController
 				$oContainer->sourcekitid = $oKit->id;
 
 				$robotService = $this->getServiceLocator()->get('RobotService');
-				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL => $oKit->serialnumber));
 
 				return $this->redirect()->toRoute('operator');
@@ -454,6 +453,9 @@ class InputdataController extends AbstractActionController
 			// for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->sourcekitloaded = true;
+			
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 
 			return $this->redirect()->toRoute('operator');
 		}
@@ -1018,7 +1020,7 @@ class InputdataController extends AbstractActionController
 		return $result;
 	}
 	
-	public function acancelpatientAction() 
+	public function ainputsoftexitAction() 
 	{
 		/* @var $robotService RobotService  */
 		$robotService = $this->getServiceLocator()->get('RobotService');

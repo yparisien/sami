@@ -159,10 +159,10 @@ class IndexController extends AbstractActionController
 		}
 		else {
 			for ($n = 0; $n < $nbRN; $n++) {
-				$keyID 			= str_ireplace('@@n@@', $n+1, RobotConstants::ISOTOPES_N_IDISOTOPE);
-				$keyShortName 	= str_ireplace('@@n@@', $n+1, RobotConstants::ISOTOPES_N_SHORTNAME);
-				$keyName 		= str_ireplace('@@n@@', $n+1, RobotConstants::ISOTOPES_N_NAME);
-				$keyPeriod 		= str_ireplace('@@n@@', $n+1, RobotConstants::ISOTOPES_N_HALFLIFE);
+				$keyID 			= str_ireplace('@@n@@', $n, RobotConstants::ISOTOPES_N_IDISOTOPE);
+				$keyShortName 	= str_ireplace('@@n@@', $n, RobotConstants::ISOTOPES_N_SHORTNAME);
+				$keyName 		= str_ireplace('@@n@@', $n, RobotConstants::ISOTOPES_N_NAME);
+				$keyPeriod 		= str_ireplace('@@n@@', $n, RobotConstants::ISOTOPES_N_HALFLIFE);
 				
 				$id = $robotService->receive($keyID);
  				$shortName = $robotService->receive($keyShortName);
