@@ -258,7 +258,7 @@ class InputdataController extends AbstractActionController
 				RobotConstants::MEDICAMENT_INPUT_DTEND => str_replace(" ", "-","DT#" . $aDrugData['expirationtime'] . ":00"),
 				RobotConstants::MEDICAMENT_INPUT_NLOT => $aDrugData['batchnum'],
 				RobotConstants::MEDICAMENT_INPUT_NAME => $drug->name,
-				RobotConstants::MEDICAMENT_INPUT_PERIOD => $radionucleide->period * 60,
+				RobotConstants::MEDICAMENT_INPUT_PERIOD => $radionucleide->period,
 				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0
 			);
 			
@@ -430,7 +430,8 @@ class InputdataController extends AbstractActionController
 
 				$robotService = $this->getServiceLocator()->get('RobotService');
 				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL => $oKit->serialnumber));
-
+				$robotService->send(array(RobotConstants::KIT_VAL_KITSOURCE => 1));
+				
 				return $this->redirect()->toRoute('operator');
 			}
 		}
@@ -948,7 +949,6 @@ class InputdataController extends AbstractActionController
 		else // sinon on laisse le formulaire être soumis
 		{
 			$robotService = $this->getServiceLocator()->get('RobotService');
-			$robotService->send(array('G_Kit.Val_Kit_S' => 1));
 			$aParams = array('success' => 1);
 		}
 

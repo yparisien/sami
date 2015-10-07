@@ -69,6 +69,8 @@ class RobotConstants {
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	
+	const KIT_VAL_KITSOURCE									= 'G_Kit.Val_Kit_S';
+	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	
 	const ERROR_CODE_1										= 'Fiole non conforme';
