@@ -343,7 +343,7 @@ class InputdataController extends AbstractActionController
 					$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
 
 					if (!is_dir($pathname)) {
-						if (@mkdir($pathname, 0755, true) === false) {
+						if (@mkdir($pathname, 0777, true) === false) {
 							$aRetVal['success'] = 0;
 							$aRetVal['msg'] = "Can't create directory " . $pathname;
 						}
