@@ -15,6 +15,7 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 use Manager\Robot\RobotService;
+use Manager\Robot\RobotConstants;
 
 class SystemController extends AbstractActionController
 {
@@ -108,6 +109,10 @@ class SystemController extends AbstractActionController
 		$oSystem = $this->getSystemTable()->getSystem();
 		$oSystem->maxactivity = $this->getRequest()->getPost("maxactivity");
 		$this->getSystemTable()->saveSystem($oSystem);
+		
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_PAR_MAXACTIVITY => $oSystem->maxactivity));
+		
 		return new JsonModel(array('success'=>1));
 	}
 }

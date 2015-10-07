@@ -38,6 +38,7 @@ class RobotConstants {
 	const MAINLOGIC_PAR_SOFTWAREVERSION 					= 'G_MainLogic.par.Software_Version';
 	const MAINLOGIC_PAR_SYSTEMVERSION 						= 'G_MainLogic.par.System_Version';
 	const MAINLOGIC_PAR_MEASUREUNIT							= 'G_MainLogic.par.Measure_Unit';
+	const MAINLOGIC_PAR_MAXACTIVITY							= 'G_MainLogic.par.Max_Act';
 	//Faire le mode demo
 
 	const MAINLOGIC_STATUS_ACTIVE 							= 'G_MainLogic.status.Active';

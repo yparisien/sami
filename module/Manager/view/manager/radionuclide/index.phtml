@@ -21,7 +21,6 @@
 						<tr>
 							<th><?php echo $this->translate('Name');?></th>
 							<th><?php echo $this->translate('Period');?></th>
-							<th><?php echo $this->translate('Coefficient');?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -29,7 +28,6 @@
 						<tr>
 							<td><?php echo $this->escapeHtml($radionuclide->name);?></td>
 							<td><?php echo $this->escapeHtml($radionuclide->period);?> <?php echo $this->translate('sec');?></td>
-							<td><?php echo $this->escapeHtml($radionuclide->coefficient);?> %</td>
 						</tr>
 						<?php } ?>
 					</tbody>
