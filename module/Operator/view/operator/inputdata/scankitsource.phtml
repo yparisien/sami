@@ -26,7 +26,7 @@
 							<label for="sourcekit-sn">Kit n°</label>
 							<div class="input-group">
 								<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
-								<input type="text" class="form-control" id="sourcekit-sn" name="sourcekit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
+								<input type="text" class="form-control barcode" id="sourcekit-sn" name="sourcekit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
 								</span>
@@ -45,12 +45,13 @@
 			</form>
 			<script type="text/javascript">
 				$(function() {
-					$('#sourcekit-sn').change(function(){checkInputVal(false);});
+					$('#sourcekit-sn').change(function(){console.log('change'); checkInputVal(false);});
 					$('#sourcekit-sn').focus();
 				});
 
 				function checkInputVal(submitForm)
 				{
+					console.log(submitForm);
 					$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
 					$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
 					var code = $('#sourcekit-sn').val();
@@ -65,38 +66,38 @@
 							url: "<?php echo $this->url('setup', array('action'=>'achecksourcekit'));?>",
 								dataType: "json",
 								data: postdata,
-							}).done(function(result) {
-								if(result.success == 1)
-								{
-									$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
-									$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
-									$('#btn-next').removeAttr('disabled');
-									if (submitForm === true) {
-	 									$('#scankitsource').submit();
-									}
-									return false;
+						}).done(function(result) {
+							if(result.success == 1)
+							{
+								$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
+								$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
+								$('#btn-next').removeAttr('disabled');
+								if (submitForm === true) {
+	 								return true;
 								}
-								else if(result.success == 0)
-								{
-									$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
-									$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
-									$('#errormsg-content').html(result.msg);
-									$('#errormsg').slideToggle();
-									setTimeout(function(){$('#errormsg').slideToggle();},3000);
-									return false;
-								}
-								else
-								{
- 									$(location).attr('href', result.redirect);
-								}
-							});
-						}
-						else
-						{
-							$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
-							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
-							$('#btn-next').attr('disabled', 'disabled');
-							$('#errormsg-content').html("<?php echo $this->translate("Invalid barcode")?>");
+								return false;
+							}
+							else if(result.success == 0)
+							{
+								$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
+								$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
+								$('#errormsg-content').html(result.msg);
+								$('#errormsg').slideToggle();
+								setTimeout(function(){$('#errormsg').slideToggle();},3000);
+								return false;
+							}
+							else
+							{
+ 								$(location).attr('href', result.redirect);
+							}
+						});
+					}
+					else
+					{
+						$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
+						$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
+						$('#btn-next').attr('disabled', 'disabled');
+						$('#errormsg-content').html("<?php echo $this->translate("Invalid barcode")?>");
 						$('#errormsg').slideToggle();
 						setTimeout(function(){$('#errormsg').slideToggle();},3000);
 						return false;

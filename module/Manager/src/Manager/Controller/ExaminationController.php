@@ -19,7 +19,6 @@ use Manager\View\VExaminationTable;
 
 class ExaminationController extends AbstractActionController
 {
-	//TODO Rajouter un champ killed comme pour drug (input_patient)
 	protected $drugTable;
 	protected $examinationTable;
 	protected $systemTable;

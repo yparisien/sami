@@ -445,23 +445,23 @@ class InputdataController extends AbstractActionController
 	{
 		if($this->params('confirm'))
 		{
-			$inputaction = new InputAction();
-			$inputaction->inputdate = date('Y-m-d H:i:s');
-			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-			$inputaction->action = "User mark source kit loaded";
-			$this->getInputActionTable()->saveInputAction($inputaction);
-
 			// for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->sourcekitloaded = true;
-			
-			$robotService = $this->getServiceLocator()->get('RobotService');
-			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 
 			return $this->redirect()->toRoute('operator');
 		}
 		else
 		{
+			$inputaction = new InputAction();
+			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+			$inputaction->action = "User start loading source & kit.";
+			$this->getInputActionTable()->saveInputAction($inputaction);
+	
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
+
 			return array();
 		}
 	}
