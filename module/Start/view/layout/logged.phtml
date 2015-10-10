@@ -211,11 +211,44 @@ if ($virtualkeyboardEnable === true) {
 		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
-					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").keyboard({
-						autoAccept: true, 
+					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").keyboard({
+						autoAccept: true,
+					 /**
+						display : {
+							bksp   : "\u2190",
+							accept : "Valider",
+							cancel : "Annuler",
+							default: "ABC",
+							meta1  : ".?123",
+							meta2  : "#+=",
+						},
+						layout: "french-sami",
+					**/
 						layout: "french-azerty-1",
 						css: {
-					        input: "form-control input-sm",
+					        input: "form-control input-md",
+					        container: "center-block dropdown-menu large-input",
+					        buttonDefault: "btn btn-default",
+					        buttonHover: "btn-primary",
+					        buttonAction: "active",
+					        buttonDisabled: "disabled",
+					    },
+					});
+					
+					$("input[type=text].form-control.barcode").keyboard({
+						autoAccept: true, 
+						layout : "custom",
+						maxLength : 35,
+						customLayout: {
+							"normal" : [
+								"7 8 9 {b}",
+								"4 5 6 {clear}",
+								"1 2 3 {a}",
+								"0 {dec} - {c}"
+							]
+						},
+						css: {
+					        input: "form-control input-md",
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
@@ -229,7 +262,7 @@ if ($virtualkeyboardEnable === true) {
 						lockInput: true, 
 						layout: "french-azerty-1",
 						css: {
-					        input: "form-control input-sm",
+					        input: "form-control input-md",
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
@@ -250,7 +283,7 @@ if ($virtualkeyboardEnable === true) {
 						}, 
 						autoAccept: true,
 						css: {
-					        input: "form-control input-sm",
+					        input: "form-control input-md",
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
@@ -271,7 +304,7 @@ if ($virtualkeyboardEnable === true) {
 						}, 
 						autoAccept: true,
 						css: {
-					        input: "form-control input-sm",
+					        input: "form-control input-md",
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
