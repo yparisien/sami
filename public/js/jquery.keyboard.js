@@ -806,8 +806,7 @@ var $keyboard = $.keyboard = function(el, options){
 					$keys = base.getLayers( $this ),
 					txt = ( $keys.length ? $keys.map(function(){ return $(this).attr('data-curtxt') || ''; }).get() : '' ) || [ $this.find('.' + kbcss.keyText).text() ];
 
-				if ((e.type === 'mouseenter' || e.type === 'touchstart') && base.el.type !== 'password' &&
-					!$this.hasClass(o.css.buttonDisabled) ){
+				if ((e.type === 'mouseenter' || e.type === 'touchstart')  && !$this.hasClass(o.css.buttonDisabled) ){
 					$this
 						.addClass(o.css.buttonHover)
 						.attr('title', function(i,t){
