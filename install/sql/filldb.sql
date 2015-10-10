@@ -71,30 +71,6 @@ CREATE TABLE `input_drug` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `input_patient`
---
-
-DROP TABLE IF EXISTS `input_patient`;
-CREATE TABLE `input_patient` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `patient_id` varchar(8) NULL,
-  `lastname` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL,
-  `gender` enum('M','F') NOT NULL,
-  `birthdate` date NOT NULL,
-  `age` int(11) NOT NULL,
-  `weight` float NOT NULL,
-  `height` int(11) NOT NULL,
-  `comments` text NOT NULL,
-  `examinationid` int(11) NOT NULL,
-  `drugid` int(11) NOT NULL,
-  `activity` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`patient_id`),
-  KEY `drugid` (`drugid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `patientkit`
 --
 
@@ -195,7 +171,7 @@ CREATE TABLE `tmp_patient` (
   `gender` enum('M','F','U') NOT NULL,
   `birthdate` date NOT NULL,
   `age` int(11) NOT NULL,
-  `weight` decimal(5,1) NOT NULL,
+  `weight` decimal(5,2) NOT NULL,
   `height` decimal(3,0) NOT NULL,
   `patienttype` varchar(25) NOT NULL DEFAULT '',
   `doctorname` varchar(100) NOT NULL DEFAULT '',
