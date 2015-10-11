@@ -19,6 +19,11 @@ class RadionuclideTable
 		return $resultSet;
 	}
 
+	/**
+	 * 
+	 * @param unknown $id
+	 * @return \Manager\Model\Radionuclide
+	 */
 	public function getRadionuclide($id)
 	{
 		$id  = (int) $id;

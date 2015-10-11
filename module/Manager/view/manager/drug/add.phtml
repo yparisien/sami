@@ -10,7 +10,10 @@
 				<span class="glyphicon glyphicon-tint"></span> <?php echo $this->translate('Drug profile');?>
 			</div>
 			<div class="panel-body">
-				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('drug', array('action'=>'add'))?>" onsubmit="return checkForm()">
+				<form class="form-horizontal" id="form-drug" role="form" method="post" action="<?php echo $this->url('drug', array('action'=>'add'))?>">
+					<div id="errorMessage" class="alert alert-danger hide" role="alert">
+						<i class=""><?php echo $this->translate('This drug is already existing in database. Please choose another name.'); ?></i>
+					</div>
 					<div class="form-group">
 						<label for="name" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
 						<div class="col-md-6">
@@ -34,8 +37,8 @@
 							<input type="text" class="form-control" id="dci" name="dci" value="" maxlength="100" required autocomplete="off" />
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit")?></button>
-					<button type="button" class="btn btn-danger" onClick="window.location='<?php echo $this->url('drug')?>'"><?php echo $this->translate("Abort")?></button>
+					<button type="button" class="btn btn-primary" onclick="checkForm();"><?php echo $this->translate("Submit")?></button>
+					<button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->url('drug')?>'"><?php echo $this->translate("Abort")?></button>
 				</form>
 			</div>
 		</div>
@@ -45,13 +48,24 @@
 <script type="text/javascript">
 	function	checkForm()
 	{
-		if(true)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('drug', array('action' => 'acheckunique'));?>",
+			dataType:"json",
+			data : {"name" : $('#name').val()}
+		}).done(function(result) {
+			if (result.error === false) {
+				$("#errorMessage").removeClass("hide");
+				$("#errorMessage").addClass("hide");
+				$("#form-drug").submit();
+				return true;
+			}
+			else {
+				$("#errorMessage").removeClass("hide");
+				return false;
+			}
+		});
+		return false;
+		//TODO Rajouter test nom unique
 	}
 </script>

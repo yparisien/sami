@@ -280,6 +280,7 @@ class InputdataController extends AbstractActionController
 				RobotConstants::MEDICAMENT_INPUT_NLOT => $aDrugData['batchnum'],
 				RobotConstants::MEDICAMENT_INPUT_NAME => $drug->name,
 				RobotConstants::MEDICAMENT_INPUT_PERIOD => $radionucleide->period,
+				RobotConstants::MEDICAMENT_INPUT_RADIONUCLIDEID => $radionucleide->id,
 				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0
 			);
 			

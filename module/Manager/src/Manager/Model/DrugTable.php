@@ -53,6 +53,23 @@ class DrugTable
 		}
 		return $row;
 	}
+	
+	/**
+	 *
+	 * @param string $name
+	 * @throws \Exception
+	 * @return Drug
+	 */
+	public function getDrugByName($name)
+	{
+		$rowset = $this->tableGateway->select(array('name' => $name));
+		$row = $rowset->current();
+		if (!$row)
+		{
+			return null;
+		}
+		return $row;
+	}
 
 	public function saveDrug(Drug $drug)
 	{

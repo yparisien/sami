@@ -14,8 +14,7 @@ CREATE TABLE `drug` (
   PRIMARY KEY (`id`),
   KEY `radionuclideid` (`radionuclideid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-ALTER TABLE `drug` 
-  ADD UNIQUE INDEX `dci_UNIQUE` (`dci` ASC)  COMMENT '';
+ALTER TABLE `sami`.`drug` ADD UNIQUE INDEX `UNIQUE_NAME` (`name` ASC);
 
 
 --

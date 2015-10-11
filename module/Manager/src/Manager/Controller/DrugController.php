@@ -13,6 +13,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Manager\Model\Drug;
 use Manager\Model\Radionuclide;
+use Zend\View\Model\JsonModel;
 
 class DrugController extends AbstractActionController
 {
@@ -134,5 +135,21 @@ class DrugController extends AbstractActionController
 		}
 		
 		return $this->redirect()->toRoute('drug');
+	}
+	
+	public function acheckuniqueAction() {
+		$aParams = array('error' => true, 'errorMessage' => 'This drug name already exists.');
+		
+		if($this->getRequest()->isPost())
+		{
+			$oRequest = $this->getRequest();
+			$drugName = $oRequest->getPost('name');
+			$oDrug = $this->getDrugTable()->getDrugByName($drugName);
+			if ($oDrug === null) {
+				$aParams = array('error' => false);
+			}
+		}
+		$result = new JsonModel($aParams);
+		return $result;
 	}
 }
