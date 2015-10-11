@@ -214,6 +214,27 @@ class InputdataController extends AbstractActionController
 		return $this->redirect()->toRoute('operator');
 	}
 
+	public function aunloaddrugAction() {
+		/* @var $robotService RobotService  */
+		$oContainer = new Container('automate_setup');
+
+		$inputaction = new InputAction();
+		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+		$inputaction->action = "Remove selected inputdrug #".$oContainer->inputdrugid;
+		$this->getInputActionTable()->saveInputAction($inputaction);
+
+		$oContainer->drugspecified = false;
+		$oContainer->drugid = null;
+		$oContainer->inputdrugid = null;
+		
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_EXIT => 1));
+		$aParams = array('success' => 1);
+		$result = new JsonModel($aParams);
+		return $result;
+	}
+	
 	public function drugAction()
 	{
 		/* @var $robotService RobotService  */

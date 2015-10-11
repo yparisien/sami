@@ -46,6 +46,20 @@ class OperatorController extends AbstractActionController
 		}
 		return $this->examinationTable;
 	}	
+	
+	/**
+	 *
+	 * @return \Manager\Model\DrugTable
+	 */
+	public function getDrugTable()
+	{
+		if(!$this->drugTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->drugTable = $sm->get('Manager\Model\DrugTable');
+		}
+		return $this->drugTable;
+	}
 
 	public function indexAction()
 	{
@@ -71,6 +85,11 @@ class OperatorController extends AbstractActionController
 		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
+		
+		if ($oContainer->drugspecified == true) {
+			$drug = $this->getDrugTable()->getDrug($oContainer->drugid);
+			$aParam['selectedDrugName'] = '[' . $drug->dci . ']' . ' ' . $drug->name;
+		}
 		
 		return new ViewModel($aParam);
 	}
