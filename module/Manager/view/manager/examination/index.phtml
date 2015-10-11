@@ -20,7 +20,7 @@
 					<thead>
 						<tr>
 							<th><?php echo $this->translate('Name');?></th>
-							<th><?php echo $this->translate('Drug');?></th>
+							<th><?php echo $this->translate('DCI');?></th>
 							<th><?php echo $this->translate('Rate');?></th>
 							<th><?php echo $this->translate('Min');?></th>
 							<th><?php echo $this->translate('Max');?></th>
@@ -31,7 +31,7 @@
 						<?php foreach($examinations as $examination) { ?>
 						<tr>
 							<td><?php echo $this->escapeHtml($examination->examination_name);?></td>
-							<td><?php echo $this->escapeHtml($examination->drug_name);?></td>
+							<td><?php echo $this->escapeHtml($examination->dci);?></td>
 							<td><?php echo $this->escapeHtml($examination->rate);?> <?php echo $unit?>/Kg</td>
 							<td><?php echo $this->escapeHtml($examination->min);?> <?php echo $unit?></td>
 							<td><?php echo $this->escapeHtml($examination->max);?> <?php echo $unit?></td>

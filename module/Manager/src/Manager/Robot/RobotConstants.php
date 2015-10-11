@@ -62,6 +62,7 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_ACT								= 'G_Medicament.Input.Act';
 	const MEDICAMENT_INPUT_ACTVOL							= 'G_Medicament.Input.Act_Vol';
 	const MEDICAMENT_INPUT_ACTDT							= 'G_Medicament.Input.Act_DT';
+	const MEDICAMENT_INPUT_DCI								= 'G_Medicament.Input.DCI';
 	const MEDICAMENT_INPUT_DTCALIB							= 'G_Medicament.Input.DT_Calib';
 	const MEDICAMENT_INPUT_DTEND							= 'G_Medicament.Input.DT_End';
 	const MEDICAMENT_INPUT_NAME								= 'G_Medicament.Input.Name';

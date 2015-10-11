@@ -24,6 +24,10 @@ class ExaminationController extends AbstractActionController
 	protected $systemTable;
 	protected $vexaminationTable;
 
+	/**
+	 * 
+	 * @return \Manager\Model\DrugTable
+	 */
 	public function getDrugTable()
 	{
 		if(!$this->drugTable)
@@ -89,7 +93,7 @@ class ExaminationController extends AbstractActionController
 			$oRequest = $this->getRequest();
 			$oExamination = new Examination();
 			$oExamination->name		= $oRequest->getPost('name');
-			$oExamination->drugid	= $oRequest->getPost('drugid');
+			$oExamination->dci		= $oRequest->getPost('dci');
 			$oExamination->rate		= $oRequest->getPost('rate');
 			$oExamination->min		= $oRequest->getPost('min');
 			$oExamination->max		= $oRequest->getPost('max');
@@ -104,7 +108,7 @@ class ExaminationController extends AbstractActionController
 		{
 			return new ViewModel(array(
 				'unit'	=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
-				'drugs'	=> $this->getDrugTable()->fetchAll(),
+				'dcis'	=> $this->getDrugTable()->fetchAllDCI(),
 			));
 		}
 	}
@@ -118,7 +122,7 @@ class ExaminationController extends AbstractActionController
 			$examinationId = $oRequest->getPost('id');
 			$oExamination = $this->getExaminationTable()->getExamination($examinationId);
 			$oExamination->name		= $oRequest->getPost('name');
-			$oExamination->drugid	= $oRequest->getPost('drugid');
+			$oExamination->dci		= $oRequest->getPost('dci');
 			$oExamination->rate		= $oRequest->getPost('rate');
 			$oExamination->min		= $oRequest->getPost('min');
 			$oExamination->max		= $oRequest->getPost('max');
@@ -135,7 +139,7 @@ class ExaminationController extends AbstractActionController
 			return new ViewModel(array(
 				'unit'			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
 				'examination'	=> $this->getExaminationTable()->getExamination($drugId),
-				'drugs'			=> $this->getDrugTable()->fetchAll(),
+				'dcis'			=> $this->getDrugTable()->fetchAllDCI(),
 			));
 		}
 	}

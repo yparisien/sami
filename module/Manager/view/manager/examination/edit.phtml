@@ -18,12 +18,12 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="drugid" class="control-label col-md-2"><?php echo $this->translate("Drug")?></label>
+						<label for="dci" class="control-label col-md-2"><?php echo $this->translate("DCI")?></label>
 						<div class="col-md-6">
-							<select class="form-control" id="drugid" name="drugid" required>
-								<option value=""><?php echo $this->translate("Select a drug")?></option>
-							<?php foreach ($this->drugs as $drug) { ?>
-								<option value="<?php echo $drug->id;?>"<?php if($drug->id == $this->examination->drugid){echo " selected";}?>><?php echo $drug->name;?></option>
+							<select class="form-control" id="dci" name="dci" required>
+								<option value=""><?php echo $this->translate("Select a DCI")?></option>
+							<?php foreach ($this->dcis as $dci) { ?>
+								<option value="<?php echo $dci->dci;?>"<?php if($dci->dci == $this->examination->dci){echo " selected";}?>><?php echo $dci->dci;?></option>
 							<?php } ?>
 							</select>
 						</div>

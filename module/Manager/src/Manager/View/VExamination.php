@@ -8,7 +8,7 @@ class VExamination
 	public	$rate;
 	public	$min;
 	public	$max;
-	public	$drug_name;
+	public	$dci;
 	public  $nbExamsInProgress;
 
 	public function	exchangeArray($data)
@@ -18,7 +18,7 @@ class VExamination
 		$this->rate = (!empty($data['rate'])) ? $data['rate'] : null;
 		$this->min = (!empty($data['min'])) ? $data['min'] : null;
 		$this->max = (!empty($data['max'])) ? $data['max'] : null;
-		$this->drug_name = (!empty($data['drug_name'])) ? $data['drug_name'] : null;
+		$this->dci = (!empty($data['dci'])) ? $data['dci'] : null;
 		$this->nbExamsInProgress = (!empty($data['nbExamsInProgress'])) ? $data['nbExamsInProgress'] : 0;
 	}
 }

@@ -3,6 +3,7 @@
 namespace Manager\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Select;
 
 class DrugTable
 {
@@ -13,9 +14,24 @@ class DrugTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	public function fetchAllDCI()
+	{
+		$resultSet = $this->tableGateway->select(function (Select $select) {
+		
+			// Select columns and count the forums.
+			$select->columns(array(
+				'dci',
+			));
+			
+			// Group by the category name.
+			$select->group('dci');
+		});
+		return $resultSet;
+	}
+	
 	public function fetchAll()
 	{
-		$resultSet = $this->tableGateway->select();
+		$resultSet = $this->tableGateway->s;
 		return $resultSet;
 	}
 

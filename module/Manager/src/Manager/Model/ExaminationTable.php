@@ -45,7 +45,7 @@ class ExaminationTable
 	{
 		$data = array(
 			'name'		=> $user->name,
-			'drugid'	=> $user->drugid,
+			'dci'		=> $user->dci,
 			'rate'		=> $user->rate,
 			'min'		=> $user->min,
 			'max'		=> $user->max,

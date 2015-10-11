@@ -25,14 +25,15 @@ DROP TABLE IF EXISTS `examination`;
 CREATE TABLE `examination` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `drugid` int(11) DEFAULT NULL,
+  `dci` varchar(255) NOT NULL,
   `rate` float NOT NULL,
   `min` float NOT NULL,
   `max` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `drugid` (`drugid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
+ALTER TABLE `sami`.`examination` 
+ADD INDEX `INDEX` (`dci` ASC);
 --
 -- Table structure for table `input_action`
 --
@@ -228,19 +229,20 @@ CREATE VIEW `view_drug` AS
 --
 
 DROP VIEW IF EXISTS `view_examination`;
-CREATE VIEW `view_examination` AS
+CREATE VIEW `sami`.`view_examination` AS
     SELECT 
         `e`.`id` AS `id`,
         `e`.`name` AS `examination_name`,
         `e`.`rate` AS `rate`,
         `e`.`min` AS `min`,
         `e`.`max` AS `max`,
-        `d`.`name` AS `drug_name`,
+        `e`.`dci` AS `dci`,
         COUNT(`ti`.`id`) AS `nbExamsInProgress`
-    FROM `drug` `d`
-        JOIN `examination` `e` ON `d`.`id` = `e`.`drugid`
-        LEFT JOIN `tmp_injection` `ti` ON `ti`.`examinationid` = `e`.`id`
-    GROUP BY `e`.`id`;
+    FROM
+        `sami`.`examination` `e`
+            LEFT JOIN
+        `sami`.`tmp_injection` `ti` ON `ti`.`examinationid` = `e`.`id`
+    GROUP BY `e`.`id`
 
 
 --
