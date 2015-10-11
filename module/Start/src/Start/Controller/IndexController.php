@@ -129,7 +129,7 @@ class IndexController extends AbstractActionController
 				$jsonModel->setVariable('errorMessage', $translate(constant('\Manager\Robot\RobotConstants::ERROR_CODE_' . $errorID)));
 			} else {
 				$now = new \DateTime();
-				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM => $now->format('Y-m-d H:i:s')));
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM => "#DT" . $now->format('Y-m-d H:i:s')));
 				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME => 1));
 			}
 		}
