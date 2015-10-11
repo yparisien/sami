@@ -31,7 +31,7 @@ class DrugTable
 	
 	public function fetchAll()
 	{
-		$resultSet = $this->tableGateway->s;
+		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
 
