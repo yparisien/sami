@@ -15,6 +15,8 @@ class RobotConstants {
 	const ISOTOPES_NB										= 'Isotopes_Nb';
 	
 	const MAINLOGIC_CMD_INPUTSOFT_ADJUSTSAMPLING			= 'G_MainLogic.cmd.Input_Soft.Adjust_Sampling';
+	const MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME			= 'G_MainLogic.cmd.Input_Soft.ChangeDateTime';
+	const MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM				= 'G_MainLogic.cmd.Input_Soft.DateTimeIHM';
 	const MAINLOGIC_CMD_INPUTSOFT_DILUTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Dilution_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_EXIT 						= 'G_MainLogic.cmd.Input_Soft.Exit';
 	const MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Injection_Sequence';
