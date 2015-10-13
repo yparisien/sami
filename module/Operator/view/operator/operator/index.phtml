@@ -27,7 +27,9 @@
 
 				<?php if ($step->drugspecified) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
+				<?php if (!$step->sourcekitloaded) { ?>
 					<span id="removeDrugButton" class="badge badge-danger"><span class="glyphicon glyphicon-remove"></span></span>
+				<?php } ?>
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-file"></span>
 					<?php echo sprintf($this->translate("Receipted drug : <u>%s</u>"), $selectedDrugName); ?>

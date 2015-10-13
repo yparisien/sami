@@ -13,6 +13,11 @@ class Injection
 	public	$vial_id;
 	public	$location;
 	public	$comments;
+	public	$dci;
+	
+	/**
+	 * Champs rempli durant l'examen
+	 */
 	public	$drugid;
 	public	$inputdrugid;
 	public	$examinationid;
@@ -20,20 +25,21 @@ class Injection
 
 	public function	exchangeArray($data)
 	{
-		$this->id				= (!empty($data['id'])) ? $data['id'] : null;
+		$this->id				= (!empty($data['id'])) ? (int) $data['id'] : null;
 		$this->patient_id		= (!empty($data['patient_id'])) ? $data['patient_id'] : null;
 		$this->type				= (!empty($data['type'])) ? $data['type'] : null;
 		$this->injection_time	= (!empty($data['injection_time'])) ? $data['injection_time'] : null;
-		$this->activity			= (!empty($data['activity'])) ? $data['activity'] : null;
+		$this->activity			= (!empty($data['activity'])) ? (int) $data['activity'] : null;
 		$this->dose_status		= (!empty($data['dose_status'])) ? $data['dose_status'] : null;
 		$this->unique_id		= (!empty($data['unique_id'])) ? $data['unique_id'] : null;
 		$this->vial_id			= (!empty($data['vial_id'])) ? $data['vial_id'] : null;
 		$this->location			= (!empty($data['location'])) ? $data['location'] : null;
 		$this->comments			= (!empty($data['comments'])) ? $data['comments'] : null;
-		$this->drugid			= (!empty($data['drugid'])) ? $data['drugid'] : null;
-		$this->inputdrugid		= (!empty($data['inputdrugid'])) ? $data['inputdrugid'] : null;
-		$this->examinationid	= (!empty($data['examinationid'])) ? $data['examinationid'] : null;
-		$this->operatorid		= (!empty($data['operatorid'])) ? $data['operatorid'] : null;
+		$this->dci				= (!empty($data['dci'])) ? $data['dci'] : null;
+		$this->drugid			= (!empty($data['drugid'])) ? (int) $data['drugid'] : null;
+		$this->inputdrugid		= (!empty($data['inputdrugid'])) ? (int) $data['inputdrugid'] : null;
+		$this->examinationid	= (!empty($data['examinationid'])) ? (int) $data['examinationid'] : null;
+		$this->operatorid		= (!empty($data['operatorid'])) ? (int) $data['operatorid'] : null;
 	}
 
 	public function	toArray()
@@ -50,6 +56,7 @@ class Injection
 		$data['vial_id']		= $this->vial_id;
 		$data['location']		= $this->location;
 		$data['comments']		= $this->comments;
+		$data['dci']			= $this->dci;
 		$data['drugid']			= $this->drugid;
 		$data['inputdrugid']	= $this->inputdrugid;
 		$data['examinationid']	= $this->examinationid;

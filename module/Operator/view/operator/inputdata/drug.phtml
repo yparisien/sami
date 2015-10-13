@@ -16,7 +16,7 @@
 							<div class="col-sm-6">
 								<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1" required>
 								<?php foreach($this->drugs as $drug) { ?>
-									<option value="<?php echo $drug->id?>"><?php echo $drug->name;?></option>
+									<option value="<?php echo $drug->id?>"><?php echo '[' . $drug->dci . ']' . ' ' . $drug->name;?></option>
 								<?php } ?>
 								</select>
 							</div>

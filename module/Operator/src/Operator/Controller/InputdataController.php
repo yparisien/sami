@@ -47,6 +47,7 @@ class InputdataController extends AbstractActionController
 	protected $sourcekitTable;
 	protected $systemTable;
 	protected $userTable;
+	protected $viewToInjectTable;
 
 	/*
 	 * Some handy functions / proxies for access to models
@@ -204,6 +205,21 @@ class InputdataController extends AbstractActionController
 			$this->userTable = $sm->get('Manager\Model\UserTable');
 		}
 		return $this->userTable;
+	}
+	
+	/**
+	 * 
+	 * @return \Bufferspace\View\ToInjectTable
+	 */
+	public function	getViewToInjectTable()
+	{
+		if(!$this->viewToInjectTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->viewToInjectTable = $sm->get('Bufferspace\View\ToInjectTable');
+		}
+		return $this->viewToInjectTable;
+	
 	}
 
 	/*
@@ -583,10 +599,25 @@ class InputdataController extends AbstractActionController
 
 	public function	selectpatientAction()
 	{
-		$patients = $this->getPatientTable()->getToInject();
+		/* @var $patient \Bufferspace\View\ToInject */
+		$oContainer = new Container('automate_setup');
+		$drug = $this->getDrugTable()->getDrug($oContainer->drugid);
+		
+		$patientsC = array();
+		$patientsNC = array();
+		$patients = $this->getViewToInjectTable()->fetchAll();
+		
+		foreach ($patients as $patient) {
+			if (strtolower($drug->dci) == strtolower($patient->injectionDci)) {
+				$patientsC[] = $patient;
+			} else {
+				$patientsNC[] = $patient;
+			}
+		}
 		
 		$aParam = array(
-			'patients'	=> $patients,
+			'patients_compatible'	=> $patientsC,
+			'patients_nocompatible'	=> $patientsNC,
 		);
 		
 		return new ViewModel($aParam);
@@ -672,6 +703,7 @@ class InputdataController extends AbstractActionController
 		$patientId = $this->getRequest()->getPost('patient-id');
 		$oContainer = new Container('automate_setup');
 		$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
+		$drug = $this->getDrugTable()->getDrug($inputdrug->drugid);
 		
 		$examinations = $this->getExaminationTable()->fetchAll();
 		$drugs = $this->getDrugTable()->fetchAll();
@@ -680,12 +712,27 @@ class InputdataController extends AbstractActionController
 		$otherExams = [];
 		
 		foreach ($examinations as $exam) {
-			if ($inputdrug->drugid == $exam->drugid) {
+			if ($drug->dci == $exam->dci) {
 				$compatibleExams[] = $exam;
 			} else {
 				$otherExams[] = $exam;
 			}
 		}
+		
+		$oPatient = $this->getPatientTable()->getPatient($patientId);
+		$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
+		
+		$dataToSend = array(
+				'G_Patient.Input.Nom' => $oPatient->lastname,
+				'G_Patient.Input.Prenom' => $oPatient->firstname,
+				'G_Patient.Input.DateN' => $oPatient->birthdate,
+				'G_Patient.Input.Ordonnancier' => $oInjection->unique_id,
+				'G_Patient.Input.Poids' => $oPatient->weight,
+				'G_Patient.Input.ActToInj' => $oInjection->activity,
+				'G_Patient.Input.DCI' => $oInjection->dci,
+		);
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send($dataToSend);
 		
 		$aParam = array(
 			'patientid'		=> $patientId,

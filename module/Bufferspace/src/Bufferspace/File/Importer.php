@@ -117,9 +117,10 @@ class	Importer
 			$oInjection->dose_status	= $patient['DoseStatus'];
 			$oInjection->unique_id		= $patient['UniqueID'];
 			$oInjection->vial_id		= $patient['VialID'];
-			//$oInjection->location	= $patient['Emplacement'];
+			$oInjection->dci			= $patient['MedicamentID'];			
 			$oInjection->location		= '';
 			$oInjection->comments		= '';
+			
 			$injectionTable->saveInjection($oInjection);
 
 		}

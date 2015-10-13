@@ -149,6 +149,7 @@ CREATE TABLE `tmp_injection` (
   `vial_id` int(11) NOT NULL,
   `location` varchar(255) NOT NULL,
   `comments` text NOT NULL,
+  `dci` VARCHAR(255) NULL DEFAULT NULL,
   `drugid` int(11) DEFAULT NULL,
   `inputdrugid` INT(11) DEFAULT NULL,
   `examinationid` int(11) DEFAULT NULL,

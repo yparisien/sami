@@ -22,6 +22,9 @@ use Bufferspace\View\Export;
 use Bufferspace\View\ExportTable;
 use Bufferspace\View\Injected;
 use Bufferspace\View\InjectedTable;
+use Bufferspace\View\ToInjectTable;
+use Bufferspace\View\ToInject;
+use Bufferspace\View\Bufferspace\View;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -92,6 +95,17 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new Injected());
 					return new TableGateway('view_injected', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Bufferspace\View\ToInjectTable' =>  function($sm) {
+					$tableGateway = $sm->get('ToInjectTableGateway');
+					$table = new ToInjectTable($tableGateway);
+					return $table;
+				},
+				'ToInjectTableGateway' => function ($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new ToInject());
+					return new TableGateway('view_toinject', $dbAdapter, null, $resultSetPrototype);
 				},
 			),
 		);

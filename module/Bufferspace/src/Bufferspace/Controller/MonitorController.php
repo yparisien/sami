@@ -60,7 +60,7 @@ class MonitorController extends AbstractActionController
 		return $this->viewinjectedTable;
 
 	}
-
+	
 	public function indexAction()
 	{
 		return array();

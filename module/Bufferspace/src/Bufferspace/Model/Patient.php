@@ -19,19 +19,19 @@ class Patient
 
 	public function	exchangeArray($data)
 	{
-		$this->id			= (!empty($data['id']))				? $data['id']			: null;
-		$this->patient_id	= (!empty($data['patient_id']))		? $data['patient_id']	: null;
-		$this->lastname		= (!empty($data['lastname']))		? $data['lastname']		: null;
-		$this->firstname	= (!empty($data['firstname']))		? $data['firstname']	: null;
-		$this->gender		= (!empty($data['gender']))			? $data['gender']		: null;
-		$this->birthdate	= (!empty($data['birthdate']))		? $data['birthdate']	: null;
-		$this->age			= (!empty($data['age']))			? $data['age']			: null;
-		$this->weight		= (!empty($data['weight']))			? $data['weight']		: null;
-		$this->height		= (!empty($data['height']))			? $data['height']		: null;
-		$this->patienttype	= (!empty($data['patienttype']))	? $data['patienttype']	: null;
-		$this->doctorname	= (!empty($data['doctorname']))		? $data['doctorname']	: null;
-		$this->injected		= (!empty($data['injected']))		? $data['injected']		: null;
-		$this->comments		= (!empty($data['comments']))		? $data['comments']		: null;
+		$this->id			= (!empty($data['id']))				? (int) $data['id']			: null;
+		$this->patient_id	= (!empty($data['patient_id']))		? $data['patient_id']		: null;
+		$this->lastname		= (!empty($data['lastname']))		? $data['lastname']			: null;
+		$this->firstname	= (!empty($data['firstname']))		? $data['firstname']		: null;
+		$this->gender		= (!empty($data['gender']))			? $data['gender']			: null;
+		$this->birthdate	= (!empty($data['birthdate']))		? $data['birthdate']		: null;
+		$this->age			= (!empty($data['age']))			? (int) $data['age']		: null;
+		$this->weight		= (!empty($data['weight']))			? (float) $data['weight']	: null;
+		$this->height		= (!empty($data['height']))			? (float) $data['height']	: null;
+		$this->patienttype	= (!empty($data['patienttype']))	? $data['patienttype']		: null;
+		$this->doctorname	= (!empty($data['doctorname']))		? $data['doctorname']		: null;
+		$this->injected		= (!empty($data['injected']))		? (int) $data['injected']	: null;
+		$this->comments		= (!empty($data['comments']))		? $data['comments']			: null;
 	}
 
 	/**
