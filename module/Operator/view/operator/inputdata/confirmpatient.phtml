@@ -54,22 +54,13 @@
 										<option value=""><?php echo $this->translate('Choose an exam'); ?></option>
 										<optgroup label="<?php echo $this->translate('Compatible exams'); ?>">
 									<?php foreach($examinations['compatible'] as $examination) {?>
-										<option value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>"><?php echo $examination->name;?></option>
+										<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
 									<?php } ?>
+									<?php if (count($examinations['others']) > 0) { ?>
 										<optgroup label="<?php echo $this->translate('Other exams'); ?>">
 									<?php foreach($examinations['others'] as $examination) {?>
-										<option disabled value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>"><?php echo $examination->name;?></option>
+										<option disabled value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
 									<?php } ?>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="drugs" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
-								<div class="col-sm-8">
-									<select class="form-control" id="drugs" name="drugid" disabled>
-										<option value=""></option>
-									<?php foreach($drugs as $drug) {?>
-										<option value="<?php echo $drug->id;?>"><?php echo $drug->name;?></option>
 									<?php } ?>
 									</select>
 								</div>
@@ -232,27 +223,6 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="alertchangedrug" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Bad drug selected');?></h4>
-			</div>
-			<div class="modal-body">
-				<p><?php echo $this->translate('You have select an exam using a different drug of those loaded in the machine'); ?></p>
-				<div class="alert alert-info">
-					<i class="glyphicon glyphicon-question-sign"></i>
-					<?php echo $this->translate('Do you want to change the exam ?'); ?>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="changeExamOperatorResponse('change');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="changeExamOperatorResponse('abort');"><?php echo $this->translate('NO');?></button>
-			</div>
-		</div>
-	</div>
-</div>
 <script type="text/javascript">
 
 	$(function () {
@@ -407,20 +377,6 @@
 		});
 	}
 
-	function	changeExamOperatorResponse(response) {
-		$('#alertlowactivity').modal('hide');
-		$('#alertchoosepatient').modal('hide');
-		$('#alertchangedrug').modal('hide');
-
-		if (response == 'change') {
-			$('#examination').val('');
-			$('#drugs').val('');
-		} else if (response == 'abort') {
-			//TODO Ajout call AJAX pour alimenter FlashMessenger
-			cancelPatient();
-		}
-	}
-	
 	function	lowActivityOperatorResponse(response)
 	{
 		$('#alertlowactivity').modal('hide');
