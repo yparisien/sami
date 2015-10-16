@@ -753,9 +753,6 @@ class InputdataController extends AbstractActionController
 			
 			// Envoi des infos a l'automate
 			$dataToSend = array(
-					'G_Patient.Input.Taux' => $oExamination->rate,
-					'G_Patient.Input.Taux_Min' => $oExamination->min,
-					'G_Patient.Input.Taux_Max' => $oExamination->max,
 					'G_MainLogic.cmd.Input_Soft.Load_Patient' => 0
 			);
 			$robotService = $this->getServiceLocator()->get('RobotService');
