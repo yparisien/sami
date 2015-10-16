@@ -243,7 +243,7 @@ CREATE VIEW `sami`.`view_examination` AS
         `sami`.`examination` `e`
             LEFT JOIN
         `sami`.`tmp_injection` `ti` ON `ti`.`examinationid` = `e`.`id`
-    GROUP BY `e`.`id`
+    GROUP BY `e`.`id`;
 
 
 --
