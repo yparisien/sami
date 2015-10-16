@@ -240,10 +240,10 @@ class IndexController extends AbstractActionController
 		
 		if ($hasMed === '1') {
 			$hasMed = true;
-			$medcode = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
+			$medname = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED);
 			
 			try {
-				$drug = $this->getDrugTable()->getDrugByDci($medcode);
+				$drug = $this->getDrugTable()->getDrugByName($medname);
 				$inputdrug = $this->getInputdrugTable()->getLastByDrugId($drug->id);
 			} catch (\Exception $e) {
 				$error = true;
