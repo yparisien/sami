@@ -12,6 +12,8 @@ namespace Operator\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
+use Manager\Robot\RobotService;
+use Manager\Robot\RobotConstants;
 
 class OperatorController extends AbstractActionController
 {
@@ -63,22 +65,29 @@ class OperatorController extends AbstractActionController
 
 	public function indexAction()
 	{
+		/* @var $robotService RobotService  */
 		$sm = $this->getServiceLocator();
 		$config = $sm->get('Config');
-		
 		$aParam = array();
 		
 		$nbExams = $this->getExaminationTable()->count();
+		
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotCanInject = $robotService->receive(array(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED => 1));
+		
+		//TODO Continuer à doubler la vérif automate
 		
 		// for the moment, retrieve steps status but use a clever way for final version
 		$oContainer = new Container('automate_setup');
 		$aParam['step'] = $oContainer;
 
-		$ready = ($oContainer->drugspecified == true
-			&& $oContainer->sourcekitscanned == true
-			&& $oContainer->sourcekitloaded == true
-			&& $oContainer->markedasended == false) ?
-		true : false;
+		$ready = (
+				$oContainer->drugspecified == true 
+			&&	$oContainer->sourcekitscanned == true 
+			&&	$oContainer->sourcekitloaded == true 
+			&&	$oContainer->markedasended == false 
+			&&	$robotCanInject == true
+		) ? true : false;
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
