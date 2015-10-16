@@ -254,7 +254,8 @@ class InputdataController extends AbstractActionController
 	public function drugAction()
 	{
 		/* @var $robotService RobotService  */
-		
+		$robotService = $this->getServiceLocator()->get('RobotService');
+
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
 			$r = $this->getRequest();
@@ -283,24 +284,14 @@ class InputdataController extends AbstractActionController
 			$this->getInputActionTable()->saveInputAction($inputaction);
 
 			$drug = $this->getDrugTable()->getDrug($aDrugData['drugid']);
-			$radionucleide = $this->getRadionuclideTable()->getRadionuclide($drug->radionuclideid);
 			
 			//Envoi a l'automate
 			$bDrugData = array(
-				RobotConstants::MEDICAMENT_INPUT_ACTVOL => $aDrugData['activityconc'],
-				RobotConstants::MEDICAMENT_INPUT_ACTDT => $aDrugData['activitycalib'],
-				RobotConstants::MEDICAMENT_INPUT_DTEND => str_replace(" ", "-","DT#" . $aDrugData['expirationtime'] . ":00"),
-				RobotConstants::MEDICAMENT_INPUT_NLOT => $aDrugData['batchnum'],
-				RobotConstants::MEDICAMENT_INPUT_DCI => $drug->dci,
-				RobotConstants::MEDICAMENT_INPUT_RADIONUCLIDEID => $radionucleide->id,
-				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0
+				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0,
 			);
-			
-			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($bDrugData);
 
-
-			// TODO Changer si necessaire for the moment, store the log id but use a clever way for final version
+			//MAJ de la session
 			$oContainer = new Container('automate_setup');
 			$oContainer->drugspecified = true;
 			$oContainer->drugid = $drug->id;
@@ -310,6 +301,10 @@ class InputdataController extends AbstractActionController
 		}
 		else // simply display the form
 		{
+			$robotService->send(array(
+					RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0,
+			));
+			
 			$aParam = array(
 				'drugs'	=> $this->getDrugTable()->fetchAll(),
 				'unit' => ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
@@ -886,15 +881,20 @@ class InputdataController extends AbstractActionController
 		
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
+			$aDrugData = array();
 			$r = $this->getRequest();
-			$drug = $this->getDrugTable()->getDrug($r->getPost('drugid'));
-			$radionucleide = $this->getRadionuclideTable()->getRadionuclide($drug->radionuclideid);
-			$aDrugData = array(
-				"G_MainLogic.cmd.Input_Soft.Load_Medicament" => 1,
-				'G_Medicament.Input.Name' => $drug->name,
-				"G_Medicament.Input.Period" => $radionucleide->period,
-				'G_Medicament.Input.Vol' => $r->getPost('vialvol')
-				);
+			if ($r->getPost('drugid')) {
+				$drug = $this->getDrugTable()->getDrug($r->getPost('drugid'));
+				$radionucleide = $this->getRadionuclideTable()->getRadionuclide($drug->radionuclideid);
+				$aDrugData ['G_Medicament.Input.ID'] = $drug->radionuclideid;
+				$aDrugData ['G_Medicament.Input.Name'] = $drug->name;
+				$aDrugData ['G_Medicament.Input.DCI'] = $drug->dci;
+				$aDrugData ['G_Medicament.Input.Period'] = $radionucleide->period;
+			}
+			if ($r->getPost('vialvol'))
+			{
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_VOL] = $r->getPost('vialvol');
+			}
 			if ($r->getPost('activityconc'))
 			{
 				$aDrugData['G_Medicament.Input.Act_Vol'] = $r->getPost('activityconc');
@@ -913,7 +913,7 @@ class InputdataController extends AbstractActionController
 			}
 			if ($r->getPost('expirationtime'))
 			{
-				$aDrugData['"G_Medicament.Input.DT_End"'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
+				$aDrugData['G_Medicament.Input.DT_End'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
 			}
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aDrugData);

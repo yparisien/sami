@@ -12,9 +12,10 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name')?></label>
+							<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $this->translate('Drug name'); ?></label>
 							<div class="col-sm-6">
 								<select class="form-control input-sm" id="drugid" name="drugid" tabindex="1" required>
+									<option value=""><?php echo $this->translate('Select a drug'); ?></option>
 								<?php foreach($this->drugs as $drug) { ?>
 									<option value="<?php echo $drug->id?>"><?php echo '[' . $drug->dci . ']' . ' ' . $drug->name;?></option>
 								<?php } ?>
@@ -25,7 +26,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 							<div class="col-sm-6">
 								<div class="input-group date" id="datetimepicker-calibration">
-									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="10" required />
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="16" required />
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -69,7 +70,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
 							<div class="col-sm-6">
 								<div class="input-group date" id="datetimepicker-peremption">
-									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="10" required />
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="16" required />
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -164,19 +165,74 @@
 	$(function() {
 		loadActivityData();
 
-		$('#vialvol').change(function() {
-			$('#activityconc').removeAttr('disabled');
-			$('#activitycalib').removeAttr('disabled');
+		//Envoie le batchnum
+		$('#batchnum').change(function() {
+			$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {"batchnum" : $("#batchnum").val()}
+	      	});
 		});
 
+		//Envoie le médicament selectionné
+		$('#drugid').change(function() {
+			$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {"drugid" : $("#drugid").val()}
+	      	});
+		});
+
+		//Envoie la date de calibration
 		$("#calibrationtime").change(function() {
-			console.log('calibrationtime');
 	    	$.ajax({
 	        	type: "POST",
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 	        	dataType: "json",
-	        	data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), 'calibrationtime': $("#calibrationtime").val() }
-	      });
+	        	data: {'calibrationtime': $("#calibrationtime").val() }
+	      	});
+		});
+
+		//Envoie la date de calibration
+		$('#datetimepicker-calibration').change(function() {
+			$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {'calibrationtime': $("#calibrationtime").val() }
+	      	});
+		});
+
+		//Envoie la date d'expiration
+		$("#expirationtime").change(function() {
+	    	$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {'expirationtime': $("#expirationtime").val() }
+	      	});
+		});
+
+		$('#datetimepicker-peremption').change(function() {
+			$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {'expirationtime': $("#expirationtime").val() }
+	      	});
+		});
+
+		$('#vialvol').change(function() {
+			$('#activityconc').removeAttr('disabled');
+			$('#activitycalib').removeAttr('disabled');
+			$.ajax({
+	        	type: "POST",
+	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+	        	dataType: "json",
+	        	data: {'vialvol': $("#vialvol").val() }
+	      	});
 		});
 
 		$("#activityconc").change(function() {
@@ -185,7 +241,7 @@
 				type: "POST",
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 				dataType: "json",
-				data: {"drugid" : $("#drugid").val(), "vialvol" : $('#vialvol').val(), 'activityconc': $("#activityconc").val(), "calibrationtime": $("#calibrationtime").val() }
+				data: { 'activityconc': $("#activityconc").val() }
 			}).done(function() {
 		
 				$.ajax({
@@ -197,9 +253,6 @@
 					$('#activitycalib').val(result["activitycalib"]);
 				});
 			});
-			/*var result = ($('#vialvol').val() * $('#activityconc').val()).toFixed(2);
-			$('#activitycalib').val(result);
-			*/
 		});
 
 		$("#activitycalib").change(function(){
@@ -207,7 +260,7 @@
 				type: "POST",
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'));?>",
 				dataType:"json",
-				data: {"drugid" : $("#drugid").val(), "vialvol": $("#vialvol").val(), "activitycalib": $('#activitycalib').val(), "calibrationtime": $("#calibrationtime").val() },
+				data: { "activitycalib": $('#activitycalib').val() },
 			}).done(function() {
 				$.ajax({
 					type: "POST",
@@ -218,9 +271,6 @@
 					$('#activityconc').val(result.activityconc);
 				});
 			});
-			/*var result = ($('#activitycalib').val() / $('#vialvol').val()).toFixed(2);
-			$('#activityconc').val(result);
-			*/
 		});
 	});
 </script>
