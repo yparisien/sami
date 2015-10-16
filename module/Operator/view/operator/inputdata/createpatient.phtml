@@ -56,13 +56,13 @@
 											<option value=""><?php echo $this->translate('Choose an exam'); ?></option>
 											<optgroup label="<?php echo $this->translate('Compatible exams'); ?>">
 										<?php foreach($examinations['compatible'] as $examination) {?>
-											<option value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>">
+											<option value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
 												<?php echo $examination->name;?>
 											</option>
 										<?php } ?>
 											<optgroup label="<?php echo $this->translate('Other exams'); ?>">
 										<?php foreach($examinations['others'] as $examination) {?>
-											<option disabled value="<?php echo $examination->id;?>" data-drug-id="<?php echo $examination->drugid; ?>">
+											<option disabled value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
 												<?php echo $examination->name;?>
 											</option>
 										<?php } ?>
@@ -71,12 +71,12 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="input6" class="col-sm-4 control-label"><?php echo $this->translate('Drug')?></label>
+									<label for="dci" class="col-sm-4 control-label"><?php echo $this->translate('DCI')?></label>
 									<div class="col-sm-8">
-										<select class="form-control" tabindex="9" id="drugid" name="drugid" disabled>
+										<select class="form-control" tabindex="9" id="dci" name="dci" disabled>
 											<option value=""></option>
-										<?php foreach($drugs as $drug) {?>
-											<option value="<?php echo $drug->id;?>"><?php echo $drug->name;?></option>
+										<?php foreach($dcis as $dci) {?>
+											<option value="<?php echo $dci->dci;?>"><?php echo $dci->dci;?></option>
 										<?php } ?>
 										</select>
 									</div>
@@ -138,8 +138,8 @@
 <script type="text/javascript">
 	$(function(){
 		$(document).on("change","#examination", function() {
-			var drugId = $("#examination option:selected").data('drugId');
- 			$('#drugid').val(drugId);
+			var dci = $("#examination option:selected").data('dci');
+ 			$('#dci').val(dci);
 		});
 	});
 </script>

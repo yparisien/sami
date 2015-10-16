@@ -660,15 +660,16 @@ class InputdataController extends AbstractActionController
 		{
 			$oContainer = new Container('automate_setup');
 			$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
+			$drug = $this->getDrugTable()->getDrug($inputdrug->drugid);
 			
 			$examinations = $this->getExaminationTable()->fetchAll();
-			$drugs = $this->getDrugTable()->fetchAll();
+			$dcis = $this->getDrugTable()->fetchAllDCI();
 			
 			$compatibleExams = [];
 			$otherExams = [];
 			
 			foreach ($examinations as $exam) {
-				if ($inputdrug->drugid == $exam->drugid) {
+				if ($drug->dci == $exam->dci) {
 					$compatibleExams[] = $exam;
 				} else {
 					$otherExams[] = $exam;
@@ -677,7 +678,7 @@ class InputdataController extends AbstractActionController
 			
 			$aParam = array(
 				'examinations'	=> array('compatible' => $compatibleExams, 'others' => $otherExams),
-				'drugs'			=> $drugs,
+				'dcis'			=> $dcis,
 			);
 			
 			return new ViewModel($aParam);
