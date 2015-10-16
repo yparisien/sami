@@ -66,6 +66,7 @@ class OperatorController extends AbstractActionController
 	public function indexAction()
 	{
 		/* @var $robotService RobotService  */
+		$oContainer = new Container('automate_setup');
 		$sm = $this->getServiceLocator();
 		$config = $sm->get('Config');
 		$aParam = array();
@@ -81,7 +82,6 @@ class OperatorController extends AbstractActionController
 		//TODO Continuer à doubler la vérif automate
 		
 		// for the moment, retrieve steps status but use a clever way for final version
-		$oContainer = new Container('automate_setup');
 		$aParam['step'] = $oContainer;
 
 		$ready = (
