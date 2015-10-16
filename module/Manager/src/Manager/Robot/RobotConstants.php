@@ -32,6 +32,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP			= 'G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P';
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTCONNECTION		= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Connection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTDISCONNECTION	= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection';
+	const MAINLOGIC_CMD_INPUTSOFT_VALSAMPLING				= 'G_MainLogic.cmd.Input_Soft.Val_Sampling';
 	
 	const MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE 			= 'G_MainLogic.cmd.Input_Trasys.Measured_Value';
 	

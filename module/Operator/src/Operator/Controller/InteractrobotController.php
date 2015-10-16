@@ -198,6 +198,10 @@ class InteractrobotController extends AbstractActionController
 	{
 		$aParams = array();
 		
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALSAMPLING => 1));
+		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
 		
