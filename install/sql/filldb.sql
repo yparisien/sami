@@ -338,4 +338,4 @@ CREATE VIEW `view_toinject` AS
         LEFT JOIN `input_drug` `id` ON `i`.`drugid` = `id`.`id`
         LEFT JOIN `drug` `d` ON `d`.`id` = `id`.`drugid`
     WHERE
-        `p`.`injected` = 0
+        `p`.`injected` = 0;
