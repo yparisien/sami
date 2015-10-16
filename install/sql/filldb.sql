@@ -221,7 +221,7 @@ CREATE VIEW `view_drug` AS
             LEFT JOIN
         `radionuclide` `r` ON `r`.`id` = `d`.`radionuclideid`
             LEFT JOIN
-        `examination` `e` ON `e`.`drugid` = `d`.`id`
+        `examination` `e` ON `e`.`dci` = `d`.`dci`
 	GROUP BY `d`.`id`;
 
 
@@ -313,3 +313,29 @@ CREATE VIEW `view_injected` AS
         `input_drug` `d` ON `i`.`drugid` = `d`.`id`
     WHERE
         `p`.`injected` = 1;
+        
+
+DROP VIEW IF EXISTS `view_toinject`;
+CREATE VIEW `view_toinject` AS
+    SELECT 
+        `p`.`id` AS `patientid`,
+        `p`.`lastname` AS `patientlastname`,
+        `p`.`firstname` AS `patientfirstname`,
+        `p`.`gender` AS `patientgender`,
+        `p`.`birthdate` AS `birthdate`,
+        `p`.`age` AS `age`,
+        `p`.`weight` AS `patientweight`,
+        `p`.`height` AS `height`,
+        `i`.`type` AS `type`,
+        `i`.`injection_time` AS `injectiontime`,
+        `i`.`activity` AS `injectionactivity`,
+        `i`.`dci` AS `injectiondci`,
+        `i`.`unique_id` AS `uniqueid`,
+        `d`.`name` AS `injectiondrugname`
+    FROM
+        `tmp_patient` `p`
+        JOIN `tmp_injection` `i` ON `p`.`id` = `i`.`patient_id`
+        LEFT JOIN `input_drug` `id` ON `i`.`drugid` = `id`.`id`
+        LEFT JOIN `drug` `d` ON `d`.`id` = `id`.`drugid`
+    WHERE
+        `p`.`injected` = 0
