@@ -660,7 +660,7 @@ class InputdataController extends AbstractActionController
 			$oInjection->vial_id		= '';
 			$oInjection->location		= '';
 			$oInjection->comments		= $oRequest->getPost('comment');
-			$oInjection->drugid			= $examination->drugid;
+			$oInjection->dci			= $examination->dci;
 			$oInjection->examinationid	= $examination->id;
 
 			$this->getInjectionTable()->saveInjection($oInjection);
@@ -719,27 +719,14 @@ class InputdataController extends AbstractActionController
 			}
 		}
 		
-		$oPatient = $this->getPatientTable()->getPatient($patientId);
-		$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
-		
-		$dataToSend = array(
-				'G_Patient.Input.Nom'			=> $oPatient->lastname,
-				'G_Patient.Input.Prenom'		=> $oPatient->firstname,
-				'G_Patient.Input.DateN'			=> $oPatient->birthdate,
-				'G_Patient.Input.Ordonnancier'	=> $oInjection->unique_id,
-				'G_Patient.Input.Poids'			=> $oPatient->weight,
-				'G_Patient.Input.ActToInj'		=> $oInjection->activity,
-				'G_Patient.Input.DCI'			=> $oInjection->dci,
-		);
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send($dataToSend);
-		
 		$aParam = array(
 			'patientid'		=> $patientId,
 			'examinations'	=> array('compatible' => $compatibleExams, 'others' => $otherExams),
 			'machinedrugid'	=> $inputdrug->drugid,
 			'unit' 			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
 		);
+		
+		
 		return new ViewModel($aParam);
 	}
 
@@ -754,7 +741,7 @@ class InputdataController extends AbstractActionController
 			$oRequest = $this->getRequest();
 			$oPatient = $this->getPatientTable()->getPatient($oRequest->getPost('patient_id'));
 			$oExamination = $this->getExaminationTable()->getExamination($oRequest->getPost('examinationid'));
-			$oDrug = $this->getDrugTable()->getDrug($oExamination->drugid);
+			$oDrug = $this->getDrugTable()->getDrug($oContainer->drugid);
 			
 			$oPatient->lastname = $oRequest->getPost('lastname');
 			$oPatient->birthdate = $oRequest->getPost('birthdate');
@@ -778,14 +765,6 @@ class InputdataController extends AbstractActionController
 			
 			// Envoi des infos a l'automate
 			$dataToSend = array(
-					'G_Patient.Input.Nom' => $oPatient->lastname,
-					'G_Patient.Input.Prenom' => $oPatient->firstname,
-					'G_Patient.Input.DateN' => $oPatient->birthdate,
-					'G_Patient.Input.Ordonnancier' => $oRequest->getPost('expeditornum'),
-					'G_Patient.Input.ActToInj' => $oRequest->getPost('activity'),
-					'G_Patient.Input.Med_Name' => $oDrug->name,
-					'G_Patient.Input.Poids' => $oRequest->getPost('weight'),
-					'G_Patient.Input.Type_Exam' => $oExamination->name,
 					'G_Patient.Input.Taux' => $oExamination->rate,
 					'G_Patient.Input.Taux_Min' => $oExamination->min,
 					'G_Patient.Input.Taux_Max' => $oExamination->max,
@@ -812,7 +791,7 @@ class InputdataController extends AbstractActionController
 		$sm = $this->getServiceLocator();
 		$cfg = $sm->get('Config');
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
-		
+		$oContainer = new Container('injection_profile');
 		
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
@@ -837,7 +816,17 @@ class InputdataController extends AbstractActionController
 			}
 			
 			if ($simulated) {
-				$activity = $r->getPost('activity');
+				$exam = $this->getExaminationTable()->getExamination($oContainer->examinationid);
+				$p = $this->getPatientTable()->getPatient($oContainer->patientid);
+				if ($r->getPost('activity')) {
+					$activity = $r->getPost('activity');
+				} else if ($r->getPost('min')) {
+					$activity = $exam->min;
+				} else if ($r->getPost('max')) {
+					$activity = $exam->max;
+				} else if ($r->getPost('norm')) {
+					$activity = $exam->rate * $p->weight;
+				}
 			} else {
 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			}
@@ -850,6 +839,7 @@ class InputdataController extends AbstractActionController
 	public function aupdatepatientAction()
 	{
 		/* @var $robotService RobotService  */
+		$ret = array("error" => false);
 
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
@@ -883,10 +873,14 @@ class InputdataController extends AbstractActionController
 			$aData["G_MainLogic.cmd.Input_Soft.Load_Patient"] = 1;
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aData);
+
+			if ($r->getPost('activity') || $r->getPost('weight')) {
+				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+				$ret["activity"] = $activity;
+			}
 		}
-		//TODO Vérifier si cette action est toujours appelé en POST ou non pour faire remonter le read dans le IF
-		$activity = $robotService->receive('G_Patient.Actual.ActToInj');
-		$result = new JsonModel(array("activity" => $activity));
+
+		$result = new JsonModel($ret);
    		
 		return $result;
 	}
@@ -1072,15 +1066,29 @@ class InputdataController extends AbstractActionController
 
 	public function	aloadexaminationAction()
 	{
+		/* @var $robotService RobotService  */
 		$aParams = array();
-		$examinationId = $this->getRequest()->getPost('examinationid');
-		$oExamination = $this->getExaminationTable()->getExamination($examinationId);
-		
 		$oContainer = new Container('automate_setup');
 		
-		if ($oExamination->drugid == $oContainer->drugid) {
+
+		$examinationId = $this->getRequest()->getPost('examinationid');
+		$oExamination = $this->getExaminationTable()->getExamination($examinationId);
+		$oDrug = $this->getDrugTable()->getDrug($oContainer->drugid);
+		
+		if ($oExamination->dci == $oDrug->dci) {
 			$aParams['error'] = false;
 			$aParams['examination'] = $oExamination->toArray();
+			
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$inputTaux = array(
+				'G_Patient.Input.Taux' 		=> $oExamination->rate,
+				'G_Patient.Input.Taux_Min'	=> $oExamination->min,
+				'G_Patient.Input.Taux_Max'	=> $oExamination->max,
+			);
+			$robotService->send($inputTaux);
+			
+			$oInjection = new Container('injection_profile');
+			$oInjection->examinationid = $examinationId;
 		} else {
 			$aParams['error'] = true;
 		}

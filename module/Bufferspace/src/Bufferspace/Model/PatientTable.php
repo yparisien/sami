@@ -34,7 +34,7 @@ class PatientTable
 	 * Get Patient
 	 * @param integer $id
 	 * @throws \Exception
-	 * @return Patient
+	 * @return \Bufferspace\Model\Patient
 	 */
 	public function getPatient($id)
 	{

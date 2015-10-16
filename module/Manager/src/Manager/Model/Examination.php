@@ -26,7 +26,7 @@ class Examination
 		
 		$data['id']		= $this->id;
 		$data['name']	= $this->name;
-		$data['dci']	= $this->drugid;
+		$data['dci']	= $this->dci;
 		$data['rate']	= $this->rate;
 		$data['min']	= $this->min;
 		$data['max']	= $this->max;

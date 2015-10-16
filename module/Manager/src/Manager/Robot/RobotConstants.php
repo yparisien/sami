@@ -24,6 +24,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_KITPATIENTSERIAL			= 'G_MainLogic.cmd.Input_Soft.Kit_Patient_Serial';
 	const MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL			= 'G_MainLogic.cmd.Input_Soft.Kit_Source_Serial';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT			= 'G_MainLogic.cmd.Input_Soft.Load_Medicament';
+	const MAINLOGIC_CMD_INPUTSOFT_LOADPATIENT				= 'G_MainLogic.cmd.Input_Soft.Load_Patient';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADPURGE					= 'G_MainLogic.cmd.Input_Soft.Load_Purge';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE				= 'G_MainLogic.cmd.Input_Soft.Load_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_PLAYINJECTION				= 'G_MainLogic.cmd.Input_Soft.Play_Injection';
