@@ -897,7 +897,7 @@ class InputdataController extends AbstractActionController
 			$aDrugData = array(
 				"G_MainLogic.cmd.Input_Soft.Load_Medicament" => 1,
 				'G_Medicament.Input.Name' => $drug->name,
-				"G_Medicament.Input.Period" => $radionucleide->period * 60,
+				"G_Medicament.Input.Period" => $radionucleide->period,
 				'G_Medicament.Input.Vol' => $r->getPost('vialvol')
 				);
 			if ($r->getPost('activityconc'))
