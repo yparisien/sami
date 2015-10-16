@@ -16,6 +16,7 @@ class Patient
 	public	$doctorname;
 	public	$injected;
 	public	$comments;
+	public	$expeditornum;
 
 	public function	exchangeArray($data)
 	{
@@ -32,6 +33,7 @@ class Patient
 		$this->doctorname	= (!empty($data['doctorname']))		? $data['doctorname']		: null;
 		$this->injected		= (!empty($data['injected']))		? (int) $data['injected']	: null;
 		$this->comments		= (!empty($data['comments']))		? $data['comments']			: null;
+		$this->expeditornum	= (!empty($data['expeditornum']))	? $data['expeditornum']		: null;
 	}
 
 	/**
@@ -66,6 +68,7 @@ class Patient
 		$data['doctorname']	= $this->doctorname;
 		$data['injected']	= $this->injected;
 		$data['comments']	= $this->comments;
+		$data['expeditornum']	= $this->expeditornum;
 		return $data;
 	}
 }

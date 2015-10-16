@@ -20,6 +20,10 @@ class MonitorController extends AbstractActionController
 	protected	$systemTable;
 	protected	$viewinjectedTable;
 
+	/**
+	 * 
+	 * @return \Bufferspace\Model\InjectionTable
+	 */
 	public function getInjectionTable()
 	{
 		if(!$this->injectionTable)
@@ -30,6 +34,10 @@ class MonitorController extends AbstractActionController
 		return $this->injectionTable;
 	}
 
+	/**
+	 * 
+	 * @return \Bufferspace\Model\PatientTable
+	 */
 	public function getPatientTable()
 	{
 		if(!$this->patientTable)
@@ -82,7 +90,13 @@ class MonitorController extends AbstractActionController
 	{
 		$patientId = $this->getRequest()->getPost('patientid');
 		$oPatient = $this->getPatientTable()->getPatient($patientId);
+		$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
+		
+		$oPatient->comments = $oInjection->comments;
+		$oPatient->expeditornum = $oInjection->unique_id;
+		
 		$aParams = $oPatient->toArray();
+		
 		$result = new \Zend\View\Model\JsonModel($aParams);
 		return $result;
 	}

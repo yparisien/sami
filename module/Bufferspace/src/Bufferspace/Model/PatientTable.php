@@ -47,7 +47,7 @@ class PatientTable
 		}
 		return $row;
 	}
-
+	
 	public function savePatient(Patient &$patient)
 	{
 		$data = array(

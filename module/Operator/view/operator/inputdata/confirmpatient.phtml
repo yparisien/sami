@@ -374,6 +374,8 @@
 			$('#spanFirstname').text(result.firstname);
 			$('#datetimepicker-birthday').data('DateTimePicker').setDate(result.birthdate);
 			$('#weight').val(result.weight);
+			$('#comments').val(result.comments);
+			$('#expeditornum').val(result.expeditornum);
 		});
 		$('#btn-next').removeAttr('disabled');
 	}
