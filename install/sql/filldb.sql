@@ -30,7 +30,7 @@ CREATE TABLE `examination` (
   `min` float NOT NULL,
   `max` float NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `drugid` (`drugid`)
+  KEY `dci` (`dci`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ALTER TABLE `sami`.`examination` 
 ADD INDEX `INDEX` (`dci` ASC);
