@@ -73,7 +73,7 @@ class OperatorController extends AbstractActionController
 		$nbExams = $this->getExaminationTable()->count();
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotCanInject = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
+		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
 		
 		//TODO Continuer à doubler la vérif automate
 		
@@ -82,12 +82,17 @@ class OperatorController extends AbstractActionController
 		$aParam['step'] = $oContainer;
 
 		$ready = (
-				$oContainer->drugspecified == true 
-			&&	$oContainer->sourcekitscanned == true 
-			&&	$oContainer->sourcekitloaded == true 
-			&&	$oContainer->markedasended == false 
+				$oContainer->drugspecified		== true 
+			&&	$oContainer->sourcekitscanned	== true 
+			&&	$oContainer->sourcekitloaded	== true 
+			&&	$oContainer->markedasended		== false 
 			&&	$robotCanInject == true
 		) ? true : false;
+		
+		if ($oContainer->sourcekitloaded === true && $robotCanInject === false) {
+			//Rajouter log incoherence etat session etat robot
+			$oContainer->sourcekitloaded = false;
+		}
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
