@@ -73,7 +73,7 @@ class OperatorController extends AbstractActionController
 		$nbExams = $this->getExaminationTable()->count();
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotCanInject = $robotService->receive(array(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED => 1));
+		$robotCanInject = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
 		
 		//TODO Continuer à doubler la vérif automate
 		
