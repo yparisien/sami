@@ -302,7 +302,7 @@ class InputdataController extends AbstractActionController
 		else // simply display the form
 		{
 			$robotService->send(array(
-					RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0,
+					RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 1,
 			));
 			
 			$aParam = array(
