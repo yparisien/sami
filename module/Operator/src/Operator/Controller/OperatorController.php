@@ -74,6 +74,9 @@ class OperatorController extends AbstractActionController
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
+		if ($robotCanInject === true) {
+			$oContainer->sourcekitloaded = true;
+		}
 		
 		//TODO Continuer à doubler la vérif automate
 		
