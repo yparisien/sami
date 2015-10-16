@@ -15,6 +15,8 @@ use Zend\Authentication\Result;
 use Zend\Session\Container;
 use Logger\Model\InputAction;
 use Zend\View\Model\JsonModel;
+use Manager\Robot\RobotConstants;
+use Manager\Robot\RobotService;
 
 class LoginController extends AbstractActionController
 {
@@ -22,6 +24,8 @@ class LoginController extends AbstractActionController
 	protected $authservice;
 	protected $inputActionTable;
 	protected $userTable;
+	protected $patientTable;
+	protected $injectionTable;
 
 	public function getAuthService()
 	{
@@ -55,6 +59,10 @@ class LoginController extends AbstractActionController
 		return $this->inputActionTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\UserTable>
+	 */
 	public function getUserTable()
 	{
 		if(!$this->userTable)
@@ -63,6 +71,34 @@ class LoginController extends AbstractActionController
 			$this->userTable = $sm->get('Manager\Model\UserTable');
 		}
 		return $this->userTable;
+	}
+	
+	/**
+	 * 
+	 * @return \Bufferspace\Model\PatientTable
+	 */
+	public function getPatientTable()
+	{
+		if(!$this->patientTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->patientTable = $sm->get('Bufferspace\Model\PatientTable');
+		}
+		return $this->patientTable;
+	}
+	
+	/**
+	 * 
+	 * @return \Bufferspace\Model\InjectionTable
+	 */
+	public function getInjectionTable()
+	{
+		if(!$this->injectionTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->injectionTable = $sm->get('Bufferspace\Model\InjectionTable');
+		}
+		return $this->injectionTable;
 	}
 
 	public function indexAction()
@@ -99,9 +135,50 @@ class LoginController extends AbstractActionController
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = $translate("Auth success");
 				$this->getInputActionTable()->saveInputAction($inputaction);
+				
+				if ($oSetup->startposition > 0) {
+					$startPos = $oSetup->startposition;
+					
+					
+					/* @var $robotService RobotService */
+					$robotService = $this->getServiceLocator()->get('RobotService');
+					$patientId = $robotService->receive(RobotConstants::PATIENT_ACTUAL_PATIENTID);
+					$patient = $this->getPatientTable()->getPatient($patientId);
+					$injection = $this->getInjectionTable()->searchByPatientId($patientId);
+					
+					
+					//Chargement des infos en session pour le profil injecté
+					$oInject = new Container('injection_profile');
+					$oInject->drugid = $injection->drugid;
+					$oInject->inputdrugid = $injection->inputdrugid;
+					$oInject->examinationid = $injection->examinationid;
+					$oInject->patientid = $patientId;
+					$oInject->operatorid = $injection->operatorid;
+					$oInject->patientkitid = $injection->patientkitid;
+					
+					if ($injection->patientkitid > 0) {
+						$startPos = 1.5;
+					}
+				}
+					
 
-				return $this->redirect()->toRoute('operator');
-			}
+				$routeDirections = array(
+					0 => array(
+							'routename' => 'operator',
+							'routeparam' => null,
+					),
+					1 => array(
+							'routename' => 'setup', 
+							'routeparam' => array('action'=>'scankitpatient'),
+					),
+					1.5 => array(
+							'routename' => 'setup',
+							'routeparam' => array('action'=>'loadkitpatient'),
+					),
+				);
+				
+				return $this->redirect()->toRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
+			}	
 			else // then go back to the login form and display error msg
 			{
 				$inputaction = new InputAction();

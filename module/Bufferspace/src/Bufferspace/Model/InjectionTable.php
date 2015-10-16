@@ -66,6 +66,7 @@ class InjectionTable
 			'inputdrugid'		=> $injection->inputdrugid,
 			'examinationid'		=> $injection->examinationid,
 			'operatorid'		=> $injection->operatorid,
+			'patientkitid'		=> $injection->patientkitid,
 		);
 
 		$id = (int) $injection->id;

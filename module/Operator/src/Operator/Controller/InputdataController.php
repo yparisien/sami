@@ -501,6 +501,7 @@ class InputdataController extends AbstractActionController
 		{
 			$patientkitId = $this->getRequest()->getPost('patientkit-sn');
 			$kit = $this->getPatientkitTable()->searchBySerialNumber($patientkitId);
+			
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
 				$inputaction = new InputAction();
@@ -521,8 +522,12 @@ class InputdataController extends AbstractActionController
 				$oKit->operatorid = $oUser->id;
 				$this->getPatientkitTable()->savePatientkit($oKit);
 
+				//Recuperation de l'injection pour l'informer du kitpatient en base et en session
 				$oContainer = new Container('injection_profile');
 				$oContainer->patientkitid = $oKit->id;
+				$injection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
+				$injection->patientkitid = $oKit->id;
+				$this->getInjectionTable()->saveInjection($injection);
 				
 				return $this->redirect()->toRoute('setup', array('action'=>'loadkitpatient'));
 			}
@@ -830,6 +835,9 @@ class InputdataController extends AbstractActionController
 		{
 			$r = $this->getRequest();
 			$aData = array();
+			if ($r->getPost('patientid')) {
+				$aData['G_Patient.Input.Patient_ID'] = $r->getPost('patientid');
+			}
 			if ($r->getPost('lastname'))
 			{
 				$aData['G_Patient.Input.Nom'] = $r->getPost('lastname');

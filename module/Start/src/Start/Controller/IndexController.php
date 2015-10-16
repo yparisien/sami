@@ -378,7 +378,8 @@ class IndexController extends AbstractActionController
 		
 		$restartType = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE);
 		if (is_numeric($restartType)) {
-			//TODO Sauvegarder le type pour renvoyer vers le bon démarrage
+			$oContainer = new Container('automate_setup');
+			$oContainer->startposition = (int) $restartType;
 		} else {
 			$error = true;
 			$errorMessage = sprintf($translate("Don't know if kitsource & source has been loaded (%s)."), $restartType);

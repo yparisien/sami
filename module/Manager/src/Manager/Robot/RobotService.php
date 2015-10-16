@@ -152,7 +152,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = "Version 0.1b";
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE:
-				$mRet = 1;
+				$mRet = $cfg['robot']['simulation']['init']['restarttype'];
 				break;
 			case RobotConstants::ISOTOPES_NB:
 				$mRet = 5;
@@ -216,6 +216,9 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ERRORID:
 				$mRet = $cfg['robot']['simulation']['init']['roboterrorcode'];
+				break;
+			case RobotConstants::PATIENT_ACTUAL_PATIENTID:
+				$mRet = $cfg['robot']['simulation']['init']['patientid'];
 				break;
 			default:
 				die($variable);

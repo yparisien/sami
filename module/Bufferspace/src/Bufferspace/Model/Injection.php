@@ -22,6 +22,7 @@ class Injection
 	public	$inputdrugid;
 	public	$examinationid;
 	public	$operatorid;
+	public	$patientkitid;
 
 	public function	exchangeArray($data)
 	{
@@ -40,6 +41,7 @@ class Injection
 		$this->inputdrugid		= (!empty($data['inputdrugid'])) ? (int) $data['inputdrugid'] : null;
 		$this->examinationid	= (!empty($data['examinationid'])) ? (int) $data['examinationid'] : null;
 		$this->operatorid		= (!empty($data['operatorid'])) ? (int) $data['operatorid'] : null;
+		$this->patientkitid		= (!empty($data['patientkitid'])) ? (int) $data['patientkitid'] : null;
 	}
 
 	public function	toArray()
@@ -61,6 +63,7 @@ class Injection
 		$data['inputdrugid']	= $this->inputdrugid;
 		$data['examinationid']	= $this->examinationid;
 		$data['operatorid']		= $this->operatorid;
+		$data['patientkitid']	= $this->patientkitid;
 		
 		return $data;
 	}

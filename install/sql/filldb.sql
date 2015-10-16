@@ -154,6 +154,7 @@ CREATE TABLE `tmp_injection` (
   `inputdrugid` INT(11) DEFAULT NULL,
   `examinationid` int(11) DEFAULT NULL,
   `operatorid` int(11) DEFAULT NULL,
+  `patientkitid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `patient_id` (`patient_id`),
   KEY `drugid` (`drugid`,`examinationid`,`operatorid`)

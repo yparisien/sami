@@ -253,7 +253,8 @@
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
 			type: "POST",
-			data: { 
+			data: {
+				'patientid'		: $('#patient-id').val(),
 				'lastname'		: $('#lastname').val(),
 				'firstname'		: $('#firstname').val(),
 				'birthdate'		: $('#birthdate').val(),

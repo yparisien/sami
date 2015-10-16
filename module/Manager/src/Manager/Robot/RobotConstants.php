@@ -72,6 +72,7 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_RADIONUCLIDEID					= 'G_Medicament.Input.ID';
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
+	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';
 	
 	const KIT_VAL_KITSOURCE									= 'G_Kit.Val_Kit_S';
 	
