@@ -136,6 +136,7 @@ class LoginController extends AbstractActionController
 				$inputaction->action = $translate("Auth success");
 				$this->getInputActionTable()->saveInputAction($inputaction);
 				
+				$startPos = 0;
 				if ($oSetup->startposition > 0) {
 					$startPos = $oSetup->startposition;
 					
@@ -177,7 +178,13 @@ class LoginController extends AbstractActionController
 					),
 				);
 				
-				return $this->redirect()->toRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
+				if ($routeDirections[$startPos]['routeparam'] != null) {
+					return $this->redirect()->toRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
+				}
+				else {
+					return $this->redirect()->toRoute($routeDirections[$startPos]['routename']);
+				}
+				
 			}	
 			else // then go back to the login form and display error msg
 			{
