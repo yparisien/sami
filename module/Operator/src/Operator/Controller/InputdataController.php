@@ -287,16 +287,11 @@ class InputdataController extends AbstractActionController
 			
 			//Envoi a l'automate
 			$bDrugData = array(
-				RobotConstants::MEDICAMENT_INPUT_DTCALIB => str_replace(" ", "-" ,"DT#" . $aDrugData['calibrationtime'] . ":00"),
-				RobotConstants::MEDICAMENT_INPUT_VOL => $aDrugData['vialvol'],
-				RobotConstants::MEDICAMENT_INPUT_ACT => $aDrugData['activity'],
 				RobotConstants::MEDICAMENT_INPUT_ACTVOL => $aDrugData['activityconc'],
 				RobotConstants::MEDICAMENT_INPUT_ACTDT => $aDrugData['activitycalib'],
 				RobotConstants::MEDICAMENT_INPUT_DTEND => str_replace(" ", "-","DT#" . $aDrugData['expirationtime'] . ":00"),
 				RobotConstants::MEDICAMENT_INPUT_NLOT => $aDrugData['batchnum'],
-				RobotConstants::MEDICAMENT_INPUT_NAME => $drug->name,
 				RobotConstants::MEDICAMENT_INPUT_DCI => $drug->dci,
-				RobotConstants::MEDICAMENT_INPUT_PERIOD => $radionucleide->period,
 				RobotConstants::MEDICAMENT_INPUT_RADIONUCLIDEID => $radionucleide->id,
 				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 0
 			);
