@@ -242,6 +242,8 @@
 </div>
 <script type="text/javascript">
 
+	var patientSetted = false;
+									
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
 	});
@@ -255,15 +257,15 @@
 				'lastname'		: $('#lastname').val(),
 				'firstname'		: $('#firstname').val(),
 				'birthdate'		: $('#birthdate').val(),
+				'expeditornum'	: $('#expeditornum').val(),
 				'weight' 		: $('#weight').val(),
-				'expeditornum'	: $('#weight').val(),
 			},
 			dataType: "json"
 		}).done(function(result) {
 			loadInjection(<?php echo $patientid;?>);
 			$('#collapseOne').collapse('hide');
 			$('#collapseTwo').collapse('show');
-			$('#submitExam').prop('disabled', false);
+			patientSetted = true;
 		});
 	}
 				
@@ -332,6 +334,7 @@
 				$('#averageactivity').val(result.examination.rate);
 				$('#minactivity').val(result.examination.min);
 				$('#maxactivity').val(result.examination.max);
+				loadActivityData();
 			}
 		});
 
@@ -391,9 +394,14 @@
 			var data = result;
 			$("#activity-time").html(data.time);
 			$("#activityavailable").val(data.activity);
-			if (Number(data.activity) < Number($("#activity").val()))
+			if ($("#activity").val() > 0 && (Number(data.activity) < Number($("#activity").val())))
 			{
 				$("#alertlowactivity").modal('show');
+			}
+			else if ($("#activity").val() > 0) {
+				if (patientSetted == true) {
+					$('#submitExam').prop('disabled', false);
+				}
 			}
 		});
 	}
@@ -421,13 +429,6 @@
 	function	highActivityOperatorResponse(response)
 	{
 		//TODO
-	}
-
-	// A utiliser
-	function	checkbeforesubmit() {
-		setActivity();
-		updatePatient();
-		loadExamination($('#examination').val());
 	}
 
 	//Appel au robot
@@ -460,14 +461,21 @@
 		loadActivityData();
 		
 		$('#examination').change(function() {
-			loadExamination($('#examination').val());
+			if ($('#examination').val() > 0) {
+				loadExamination($('#examination').val());
+			}
+			else {
+				$('#submitExam').prop('disabled', true);
+			}
 		});
 		
 		$('#activity').change(function () {
+			$('#submitExam').prop('disabled', true);
 			setActivity();
 		});
 
 		$('#weight').change(function () {
+			$('#submitExam').prop('disabled', true);
 			updateWeight();
 		});
 	});

@@ -1073,6 +1073,13 @@ class InputdataController extends AbstractActionController
 			$aParams['examination'] = $oExamination->toArray();
 			
 			$robotService = $this->getServiceLocator()->get('RobotService');
+			
+			$inputExam = array(
+				'G_Patient.Input.Type_Exam'	=> 'typeexam',
+				'G_Patient.Input.DCI'		=> $oExamination->dci,
+			);
+			$robotService->send($inputExam);
+			
 			$inputTaux = array(
 				'G_Patient.Input.Taux' 		=> $oExamination->rate,
 				'G_Patient.Input.Taux_Min'	=> $oExamination->min,
