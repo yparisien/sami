@@ -8,7 +8,7 @@
 			<span class="glyphicon glyphicon-barcode"></span> <?php echo $this->translate('Registrer the source kit')?>
 		</div>
 		<div class="panel-body">
-			<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST" onsubmit="checkInputVal(true);">
+			<form id="scankitsource" action="<?php echo $this->url('setup', array('action'=>'scankitsource'));?>" method="POST">
 				<div class="row">
 					<div class="col-md-12">
 						<p><?php echo $this->translate('Please scan the barcode of the source kit or write it manually');?></p>
@@ -36,7 +36,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="submit" class="btn btn-success btn-block" disabled>Suivant</button>
+						<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="checkInputVal(true);" disabled>Suivant</button>
 					</div>
 					<div class="col-md-2">
 						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
@@ -73,7 +73,9 @@
 								$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
 								$('#btn-next').removeAttr('disabled');
 								if (submitForm === true) {
-	 								return true;
+									setTimeout(function() { 
+										$('#scankitsource').submit();
+									}, 3000);
 								}
 								return false;
 							}

@@ -472,11 +472,21 @@ class InputdataController extends AbstractActionController
 
 	public function loadkitsourceAction()
 	{
+		$robotService = $this->getServiceLocator()->get('RobotService');
 		if($this->params('confirm'))
 		{
 			// for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->sourcekitloaded = true;
+			
+			$sm = $this->getServiceLocator();
+			$cfg = $sm->get('Config');
+			$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
+			
+			if ($simulated === true) {
+				$fr = new Container('fake_robot');
+				$fr->haskitsourceloaded = true;
+			}
 
 			return $this->redirect()->toRoute('operator');
 		}
@@ -488,7 +498,6 @@ class InputdataController extends AbstractActionController
 			$inputaction->action = "User start loading source & kit.";
 			$this->getInputActionTable()->saveInputAction($inputaction);
 	
-			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE => 1));
 
 			return array();
@@ -692,12 +701,21 @@ class InputdataController extends AbstractActionController
 
 	public function confirmpatientAction()
 	{
-		// on récup l'id en post et on la renvoit ds l'interface, on chargera les données en ajax
+		$sm = $this->getServiceLocator();
+		
 		$patientId = $this->getRequest()->getPost('patient-id');
+		$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
 		$oContainer = new Container('automate_setup');
 		
 		$inputdrug = $this->getInputDrugTable()->getInputDrug($oContainer->inputdrugid);
 		$drug = $this->getDrugTable()->getDrug($inputdrug->drugid);
+		
+		$oContainer = new Container('injection_profile');
+		$oContainer->inputdrugid = $oInjection->inputdrugid;
+		$oContainer->drugid = $oInjection->drugid;
+		$oContainer->examinationid = $oInjection->examinationid;
+		$oContainer->patientid = $patientId;
+		$oContainer->operatorid = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
 		
 		$examinations = $this->getExaminationTable()->fetchAll();
 		
@@ -820,7 +838,11 @@ class InputdataController extends AbstractActionController
 			} else {
 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			}
+			
 			$result = new JsonModel(array('activity' => $activity));
+			$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
+			$oInjection->activity = $activity;
+			$this->getInjectionTable()->saveInjection($oInjection);
 			
    			return $result;
 		}	
@@ -835,32 +857,53 @@ class InputdataController extends AbstractActionController
 		{
 			$r = $this->getRequest();
 			$aData = array();
+			$patientId = 0;
+			$oPatient = null;
+			$oInjection = null;
+			
 			if ($r->getPost('patientid')) {
 				$aData['G_Patient.Input.Patient_ID'] = $r->getPost('patientid');
+				$patientId = $r->getPost('patientid');
+			} else {
+				$oContainer = new Container('injection_profile');
+				$patientId = $oContainer->patientid;
 			}
+			
+			//MAJ du patient et de l'injection
+			if ($patientId > 0) {
+				$oPatient = $this->getPatientTable()->getPatient($patientId);
+				$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
+			}
+			
 			if ($r->getPost('lastname'))
 			{
 				$aData['G_Patient.Input.Nom'] = $r->getPost('lastname');
+				$oPatient->lastname = $r->getPost('lastname');
 			}
 			if ($r->getPost('firstname'))
 			{
 				$aData['G_Patient.Input.Prenom'] = $r->getPost('firstname');
+				$oPatient->firstname = $r->getPost('firstname');
 			}
 			if ($r->getPost('birthdate'))
 			{
 				$aData['G_Patient.Input.DateN'] = $r->getPost('birthdate');
+				$oPatient->birthdate = $r->getPost('birthdate');
 			}
 			if ($r->getPost('expeditornum'))
 			{
 				$aData['G_Patient.Input.Ordonnancier'] = $r->getPost('expeditornum');
+				$oInjection->unique_id = $r->getPost('expeditornum');
 			}
 			if ($r->getPost('activity'))
 			{
 				$aData['G_Patient.Input.ActToInj'] = $r->getPost('activity');
+				$oInjection->activity = $r->getPost('activity');
 			}
 			if ($r->getPost('weight'))
 			{
 				$aData['G_Patient.Input.Poids'] = $r->getPost('weight');
+				$oPatient->weight = $r->getPost('weight');
 			}
 			
 			$aData["G_MainLogic.cmd.Input_Soft.Load_Patient"] = 1;
@@ -870,6 +913,14 @@ class InputdataController extends AbstractActionController
 			if ($r->getPost('activity') || $r->getPost('weight')) {
 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 				$ret["activity"] = $activity;
+			}
+			
+			if ($oPatient instanceof Patient) {
+				$this->getPatientTable()->savePatient($oPatient);
+			}
+			
+			if ($oInjection instanceof Injection) {
+				$this->getInjectionTable()->saveInjection($oInjection);
 			}
 		}
 

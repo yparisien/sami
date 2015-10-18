@@ -210,6 +210,10 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED:
 				$mRet = $cfg['robot']['simulation']['init']['loadedsourcekit'];
+				$fr = new Container('fake_robot');
+ 				if ($fr->offsetExists('haskitsourceloaded') && $fr->haskitsourceloaded === true) {
+ 					$mRet = '1';
+ 				}
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ERROR:
 				$mRet = $cfg['robot']['simulation']['init']['robotinerror'];

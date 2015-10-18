@@ -281,6 +281,16 @@ class InteractrobotController extends AbstractActionController
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$inputaction->action = "User mark automate unloaded";
 			$this->getInputActionTable()->saveInputAction($inputaction);
+			
+			$sm = $this->getServiceLocator();
+			$cfg = $sm->get('Config');
+			$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
+				
+			if ($simulated === true) {
+				$fr = new Container('fake_robot');
+				$fr->haskitsourceloaded = false;
+			}
+			
 			return $this->redirect()->toRoute('operator');
 		}
 		else

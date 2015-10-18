@@ -208,6 +208,30 @@ if ($virtualkeyboardEnable === true) {
 			');
 		}
 
+		if ($disableLinks === true) {
+			$this->inlineScript()->appendScript('
+				$(function(){
+					$("nav.navbar li").addClass("disabled");
+					
+					$("ol.breadcrumb li a").css("cursor", "not-allowed");
+					
+					$("nav.navbar a.navbar-brand").css("cursor", "not-allowed");
+					
+					$("nav.navbar li a").click(function() {
+						return false;
+					});
+			
+					$("ol.breadcrumb li").click(function() {
+						return false;
+					});
+			
+					$("nav.navbar a.navbar-brand").click(function() {
+						return false;
+					});
+				});
+			');
+		}
+		
 		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){

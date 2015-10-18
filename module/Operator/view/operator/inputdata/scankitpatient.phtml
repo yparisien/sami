@@ -38,7 +38,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-md-offset-4">
-						<button id="btn-next" type="submit" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('setup', array('action'=>'loadkitpatient'))?>'" disabled>Suivant</button>
+						<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="checkInputVal(true);" disabled>Suivant</button>
 					</div>
 					<div class="col-md-2">
 						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancel();">Annuler</button>
@@ -48,7 +48,7 @@
 			<script type="text/javascript">
 			
 			$(function() {
-				$('#patientkit-sn').change(function(){checkInputVal();});
+				$('#patientkit-sn').change(function(){checkInputVal(false);});
 				$('#patientkit-sn').focus();
 			});
 
@@ -63,7 +63,7 @@
 				});
 			}
 
-			function checkInputVal()
+			function checkInputVal(submit)
 			{
 				$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
 				$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
@@ -85,7 +85,9 @@
 							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
 							$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
 							$('#btn-next').removeAttr('disabled');
-							$('#scankitpatient').submit();
+							if (submit === true) {
+								$('#scankitpatient').submit();
+							}
 							return false;
 						}
 						else
@@ -115,7 +117,7 @@
 				$('#patientkit-sn').val('');
 				$('#patientkit-sn').popover('hide');
 				$('#patientkit-sn').focus();
-				checkInputVal();
+				checkInputVal(false);
 			}
 			</script>
 		</div>

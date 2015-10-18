@@ -12,6 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\Config\Reader\Json;
 use Zend\View\Helper\ViewModel;
+use Manager\Robot\RobotService;
 
 class MonitorController extends AbstractActionController
 {
@@ -103,8 +104,15 @@ class MonitorController extends AbstractActionController
 
 	public function	aloadinjectionAction()
 	{
+		/* @var $robotService RobotService  */
 		$patientId = $this->getRequest()->getPost('patientid');
 		$oInjection = $this->getInjectionTable()->searchByPatientId($patientId);
+		
+		if ($oInjection->activity > 0) {
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array('G_Patient.Input.ActToInj' => $oInjection->activity));
+		}
+		
 		$aParams = $oInjection->toArray();
 		$result = new \Zend\View\Model\JsonModel($aParams);
 		return $result;
