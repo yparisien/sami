@@ -33,7 +33,12 @@ class ExportbufferController extends AbstractActionController
 		$oExport = new Exporter($this->getServiceLocator());
 		$oExport->setPathfile($destPath);
 		$oExport->generateFile('schedule.csv');
+		$ret = $oExport->historyPatient();
+		
+		if ($ret === true) {
+			$oContainer->markedasended = false;
+		}
 
-		return new JsonModel(array('succes'=>1));
+		return new JsonModel(array('succes' => $ret));
 	}
 }

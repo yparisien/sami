@@ -17,4 +17,10 @@ class InjectedTable
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
+	
+	public function count()
+	{
+		$resultSet = $this->tableGateway->select();
+		return $resultSet->count();
+	}
 }

@@ -11,18 +11,20 @@ return array(
 	 * Configuration du robot
 	 */
 	'robot' => array(
-		'simulated'		=> true,				//Active (true) / Desactive (false) le mode de simulation
+		'simulated'		=> true,												//Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
-			'init' => array( 					//Paramètres de la séquence de démarrage
-				'trytogood'			=> '1',		//Nb d'essai avant OK
-				'robotinerror'		=> '0',		//Déamarrage du robot en erreur 1=Erreur 0=OK
-				'roboterrorcode'	=> '2',		//Code de démarrage renvoyé par le robot en cas  d'erreur au démarrage
-				'hasmed' 			=> '0',	//Un médicament est chargé (1) ou non (0) dans le robot
-				'loadedmed'			=> 'GLU',	//Nom DCI du médicament chargé dans le robot
-				'loadedsourcekit'	=> '0',	//Kit source chargé (1) ou non (0)
-				'sourcekitscanned'	=> '0',	//Kit source scanné (1) ou non (0)
-				'sourcekitserial'	=> '90830284902384238904823098402398402', //Numéro de série du kit source chargé et scanné
-				'unit'				=> 'mbq',	//Unit de mesure du robot mbq ou mci
+			'init' => array( 													//Paramètres de la séquence de démarrage
+				'trytogood'			=> '1',										//Nb d'essai avant OK
+				'robotinerror'		=> '0',										//Déamarrage du robot en erreur 1=Erreur 0=OK
+				'roboterrorcode'	=> '2',										//Code de démarrage renvoyé par le robot en cas  d'erreur au démarrage
+				'hasmed' 			=> '0',										//Un médicament est chargé (1) ou non (0) dans le robot
+				'loadedmed'			=> 'Gluscan',								//Nom du médicament chargé dans le robot
+				'loadedsourcekit'	=> '0',										//Kit source chargé (1) ou non (0)
+				'sourcekitscanned'	=> '0',										//Kit source scanné (1) ou non (0)
+				'sourcekitserial'	=> '23402349204239042039490234902904230',	//Numéro de série du kit source chargé et scanné
+				'unit'				=> 'mbq',									//Unit de mesure du robot mbq ou mci
+				'restarttype'		=> '0',										//Point de redemarrage
+				'patientid'			=> '10',									//Id du patient chargé lors d'un redemarrage
 			),
 		),
 	),

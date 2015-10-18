@@ -20,6 +20,7 @@ class OperatorController extends AbstractActionController
 	protected $systemTable;
 	protected $drugTable;
 	protected $examinationTable;
+	protected $injectedTable;
 
 	/**
 	 * 
@@ -62,6 +63,20 @@ class OperatorController extends AbstractActionController
 		}
 		return $this->drugTable;
 	}
+	
+	/**
+	 *
+	 * @return \Bufferspace\View\InjectedTable
+	 */
+	public function getInjectedTable()
+	{
+		if(!$this->injectedTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->injectedTable = $sm->get('Bufferspace\View\InjectedTable');
+		}
+		return $this->injectedTable;
+	}
 
 	public function indexAction()
 	{
@@ -72,6 +87,7 @@ class OperatorController extends AbstractActionController
 		$aParam = array();
 		
 		$nbExams = $this->getExaminationTable()->count();
+		$nbInjected = $this->getInjectedTable()->count();
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
@@ -99,7 +115,7 @@ class OperatorController extends AbstractActionController
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
-		$aParam['canExport'] = ($oContainer->fileloaded) ? true : false;
+		$aParam['canExport'] = ($oContainer->markedasended && $nbInjected > 0) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
 		

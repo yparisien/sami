@@ -27,9 +27,9 @@
 
 				<?php if ($step->drugspecified) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
-				<?php if (!$step->sourcekitloaded) { ?>
+					<?php if (!$step->sourcekitloaded) { ?>
 					<span id="removeDrugButton" class="badge badge-danger"><span class="glyphicon glyphicon-remove"></span></span>
-				<?php } ?>
+					<?php } ?>
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-file"></span>
 					<?php echo sprintf($this->translate("Receipted drug : <u>%s</u>"), $selectedDrugName); ?>
@@ -44,6 +44,9 @@
 
 				<?php if ($step->sourcekitscanned) { ?>
 				<a href="#" class="list-group-item list-group-item-success">
+					<?php if (!$step->sourcekitloaded) { ?>
+					<span id="removeScanButton" class="badge badge-danger"><span class="glyphicon glyphicon-remove"></span></span>
+					<?php } ?>
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<span class="glyphicon glyphicon-barcode"></span>
 					<?php echo $this->translate('Scan source kit barcode')?>
@@ -141,10 +144,31 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="confirmRemoveScan" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Remove receipted kit source.');?></h4>
+			</div>
+			<div class="modal-body">
+				<p><?php echo $this->translate("Are you sure to remove selected source kit ?"); ?></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="removeSourceKit();"><?php echo $this->translate('Confirm');?></button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->translate('Cancel');?></button>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 $(function() {
 	$('#removeDrugButton').click(function() {
 		$("#confirmRemoveDrug").modal('show');
+	});
+
+	$('#removeScanButton').click(function() {
+		$("#confirmRemoveScan").modal('show');
 	});
 });
 
@@ -157,6 +181,17 @@ function removeDrug() {
         }).done(function (result) {
             location.reload();
         });
+}
+
+function removeSourceKit() {
+	  $.ajax({
+        type: "POST",
+        url: "<?php echo $this->url('setup', array('action'=>'aunloadsourcekit'))?>",
+        dataType: "json",
+        data: {}
+      }).done(function (result) {
+          location.reload();
+      });
 }
 </script>
 <?php } ?>

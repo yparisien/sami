@@ -12,18 +12,18 @@ class	Exporter
 	protected	$_patients		= array();
 	protected	$_checksum		= array();
 
-	function	__construct($servicelocator)
+	public function	__construct($servicelocator)
 	{
 		$this->_servicelocator = $servicelocator;
 	}
 
-	function	getPathFile()	{ return $this->_pathfile; }
-	function	getFd()			{ return $this->_fd; }
+	public function	getPathFile()	{ return $this->_pathfile; }
+	public function	getFd()			{ return $this->_fd; }
 
-	function	setHeader()		{ return $this->_header; }
-	function	setDataStruct()	{ return $this->_datastruct; }
+	public function	setHeader()		{ return $this->_header; }
+	public function	setDataStruct()	{ return $this->_datastruct; }
 
-	function	setPathFile($pathfile)
+	public function	setPathFile($pathfile)
 	{
 		if(file_exists($pathfile))
 		{
@@ -82,5 +82,13 @@ class	Exporter
 				fclose($fd);
 			}
 		}
+	}
+	
+	public function historyPatient() {
+		$bRet = false;
+		
+		$bRet = true;
+		
+		return $bRet;
 	}
 }
