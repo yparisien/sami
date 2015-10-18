@@ -36,9 +36,10 @@ class ExportbufferController extends AbstractActionController
 		$ret = $oExport->historyPatient();
 		
 		if ($ret === true) {
+			$oExport->cleanDataBase();
 			$oContainer->markedasended = false;
 		}
 
-		return new JsonModel(array('succes' => $ret));
+		return new JsonModel(array('succes' => 1));
 	}
 }

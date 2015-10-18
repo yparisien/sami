@@ -1,21 +1,72 @@
 <?php
 namespace Bufferspace\File;
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+
 class	Exporter
 {
 	protected	$_pathfile;
 	protected	$_fd;
+	
+	/**
+	 * 
+	 * @var ServiceLocatorInterface
+	 */
 	protected	$_servicelocator;
 
 	protected	$_header		= array();
 	protected	$_datastruct	= array();
 	protected	$_patients		= array();
 	protected	$_checksum		= array();
+	
+	protected	$patientTable;
+	protected	$injectionTable;
+	protected	$injectedTable;
 
 	public function	__construct($servicelocator)
 	{
 		$this->_servicelocator = $servicelocator;
 	}
+	
+	/**
+	 *
+	 * @return \Bufferspace\Model\InjectionTable
+	 */
+	public function getInjectionTable()
+	{
+		if(!$this->injectionTable)
+		{
+			$this->injectionTable = $this->_servicelocator->get('Bufferspace\Model\InjectionTable');
+		}
+		return $this->injectionTable;
+	}
+	
+	/**
+	 *
+	 * @return \Bufferspace\Model\PatientTable
+	 */
+	public function getPatientTable()
+	{
+		if(!$this->patientTable)
+		{
+			$this->patientTable = $this->_servicelocator->get('Bufferspace\Model\PatientTable');
+		}
+		return $this->patientTable;
+	}
+	
+	/**
+	 *
+	 * @return \Bufferspace\View\InjectedTable
+	 */
+	public function getInjectedTable()
+	{
+		if(!$this->injectedTable)
+		{
+			$this->injectedTable = $this->_servicelocator->get('Bufferspace\View\InjectedTable');
+		}
+		return $this->injectedTable;
+	}
+
 
 	public function	getPathFile()	{ return $this->_pathfile; }
 	public function	getFd()			{ return $this->_fd; }
@@ -81,6 +132,20 @@ class	Exporter
 				fwrite($fd, 'checksum,'.$checksum."\n");
 				fclose($fd);
 			}
+		}
+	}
+	
+	public function cleanDataBase()
+	{
+		$patientTable = $this->getPatientTable();
+		$injectionTable = $this->getInjectionTable();
+		$injectedTable = $this->getInjectedTable();
+
+		$aoInjected = $injectedTable->fetchAll();
+		
+		foreach ($aoInjected as $oInjected) {
+			$patientTable->deletePatient($oInjected->patientid);
+			$injectionTable->deleteInjection($oInjected->injectionid);
 		}
 	}
 	

@@ -333,7 +333,7 @@ CREATE VIEW `view_export` AS
 DROP VIEW IF EXISTS `view_injected`;
 CREATE VIEW `view_injected` AS
     SELECT 
-        `p`.`patient_id` AS `patientid`,
+        `p`.`id` AS `patientid`,
         `p`.`lastname` AS `patientlastname`,
         `p`.`firstname` AS `patientfirstname`,
         `p`.`gender` AS `gender`,
@@ -345,6 +345,7 @@ CREATE VIEW `view_injected` AS
         `p`.`doctorname` AS `doctorname`,
         `i`.`location` AS `emplacement`,
         `i`.`type` AS `type`,
+        `i`.`id` AS `injectionid`,
         `i`.`injection_time` AS `injectiontime`,
         `i`.`activity` AS `activity`,
         `i`.`dose_status` AS `dosestatus`,
