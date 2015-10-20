@@ -1,4 +1,10 @@
 <?php //TODO Trad high prio ?>
+<?php
+$this->headStyle()->appendStyle('
+.slider-selection {
+	background: #337ab7;
+}');
+?>
 <ol class="breadcrumb">
 	<li><a href="<?php echo $this->url('operator')?>"><span class="glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
 	<li><?php echo $this->translate('Injection')?></li>
@@ -54,17 +60,19 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-1 col-md-offset-2">
-								<button class="btn btn-primary" onClick="pauseInjection()" id="btn-pause"><span class="glyphicon glyphicon-pause"></span></button>
-							</div>
-							<div class="col-md-1">
+							<div class="col-md-4">
+								<button class="btn btn-primary" onClick="pauseInjection()" id="btn-pause" disabled><span class="glyphicon glyphicon-pause"></span></button>
 								<button class="btn btn-primary" onClick="playInjection()" id="btn-play" disabled><span class="glyphicon glyphicon-play"></span></button>
 							</div>
-							<div class="col-md-8 text-right">
+							<div class="col-md-4">
 								Règlage du débit:
-								<button onClick="injectionSlowDown()"><span class="glyphicon glyphicon-minus"></span></button>
-								<input type="number" id="debit-controller" value="" data-slider-min="0" data-slider-max="4" data-slider-step="1" data-slider-value="2" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide" autocomplete="off">
-								<button onClick="injectionSpeedUp()"><span class="glyphicon glyphicon-plus"></span></button>
+								<input id="debit-controller" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" />
+							</div>
+							<div class="col-md-4">
+								<div class="input-group">
+									<input id="debitVal" type="number" value="0.5" class="form-control ui-keyboard-input input-md ui-keyboard-nokeyboard" autocomplete="off" disabled aria-haspopup="true" role="textbox" />
+									<span class="input-group-addon">ml / s</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -81,8 +89,10 @@
 			<script type="text/javascript">
 					var value = 0;
 					var statut = 1;
+					var started = false;
 					var timerAnim; // instance of timer used by moveProgressBar
 					var frequency = 500; // value of interval (in ms)
+
 					function	moveProgressBar()
 					{
 						timerAnim = window.setInterval(function(){animProgressBar();}, frequency);
@@ -95,28 +105,27 @@
 
 					function	animProgressBar()
 					{
-
-              $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'agetinjectionprogress'))?>",
-              dataType: "json",
-              data: {}
-            }).done(function (result) {
-						if(result.progress < 100)
-						{
-							// mockup to simulate automate "life", in fact automate send the real %, no recalculation needed
-							//value += Math.round($("#debit-controller").slider('getValue'));
-							$("#injection-progress").css('width', result.progress+'%');
-						}
-						else
-						{
-							$("#injection-progress").css('width', '100%');
-							$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
-							$('#injection-statut').html('Injection terminée !');
-							$("#btn-next").removeAttr('disabled');
-							stopProgressBar();
-							sendNotifEndInjection();
-						}
+              			$.ajax({
+              				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'agetinjectionprogress'))?>",
+              				dataType: "json",
+              				data: {}
+            			}).done(function (result) {
+							if(result.progress < 100)
+							{
+								// mockup to simulate automate "life", in fact automate send the real %, no recalculation needed
+								//value += Math.round($("#debit-controller").slider('getValue'));
+								$("#injection-progress").css('width', result.progress+'%');
+							}
+							else
+							{
+								$("#injection-progress").css('width', '100%');
+								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+								$('#injection-statut').html('Injection terminée !');
+								$("#btn-next").removeAttr('disabled');
+								stopProgressBar();
+								sendNotifEndInjection();
+							}
 						});
 					}
 
@@ -126,25 +135,31 @@
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#collapseOne').collapse('toggle');
 						$('#injection-statut').html('Injection en cours...');
-            $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'alaunchinjection'))?>",
-              dataType: "json",
-              data: {}
-            });
-						moveProgressBar();
+			            $.ajax({
+			              type: "POST",
+			              url: "<?php echo $this->url('inject', array('action'=>'alaunchinjection'))?>",
+			              dataType: "json",
+			              data: {}
+			            }).done(function (result) {
+							if (result.error === false) {
+								started = true;
+								$('#btn-play').attr('disabled', 1);
+								$('#btn-pause').removeAttr('disabled');
+								moveProgressBar();
+							}				            
+			            });
 					}
 
 					function	pauseInjection()
 					{
 						$('#btn-pause').attr('disabled', 1);
 						$('#btn-play').removeAttr('disabled');
-            $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'apauseinjection'))?>",
-              dataType: "json",
-              data: {}
-            });
+			            $.ajax({
+			              type: "POST",
+			              url: "<?php echo $this->url('inject', array('action'=>'apauseinjection'))?>",
+			              dataType: "json",
+			              data: {}
+			            });
 
 						stopProgressBar();
 					}
@@ -153,44 +168,24 @@
 					{
 						$('#btn-play').attr('disabled', 1);
 						$('#btn-pause').removeAttr('disabled');
-            $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'aplayinjection'))?>",
-              dataType: "json",
-              data: {}
-            });
+			            $.ajax({
+			              type: "POST",
+			              url: "<?php echo $this->url('inject', array('action'=>'aplayinjection'))?>",
+			              dataType: "json",
+			              data: {}
+			            });
 
 						moveProgressBar();
 					}
 
-					function sendSpeedInjection()
+					function sendSpeedInjection(speed)
 					{
 						$.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'aspeedinjection'))?>",
-              dataType: "json",
-              data: {speed :  $("#debit-controller").slider('getValue') * 25}
-            });
-					}
-
-					function	injectionSlowDown()
-					{
-						pauseInjection();
-						if($("#debit-controller").slider('getValue') > 0)
-						{
-							$("#debit-controller").slider('setValue', $("#debit-controller").slider('getValue') - 1);
-						}
-						sendSpeedInjection();
-					}
-
-					function	injectionSpeedUp()
-					{
-						pauseInjection();
-						if($("#debit-controller").slider('getValue') < 4)
-						{
-							$("#debit-controller").slider('setValue', $("#debit-controller").slider('getValue') + 1);
-						}
-						sendSpeedInjection();
+			              type: "POST",
+			              url: "<?php echo $this->url('inject', array('action'=>'aspeedinjection'))?>",
+			              dataType: "json",
+			              data: {speed : speed}
+			            });
 					}
 
 					function	sendNotifEndInjection()
@@ -201,21 +196,25 @@
 					}
 
 					$(function(){
-						$('#debit-controller').slider()
-						.on('slideStart', function(){
-							pauseInjection();
+						$('#debit-controller').bootstrapSlider({
+							formatter: function(value) {
+								return value / 10.0;
+							}
 						})
-						.on('slideStop', function() {
-							//playInjection();
+						.on("slide", function(slideEvt) {
+							$("#debitVal").val(slideEvt.value / 10.0);
+						})
+						.on("change", function(slideEvt) {
+							$("#debitVal").val(slideEvt.value.newValue / 10.0);
+						})
+						.on('slideStart', function() {
+							if (started === true) {
+								pauseInjection();
+							}
+						})
+						.on('slideStop', function(slideEvt) {
+							sendSpeedInjection(slideEvt.value);
 						});
-						$.ajax({
-	            type: "POST",
-  	          url: "<?php echo $this->url('inject', array('action'=>'agetspeedinjection'))?>",
-    	        dataType: "json",
-      	      data: {}
-        	  }).done(function (result) {
-          	  $("#debit-controller").slider('setValue', result.speed);
-	          });
 					});
 				</script>
 		</div>

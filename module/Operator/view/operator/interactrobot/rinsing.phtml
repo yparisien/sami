@@ -83,7 +83,7 @@
 				var statut = 1;
 
 				var timerAnim; // instance of timer used by moveProgressBar
-				var frequency = 500; // value of interval (in ms)
+				var frequency = 5000; // value of interval (in ms)
 
 				function moveProgressBar()
 				{
@@ -97,40 +97,40 @@
 
 				function	animProgressBar()
 				{
-              $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
-              dataType: "json",
-              data: {}
-            }).done(function (result) {
+	            	$.ajax({
+	              		type: "POST",
+	              		url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
+	              		dataType: "json",
+	              		data: {}
+	            	}).done(function (result) {
 
-					var speed = $("#debit-controller").slider('getValue');
-					if(Number(result.progress) <= 50)
-					{
-						value2 = result.progress * 2;
-						value3 = 100 - result.progress * 2;
-					}
-					else
-					{
-						value1 = (result.progress - 50) * 2;
-						value2 = 100 - (result.progress - 50) * 2;
-					}
-					$("#rinsing-progress-1").css('width', value1+'%');
-					$("#rinsing-progress-2").css('width', value2+'%');
-					$("#rinsing-progress-3").css('width', value3+'%');
+						var speed = $("#debit-controller").slider('getValue');
+						if(Number(result.progress) <= 50)
+						{
+							value2 = result.progress * 2;
+							value3 = 100 - result.progress * 2;
+						}
+						else
+						{
+							value1 = (result.progress - 50) * 2;
+							value2 = 100 - (result.progress - 50) * 2;
+						}
+						$("#rinsing-progress-1").css('width', value1+'%');
+						$("#rinsing-progress-2").css('width', value2+'%');
+						$("#rinsing-progress-3").css('width', value3+'%');
 
-					if(value1 >= 100)
-					{
-						stopProgressBar();
-						$("#rinsing-progress-1").css('width', '100%');
-						$("#rinsing-progress-2").css('width', '0%');
-						$("#rinsing-progress-3").css('width', '0%');
-						$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
-						$("#rinsing-confirm").removeAttr('disabled');
-						$('#rinsing-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
-						rinsed = 1;
-						checkEnableNext();
-					}
+						if(value1 >= 100)
+						{
+							stopProgressBar();
+							$("#rinsing-progress-1").css('width', '100%');
+							$("#rinsing-progress-2").css('width', '0%');
+							$("#rinsing-progress-3").css('width', '0%');
+							$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+							$("#rinsing-confirm").removeAttr('disabled');
+							$('#rinsing-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
+							rinsed = 1;
+							checkEnableNext();
+						}
 					});
 				}
 
@@ -140,6 +140,12 @@
 					$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 					$('#collapseOne').collapse('toggle');
 					$('#rinsing-statut').html('Rinçage en cours...');
+					$.ajax({
+		            	type: "POST",
+		            	url: "<?php echo $this->url('inject', array('action'=>'alaunchrinsing'))?>",
+		            	dataType: "json",
+		            	data: {}
+		            });
 					moveProgressBar();
 				}
 
@@ -147,6 +153,12 @@
 				{
 					$('#btn-pause').attr('disabled', 1);
 					$('#btn-play').removeAttr('disabled');
+					$.ajax({
+		            	type: "POST",
+		            	url: "<?php echo $this->url('inject', array('action'=>'apauseinjection'))?>",
+		            	dataType: "json",
+		            	data: {}
+		            });
 					stopProgressBar();
 				}
 
@@ -154,26 +166,25 @@
 				{
 					$('#btn-play').attr('disabled', 1);
 					$('#btn-pause').removeAttr('disabled');
-          $.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'alaunchinjection'))?>",
-              dataType: "json",
-              data: {}
-            });
-
+		          	$.ajax({
+		            	type: "POST",
+		            	url: "<?php echo $this->url('inject', array('action'=>'aplayinjection'))?>",
+		            	dataType: "json",
+		            	data: {}
+		            });
 					moveProgressBar();
 				}
 
-        function sendSpeedInjection()
-        {
-          $.ajax({
-            type: "POST",
-            url: "<?php echo $this->url('inject', array('action'=>'aspeedinjection'))?>",
-            dataType: "json",
-            data: {speed :  $("#debit-controller").slider('getValue') * 25}
-          });
-        }
-
+		        function sendSpeedInjection()
+		        {
+					$.ajax({
+		           		type: "POST",
+		           		url: "<?php echo $this->url('inject', array('action'=>'aspeedinjection'))?>",
+		           		dataType: "json",
+		          		data: {speed :  $("#debit-controller").slider('getValue') * 25}
+		          	});
+		        }
+		
 				function	rinsingSlowDown()
 				{
 					pauseRinsing();
@@ -211,16 +222,13 @@
 					$('#debit-controller').slider()
 					.on('slideStart', function(){
 						pauseRinsing();
-					})
-					.on('slideStop', function() {
-						//playRinsing();
 					});
-				  $.ajax({
-            type: "POST",
-            url: "<?php echo $this->url('inject', array('action'=>'agetspeedinjection'))?>",
-            dataType: "json",
-            data: {}
-          }).done(function (result) {
+					$.ajax({
+            			type: "POST",
+            			url: "<?php echo $this->url('inject', array('action'=>'agetspeedinjection'))?>",
+            			dataType: "json",
+            			data: {}
+          				}).done(function (result) {
 						$("#debit-controller").slider('setValue', result.speed);
 					});
 				});

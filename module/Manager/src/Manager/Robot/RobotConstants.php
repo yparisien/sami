@@ -27,6 +27,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_LOADPURGE					= 'G_MainLogic.cmd.Input_Soft.Load_Purge';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADSEQUENCE				= 'G_MainLogic.cmd.Input_Soft.Load_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_PLAYINJECTION				= 'G_MainLogic.cmd.Input_Soft.Play_Injection';
+	const MAINLOGIC_CMD_INPUTSOFT_RINSINGSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Rinsing_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_SAMPLINGSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Sampling_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_STOPINJECTION				= 'G_MainLogic.cmd.Input_Soft.Stop_Injection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP			= 'G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P';

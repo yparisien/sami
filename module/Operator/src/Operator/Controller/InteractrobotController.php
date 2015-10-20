@@ -326,6 +326,7 @@ class InteractrobotController extends AbstractActionController
 		$result = new JsonModel($aParams);
 		return $result;
 	}
+	
 	public function	alaunchpurgeAction()
 	{
 		/* @var $robotService RobotService */
@@ -337,6 +338,7 @@ class InteractrobotController extends AbstractActionController
 		
 		return $result;
 	}
+	
 	public function	adisconnectpatientAction()
 	{
 		/* @var $robotService RobotService */
@@ -348,6 +350,7 @@ class InteractrobotController extends AbstractActionController
 		
 		return $result;
 	}
+	
 	public function	agetsamplingprogressAction()
 	{
 		/* @var $robotService RobotService */
@@ -358,6 +361,7 @@ class InteractrobotController extends AbstractActionController
 		$result = new JsonModel($aParams);
 		return $result;
 	}
+	
 	public function	alaunchsamplingAction()
 	{
 		/* @var $robotService RobotService */
@@ -369,6 +373,7 @@ class InteractrobotController extends AbstractActionController
 		
 		return $result;
 	}
+	
 	public function	aadjustsamplingAction()
 	{
 		/* @var $robotService RobotService */
@@ -380,6 +385,7 @@ class InteractrobotController extends AbstractActionController
 
 		return $result;
 	}
+	
 	public function	agetsamplingactivityAction()
 	{
 		/* @var $robotService RobotService */
@@ -390,6 +396,7 @@ class InteractrobotController extends AbstractActionController
 		$result = new JsonModel($aParams);
 		return $result;
 	}
+	
 	public function	agetdilutionprogressAction()
 	{
 		/* @var $robotService RobotService */
@@ -412,6 +419,7 @@ class InteractrobotController extends AbstractActionController
 		
 		return $result;
 	}
+	
 	public function	agetinjectionprogressAction()
 	{
 		/* @var $robotService RobotService */
@@ -423,15 +431,28 @@ class InteractrobotController extends AbstractActionController
 		
 		return $result;
 	}
+	
 	public function	alaunchinjectionAction()
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE => 1));
 		
-		$aParams = array();
+		$aParams = array("error" => false);
 		$result = new JsonModel($aParams);
 
+		return $result;
+	}
+	
+	public function	alaunchrinsingAction()
+	{
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_RINSINGSEQUENCE => 1));
+	
+		$aParams = array();
+		$result = new JsonModel($aParams);
+	
 		return $result;
 	}
 	
@@ -479,7 +500,7 @@ class InteractrobotController extends AbstractActionController
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$speed = $robotService->receive(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED);
 		
-		$aParams = array("speed" => $speed / 25);
+		$aParams = array("speed" => $speed);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
