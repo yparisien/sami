@@ -595,7 +595,7 @@ class InteractrobotController extends AbstractActionController
 	{
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_ENDINJECTION));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_ENDINJECTION => 1));
 		
 		$setup = new Container('automate_setup');
 		$setup->markedasended = true;
