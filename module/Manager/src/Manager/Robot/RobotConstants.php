@@ -38,12 +38,13 @@ class RobotConstants {
 	
 	const MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE 			= 'G_MainLogic.cmd.Input_Trasys.Measured_Value';
 	
-	const MAINLOGIC_PAR_SERIALNUMBERSAMI 					= 'G_MainLogic.par.Serial_Number_SAMI';
+	const MAINLOGIC_PAR_DEMOMODE							= 'G_MainLogic.par.Demo_Mode';
+	const MAINLOGIC_PAR_MAXACTIVITY							= 'G_MainLogic.par.Max_Act';
+	const MAINLOGIC_PAR_MEASUREUNIT							= 'G_MainLogic.par.Measure_Unit';
 	const MAINLOGIC_PAR_SERIALNUMBERACTIVI 					= 'G_MainLogic.par.Serial_Number_Activi';
+	const MAINLOGIC_PAR_SERIALNUMBERSAMI 					= 'G_MainLogic.par.Serial_Number_SAMI';
 	const MAINLOGIC_PAR_SOFTWAREVERSION 					= 'G_MainLogic.par.Software_Version';
 	const MAINLOGIC_PAR_SYSTEMVERSION 						= 'G_MainLogic.par.System_Version';
-	const MAINLOGIC_PAR_MEASUREUNIT							= 'G_MainLogic.par.Measure_Unit';
-	const MAINLOGIC_PAR_MAXACTIVITY							= 'G_MainLogic.par.Max_Act';
 	//Faire le mode demo
 
 	const MAINLOGIC_STATUS_ACTIVE 							= 'G_MainLogic.status.Active';

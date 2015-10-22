@@ -139,6 +139,10 @@ class InteractrobotController extends AbstractActionController
 		return $this->sourcekitTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -243,6 +247,7 @@ class InteractrobotController extends AbstractActionController
 	public function	patientdisconnectionAction()
 	{
 		$aParams = array();
+		$kitpatient = (bool) $this->getSystemTable()->getSystem()->genuinekit;
 		
 		$injection = new Container('injection_profile');
 		$setup = new Container('automate_setup');
@@ -257,7 +262,9 @@ class InteractrobotController extends AbstractActionController
 		$aParams['operator'] = $this->getUserTable()->getUser($injection->operatorid)->toArray();
 		$aParams['curdrug'] = $inputdrug->toArray();
 		$aParams['drug'] = $this->getDrugTable()->getDrug($inputdrug->drugid)->toArray();
-		$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid)->toArray();
+		if ($kitpatient === true) {
+			$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid)->toArray();
+		}
 		$aParams['radionuclide'] = $this->getRadionuclideTable()->getRadionuclide($aParams['drug']['radionuclideid'])->toArray();
 		$aParams['sourcekit'] = $this->getSourcekitTable()->getSourcekit($setup->sourcekitid)->toArray();
 		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
