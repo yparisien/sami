@@ -22,6 +22,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Injection_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED 				= 'G_MainLogic.cmd.Input_Soft.Inject_Speed';
 	const MAINLOGIC_CMD_INPUTSOFT_KITSOURCESERIAL			= 'G_MainLogic.cmd.Input_Soft.Kit_Source_Serial';
+	const MAINLOGIC_CMD_INPUTSOFT_LOADKITSOURCE				= 'G_MainLogic.cmd.Input_Soft.Load_Kit_S';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT			= 'G_MainLogic.cmd.Input_Soft.Load_Medicament';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADPATIENT				= 'G_MainLogic.cmd.Input_Soft.Load_Patient';
 	const MAINLOGIC_CMD_INPUTSOFT_LOADPURGE					= 'G_MainLogic.cmd.Input_Soft.Load_Purge';
@@ -76,8 +77,6 @@ class RobotConstants {
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';
-	
-	const KIT_VAL_KITSOURCE									= 'G_Kit.Val_Kit_S';
 	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	
