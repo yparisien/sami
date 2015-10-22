@@ -18,6 +18,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME			= 'G_MainLogic.cmd.Input_Soft.ChangeDateTime';
 	const MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM				= 'G_MainLogic.cmd.Input_Soft.DateTimeIHM';
 	const MAINLOGIC_CMD_INPUTSOFT_DILUTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Dilution_Sequence';
+	const MAINLOGIC_CMD_INPUTSOFT_ENDINJECTION 				= 'G_MainLogic.cmd.Input_Soft.End_Injection';
 	const MAINLOGIC_CMD_INPUTSOFT_EXIT 						= 'G_MainLogic.cmd.Input_Soft.Exit';
 	const MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Injection_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED 				= 'G_MainLogic.cmd.Input_Soft.Inject_Speed';

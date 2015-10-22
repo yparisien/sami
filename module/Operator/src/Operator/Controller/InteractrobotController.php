@@ -593,8 +593,14 @@ class InteractrobotController extends AbstractActionController
 
 	public function	amarkendinjectAction()
 	{
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_ENDINJECTION));
+		
 		$setup = new Container('automate_setup');
 		$setup->markedasended = true;
+		
+		
 		return new JsonModel(array('success'=>true));
 	}
 }
