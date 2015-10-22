@@ -117,26 +117,32 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::SUBPURGE_STATUS_EVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->purgeEvolutionStatus) && ($fr->purgeEvolutionStatus == 100)) ? 0 : $fr->purgeEvolutionStatus + 25 ;
+				$progress = (isset($fr->purgeEvolutionStatus) && ($fr->purgeEvolutionStatus == 100)) ? 0 : $fr->purgeEvolutionStatus + 25;
 				$fr->purgeEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_SAMPLINGEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 10 ;
+				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 10;
 				$fr->samplingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_DILUTIONEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->dilutionEvolutionStatus) && ($fr->dilutionEvolutionStatus == 100)) ? 0 : $fr->dilutionEvolutionStatus + 20 ;
+				$progress = (isset($fr->dilutionEvolutionStatus) && ($fr->dilutionEvolutionStatus == 100)) ? 0 : $fr->dilutionEvolutionStatus + 20;
 				$fr->dilutionEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_INJECTIONEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2 ;
+				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2;
 				$fr->injectionEvolutionStatus = $progress;
+				$mRet = $progress;
+				break;
+			case RobotConstants::MAINLOGIC_STATUS_RINSINGEVOLUTION:
+				$fr = new Container('fake_robot');
+				$progress = (isset($fr->rinsingEvolutionStatus) && ($fr->rinsingEvolutionStatus == 100)) ? 0 : $fr->rinsingEvolutionStatus + 25 ;
+				$fr->rinsingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
 			case RobotConstants::MAINLOGIC_PAR_SERIALNUMBERSAMI:

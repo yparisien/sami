@@ -432,6 +432,18 @@ class InteractrobotController extends AbstractActionController
 		return $result;
 	}
 	
+	public function	agetrinsingprogressAction()
+	{
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$progress = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_RINSINGEVOLUTION);
+	
+		$aParams = array("progress" => $progress);
+		$result = new JsonModel($aParams);
+	
+		return $result;
+	}
+	
 	public function	alaunchinjectionAction()
 	{
 		/* @var $robotService RobotService */
@@ -450,7 +462,7 @@ class InteractrobotController extends AbstractActionController
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_RINSINGSEQUENCE => 1));
 	
-		$aParams = array();
+		$aParams = array("error" => false);
 		$result = new JsonModel($aParams);
 	
 		return $result;

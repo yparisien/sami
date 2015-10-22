@@ -1,4 +1,10 @@
 <?php //TODO Trad high prio ?>
+<?php
+$this->headStyle()->appendStyle('
+.slider-selection {
+	background: #337ab7;
+}');
+?>
 <ol class="breadcrumb">
 	<li><a href="<?php echo $this->url('operator')?>"><span class="glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
 	<li><?php echo $this->translate('Injection')?></li>
@@ -14,17 +20,19 @@
 				<div class="panel-heading">
 					<?php echo $this->translate("Patient's data")?>
 				</div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
-						<div class="col-md-3"><input value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" disabled/></div>
-						<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
-						<div class="col-md-3"><input value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" disabled/></div>
-					</div>
-					<div class="row">
-						<div class="col-md-3"><?php echo $this->translate('Activity injected')?></div>
-						<div class="col-md-3"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
-						<div class="col-md-2 col-md-offset-3"><button type="button" class="btn btn-primary" id="rinsing-confirm" onClick="launchRinsing()">Lancer le rinçage</button></div>
+				<div id="collapseOne" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
+							<div class="col-md-3"><input value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" disabled/></div>
+							<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
+							<div class="col-md-3"><input value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" disabled/></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><?php echo $this->translate('Activity injected')?></div>
+							<div class="col-md-3"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
+							<div class="col-md-2 col-md-offset-3"><button type="button" class="btn btn-primary" id="rinsing-confirm" onClick="launchRinsing(false)">Lancer le rinçage</button></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -50,40 +58,44 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-1 col-md-offset-2">
-							<button class="btn btn-primary" onClick="pauseRinsing()" id="btn-pause"><span class="glyphicon glyphicon-pause"></span></button>
-						</div>
-						<div class="col-md-1">
+						<div class="col-md-4">
+							<button class="btn btn-primary" onClick="pauseRinsing()" id="btn-pause" disabled><span class="glyphicon glyphicon-pause"></span></button>
 							<button class="btn btn-primary" onClick="playRinsing()" id="btn-play" disabled><span class="glyphicon glyphicon-play"></span></button>
 						</div>
-						<div class="col-md-8 text-right">
+						<div class="col-md-4">
 							Règlage du débit:
-							<button onClick="rinsingSlowDown()"><span class="glyphicon glyphicon-minus"></span></button>
-							<input type="number" id="debit-controller" value="" data-slider-min="0" data-slider-max="4" data-slider-step="1" data-slider-value="2" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide" autocomplete="off">
-							<button onClick="rinsingSpeedUp()"><span class="glyphicon glyphicon-plus"></span></button>
+							<input type="text" id="debit-controller" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" autocomplete="off">
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<input id="debitVal" type="number" value="0.5" class="form-control ui-keyboard-input input-md ui-keyboard-nokeyboard" autocomplete="off" disabled aria-haspopup="true" role="textbox" />
+								<span class="input-group-addon">ml / s</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row" style="margin-top:10px;margin-bottom:10px;">
-			<div class="col-md-2 col-md-offset-4">
-				<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled>Suivant</button>
+			<div class="col-md-2 col-md-offset-3">
+				<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled>Suivant</button>
 			</div>
 			<div class="col-md-2">
-				<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+				<button id="btn-relaunch" type="button" class="btn btn-primary btn-block" onclick="launchRinsing(true);" disabled>Relancer un rinsage</button>
+			</div>
+			<div class="col-md-2">
+				<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
 			</div>
 		</div>
 		<script type="text/javascript">
 				var value1 = 0;
 				var value2 = 0;
 				var value3 = 100;
-				var way = 0;
-				var rinsed = 1;
-				var statut = 1;
+				var rinsed = 0;
+				var started = false;
 
 				var timerAnim; // instance of timer used by moveProgressBar
-				var frequency = 5000; // value of interval (in ms)
+				var frequency = 1000; // value of interval (in ms)
 
 				function moveProgressBar()
 				{
@@ -99,12 +111,10 @@
 				{
 	            	$.ajax({
 	              		type: "POST",
-	              		url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
+	              		url: "<?php echo $this->url('inject', array('action'=>'agetrinsingprogress'))?>",
 	              		dataType: "json",
 	              		data: {}
 	            	}).done(function (result) {
-
-						var speed = $("#debit-controller").slider('getValue');
 						if(Number(result.progress) <= 50)
 						{
 							value2 = result.progress * 2;
@@ -129,24 +139,41 @@
 							$("#rinsing-confirm").removeAttr('disabled');
 							$('#rinsing-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
 							rinsed = 1;
+							started = false;
 							checkEnableNext();
 						}
 					});
 				}
 
-				function launchRinsing()
+				function launchRinsing(relaunch)
 				{
 					$("#rinsing-confirm").attr('disabled', 1);
 					$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
-					$('#collapseOne').collapse('toggle');
-					$('#rinsing-statut').html('Rinçage en cours...');
+
+					if (relaunch === true) {
+						$('#rinsing-statut').html('Nouveau rinçage en cours...');
+						value1 = 0;
+						value2 = 0;
+						value3 = 100;
+						var started = false;
+					} else {
+						$('#collapseOne').collapse('toggle');
+						$('#rinsing-statut').html('Rinçage en cours...');
+					}
+
 					$.ajax({
 		            	type: "POST",
 		            	url: "<?php echo $this->url('inject', array('action'=>'alaunchrinsing'))?>",
 		            	dataType: "json",
 		            	data: {}
+					}).done(function (result) {
+						if (result.error === false) {
+							started = true;
+							$('#btn-play').attr('disabled', 1);
+							$('#btn-pause').removeAttr('disabled');
+							moveProgressBar();
+						}				            
 		            });
-					moveProgressBar();
 				}
 
 				function	pauseRinsing()
@@ -175,61 +202,44 @@
 					moveProgressBar();
 				}
 
-		        function sendSpeedInjection()
+		        function sendSpeedInjection(speed)
 		        {
 					$.ajax({
 		           		type: "POST",
 		           		url: "<?php echo $this->url('inject', array('action'=>'aspeedinjection'))?>",
 		           		dataType: "json",
-		          		data: {speed :  $("#debit-controller").slider('getValue') * 25}
+		          		data: {speed : speed}
 		          	});
 		        }
 		
-				function	rinsingSlowDown()
-				{
-					pauseRinsing();
-					if($("#debit-controller").slider('getValue') > 0)
-					{
-						$("#debit-controller").slider('setValue', $("#debit-controller").slider('getValue') - 1);
-					}
-					sendSpeedInjection();
-				}
-
-				function	rinsingSpeedUp()
-				{
-					pauseRinsing();
-					if($("#debit-controller").slider('getValue') < 4)
-					{
-						$("#debit-controller").slider('setValue', $("#debit-controller").slider('getValue') + 1);
-					}
-					sendSpeedInjection();
-				}
-
 				function	checkEnableNext()
 				{
 					if(rinsed == 1)
 					{
+						$("#btn-relaunch").removeAttr('disabled');
 						$("#btn-next").removeAttr('disabled');
 					}
 				}
 
-				function	blockNextStep()
-				{
-					$("#btn-next").attr('disabled', 1);
-				}
-
 				$(function(){
-					$('#debit-controller').slider()
-					.on('slideStart', function(){
-						pauseRinsing();
-					});
-					$.ajax({
-            			type: "POST",
-            			url: "<?php echo $this->url('inject', array('action'=>'agetspeedinjection'))?>",
-            			dataType: "json",
-            			data: {}
-          				}).done(function (result) {
-						$("#debit-controller").slider('setValue', result.speed);
+					$('#debit-controller').bootstrapSlider({
+						formatter: function(value) {
+							return value / 10.0;
+						}
+					})
+					.on("slide", function(slideEvt) {
+						$("#debitVal").val(slideEvt.value / 10.0);
+					})
+					.on("change", function(slideEvt) {
+						$("#debitVal").val(slideEvt.value.newValue / 10.0);
+					})
+					.on('slideStart', function() {
+						if (started === true) {
+							pauseRinsing();
+						}
+					})
+					.on('slideStop', function(slideEvt) {
+						sendSpeedInjection(slideEvt.value);
 					});
 				});
 			</script>
