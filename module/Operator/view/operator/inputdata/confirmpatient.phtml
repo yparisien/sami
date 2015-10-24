@@ -291,6 +291,9 @@
 			data: {"min" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
+			if (patientSetted == true && result.activity > 0) {
+				$('#submitExam').prop('disabled', false);
+			}
 		});
 	}
 
@@ -304,6 +307,9 @@
 			data: {"max" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
+			if (patientSetted == true && result.activity > 0) {
+				$('#submitExam').prop('disabled', false);
+			}
 		});
 	}
 
@@ -317,6 +323,9 @@
 			data: {"norm" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
+			if (patientSetted == true && result.activity > 0) {
+				$('#submitExam').prop('disabled', false);
+			}
 		});
 	}
 
