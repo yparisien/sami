@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-27 16:28+0100\n"
-"PO-Revision-Date: 2014-02-27 16:28+0100\n"
+"POT-Creation-Date: 2015-10-24 15:08+0200\n"
+"PO-Revision-Date: 2015-10-24 15:08+0200\n"
 "Last-Translator: Valentin Leclere <vleclere@softia.fr>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: it_IT\n"
@@ -11,80 +11,359 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: translate\n"
-"X-Poedit-Basepath: ../../\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:343
+#: ../module/Auth/src/Auth/Controller/AuthController.php:114
 #, php-format
-msgid "Source kit already used by %s %s at %s"
+msgid "Bad password - %s try(s) remaining"
 msgstr ""
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:366
+#: ../module/Auth/src/Auth/Controller/AuthController.php:126
+msgid "Confirm his/her identity"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/AuthController.php:137
+msgid "You are not authorized to perform this action for the moment"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/AuthController.php:170
+msgid "Switching user successfull"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/AuthController.php:188
 #, php-format
-msgid "Patient kit already used by %s %s at %s"
+msgid "Bad credentials - %s try(s) remaining"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:150
+msgid "Auth success"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:163
+msgid "Could found the patient in the database. No patient is selected."
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:217
+msgid "No user matching"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:220
+msgid "Login and password doesn't match"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:223
+msgid "Error during the process, please retry later"
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:259
+msgid "New password is setted."
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:264
+msgid "Old password don't match with current password please retry."
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:270
+msgid ""
+"New password is not confirmed, no match with confirmation, please retry."
+msgstr ""
+
+#: ../module/Auth/src/Auth/Controller/LoginController.php:291
+#: ../module/Auth/src/Auth/Controller/LoginController.php:312
+msgid "You have been logged out."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/DrugController.php:79
+#, php-format
+msgid "Drug (%s) has been created."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/DrugController.php:105
+#, php-format
+msgid "Drug (%s) has been modified."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/DrugController.php:129
+#, php-format
+msgid "Drug (%s) has been deleted."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/DrugController.php:133
+#, php-format
+msgid "Drug (%s) can't be deleted. Already in use in %s examinations"
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/ExaminationController.php:102
+#, php-format
+msgid "Examination (%s) has been created."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/ExaminationController.php:131
+#, php-format
+msgid "Examination (%s) has been modified."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/ExaminationController.php:157
+#, php-format
+msgid "Examination (%s) has been deleted."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/ExaminationController.php:161
+#, php-format
+msgid "Examination (%s) can't be deleted. Already %s examinations in progress."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/UserController.php:50
+#: ../module/Manager/src/Manager/Controller/UserController.php:83
+msgid "Password confirmation is different than new password."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/UserController.php:64
+#, php-format
+msgid "Operator (%s) has been created."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/UserController.php:97
+#, php-format
+msgid "Operator (%s) has been modified."
+msgstr ""
+
+#: ../module/Manager/src/Manager/Controller/UserController.php:123
+#, php-format
+msgid "Operator (%s) has been deleted."
+msgstr ""
+
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1082
+#, php-format
+msgid "Source kit already used by %s %s at %s, %s try remaining"
+msgstr ""
+
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1126
+#, php-format
+msgid "Patient kit already used by %s %s at %s, %s try remaining"
+msgstr ""
+
+#: ../module/Operator/src/Operator/Controller/InteractrobotController.php:320
+#, php-format
+msgid "You are not authorized to perform this action : Access page '%s'"
+msgstr ""
+
+#: ../module/Start/src/Start/Controller/IndexController.php:189
+msgid "No radionuclide found in the robot. Contact support."
+msgstr ""
+
+#: ../module/Start/src/Start/Controller/IndexController.php:277
+#, php-format
+msgid "%s drug not found in database."
+msgstr ""
+
+#: ../module/Start/src/Start/Controller/IndexController.php:294
+#, php-format
+msgid "Dont know if a drug is loaded (%s)."
+msgstr ""
+
+#: ../module/Start/src/Start/Controller/IndexController.php:342
+#, php-format
+msgid "Don't know if kitsource has been scanned (%s)."
+msgstr ""
+
+#: ../module/Start/src/Start/Controller/IndexController.php:381
+#: ../module/Start/src/Start/Controller/IndexController.php:412
+#, php-format
+msgid "Don't know if kitsource & source has been loaded (%s)."
 msgstr ""
 
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:2
 #: ../module/Auth/view/auth/auth/swapauth.phtml:2
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:2
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:2
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:2
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:2
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:2
 #: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:2
 #: ../module/Operator/view/operator/inputdata/scankitsource.phtml:2
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:2
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:3
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:2
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:9
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:3
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:2
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:9
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:3
+#: ../module/Operator/view/operator/interactrobot/unload.phtml:3
 #: ../module/Operator/view/operator/operator/index.phtml:2
 msgid "Operator dashboard"
 msgstr ""
 
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:3
-#: ../module/Auth/view/auth/auth/confirmauth.phtml:9
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:8
 #: ../module/Auth/view/auth/auth/swapauth.phtml:3
 #: ../module/Auth/view/auth/auth/swapauth.phtml:9
 msgid "User account confirmation"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/confirmauth.phtml:14
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:13
 msgid "Please confirm the current account or login to your own account"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/confirmauth.phtml:21
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:34
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:19
 msgid "User"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/confirmauth.phtml:29
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:95
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:105
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:55
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:38
+#: ../module/Auth/view/auth/auth/swapauth.phtml:35
+#: ../module/Auth/view/auth/login/index.phtml:18
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:23
+msgid "Password"
+msgstr ""
+
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:45
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:156
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:124
+#: ../module/Operator/view/operator/inputdata/drug.phtml:113
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:18
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:54
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:115
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:56
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:79
 msgid "Next"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/confirmauth.phtml:32
+#: ../module/Auth/view/auth/auth/confirmauth.phtml:48
 msgid "Change user account"
 msgstr ""
 
 #: ../module/Auth/view/auth/auth/swapauth.phtml:14
-#: ../module/Auth/view/auth/login/index.phtml:17
+#: ../module/Auth/view/auth/login/index.phtml:16
 msgid "Please sign in"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/swapauth.phtml:20
-#: ../module/Auth/view/auth/login/index.phtml:18
-#: ../module/Manager/view/manager/user/add.phtml:27
-#: ../module/Manager/view/manager/user/edit.phtml:27
+#: ../module/Auth/view/auth/auth/swapauth.phtml:34
+#: ../module/Auth/view/auth/login/index.phtml:17
+#: ../module/Manager/view/manager/user/add.phtml:22
+#: ../module/Manager/view/manager/user/edit.phtml:22
 #: ../module/Manager/view/manager/user/index.phtml:17
 msgid "Login"
 msgstr ""
 
-#: ../module/Auth/view/auth/auth/swapauth.phtml:21
+#: ../module/Auth/view/auth/auth/swapauth.phtml:36
 #: ../module/Auth/view/auth/login/index.phtml:19
-msgid "Password"
-msgstr ""
-
-#: ../module/Auth/view/auth/auth/swapauth.phtml:22
-#: ../module/Auth/view/auth/login/index.phtml:20
 msgid "Sign in"
 msgstr ""
 
+#: ../module/Auth/view/auth/login/changepwd.phtml:17
+msgid "Old password"
+msgstr ""
+
+#: ../module/Auth/view/auth/login/changepwd.phtml:23
+msgid "New password"
+msgstr ""
+
+#: ../module/Auth/view/auth/login/changepwd.phtml:29
+#: ../module/Manager/view/manager/user/add.phtml:53
+msgid "Confirm password"
+msgstr ""
+
+#: ../module/Auth/view/auth/login/changepwd.phtml:38
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:79
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:39
+#: ../module/Operator/view/operator/operator/index.phtml:141
+#: ../module/Operator/view/operator/operator/index.phtml:158
+msgid "Confirm"
+msgstr ""
+
+#: ../module/Auth/view/auth/login/changepwd.phtml:41
+#: ../module/Manager/view/manager/drug/add.phtml:41
+#: ../module/Manager/view/manager/drug/edit.phtml:39
+#: ../module/Manager/view/manager/examination/add.phtml:59
+#: ../module/Manager/view/manager/examination/edit.phtml:60
+#: ../module/Manager/view/manager/user/add.phtml:60
+#: ../module/Manager/view/manager/user/edit.phtml:61
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:180
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:128
+#: ../module/Operator/view/operator/inputdata/drug.phtml:116
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:21
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:57
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:59
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:82
+msgid "Abort"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:3
+msgid "Export"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:4
+msgid "Export data"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:9
+msgid "Export patients data"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:16
+msgid ""
+"Push the following button to generate file which allow to import injections "
+"result's datas into your management software."
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:24
+msgid "Generate export"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:30
+msgid "Download export"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:37
+msgid "Operateur menu"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:48
+msgid "Loading"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/exportbuffer/index.phtml:52
+msgid "Loading, please wait."
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:3
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:9
+msgid "Patients overview"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:15
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:76
+msgid "Patient name"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:16
+msgid "Injection date"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:17
+msgid "Injected activity"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:18
+msgid "Operator name"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:37
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:128
+msgid "Launch another injection"
+msgstr ""
+
+#: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:40
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:122
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:131
+msgid "End of injections"
+msgstr ""
+
+#: ../module/Manager/view/manager/activimeter/index.phtml:2
 #: ../module/Manager/view/manager/drug/add.phtml:2
 #: ../module/Manager/view/manager/drug/edit.phtml:2
 #: ../module/Manager/view/manager/drug/index.phtml:2
@@ -92,14 +371,19 @@ msgstr ""
 #: ../module/Manager/view/manager/examination/edit.phtml:2
 #: ../module/Manager/view/manager/examination/index.phtml:2
 #: ../module/Manager/view/manager/manager/index.phtml:2
-#: ../module/Manager/view/manager/radionuclide/add.phtml:2
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:2
-#: ../module/Manager/view/manager/radionuclide/index.phtml:2
+#: ../module/Manager/view/manager/radionuclide/index.phtml:3
 #: ../module/Manager/view/manager/system/index.phtml:2
 #: ../module/Manager/view/manager/user/add.phtml:2
 #: ../module/Manager/view/manager/user/edit.phtml:2
 #: ../module/Manager/view/manager/user/index.phtml:2
 msgid "Supervior dashboard"
+msgstr ""
+
+#: ../module/Manager/view/manager/activimeter/index.phtml:3
+#: ../module/Manager/view/manager/activimeter/index.phtml:9
+#: ../module/Manager/view/manager/manager/index.phtml:44
+#: ../module/Manager/view/manager/system/index.phtml:68
+msgid "Activimeter"
 msgstr ""
 
 #: ../module/Manager/view/manager/drug/add.phtml:3
@@ -116,37 +400,42 @@ msgid "Drug profile"
 msgstr ""
 
 #: ../module/Manager/view/manager/drug/add.phtml:15
+msgid "This drug is already existing in database. Please choose another name."
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/add.phtml:18
 #: ../module/Manager/view/manager/drug/edit.phtml:15
-#: ../module/Manager/view/manager/drug/index.phtml:15
+#: ../module/Manager/view/manager/drug/index.phtml:22
 #: ../module/Manager/view/manager/examination/add.phtml:15
 #: ../module/Manager/view/manager/examination/edit.phtml:15
-#: ../module/Manager/view/manager/examination/index.phtml:15
-#: ../module/Manager/view/manager/radionuclide/add.phtml:15
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:15
-#: ../module/Manager/view/manager/radionuclide/index.phtml:15
+#: ../module/Manager/view/manager/examination/index.phtml:22
+#: ../module/Manager/view/manager/radionuclide/index.phtml:22
 msgid "Name"
 msgstr ""
 
-#: ../module/Manager/view/manager/drug/add.phtml:21
+#: ../module/Manager/view/manager/drug/add.phtml:24
 #: ../module/Manager/view/manager/drug/edit.phtml:21
-#: ../module/Manager/view/manager/drug/index.phtml:16
+#: ../module/Manager/view/manager/drug/index.phtml:23
 msgid "Radionuclide"
 msgstr ""
 
-#: ../module/Manager/view/manager/drug/add.phtml:31
-#: ../module/Manager/view/manager/drug/edit.phtml:31
-#: ../module/Manager/view/manager/drug/index.phtml:17
+#: ../module/Manager/view/manager/drug/add.phtml:27
+#: ../module/Manager/view/manager/drug/edit.phtml:24
+msgid "Choose a radionuclide"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/add.phtml:35
+#: ../module/Manager/view/manager/drug/edit.phtml:32
+#: ../module/Manager/view/manager/drug/index.phtml:24
 msgid "D.C.I."
 msgstr ""
 
-#: ../module/Manager/view/manager/drug/add.phtml:36
-#: ../module/Manager/view/manager/drug/edit.phtml:37
-#: ../module/Manager/view/manager/examination/add.phtml:57
-#: ../module/Manager/view/manager/examination/edit.phtml:58
-#: ../module/Manager/view/manager/radionuclide/add.phtml:38
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:39
-#: ../module/Manager/view/manager/user/add.phtml:50
-#: ../module/Manager/view/manager/user/edit.phtml:51
+#: ../module/Manager/view/manager/drug/add.phtml:40
+#: ../module/Manager/view/manager/drug/edit.phtml:38
+#: ../module/Manager/view/manager/examination/add.phtml:58
+#: ../module/Manager/view/manager/examination/edit.phtml:59
+#: ../module/Manager/view/manager/user/add.phtml:59
+#: ../module/Manager/view/manager/user/edit.phtml:60
 msgid "Submit"
 msgstr ""
 
@@ -154,16 +443,70 @@ msgstr ""
 msgid "Drug list"
 msgstr ""
 
-#: ../module/Manager/view/manager/drug/index.phtml:18
-#: ../module/Manager/view/manager/examination/index.phtml:20
-#: ../module/Manager/view/manager/radionuclide/index.phtml:18
+#: ../module/Manager/view/manager/drug/index.phtml:14
+#: ../module/Manager/view/manager/examination/index.phtml:14
+#: ../module/Manager/view/manager/manager/index.phtml:6
+#: ../module/Manager/view/manager/manager/index.phtml:12
+#: ../module/Manager/view/manager/manager/index.phtml:18
+#: ../module/Manager/view/manager/radionuclide/index.phtml:15
+#: ../module/Operator/view/operator/operator/index.phtml:6
+msgid "Warning"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:15
+#: ../module/Manager/view/manager/manager/index.phtml:13
+msgid "No drugs found in database. Please "
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:15
+#: ../module/Manager/view/manager/examination/index.phtml:15
+#: ../module/Manager/view/manager/manager/index.phtml:13
+#: ../module/Manager/view/manager/manager/index.phtml:19
+msgid "create"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:15
+#: ../module/Manager/view/manager/manager/index.phtml:13
+msgid " at least one drug."
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:17
+#: ../module/Manager/view/manager/drug/index.phtml:52
+msgid "Add a drug"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:25
+#: ../module/Manager/view/manager/examination/index.phtml:27
 #: ../module/Manager/view/manager/user/index.phtml:19
 #, fuzzy
 msgid "Action"
 msgstr "Eccezione"
 
-#: ../module/Manager/view/manager/drug/index.phtml:36
-msgid "Add a drug"
+#: ../module/Manager/view/manager/drug/index.phtml:35
+#: ../module/Manager/view/manager/examination/index.phtml:39
+#: ../module/Manager/view/manager/user/index.phtml:38
+msgid "Edit"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:38
+msgid "Delete drug confirmation title"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:38
+msgid "Delete drug confirmation content"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:39
+#: ../module/Manager/view/manager/drug/index.phtml:43
+#: ../module/Manager/view/manager/examination/index.phtml:44
+#: ../module/Manager/view/manager/examination/index.phtml:49
+#: ../module/Manager/view/manager/user/index.phtml:42
+msgid "Delete"
+msgstr ""
+
+#: ../module/Manager/view/manager/drug/index.phtml:42
+#, php-format
+msgid "%s examination(s) use this drug."
 msgstr ""
 
 #: ../module/Manager/view/manager/examination/add.phtml:3
@@ -181,25 +524,30 @@ msgstr ""
 
 #: ../module/Manager/view/manager/examination/add.phtml:21
 #: ../module/Manager/view/manager/examination/edit.phtml:21
-#: ../module/Manager/view/manager/examination/index.phtml:16
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:59
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:59
-msgid "Drug"
+#: ../module/Manager/view/manager/examination/index.phtml:23
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:74
+msgid "DCI"
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/add.phtml:31
-#: ../module/Manager/view/manager/examination/edit.phtml:31
-#: ../module/Manager/view/manager/examination/index.phtml:17
+#: ../module/Manager/view/manager/examination/add.phtml:24
+#: ../module/Manager/view/manager/examination/edit.phtml:24
+msgid "Select a DCI"
+msgstr ""
+
+#: ../module/Manager/view/manager/examination/add.phtml:32
+#: ../module/Manager/view/manager/examination/edit.phtml:32
+#: ../module/Manager/view/manager/examination/index.phtml:24
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:173
 msgid "Rate"
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/add.phtml:40
-#: ../module/Manager/view/manager/examination/edit.phtml:40
+#: ../module/Manager/view/manager/examination/add.phtml:41
+#: ../module/Manager/view/manager/examination/edit.phtml:41
 msgid "Min."
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/add.phtml:49
-#: ../module/Manager/view/manager/examination/edit.phtml:49
+#: ../module/Manager/view/manager/examination/add.phtml:50
+#: ../module/Manager/view/manager/examination/edit.phtml:50
 msgid "Max."
 msgstr ""
 
@@ -207,134 +555,142 @@ msgstr ""
 msgid "Examination list"
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/index.phtml:18
-msgid "Min"
+#: ../module/Manager/view/manager/examination/index.phtml:15
+#: ../module/Manager/view/manager/manager/index.phtml:19
+msgid "No exam found in database. Please "
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/index.phtml:19
-msgid "Max"
+#: ../module/Manager/view/manager/examination/index.phtml:15
+#: ../module/Manager/view/manager/manager/index.phtml:19
+msgid " at least one exam."
 msgstr ""
 
-#: ../module/Manager/view/manager/examination/index.phtml:40
+#: ../module/Manager/view/manager/examination/index.phtml:17
+#: ../module/Manager/view/manager/examination/index.phtml:58
 #, fuzzy
 msgid "Add an examination"
 msgstr "Informazioni aggiuntive"
 
-#: ../module/Manager/view/manager/manager/index.phtml:8
+#: ../module/Manager/view/manager/examination/index.phtml:25
+msgid "Min"
+msgstr ""
+
+#: ../module/Manager/view/manager/examination/index.phtml:26
+msgid "Max"
+msgstr ""
+
+#: ../module/Manager/view/manager/examination/index.phtml:42
+msgid "Delete examination confirmation title"
+msgstr ""
+
+#: ../module/Manager/view/manager/examination/index.phtml:42
+msgid "Delete examination confirmation content"
+msgstr ""
+
+#: ../module/Manager/view/manager/examination/index.phtml:47
+#, php-format
+msgid "%s examination(s) actually in progress."
+msgstr ""
+
+#: ../module/Manager/view/manager/manager/index.phtml:7
+#: ../module/Manager/view/manager/radionuclide/index.phtml:16
+msgid "No radionuclides found in database. Please "
+msgstr ""
+
+#: ../module/Manager/view/manager/manager/index.phtml:7
+#: ../module/Manager/view/manager/radionuclide/index.phtml:16
+msgid "restart the application"
+msgstr ""
+
+#: ../module/Manager/view/manager/manager/index.phtml:7
+#: ../module/Manager/view/manager/radionuclide/index.phtml:16
+msgid " or (if it fails) reboot completely the system."
+msgstr ""
+
+#: ../module/Manager/view/manager/manager/index.phtml:28
 msgid "Users management"
 msgstr ""
 
-#: ../module/Manager/view/manager/manager/index.phtml:9
+#: ../module/Manager/view/manager/manager/index.phtml:32
 msgid "Radionuclides management"
 msgstr ""
 
-#: ../module/Manager/view/manager/manager/index.phtml:10
+#: ../module/Manager/view/manager/manager/index.phtml:36
 msgid "Drugs management"
 msgstr ""
 
-#: ../module/Manager/view/manager/manager/index.phtml:11
+#: ../module/Manager/view/manager/manager/index.phtml:40
 msgid "Examinations management"
 msgstr ""
 
-#: ../module/Manager/view/manager/manager/index.phtml:12
-#: ../module/Manager/view/manager/system/index.phtml:68
-msgid "Activimeter"
-msgstr ""
-
-#: ../module/Manager/view/manager/manager/index.phtml:13
+#: ../module/Manager/view/manager/manager/index.phtml:48
 #: ../module/Manager/view/manager/system/index.phtml:3
 #: ../module/Manager/view/manager/system/index.phtml:9
 msgid "System overview"
 msgstr ""
 
-#: ../module/Manager/view/manager/manager/index.phtml:14
-msgid "Operator exploitation"
-msgstr ""
-
-#: ../module/Manager/view/manager/manager/index.phtml:15
-msgid "Automate"
-msgstr ""
-
-#: ../module/Manager/view/manager/radionuclide/add.phtml:3
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:3
-#: ../module/Manager/view/manager/radionuclide/index.phtml:3
+#: ../module/Manager/view/manager/radionuclide/index.phtml:4
 msgid "Radionuclide management"
 msgstr ""
 
-#: ../module/Manager/view/manager/radionuclide/add.phtml:4
-#: ../module/Manager/view/manager/radionuclide/add.phtml:10
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:4
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:10
-msgid "Radionuclide profile"
-msgstr ""
-
-#: ../module/Manager/view/manager/radionuclide/add.phtml:21
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:21
-#: ../module/Manager/view/manager/radionuclide/index.phtml:16
-msgid "Period"
-msgstr ""
-
-#: ../module/Manager/view/manager/radionuclide/add.phtml:30
-#: ../module/Manager/view/manager/radionuclide/edit.phtml:30
-#: ../module/Manager/view/manager/radionuclide/index.phtml:17
-msgid "Coefficient"
-msgstr ""
-
-#: ../module/Manager/view/manager/radionuclide/index.phtml:9
+#: ../module/Manager/view/manager/radionuclide/index.phtml:10
 msgid "Radionuclide list"
 msgstr ""
 
-#: ../module/Manager/view/manager/radionuclide/index.phtml:37
-msgid "Add a radionuclide"
+#: ../module/Manager/view/manager/radionuclide/index.phtml:23
+msgid "Period"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:16
+#: ../module/Manager/view/manager/radionuclide/index.phtml:30
+msgid "sec"
+msgstr ""
+
+#: ../module/Manager/view/manager/system/index.phtml:17
 msgid "Language"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:19
+#: ../module/Manager/view/manager/system/index.phtml:20
 msgid "German"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:20
+#: ../module/Manager/view/manager/system/index.phtml:21
 msgid "English"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:21
+#: ../module/Manager/view/manager/system/index.phtml:22
 msgid "Spanish"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:22
+#: ../module/Manager/view/manager/system/index.phtml:23
 msgid "French"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:23
+#: ../module/Manager/view/manager/system/index.phtml:24
 msgid "Italian"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:30
-msgid "Mode"
+#: ../module/Manager/view/manager/system/index.phtml:31
+msgid "Use DelphInnove Kit"
 msgstr ""
-
-#: ../module/Manager/view/manager/system/index.phtml:33
-#, fuzzy
-msgid "Exploitation"
-msgstr "Eccezione"
 
 #: ../module/Manager/view/manager/system/index.phtml:34
-msgid "Demonstration"
+#: ../module/Manager/view/manager/user/add.phtml:45
+#: ../module/Manager/view/manager/user/edit.phtml:45
+#: ../module/Manager/view/manager/user/index.phtml:33
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:36
+msgid "No"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:41
-msgid "Unit of measurement "
+#: ../module/Manager/view/manager/system/index.phtml:35
+#: ../module/Manager/view/manager/user/add.phtml:48
+#: ../module/Manager/view/manager/user/edit.phtml:48
+#: ../module/Manager/view/manager/user/index.phtml:31
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:37
+msgid "Yes"
 msgstr ""
 
-#: ../module/Manager/view/manager/system/index.phtml:44
-msgid "MBq"
-msgstr ""
-
-#: ../module/Manager/view/manager/system/index.phtml:45
-msgid "mCi"
+#: ../module/Manager/view/manager/system/index.phtml:42
+msgid "Max activity"
 msgstr ""
 
 #: ../module/Manager/view/manager/system/index.phtml:52
@@ -366,35 +722,59 @@ msgstr ""
 msgid "User account"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/add.phtml:15
-#: ../module/Manager/view/manager/user/edit.phtml:15
+#: ../module/Manager/view/manager/user/add.phtml:16
+#: ../module/Manager/view/manager/user/edit.phtml:16
 #: ../module/Manager/view/manager/user/index.phtml:15
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:17
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:17
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:26
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:18
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:23
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:29
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:26
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:23
 msgid "Lastname"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/add.phtml:21
-#: ../module/Manager/view/manager/user/edit.phtml:21
-#: ../module/Manager/view/manager/user/index.phtml:16
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:71
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:71
-msgid "Firstname"
+#: ../module/Manager/view/manager/user/add.phtml:18
+#: ../module/Manager/view/manager/user/edit.phtml:18
+msgid "DURAND"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/add.phtml:33
+#: ../module/Manager/view/manager/user/add.phtml:24
+#: ../module/Manager/view/manager/user/edit.phtml:24
+msgid "durandm"
+msgstr ""
+
+#: ../module/Manager/view/manager/user/add.phtml:28
 msgid "New Password"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/add.phtml:39
-msgid "Confirm password"
+#: ../module/Manager/view/manager/user/add.phtml:36
+#: ../module/Manager/view/manager/user/edit.phtml:36
+#: ../module/Manager/view/manager/user/index.phtml:16
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:55
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:87
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:25
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:31
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:28
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:25
+msgid "Firstname"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/edit.phtml:33
+#: ../module/Manager/view/manager/user/add.phtml:38
+#: ../module/Manager/view/manager/user/edit.phtml:38
+msgid "Michel"
+msgstr ""
+
+#: ../module/Manager/view/manager/user/add.phtml:42
+#: ../module/Manager/view/manager/user/edit.phtml:42
+msgid "User is manager"
+msgstr ""
+
+#: ../module/Manager/view/manager/user/edit.phtml:28
 msgid "New Password (let it empty if not modified)"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/edit.phtml:39
+#: ../module/Manager/view/manager/user/edit.phtml:53
 msgid "Confirm password (let it empty if not modified)"
 msgstr ""
 
@@ -406,228 +786,634 @@ msgstr ""
 msgid "Supervisor"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/index.phtml:31
-msgid "Yes"
+#: ../module/Manager/view/manager/user/index.phtml:41
+msgid "Delete user confirmation title"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/index.phtml:33
-msgid "No"
+#: ../module/Manager/view/manager/user/index.phtml:41
+msgid "Delete user confirmation content"
 msgstr ""
 
-#: ../module/Manager/view/manager/user/index.phtml:45
+#: ../module/Manager/view/manager/user/index.phtml:50
 msgid "Add user"
 msgstr ""
 
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:2
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:134
+msgid "Operator menu"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:3
+msgid "Account confirmation"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:10
+msgid "CAUTION: EXPIRY TIME EXCEEDED"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:13
+msgid "Injection prohibited unless authorized by Radio-Pharmacist"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:14
+msgid ""
+"To Authorize: Please sign-in with authority account, or Cancel to end the "
+"injections."
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:31
+msgid "Valid"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/checkperemption.phtml:34
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:126
+#: ../module/Operator/view/operator/operator/index.phtml:142
+#: ../module/Operator/view/operator/operator/index.phtml:159
+msgid "Cancel"
+msgstr ""
+
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:3
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:10
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:9
 msgid "Confirmation of patient's datas"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:23
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:23
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:55
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:19
+msgid "Selected patient : "
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:29
+msgid "ex: Martin"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:33
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:25
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:93
 msgid "Birthdate"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:43
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:43
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:37
+msgid "ex: 1984-03-02"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:58
+msgid "ex: Julie"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:62
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:46
 msgid "Expeditor number"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:49
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:49
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:65
+msgid "ex: 754234"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:71
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:115
+msgid "Comments"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:74
+msgid "Commentaire sur l'examen du patient"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:87
+msgid "Exams variables"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:95
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:53
 #, fuzzy
 msgid "Examination"
 msgstr "Eccezione"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:77
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:77
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:70
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:98
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:56
+msgid "Choose an exam"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:99
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:57
+msgid "Compatible exams"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:104
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:63
+msgid "Other exams"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:115
+msgid "This field impact the activity"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:115
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:94
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:99
 msgid "Weight"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:86
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:96
-msgid "Comments"
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:119
+msgid "ex: 72,25"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:98
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:108
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:58
-msgid "Abort"
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:127
+msgid "Activity for examination"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:3
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:10
-msgid "Creation of patient"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:86
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:45
-msgid "Gender"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:89
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:48
-msgid "Select gender..."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:90
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:49
-msgid "F"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/createpatient.phtml:91
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:50
-msgid "M"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:2
-msgid "Operator's dashboard"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:3
-#: ../module/Operator/view/operator/inputdata/drug.phtml:9
-#: ../module/Operator/view/operator/operator/index.phtml:8
-#, fuzzy
-msgid "Filling drug's informations"
-msgstr "Informazioni aggiuntive"
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:16
-msgid "Drug name"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:26
-msgid "Batch number"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:32
-msgid "Calibration time"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:50
-msgid "Vial volume"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/drug.phtml:59
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:140
+#: ../module/Operator/view/operator/inputdata/drug.phtml:97
 #, fuzzy
 msgid "Activity available at"
 msgstr "Non è disponibile alcuna eccezione"
 
-#: ../module/Operator/view/operator/inputdata/drug.phtml:70
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:159
+msgid "Min Activity"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:166
+msgid "Max Activity"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:193
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:227
+msgid "Insufficient activity"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:196
+msgid "Insufficient activity. Do you want to correct it ?"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:199
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:216
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:237
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:17
+msgid "YES"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:200
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:217
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:238
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:18
+msgid "NO"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:210
+msgid "Maximum activity reached"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:213
+msgid "You have reached the maximum acivity. Do you want to correct it ?"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:230
+msgid "Insufficient activity. You have choose to don't change the activity."
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:233
+msgid "Do you want to create / choose another patient ?"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:3
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:11
+msgid "Creation of patient"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:104
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:82
+msgid "Gender"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:107
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:85
+msgid "Select gender..."
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:108
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:86
+msgid "F"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:109
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:87
+msgid "M"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/createpatient.phtml:110
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:88
+msgid "U"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:2
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:2
+msgid "Operator's dashboard"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:3
+#: ../module/Operator/view/operator/inputdata/drug.phtml:8
+#: ../module/Operator/view/operator/operator/index.phtml:41
+#, fuzzy
+msgid "Filling drug's informations"
+msgstr "Informazioni aggiuntive"
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:15
+msgid "Drug name"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:18
+msgid "Select a drug"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:26
+msgid "Calibration time"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:44
+msgid "Vial volume"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:53
 msgid "Activity concentration"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/drug.phtml:79
-msgid "Activity at calibration time"
+#: ../module/Operator/view/operator/inputdata/drug.phtml:64
+msgid "Batch number"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/drug.phtml:88
+#: ../module/Operator/view/operator/inputdata/drug.phtml:70
 msgid "Expiration time"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:127
+#: ../module/Operator/view/operator/inputdata/drug.phtml:88
+msgid "Activity at calibration time"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:109
+msgid "Fill the vial volume field to enable fields about activity"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:3
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:8
+msgid "Automate setup for the injection"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:13
+msgid "Please connect the patient kit and validate to continue"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:36
+#: ../module/Operator/view/operator/interactrobot/unload.phtml:35
 msgid "Continue"
 msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:3
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:9
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:8
 msgid "Loading patients data"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:15
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:14
 msgid "Please plug the USB storage, select the file and confirm"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:23
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:22
 msgid "Select file"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:40
-msgid "Confirm"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:45
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:44
 msgid "Transfert OK - loading datas..."
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:46
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:45
 msgid "Transfert OK - Unplug the USB key and press Next"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:48
+#: ../module/Operator/view/operator/inputdata/loadpatient.phtml:47
 msgid "Error during transfert!"
 msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:3
-#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:9
+#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:8
 msgid "Registrer the patient kit"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:15
+#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:14
 msgid "Please scan the barcode of the patient kit or write it manually"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:97
-#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:95
+#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:19
+#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:19
+msgid "Error"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:109
+#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:102
 msgid "Invalid barcode"
 msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/scankitsource.phtml:3
-#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:9
+#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:8
 msgid "Registrer the source kit"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:15
+#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:14
 msgid "Please scan the barcode of the source kit or write it manually"
 msgstr ""
 
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:3
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:9
+msgid "Patient selection"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:17
+msgid "Compatible patients list"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:33
+msgid "No patient loaded. Try to load a file or to create a new one."
+msgstr ""
+
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:34
+msgid "Import patients"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:42
+msgid ""
+"No compatible patient found. Try to unload the drug or create a new patient."
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:53
+msgid "Other patients list"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:71
 msgid "Patient record"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:39
-msgid "Patient name"
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:118
+msgid "New patient"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:61
-msgid "Age"
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:4
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:3
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:10
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:11
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:16
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:4
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:3
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:10
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:4
+msgid "Injection"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:65
-msgid "y.o."
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:5
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:10
+msgid "Dilution"
 msgstr ""
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:79
-msgid "Height"
+#: ../module/Operator/view/operator/interactrobot/dilution.phtml:17
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:23
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:21
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:17
+msgid "Patient's data"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:9
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:4
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:9
+msgid "End of injection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:12
+msgid ""
+"End of injections mean rinsing the needle and reinject the content into the "
+"source vial."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:13
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:111
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:112
+msgid "Remaining activity at "
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:14
+msgid "Confirm the end of injection?"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:30
+msgid "Confirm the end of injection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/endinject.phtml:33
+msgid "Are you sure to confirm the end of injection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:35
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:32
+msgid "Activity injected"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:41
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:19
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:104
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:35
+msgid "Validation"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:49
+msgid "Injection progress"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:52
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:25
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:44
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:47
+msgid "Status"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:52
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:47
+msgid "Waiting for patient's datas validation..."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:5
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:10
+msgid "Patient disconnection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:14
+msgid "Location of injection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:27
+msgid "Informations resume"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:67
+msgid "Printing sticker"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:68
+#: ../module/Operator/view/operator/operator/testprint.phtml:1
+msgid "Send to printer"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:88
+#: ../module/Operator/view/operator/operator/testprint.phtml:19
+msgid "Serial : "
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:103
+msgid "Please disconnect the patient kit, trash it and validate."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:125
+msgid "Injected patients list"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:4
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:9
+msgid "Purge"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:14
+msgid "Put the patient kit in the container provided for this purpose"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:17
+msgid "Launch the purge"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:22
+msgid "Purge progression"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:25
+msgid "Waiting for the purge launch..."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:45
+msgid "Patient kit connection to the patient"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:49
+msgid "Connection"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:96
+msgid "Purge completed! Press the start purge button to restart purge."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:129
+msgid "Purge in progress..."
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/purge.phtml:154
+msgid "Connected"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:11
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:16
+msgid "Rinsing"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/rinsing.phtml:41
+msgid "Rinsing progress"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:5
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:10
+msgid "Sample"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:29
+msgid "Activity to inject"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:44
+msgid "Sample progression"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:59
+msgid "Adjust"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/unload.phtml:4
+msgid "Unload automate"
+msgstr ""
+
+#: ../module/Operator/view/operator/interactrobot/unload.phtml:9
+msgid "Unload kitsource and source"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:7
+msgid "No exams found in database. Please "
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:7
+msgid "create an exam"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:7
+msgid " to start injections."
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:18
+#: ../module/Operator/view/operator/operator/index.phtml:24
 msgid "Transfering patient's data to robot"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:10
+#: ../module/Operator/view/operator/operator/index.phtml:35
+#, php-format
+msgid "Receipted drug : <u>%s</u>"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:52
+#: ../module/Operator/view/operator/operator/index.phtml:58
 msgid "Scan source kit barcode"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:11
+#: ../module/Operator/view/operator/operator/index.phtml:66
+#: ../module/Operator/view/operator/operator/index.phtml:72
+#: ../module/Operator/view/operator/operator/index.phtml:78
 msgid "Loading Source kit & Source"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:12
+#: ../module/Operator/view/operator/operator/index.phtml:70
+#: ../module/Operator/view/operator/operator/index.phtml:102
+msgid "Action required"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:85
+#: ../module/Operator/view/operator/operator/index.phtml:91
 msgid "Injection - Operator Authentification"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:13
+#: ../module/Operator/view/operator/operator/index.phtml:97
 msgid "List of patients injected"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:14
+#: ../module/Operator/view/operator/operator/index.phtml:104
+#: ../module/Operator/view/operator/operator/index.phtml:110
 msgid "Unloading"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:15
+#: ../module/Operator/view/operator/operator/index.phtml:117
+#: ../module/Operator/view/operator/operator/index.phtml:123
 msgid "Transferting patient's data to software"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:135
+msgid "Remove receipted drug."
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:138
+msgid "Are you sure to remove selected drug ?"
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:152
+msgid "Remove receipted kit source."
+msgstr ""
+
+#: ../module/Operator/view/operator/operator/index.phtml:155
+msgid "Are you sure to remove selected source kit ?"
 msgstr ""
 
 #: ../module/Start/view/error/403.phtml:1
@@ -734,37 +1520,90 @@ msgstr "Si è verificato un errore"
 msgid "I've fixed it, reload!"
 msgstr ""
 
-#: ../module/Start/view/layout/layout.phtml:6
-#: ../module/Start/view/layout/layout.phtml:46
-#: ../module/Start/view/layout/logged.phtml:6
-#: ../module/Start/view/layout/logged.phtml:46
+#: ../module/Start/view/layout/layout.phtml:18
+#: ../module/Start/view/layout/layout.phtml:74
+#: ../module/Start/view/layout/logged.phtml:19
+#: ../module/Start/view/layout/logged.phtml:81
 msgid "S.A.M.I."
 msgstr ""
 
-#: ../module/Start/view/layout/layout.phtml:40
-#: ../module/Start/view/layout/logged.phtml:40
+#: ../module/Start/view/layout/layout.phtml:57
+#: ../module/Start/view/layout/logged.phtml:63
+msgid "The Javascript of your browser seems to be desactivated."
+msgstr ""
+
+#: ../module/Start/view/layout/layout.phtml:58
+#: ../module/Start/view/layout/logged.phtml:64
+msgid "Please enable it to use S.A.M.I or contact the support."
+msgstr ""
+
+#: ../module/Start/view/layout/layout.phtml:67
+#: ../module/Start/view/layout/logged.phtml:74
 msgid "Delphinnove"
 msgstr ""
 
-#: ../module/Start/view/layout/layout.phtml:62
-#: ../module/Start/view/layout/logged.phtml:75
+#: ../module/Start/view/layout/layout.phtml:89
+#: ../module/Start/view/layout/logged.phtml:124
 msgid "by Delphinnove. All rights reserved."
 msgstr "DelphInnove - Tutti i diritti sono riservati."
 
-#: ../module/Start/view/layout/logged.phtml:51
-msgid "Operator"
-msgstr ""
-
-#: ../module/Start/view/layout/logged.phtml:53
+#: ../module/Start/view/layout/logged.phtml:87
 msgid "Manager"
 msgstr ""
 
-#: ../module/Start/view/layout/logged.phtml:60
+#: ../module/Start/view/layout/logged.phtml:89
+msgid "Operator"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:95
 msgid "Change password"
 msgstr ""
 
-#: ../module/Start/view/layout/logged.phtml:61
+#: ../module/Start/view/layout/logged.phtml:96
 msgid "Logout"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:397
+#: ../module/Start/view/layout/logged.phtml:438
+msgid "Locking protection system"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:401
+#: ../module/Start/view/layout/logged.phtml:442
+#, php-format
+msgid "No activity has been detect on this screen since %s seconds."
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:402
+#: ../module/Start/view/layout/logged.phtml:443
+msgid "You have been deconnected."
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:404
+#: ../module/Start/view/layout/logged.phtml:445
+msgid "Please proceed to Sign-In button to be reconnected."
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:408
+#: ../module/Start/view/layout/logged.phtml:429
+#: ../module/Start/view/layout/logged.phtml:449
+msgid "Sign In"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:418
+msgid "System error detected"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:422
+msgid "An error has been raised by the robot :"
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:423
+msgid "Error message : "
+msgstr ""
+
+#: ../module/Start/view/layout/logged.phtml:425
+msgid "Please check the manual for instructions."
 msgstr ""
 
 #: ../module/Start/view/start/index/index.phtml:2
@@ -776,9 +1615,53 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: ../module/Start/view/start/index/index.phtml:3
+#: ../module/Start/view/start/index/index.phtml:4
 msgid "Done"
 msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:40
+msgid "An error occured during setup. Please retry."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:58
+msgid ""
+"An error occured during setup. Robot is not responding. Please retry or "
+"restart system."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:71
+msgid "connections attempt(s)"
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:79
+msgid ""
+"An error occured during setup. Robot is returning an error at starting : "
+"&laquo;"
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:107
+msgid "Loading of measure unit failed."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:127
+msgid "Loading of radionuclides failed."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:147
+msgid "Check of loaded drug failed."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:167
+msgid "Check of kit source serial failed."
+msgstr ""
+
+#: ../module/Start/view/start/index/index.phtml:187
+msgid "Check of kit source loading failed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Exploitation"
+#~ msgstr "Eccezione"
 
 #~ msgid "Home"
 #~ msgstr "Pagina iniziale"

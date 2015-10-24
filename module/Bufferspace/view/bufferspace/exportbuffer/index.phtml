@@ -19,18 +19,23 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-md-offset-2">
-						<button class="btn btn-lg btn-primary btn-block" onClick="launchExportGen()" id="genbtn">
+						<button class="btn btn-lg btn-primary btn-block" onclick="launchExportGen()" id="genbtn">
 							<span class="glyphicon glyphicon-share"></span>
 							<?php echo $this->translate('Generate export')?>
 						</button>
 					</div>
 					<div class="col-md-4">
-						<button class="btn btn-lg btn-primary btn-block" onClick="window.open('/tmp/schedule.csv')" id="downloadbtn" disabled>
+						<button class="btn btn-lg btn-primary btn-block" onclick="window.open('/tmp/schedule.csv')" id="downloadbtn" disabled>
 							<span class="glyphicon glyphicon-floppy-save"></span>
 							<?php echo $this->translate('Download export')?>
 						</button>
 					</div>
 				</div>
+			</div>
+			<div class="col-md-4 col-md-offset-4">
+				<button class="btn btn-primary btn-block" onclick="location.href='<?php echo $this->url('operator')?>';" id="downloadbtn">
+					<?php echo $this->translate('Operateur menu')?>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -43,7 +48,7 @@
 				<h4 class="modal-title" id="loading-screen-label"><?php echo $this->translate('Loading')?></h4>
 			</div>
 			<div class="modal-body">
-				<img src="/img/ajax-loader-black.gif" style="margin-right:10px"/>
+				<img src="img/ajax-loader-black.gif" style="margin-right:10px"/>
 				<?php echo $this->translate('Loading, please wait.')?>
 			</div>
 		</div>
