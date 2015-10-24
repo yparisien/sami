@@ -62,7 +62,7 @@ class LoginController extends AbstractActionController
 
 	/**
 	 * 
-	 * @return \Manager\Model\UserTable>
+	 * @return \Manager\Model\UserTable
 	 */
 	public function getUserTable()
 	{
@@ -130,6 +130,19 @@ class LoginController extends AbstractActionController
 			$result = $this->getAuthService()->authenticate();
 			if($result->isValid()) // if credential is valid
 			{
+				/* @var $robotService RobotService */
+				$robotService = $this->getServiceLocator()->get('RobotService');
+				
+				$login = $this->getAuthService()->getIdentity();
+				$user = $this->getUserTable()->searchByLogin($login);
+				
+				
+				if ((int) $user->id === 1) {
+					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 1));
+				} else {
+					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 0));
+				}
+
 				$this->getSessionStorage()->storeAuth();
 				$inputaction = new InputAction();
 				$inputaction->inputdate = date('Y-m-d H:i:s');
@@ -142,8 +155,6 @@ class LoginController extends AbstractActionController
 					$startPos = $oSetup->startposition;
 					
 					
-					/* @var $robotService RobotService */
-					$robotService = $this->getServiceLocator()->get('RobotService');
 					$patientId = $robotService->receive(RobotConstants::PATIENT_ACTUAL_PATIENTID);
 					$patient = $this->getPatientTable()->getPatient($patientId);
 					if ($patient instanceof Patient) {

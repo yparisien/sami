@@ -46,7 +46,6 @@ class RobotConstants {
 	const MAINLOGIC_PAR_SERIALNUMBERSAMI 					= 'G_MainLogic.par.Serial_Number_SAMI';
 	const MAINLOGIC_PAR_SOFTWAREVERSION 					= 'G_MainLogic.par.Software_Version';
 	const MAINLOGIC_PAR_SYSTEMVERSION 						= 'G_MainLogic.par.System_Version';
-	//Faire le mode demo
 
 	const MAINLOGIC_STATUS_ACTIVE 							= 'G_MainLogic.status.Active';
 	const MAINLOGIC_STATUS_DILUTIONEVOLUTION 				= 'G_MainLogic.status.Dilution_Evolution';
