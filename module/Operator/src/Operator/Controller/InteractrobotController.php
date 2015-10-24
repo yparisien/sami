@@ -316,9 +316,10 @@ class InteractrobotController extends AbstractActionController
 			return new ViewModel($aParams);
 		} else {
 			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+			$page = "End Inject";
 			$message = sprintf($translate("You are not authorized to perform this action : Access page '%s'"), $page);
 			$this->flashmessenger()->addErrorMessage($message);
-			$this->redirect()->toRoute('operator');
+			return $this->redirect()->toRoute('operator');
 		}
 	}
 
