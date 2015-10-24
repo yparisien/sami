@@ -87,7 +87,6 @@ class OperatorController extends AbstractActionController
 		$aParam = array();
 		
 		$nbExams = $this->getExaminationTable()->count();
-		$nbInjected = $this->getInjectedTable()->count();
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
@@ -101,7 +100,8 @@ class OperatorController extends AbstractActionController
 		$aParam['step'] = $oContainer;
 
 		$ready = (
-				$oContainer->drugspecified		== true 
+				$oContainer->fileloaded			== true
+			&&	$oContainer->drugspecified		== true 
 			&&	$oContainer->sourcekitscanned	== true 
 			&&	$oContainer->sourcekitloaded	== true 
 			&&	$oContainer->markedasended		== false 
@@ -115,7 +115,7 @@ class OperatorController extends AbstractActionController
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
-		$aParam['canExport'] = ($oContainer->markedasended && $nbInjected > 0) ? true : false;
+		$aParam['canExport'] = ($oContainer->markedasended) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
 		
