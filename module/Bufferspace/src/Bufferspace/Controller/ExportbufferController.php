@@ -26,7 +26,7 @@ class ExportbufferController extends AbstractActionController
 
 	public function agenfileAction()
 	{
-		$destPath = dirname(__DIR__).'../../../../../public/tmp';
+		$destPath = dirname(__DIR__) . '/../../../../public/tmp';
 		$oContainer = new Container('automate_setup');
 		$oContainer->fileloaded = false;
 

@@ -11,6 +11,16 @@ return array(
 
 	'router' => array(
 		'routes' => array(
+			'checkerrorstatus' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'	=> '/checkerrorstatus',
+					'defaults' => array(
+						'controller' => 'Start\Controller\Index',
+						'action'	 => 'checkerrorstatus',
+					),
+				),
+			),
 			'initrn' => array(
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => array(

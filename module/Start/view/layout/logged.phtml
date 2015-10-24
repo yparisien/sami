@@ -339,6 +339,32 @@ if ($virtualkeyboardEnable === true) {
 				});
 			');
 		}
+		
+		$this->inlineScript()->appendScript('
+			$(function() {
+				function checkErrorSystem() {
+					setTimeout(function(){
+						$.ajax({
+							url: "'. $this->url('checkerrorstatus', array()) . '",
+						}).done(function(result){
+							if (result.error === false) {
+								checkErrorSystem();
+							} else {
+								$("#errorMessageSpan").html(result.errorMessage);
+								$("#modalErrorDetected").modal({
+									backdrop: "static",
+									keyboard: false,
+									show: true,
+								});
+							}
+						});
+					}, 1500);
+				}
+				
+				checkErrorSystem();
+			});
+		');
+		
 		?>
 		<?php echo $this->inlineScript() ?>
 		<?php if ($this->login == "DelphInnove") {
@@ -386,8 +412,26 @@ if ($virtualkeyboardEnable === true) {
 			</div>
 		</div>
 <?php } ?>
-
-<?php if ($appendSupervisorJsTimeout === true) { ?>
+<div class="modal fade" id="modalErrorDetected" tabindex="-1" role="dialog" aria-labelledby="errordetectedModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="errordetectedModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('System error detected'); ?></h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger" role="alert">
+					<p><?php echo $this->translate('An error has been raised by the robot :'); ?></p>
+					<p><?php echo $this->translate('Error message : ');?><span id="errorMessageSpan"></span></p>
+					<br />
+					<p><?php echo $this->translate('Please check the manual for instructions.'); ?></p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log'); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Sign In'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="modalAutoLogout" tabindex="-1" role="dialog" aria-labelledby="autologoutModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -408,7 +452,6 @@ if ($virtualkeyboardEnable === true) {
 		</div>
 	</div>
 </div>
-<?php } ?>
 		</div>
 	</body>
 </html>

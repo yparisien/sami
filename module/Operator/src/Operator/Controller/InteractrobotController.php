@@ -18,6 +18,7 @@ use Zend\Http\Response;
 use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
+use Zend\View\Model\Zend\View\Model;
 
 class InteractrobotController extends AbstractActionController
 {
@@ -324,6 +325,7 @@ class InteractrobotController extends AbstractActionController
 	/*
 	 * Ajax's calls beyond this line
 	 */
+	
 	public function	agetpurgeprogressAction()
 	{
 		/* @var $robotService RobotService */

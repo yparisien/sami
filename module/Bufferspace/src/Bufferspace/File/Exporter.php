@@ -82,7 +82,7 @@ class	Exporter
 		}
 		else
 		{
-			throw(new \Exception("Invalid pathfile"));
+			throw(new \Exception("Invalid pathfile : " . $pathfile));
 		}
 	}
 

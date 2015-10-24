@@ -20,6 +20,7 @@ use Manager\Model\Radionuclide;
 use Manager\Model\Drug;
 use Logger\Model\InputDrug;
 use Operator\Model\Sourcekit;
+use Zend\I18n\View\Helper\Translate;
 
 class IndexController extends AbstractActionController
 {
@@ -104,6 +105,32 @@ class IndexController extends AbstractActionController
 			$this->sourcekitTable = $sm->get('Operator\Model\SourcekitTable');
 		}
 		return $this->sourcekitTable;
+	}
+	
+	/**
+	 * Check la présence d'erreur sur chaque écran
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
+	public function checkerrorstatusAction() {
+		/* @var $robotService RobotService */
+		/* @var $translate Translate */
+		
+	
+		$jsonModel = new JsonModel();
+	
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+		$error = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
+		if ($error === true) {
+			$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
+			$jsonModel->setVariable('error', true);
+			$jsonModel->setVariable('errorMessage', $translate(constant('\Manager\Robot\RobotConstants::ERROR_CODE_' . $errorID)));
+		} else {
+			$jsonModel->setVariable('error', false);
+		}
+	
+		return $jsonModel;
 	}
 	
 	/**
