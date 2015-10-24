@@ -146,9 +146,14 @@
 			location.href = '<?php echo $this->url('operator'); ?>';
 		});
 	}
-	
 
-	function	loadActivityData()
+	function	checkActivityDataByInterval() {
+		setTimeout(function() {
+			loadActivityData(true);
+		}, 60000);
+	}
+
+	function	loadActivityData(reload)
 	{
 		$.ajax({
 			type: "GET",
@@ -158,12 +163,15 @@
 			var data = result;
 			$("#activity-time").html(data.time);
 			$("#activity").val(data.activity).trigger('change');
+
+			if (reload === true) {
+				checkActivityDataByInterval();
+			}
 		});
-		setTimeout(function(){loadActivityData();}, 10000);
 	}
 
 	$(function() {
-		loadActivityData();
+		checkActivityDataByInterval();
 
 		//Envoie le batchnum
 		$('#batchnum').change(function() {
@@ -232,7 +240,10 @@
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 	        	dataType: "json",
 	        	data: {'vialvol': $("#vialvol").val() }
-	      	});
+	      	}).done(function(result) {
+		      	//TODO Tester le retour
+				loadActivityData(false);
+			});
 		});
 
 		$("#activityconc").change(function() {
@@ -251,6 +262,7 @@
 					data : {"field" : "calib"}
 				}).done(function(result) {
 					$('#activitycalib').val(result["activitycalib"]);
+					loadActivityData(false);
 				});
 			});
 		});
@@ -269,6 +281,7 @@
 					data : {"field" : "conc"}
 				}).done(function(result) {
 					$('#activityconc').val(result.activityconc);
+					loadActivityData(false);
 				});
 			});
 		});
