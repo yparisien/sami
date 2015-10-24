@@ -17,6 +17,7 @@ use Logger\Model\InputAction;
 use Zend\View\Model\JsonModel;
 use Manager\Robot\RobotConstants;
 use Manager\Robot\RobotService;
+use Bufferspace\Model\Patient;
 
 class LoginController extends AbstractActionController
 {
@@ -145,7 +146,11 @@ class LoginController extends AbstractActionController
 					$robotService = $this->getServiceLocator()->get('RobotService');
 					$patientId = $robotService->receive(RobotConstants::PATIENT_ACTUAL_PATIENTID);
 					$patient = $this->getPatientTable()->getPatient($patientId);
-					$injection = $this->getInjectionTable()->searchByPatientId($patientId);
+					if ($patient instanceof Patient) {
+						$injection = $this->getInjectionTable()->searchByPatientId($patientId);
+					} else {
+						$this->flashmessenger()->addErrorMessage($translate('Could found the patient in the database. No patient is selected.'));
+					}
 					
 					
 					//Chargement des infos en session pour le profil injecté
