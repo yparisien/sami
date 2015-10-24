@@ -44,7 +44,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3"  />
+									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3" required  />
 									<span class="input-group-addon">ml</span>
 								</div>
 							</div>
@@ -53,7 +53,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled />
+									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled required />
 									<span class="input-group-addon"><?php echo $unit?>/ml</span>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled />
+									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled required />
 									<span class="input-group-addon"><?php echo $unit?></span>
 								</div>
 							</div>
