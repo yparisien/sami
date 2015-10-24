@@ -157,7 +157,7 @@
 		}).done(function(result) {
 			var data = result;
 			$("#activity-time").html(data.time);
-			$("#activity").val(data.activity);
+			$("#activity").val(data.activity).trigger('change');
 		});
 		setTimeout(function(){loadActivityData();}, 10000);
 	}
@@ -271,6 +271,31 @@
 					$('#activityconc').val(result.activityconc);
 				});
 			});
+		});
+
+
+		$("#activity").change(function() {
+			var activity = $("#activity").val();
+			if (activity == -1) {
+				if ($("#expirationtime").val() != '') {
+					alert('LA DATE D EXPIRATION EST FAUSSE');
+				}
+			}
+			else if (activity == -2) {
+				if ($("#activityconc").val() != '') {
+					alert('L ACTIVITE VOLUMIQUE EST FAUSSE');
+				}
+			}
+			else if (activity == -3) {
+				if ($("#activitycalib").val() != '') {
+					alert('L ACTIVITE A CALIBRATION EST FAUSSE');
+				}
+			}
+			else if (activity == -4) {
+				if ($("#vialvol").val() != '') {
+					alert('LE VOLUME DE LA FIOLE EST INCORRECT');
+				}
+			}
 		});
 	});
 </script>
