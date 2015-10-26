@@ -73,9 +73,7 @@
 								$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
 								$('#btn-next').removeAttr('disabled');
 								if (submitForm === true) {
-									setTimeout(function() { 
-										$('#scankitsource').submit();
-									}, 3000);
+									$('#scankitsource').submit();
 								}
 								return false;
 							}

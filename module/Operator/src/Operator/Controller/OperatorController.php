@@ -100,8 +100,7 @@ class OperatorController extends AbstractActionController
 		$aParam['step'] = $oContainer;
 
 		$ready = (
-				$oContainer->fileloaded			== true
-			&&	$oContainer->drugspecified		== true 
+			$oContainer->drugspecified			== true 
 			&&	$oContainer->sourcekitscanned	== true 
 			&&	$oContainer->sourcekitloaded	== true 
 			&&	$oContainer->markedasended		== false 
@@ -115,7 +114,7 @@ class OperatorController extends AbstractActionController
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
-		$aParam['canExport'] = ($oContainer->markedasended) ? true : false;
+		$aParam['canExport'] = (!$oContainer->fileexported) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
 		

@@ -80,6 +80,7 @@
 				<?php } ?>
 				
 				<?php if ($canInject) { ?>
+				<?php if ($step->fileloaded === false) { $cssClass = 'list-group-item-warning'; } else { $cssClass = 'active'; } ?>
 				<a href="<?php echo $this->url('auth', array('action'=>'confirmauth'))?>" class="list-group-item active">
 					<span class="glyphicon glyphicon-user"></span>
 					<?php echo $this->translate('Injection - Operator Authentification')?>

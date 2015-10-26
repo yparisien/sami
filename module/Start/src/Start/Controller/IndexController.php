@@ -451,6 +451,7 @@ class IndexController extends AbstractActionController
 		$oSetup->drugspecified = false;
 		$oSetup->drugid = 0;
 		$oSetup->inputdrugid = 0;
+		$oSetup->fileexported = false;
 		$oSetup->fileloaded = false;
 		$oSetup->loadedfilename = "";
 		$oSetup->sourcekitscanned = false;
@@ -504,6 +505,7 @@ class IndexController extends AbstractActionController
 			$oContainer->drugid = 0;
 			$oContainer->inputdrugid = 0;
 			$oContainer->fileloaded = false;
+			$oContainer->fileexported = false;
 			$oContainer->loadedfilename = "";
 			$oContainer->sourcekitscanned = false;
 			$oContainer->sourcekitbarcode = "";

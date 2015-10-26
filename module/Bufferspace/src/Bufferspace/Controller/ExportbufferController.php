@@ -38,6 +38,7 @@ class ExportbufferController extends AbstractActionController
 		if ($ret === true) {
 			$oExport->cleanDataBase();
 			$oContainer->markedasended = false;
+			$oContainer->fileexported = true;
 		}
 
 		return new JsonModel(array('succes' => 1));

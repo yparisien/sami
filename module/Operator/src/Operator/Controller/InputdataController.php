@@ -390,6 +390,7 @@ class InputdataController extends AbstractActionController
 					// for the moment, store the log id but use a clever way for final version
 					$oContainer = new Container('automate_setup');
 					$oContainer->fileloaded = true;
+					$oContainer->fileexported = false;
 					$oContainer->loadedfilename = $file['name'];
 
 					//Copy file too archive
@@ -801,7 +802,7 @@ class InputdataController extends AbstractActionController
 			
 			// Envoi des infos a l'automate
 			$dataToSend = array(
-					'G_MainLogic.cmd.Input_Soft.Load_Patient' => 0
+					RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADPATIENT => 0
 			);
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($dataToSend);
@@ -931,7 +932,7 @@ class InputdataController extends AbstractActionController
 				$oPatient->weight = $r->getPost('weight');
 			}
 			
-			$aData["G_MainLogic.cmd.Input_Soft.Load_Patient"] = 1;
+			$aData[RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADPATIENT] = 1;
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aData);
 
