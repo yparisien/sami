@@ -40,20 +40,20 @@
 								});
 							</script>
 						</div>
-						<div class="form-group">
+						<div class="form-group has-info">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 200,5" autocomplete="off" tabindex="3" required  />
+									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="any" min="0" placeholder="ex: 10" autocomplete="off" tabindex="3" required  />
 									<span class="input-group-addon">ml</span>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="divActivityConc">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 12,5" autocomplete="off"  tabindex="7" disabled required />
+									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 200,52" autocomplete="off"  tabindex="7" disabled required />
 									<span class="input-group-addon"><?php echo $unit?>/ml</span>
 								</div>
 							</div>
@@ -84,11 +84,11 @@
 								});
 							</script>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="divActivityCalib">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="" tabindex="6" autocomplete="off" disabled required />
+									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="ex: 123.45" tabindex="6" autocomplete="off" disabled required />
 									<span class="input-group-addon"><?php echo $unit?></span>
 								</div>
 							</div>
@@ -104,9 +104,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="alert alert-info">
+				<div class="alert alert-info col-md-3">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
 					<?php echo $this->translate('Fill the vial volume field to enable fields about activity')?>
+				</div>
+				<div class="alert alert-warning col-md-3 col-md-offset-1">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<?php echo $this->translate('The last filled value is in yellow')?>
+				</div>
+				<div class="alert alert-success col-md-3 col-md-offset-1">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<?php echo $this->translate('The green field represents the calculated value')?>
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-md-offset-4">
@@ -121,6 +129,9 @@
 	</div>
 </div>
 <script type="text/javascript">
+	var lastChange = null;
+
+							
 	/**
 	 * @todo fill the tests
 	 */
@@ -241,33 +252,64 @@
 	        	dataType: "json",
 	        	data: {'vialvol': $("#vialvol").val() }
 	      	}).done(function(result) {
-		      	//TODO Tester le retour
-				loadActivityData(false);
+				var data = null;
+		      	if (lastChange == 'activityconc') {
+			      	data = {"field" : "calib"};
+		      	} else if (lastChange == 'activitycalib') {
+		      		data = {"field" : "conc"};
+		      	}
+		      	
+ 	      		$.ajax({
+ 					type: "POST",
+					url: "<?php echo $this->url('setup', array('action'=>'arecalcactivity'));?>",
+ 					dataType:"json",
+ 					data : data
+ 				}).done(function(result) {
+ 					$('#activityconc').val(result.activityconc);
+ 					loadActivityData(false);
+ 				});
 			});
 		});
 
 		$("#activityconc").change(function() {
-			console.log('activityconc');
+			lastChange = 'activityconc';
+
+			$("#divActivityCalib").removeClass('has-warning');
+			$("#divActivityCalib").removeClass('has-success');
+			$("#divActivityConc").removeClass('has-warning');
+			$("#divActivityConc").removeClass('has-success');
+
+			$("#divActivityConc").addClass('has-warning');
+			
 			$.ajax({
 				type: "POST",
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 				dataType: "json",
 				data: { 'activityconc': $("#activityconc").val() }
 			}).done(function() {
-		
 				$.ajax({
 					type: "POST",
 					url: "<?php echo $this->url('setup', array('action'=>'arecalcactivity'));?>",
 					dataType:"json",
 					data : {"field" : "calib"}
 				}).done(function(result) {
+					$("#divActivityCalib").addClass('has-success');
 					$('#activitycalib').val(result["activitycalib"]);
 					loadActivityData(false);
 				});
 			});
 		});
 
-		$("#activitycalib").change(function(){
+		$("#activitycalib").change(function() {
+			lastChange = 'activitycalib';
+
+			$("#divActivityCalib").removeClass('has-warning');
+			$("#divActivityCalib").removeClass('has-success');
+			$("#divActivityConc").removeClass('has-warning');
+			$("#divActivityConc").removeClass('has-success');
+			
+			$("#divActivityCalib").addClass('has-warning');
+			
 			$.ajax({
 				type: "POST",
 				url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'));?>",
@@ -280,6 +322,7 @@
 					dataType:"json",
 					data : {"field" : "conc"}
 				}).done(function(result) {
+					$("#divActivityConc").addClass('has-success');
 					$('#activityconc').val(result.activityconc);
 					loadActivityData(false);
 				});

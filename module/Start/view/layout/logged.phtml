@@ -235,7 +235,7 @@ if ($virtualkeyboardEnable === true) {
 		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
-					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").keyboard({
+					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").keyboard({
 						autoAccept: true,
 					 /**
 						display : {
@@ -268,7 +268,7 @@ if ($virtualkeyboardEnable === true) {
 								"7 8 9 {b}",
 								"4 5 6 {clear}",
 								"1 2 3 {a}",
-								"0 {dec} - {c}"
+								"0 {dec} {c}"
 							]
 						},
 						css: {
@@ -294,7 +294,7 @@ if ($virtualkeyboardEnable === true) {
 					    },
 					});
 					
-					$("input[type=number].form-control").keyboard({
+					$("input[type=number].form-control,input[type=text].form-control.number").keyboard({
 						layout : "custom",
 						customLayout: {
 							"normal" : [

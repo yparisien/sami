@@ -1020,6 +1020,11 @@ class InputdataController extends AbstractActionController
 			$activityCalib = $robotService->receive('G_Medicament.Actual.Act_DT');
 			$aParams = array('success' => 1, "activitycalib" => $activityCalib);
 		}
+		if ($r->getPost('field') == "vialvol")
+		{
+			$activityCalib = $robotService->receive('G_Medicament.Actual.Act_DT');
+			$aParams = array('success' => 1, "activitycalib" => $activityCalib);
+		}
 
 		$result = new JsonModel($aParams);
 		return $result;
