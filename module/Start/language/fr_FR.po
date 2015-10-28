@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 10:48+0100\n"
-"PO-Revision-Date: 2015-10-28 10:49+0100\n"
+"POT-Creation-Date: 2015-10-28 18:34+0100\n"
+"PO-Revision-Date: 2015-10-28 18:34+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -27,7 +27,7 @@ msgstr "Confirmez votre Identité"
 #: ../module/Auth/src/Auth/Controller/AuthController.php:137
 msgid "You are not authorized to perform this action for the moment"
 msgstr ""
-"Après avoir Valider la Fin des Injection, vous ne pouvez plus injecter un "
+"Après avoir Valider la Fin des Injections, vous ne pouvez plus injecter un "
 "autre Patient !"
 
 #: ../module/Auth/src/Auth/Controller/AuthController.php:170
@@ -237,7 +237,7 @@ msgstr "Mot de passe"
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:45
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:156
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:124
-#: ../module/Operator/view/operator/inputdata/drug.phtml:113
+#: ../module/Operator/view/operator/inputdata/drug.phtml:121
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:18
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:54
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:115
@@ -298,7 +298,7 @@ msgstr "Confirmez"
 #: ../module/Manager/view/manager/user/edit.phtml:61
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:180
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:128
-#: ../module/Operator/view/operator/inputdata/drug.phtml:116
+#: ../module/Operator/view/operator/inputdata/drug.phtml:124
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:21
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:57
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:59
@@ -1065,6 +1065,14 @@ msgstr "Activité à Heure de Calibration"
 #: ../module/Operator/view/operator/inputdata/drug.phtml:109
 msgid "Fill the vial volume field to enable fields about activity"
 msgstr "Saisissez le Volume de la fiole pour calculer l'Activité"
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:113
+msgid "The last filled value is in yellow"
+msgstr ""
+
+#: ../module/Operator/view/operator/inputdata/drug.phtml:117
+msgid "The green field represents the calculated value"
+msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:3
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:8
