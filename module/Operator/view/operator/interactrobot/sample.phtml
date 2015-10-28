@@ -14,25 +14,23 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $this->translate("Patient's data")?></a>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $this->translate("Patient's data")?><span id="patientResume"></span></a>
 						</div>
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
-								<div class="col-md-3"><input type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
-								<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
-								<div class="col-md-3"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><?php echo $this->translate('Lastname')?></div>
+								<div class="col-sm-2"><input id="lastname" type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><?php echo $this->translate('Firstname')?></div>
+								<div class="col-sm-2"><input id="firstname" type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><?php echo $this->translate('Activity to inject')?></div>
+								<div class="col-sm-2"><div class="input-group"><input id="activity" type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/>
+								<span class="input-group-addon"><?php echo $unit;?></span></div></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><?php echo $this->translate('Activity to inject')?></div>
-								<div class="col-md-3"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
-								<div class="col-md-6"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-2 col-md-offset-10">
-									<button type="button" class="btn btn-primary" id="dilution-confirm" onClick="launchSampling()"><?php echo $this->translate('Validation')?></button>
+								<div class="col-md-2 col-md-offset-5">
+									<button type="button" class="btn btn-primary btn-block" id="dilution-confirm" onclick="launchSampling()"><?php echo $this->translate('Validation')?></button>
 								</div>
 							</div>
 						</div>
@@ -55,9 +53,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-1 col-md-offset-5">
-							<button id="btn-add-activity" class="btn btn-primary"><span class=""><?php echo $this->translate("Adjust");?></span></button>
-						</div>
+						
 <!-- 							<div class="col-md-1">
 								<button id="btn-remove-activity" class="btn btn-primary"><span class="glyphicon glyphicon-minus-sign"></span></button>
 							</div>-->
@@ -65,18 +61,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3"><p>Activité prélevée</p></div>
-				<div class="col-md-3"><div class="input-group"><input type="number" id="val-add" value="0" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
-				<div class="col-md-3"><p>Activité restante</p></div>
-				<div class="col-md-3"><div class="input-group"><input type="number" id="val-left" value="500" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
-			</div>
-			<div class="row">
-				<div class="col-md-3"><p>Activité demandée</p></div>
-				<div class="col-md-3"><div class="input-group"><input type="number" id="val-asked" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
+				<div class="col-sm-2"><p>Activité prélevée</p></div>
+				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-add" value="0" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
+				<div class="col-sm-2"><p>Activité restante</p></div>
+				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-left" value="500" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
+				<div class="col-sm-2"><p>Activité demandée</p></div>
+				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-asked" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-2 col-md-offset-4">
+				<div class="col-md-2 col-md-offset-3">
 					<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="gotonext()"><?php echo $this->translate('Next')?></button>
+				</div>
+				<div class="col-md-2">
+					<button id="btn-add-activity" class="btn btn-primary btn-block"><?php echo $this->translate("Adjust");?></button>
 				</div>
 				<div class="col-md-2">
 					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
@@ -85,54 +82,48 @@
 			<script type="text/javascript">
 					var value = 0; // real sampled activity value
 					var rate = 0; // rate (in %)
-					var step = 1; // value of the step (in activity unit)
 					var animstep = 1; // internal value, used as mockup to simulate "life" between two reads on the automate
 					var initial = 0; // tag: 0 = sample is not at precalculated value; 1 = sample is _OR_ was at precalculated value
-					var maxavailable = 500; // internal value, used as mockup to simulate value read on the automate (about the max available activity)
   
-					var timerAnim; // instance of timer used by moveProgressBar
-					var timerAnimFreq = 250; // frequency of timer in ms
 					function moveProgressBar(asked)
 					{
 						lockui();
-//						timerAnim = window.setInterval(function(){animProgressBar(asked);}, timerAnimFreq);
-							$.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'agetsamplingprogress'))?>",
-              dataType: "json",
-              data: {}
-            }).done(function (result) {
+						$.ajax({
+              				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'agetsamplingprogress'))?>",
+              				dataType: "json",
+              				data: {}
+            			}).done(function (result) {
 							animProgressBar(result.progress);
 							if (result.progress == 100)
 							{
-		            $.ajax({
-  	            type: "POST",
-    	          url: "<?php echo $this->url('inject', array('action'=>'agetsamplingactivity'))?>",
-      	        dataType: "json",
-        	      data: {}
-  		      	    }).done(function (result) {
-								$("#val-add").val(result.activity)
-								animstep = result.activity;
-								animProgressBar(asked);
+		            			$.ajax({
+  	            					type: "POST",
+    	        					url: "<?php echo $this->url('inject', array('action'=>'agetsamplingactivity'))?>",
+      	        					dataType: "json",
+        	      					data: {}
+  		      	    			}).done(function (result) {
+									$("#val-add").val(result.activity)
+									animstep = result.activity;
+									animProgressBar(asked);
 								});
 							}
 							else
 							{
-								window.setTimeout(function(){moveProgressBar(asked);}, 2000);
+								window.setTimeout(function(){ moveProgressBar(asked); }, 2000);
 							}
 						});					
 					}
 
 					function	animProgressBar(progress)
 					{
-							$("#dilution-progress").css('width', progress+'%');
-						if (progress== 100)
+						$("#dilution-progress").css('width', progress+'%');
+						if (progress == 100)
 						{
 							$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
 							$('#dilution-statut').html('Prélèvement terminé !');
 							initial = 1;
 							unlockui();
-//							window.clearInterval(timerAnim);
 						}
 					}
 
@@ -143,79 +134,88 @@
 						$('#collapseOne').collapse('toggle');
 						$('#dilution-statut').html('Prélèvement en cours...');
 						$("#val-asked").val(<?php echo $injection['activity']?>);
-						$.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'alaunchsampling'))?>",
-              dataType: "json",
-              data: {}
-            });
 
+						var resume = ' : ' + $('#firstname').val() + ' ' + $('#lastname').val() + ', <?php echo $this->translate('Activity to inject')?> : ' + $('#activity').val() + ' <?php echo $unit;?>';
+						$('#patientResume').html(resume);
+						
+						$.ajax({
+              				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'alaunchsampling'))?>",
+              				dataType: "json",
+              				data: {}
+            			});
+
+						loadActivityData();
 						moveProgressBar(<?php echo $injection['activity']?>);
 					}
 
 					function	adjustActivity()
 					{
+						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$.ajax({
-              type: "POST",
-              url: "<?php echo $this->url('inject', array('action'=>'aadjustsampling'))?>",
-              dataType: "json",
-              data: {}
-            }).done(function(){
+              				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'aadjustsampling'))?>",
+              				dataType: "json",
+              				data: {}
+            			}).done(function(){
 							moveProgressBar(<?php echo $injection['activity']?>);
-					});
-				}
-				function  loadActivityData()
-				{
-					$.ajax({
-						type: "GET",
-						url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity'))?>",
-						dataType: "json"
-					}).done(function(result) {
-						var data = result;
-						$("#val-left").val(data.activity);
-					});
-					setTimeout(function(){loadActivityData();}, 5000);
-				}
-
-
-				function	lockui()
-				{
-					$("#btn-add-activity").attr('disabled', 1);
-					$("#btn-remove-activity").attr('disabled', 1);
-					$("#btn-next").attr('disabled', 1);
-				}
-
-				function	unlockui()
-				{
-					$("#btn-add-activity").removeAttr('disabled');
-					$("#btn-remove-activity").removeAttr('disabled');
-					if(initial == 1)
-					{
-						$("#btn-next").removeAttr('disabled');
+						});
 					}
-				}
 
-				function	gotonext()
-				{
-					var postdata = {
-						activity: $('#val-add').val()
-					};
-					$.ajax({
-						type: "POST",
-						url: "<?php echo $this->url('inject', array('action'=>'aupdateactivity'));?>",
-						dataType: "json",
-						data: postdata,
-					}).done(function(){
-						location.href='<?php echo $this->url('inject', array('action'=>'dilution'))?>';
+					function  loadActivityData()
+					{
+						$.ajax({
+							type: "GET",
+							url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity'))?>",
+							dataType: "json"
+						}).done(function(result) {
+							var data = result;
+							$("#val-left").val(data.activity);
+						});
+
+						setTimeout(function() {
+							loadActivityData();
+						}, 15000);
+					}
+
+
+					function	lockui()
+					{
+						$("#btn-add-activity").attr('disabled', 1);
+						$("#btn-remove-activity").attr('disabled', 1);
+						$("#btn-next").attr('disabled', 1);
+					}
+	
+					function	unlockui()
+					{
+						$("#btn-add-activity").removeAttr('disabled');
+						$("#btn-remove-activity").removeAttr('disabled');
+						if(initial == 1)
+						{
+							$("#btn-next").removeAttr('disabled');
+						}
+					}
+	
+					function	gotonext()
+					{
+						var postdata = {
+							activity: $('#val-add').val()
+						};
+						$.ajax({
+							type: "POST",
+							url: "<?php echo $this->url('inject', array('action'=>'aupdateactivity'));?>",
+							dataType: "json",
+							data: postdata,
+						}).done(function(){
+							location.href='<?php echo $this->url('inject', array('action'=>'dilution'))?>';
+						});
+					}
+	
+					$(function(){
+						lockui(); // lock ui on page startup
+						// listener on buttons
+						$("#btn-add-activity").click(function(){adjustActivity();});
 					});
-				}
-
-				$(function(){
-					lockui(); // lock ui on page startup
-					loadActivityData();
-					// listener on buttons
-					$("#btn-add-activity").click(function(){adjustActivity();});
-				});
 			</script>
 		</div>
 	</div>

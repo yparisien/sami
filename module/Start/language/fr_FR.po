@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 18:34+0100\n"
-"PO-Revision-Date: 2015-10-28 18:34+0100\n"
+"POT-Creation-Date: 2015-10-28 23:21+0100\n"
+"PO-Revision-Date: 2015-10-28 23:21+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -242,7 +242,7 @@ msgstr "Mot de passe"
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:54
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:115
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:56
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:78
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:73
 msgid "Next"
 msgstr "Suivant"
 
@@ -302,7 +302,7 @@ msgstr "Confirmez"
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:21
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:57
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:59
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:84
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:79
 msgid "Abort"
 msgstr "Annuler"
 
@@ -855,7 +855,7 @@ msgstr "Confirmation des Données Patient"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:19
 msgid "Selected patient : "
-msgstr "Sélection du Patient"
+msgstr "Patient selectionné : "
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:29
 msgid "ex: Martin"
@@ -1247,7 +1247,7 @@ msgstr "Activité Injectée"
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:41
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:19
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:104
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:36
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:33
 msgid "Validation"
 msgstr "Validation"
 
@@ -1258,12 +1258,12 @@ msgstr "Progression de l'Injection"
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:52
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:25
 #: ../module/Operator/view/operator/interactrobot/rinsing.phtml:44
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:48
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:45
 msgid "Status"
 msgstr "Statut"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:52
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:48
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:45
 msgid "Waiting for patient's datas validation..."
 msgstr "En attente de la Validation des Données Patient..."
 
@@ -1357,23 +1357,20 @@ msgid "Rinsing progress"
 msgstr "Rinçage en cours"
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:5
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:10
 msgid "Sample"
 msgstr "Prélèvement"
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:10
-msgid "Sample & Dilution"
-msgstr ""
-
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:29
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:149
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:27
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:138
 msgid "Activity to inject"
 msgstr "Activité à Injecter"
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:45
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:42
 msgid "Sample progression"
 msgstr "Progression du Prélèvement"
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:81
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:76
 msgid "Adjust"
 msgstr "Ajuster"
 
@@ -1600,46 +1597,46 @@ msgstr "Modification du Mot de Passe"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: ../module/Start/view/layout/logged.phtml:397
-#: ../module/Start/view/layout/logged.phtml:438
+#: ../module/Start/view/layout/logged.phtml:395
+#: ../module/Start/view/layout/logged.phtml:436
 msgid "Locking protection system"
 msgstr "Verrouillage System"
 
-#: ../module/Start/view/layout/logged.phtml:401
-#: ../module/Start/view/layout/logged.phtml:442
+#: ../module/Start/view/layout/logged.phtml:399
+#: ../module/Start/view/layout/logged.phtml:440
 #, php-format
 msgid "No activity has been detect on this screen since %s seconds."
 msgstr "Aucune action sur l'écran détectée depuis %s secondes"
 
-#: ../module/Start/view/layout/logged.phtml:402
-#: ../module/Start/view/layout/logged.phtml:443
+#: ../module/Start/view/layout/logged.phtml:400
+#: ../module/Start/view/layout/logged.phtml:441
 msgid "You have been deconnected."
 msgstr "Vous avez été déconnecté"
 
-#: ../module/Start/view/layout/logged.phtml:404
-#: ../module/Start/view/layout/logged.phtml:445
+#: ../module/Start/view/layout/logged.phtml:402
+#: ../module/Start/view/layout/logged.phtml:443
 msgid "Please proceed to Sign-In button to be reconnected."
 msgstr "Appuyez sur le bouton \"S'Identifier\" pour vous reconnecter"
 
-#: ../module/Start/view/layout/logged.phtml:408
-#: ../module/Start/view/layout/logged.phtml:429
-#: ../module/Start/view/layout/logged.phtml:449
+#: ../module/Start/view/layout/logged.phtml:406
+#: ../module/Start/view/layout/logged.phtml:427
+#: ../module/Start/view/layout/logged.phtml:447
 msgid "Sign In"
 msgstr "S'Identifier"
 
-#: ../module/Start/view/layout/logged.phtml:418
+#: ../module/Start/view/layout/logged.phtml:416
 msgid "System error detected"
 msgstr "Erreur System détectée"
 
-#: ../module/Start/view/layout/logged.phtml:422
+#: ../module/Start/view/layout/logged.phtml:420
 msgid "An error has been raised by the robot :"
 msgstr "Une erreur a été déconnecté par l'Injecteur"
 
-#: ../module/Start/view/layout/logged.phtml:423
+#: ../module/Start/view/layout/logged.phtml:421
 msgid "Error message : "
 msgstr "Message d'erreur :"
 
-#: ../module/Start/view/layout/logged.phtml:425
+#: ../module/Start/view/layout/logged.phtml:423
 msgid "Please check the manual for instructions."
 msgstr "Veuillez lire le Manuel d'Utilisation"
 

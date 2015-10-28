@@ -16,7 +16,7 @@
 					  <div class="panel panel-default">
 					    <div class="panel-heading" role="tab" id="headingOne">
 					      <h4 class="panel-title">
-					          <?php echo $this->translate('Selected patient : '); ?><span id="spanFirstname"></span> <span id="spanLastname"></span>
+					          <?php echo $this->translate('Selected patient : '); ?> <span id="spanFirstname"></span> <span id="spanLastname"></span>
 					      </h4>
 					    </div>
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -250,6 +250,9 @@
 
 	function	setPatientAndShowExam()
 	{
+		$('#spanLastname').text($('#lastname').val());
+		$('#spanFirstname').text($('#firstname').val());
+		
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'aupdatepatient'));?>",
 			type: "POST",
