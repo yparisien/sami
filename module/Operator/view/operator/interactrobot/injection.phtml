@@ -27,22 +27,27 @@ $this->headStyle()->appendStyle('
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="panel-title">
-							<?php echo $this->translate("Patient's data")?>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $this->translate("Patient's data")?><span id="patientResume"></span></a>
 						</div>
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-sm-2"><?php echo $this->translate('Lastname')?></div>
-								<div class="col-sm-2"><input type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><input id="lastname" type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
 								<div class="col-sm-2"><?php echo $this->translate('Firstname')?></div>
-								<div class="col-sm-2"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><input id="firstname" type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
 								<div class="col-sm-2"><?php echo $this->translate('Activity injected')?></div>
-								<div class="col-sm-2"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off"  disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
+								<div class="col-sm-2">
+									<div class="input-group">
+										<input id="activity" type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off"  disabled/>
+										<span class="input-group-addon"><?php echo $unit?></span>
+									</div>
+								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-2 col-md-offset-10">
-									<button type="button" class="btn btn-primary" id="injection-confirm" onclick="launchDilution();"><?php echo $this->translate('Validation')?></button>
+								<div class="col-md-2 col-md-offset-5">
+									<button type="button" class="btn btn-primary btn-block" id="injection-confirm" onclick="launchDilution();"><?php echo $this->translate('Validation')?></button>
 								</div>
 							</div>
 						</div>
@@ -320,6 +325,10 @@ $this->headStyle()->appendStyle('
 					function launchDilution()
 					{
 						step = 'dilution';
+
+						var resume = ' : ' + $('#firstname').val() + ' ' + $('#lastname').val() + ', <?php echo $this->translate('Activity to inject')?> : ' + $('#activity').val() + ' <?php echo $unit;?>';
+						$('#patientResume').html(resume);
+						
 						$("#injection-confirm").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#collapseOne').collapse('toggle');
