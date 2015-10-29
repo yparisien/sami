@@ -199,42 +199,14 @@ class InteractrobotController extends AbstractActionController
 		return new ViewModel($aParams);
 	}
 
-	public function	dilutionAction()
+	public function	injectionAction()
 	{
 		$aParams = array();
 		
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VALSAMPLING => 1));
-		
-		$injection = new Container('injection_profile');
-		$patientId = $injection->patientid;
-		
-		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
-		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
-		
-		return new ViewModel($aParams);
-	}
 
-	public function	injectionAction()
-	{
-		$aParams = array();
-		
-		$injection = new Container('injection_profile');
-		$patientId = $injection->patientid;
-		
-		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
-		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
-		
-		return new ViewModel($aParams);
-	}
-
-	public function	rinsingAction()
-	{
-		$aParams = array();
-		
 		$injection = new Container('injection_profile');
 		$patientId = $injection->patientid;
 		
@@ -277,6 +249,9 @@ class InteractrobotController extends AbstractActionController
 	{
 		if($this->params('confirm'))
 		{
+			/* @var $robotService RobotService */
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			
 			$oContainer = new Container('automate_setup');
 			$oContainer->drugspecified = false;
 			$oContainer->drugid = 0;
@@ -293,6 +268,8 @@ class InteractrobotController extends AbstractActionController
 			$sm = $this->getServiceLocator();
 			$cfg = $sm->get('Config');
 			$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
+			
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_UNLOAD => 1));
 				
 			if ($simulated === true) {
 				$fr = new Container('fake_robot');

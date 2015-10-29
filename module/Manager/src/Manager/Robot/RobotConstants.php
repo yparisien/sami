@@ -32,6 +32,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_RINSINGSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Rinsing_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_SAMPLINGSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Sampling_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_STOPINJECTION				= 'G_MainLogic.cmd.Input_Soft.Stop_Injection';
+	const MAINLOGIC_CMD_INPUTSOFT_UNLOAD					= 'G_MainLogic.cmd.Input_Soft.Unload';
 	const MAINLOGIC_CMD_INPUTSOFT_VALCONNECTIONKITP			= 'G_MainLogic.cmd.Input_Soft.Val_Connection_Kit_P';
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTCONNECTION		= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Connection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTDISCONNECTION	= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection';

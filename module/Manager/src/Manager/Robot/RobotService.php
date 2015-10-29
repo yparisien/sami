@@ -141,7 +141,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_RINSINGEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->rinsingEvolutionStatus) && ($fr->rinsingEvolutionStatus == 100)) ? 0 : $fr->rinsingEvolutionStatus + 25 ;
+				$progress = (isset($fr->rinsingEvolutionStatus) && ($fr->rinsingEvolutionStatus == 100)) ? 0 : $fr->rinsingEvolutionStatus + 10 ;
 				$fr->rinsingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;

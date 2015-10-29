@@ -14,6 +14,13 @@ $this->headStyle()->appendStyle('
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<?php echo $this->translate('Injection')?>
+			
+			<div class="btn-group pull-right" role="group">
+				<button type="button" id="btn-dilution" class="btn btn-default disabled"> Dilution <i id="i-dilution"></i></button>
+				<button type="button" id="btn-injection" class="btn btn-default disabled"> Injection <i id="i-injection"></i></button>
+				<button type="button" id="btn-rinsing" class="btn btn-default disabled"> Rinsage <i id="i-rinsing"></i></button>
+			</div>
+			<div class="clearfix"></div>
 		</div>
 		<div class="panel-body">
 			<div class="panel-group" id="accordion">
@@ -26,19 +33,16 @@ $this->headStyle()->appendStyle('
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-3"><?php echo $this->translate('Lastname')?></div>
-								<div class="col-md-3"><input type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
-								<div class="col-md-3"><?php echo $this->translate('Firstname')?></div>
-								<div class="col-md-3"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><?php echo $this->translate('Activity injected')?></div>
-								<div class="col-md-3"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off"  disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
-								<div class="col-md-6"></div>
+								<div class="col-sm-2"><?php echo $this->translate('Lastname')?></div>
+								<div class="col-sm-2"><input type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><?php echo $this->translate('Firstname')?></div>
+								<div class="col-sm-2"><input type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
+								<div class="col-sm-2"><?php echo $this->translate('Activity injected')?></div>
+								<div class="col-sm-2"><div class="input-group"><input type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off"  disabled/><span class="input-group-addon"><?php echo $unit?></span></div></div>
 							</div>
 							<div class="row">
 								<div class="col-md-2 col-md-offset-10">
-									<button type="button" class="btn btn-primary" id="injection-confirm" onClick="launchInjection()"><?php echo $this->translate('Validation')?></button>
+									<button type="button" class="btn btn-primary" id="injection-confirm" onclick="launchDilution();"><?php echo $this->translate('Validation')?></button>
 								</div>
 							</div>
 						</div>
@@ -54,7 +58,7 @@ $this->headStyle()->appendStyle('
 							<div class="col-md-12">
 								<div class="progress progress-striped active">
 									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="injection-progress">
-										<span class="sr-only">45% Complete</span>
+										<span class="sr-only">0% Complete</span>
 									</div>
 								</div>
 							</div>
@@ -79,31 +83,118 @@ $this->headStyle()->appendStyle('
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 col-md-offset-4">
-					<button id="btn-next" type="button" class="btn btn-success btn-block" onClick="location.href='<?php echo $this->url('inject', array('action'=>'rinsing'))?>'" disabled>Suivant</button>
+				<div class="col-md-2 col-md-offset-3">
+					<button id="btn-relaunch" type="button" class="btn btn-primary btn-block" onclick="launchRinsing(true);" disabled>Relancer un rinsage</button>
 				</div>
 				<div class="col-md-2">
-					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onClick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled>Suivant</button>
+				</div>
+				<div class="col-md-2">
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
 				</div>
 			</div>
 			<script type="text/javascript">
 					var value = 0;
+					var rinsed = 0;
 					var statut = 1;
 					var started = false;
 					var timerAnim; // instance of timer used by moveProgressBar
 					var frequency = 500; // value of interval (in ms)
+					var step = null;
 
-					function	moveProgressBar()
+					function	moveProgressBarRinsing()
 					{
-						timerAnim = window.setInterval(function(){animProgressBar();}, frequency);
+						timerAnim = window.setInterval(function(){animProgressBarRinsing();}, frequency);
 					}
 
-					function	stopProgressBar()
+					function	stopProgressBarRinsing()
 					{
 						window.clearInterval(timerAnim);
 					}
 
-					function	animProgressBar()
+
+					function	animProgressBarRinsing()
+					{
+		            	$.ajax({
+		              		type: "POST",
+		              		url: "<?php echo $this->url('inject', array('action'=>'agetrinsingprogress'))?>",
+		              		dataType: "json",
+		              		data: {}
+		            	}).done(function (result) {
+							$("#injection-progress").css('width', result.progress+'%');
+
+							if(result.progress >= 100)
+							{
+								stopProgressBarRinsing();
+								$('#btn-rinsing').removeClass('btn-warning active').addClass('btn-success');
+								$('#i-rinsing').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
+								$("#injection-progress").css('width', '100%');
+								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+								$('#injection-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
+								rinsed = 1;
+								started = false;
+								checkEnableNext();
+
+								$('#btn-play').attr('disabled', 1);
+								$('#btn-pause').attr('disabled', 1);
+							}
+						});
+					}
+
+					function launchRinsing(relaunch)
+					{
+						step = 'rinsing';
+						$("#injection-confirm").attr('disabled', 1);
+						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+						$('#btn-rinsing').removeClass('disabled btn-success').addClass('btn-warning active');
+						$('#i-rinsing').removeClass('glyphicon-ok-sign').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+						$("#injection-progress").css('width', '0%');
+						$("#btn-next").attr('disabled', 1);
+						$("#btn-relaunch").attr('disabled', 1);
+						
+
+						if (relaunch === true) {
+							$('#injection-statut').html('Nouveau rinçage en cours...');
+							var started = false;
+						} else {
+							$('#injection-statut').html('Rinçage en cours...');
+						}
+
+						$.ajax({
+			            	type: "POST",
+			            	url: "<?php echo $this->url('inject', array('action'=>'alaunchrinsing'))?>",
+			            	dataType: "json",
+			            	data: {}
+						}).done(function (result) {
+							if (result.error === false) {
+								started = true;
+								$('#btn-play').attr('disabled', 1);
+								$('#btn-pause').removeAttr('disabled');
+								moveProgressBarRinsing();
+							}				            
+			            });
+					}
+
+					function	checkEnableNext()
+					{
+						if(rinsed == 1)
+						{
+							$("#btn-relaunch").removeAttr('disabled');
+							$("#btn-next").removeAttr('disabled');
+						}
+					}
+
+					function	moveProgressBarInjection()
+					{
+						timerAnim = window.setInterval(function(){animProgressBarInjection();}, frequency);
+					}
+
+					function	stopProgressBarInjection()
+					{
+						window.clearInterval(timerAnim);
+					}
+
+					function	animProgressBarInjection()
 					{
               			$.ajax({
               				type: "POST",
@@ -119,33 +210,45 @@ $this->headStyle()->appendStyle('
 							}
 							else
 							{
+								$('#btn-injection').removeClass('btn-warning active').addClass('btn-success');
+								$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
 								$("#injection-progress").css('width', '100%');
 								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
 								$('#injection-statut').html('Injection terminée !');
 								$("#btn-next").removeAttr('disabled');
-								stopProgressBar();
+								stopProgressBarInjection();
 								sendNotifEndInjection();
+
+								$('#btn-play').attr('disabled', 1);
+								$('#btn-pause').attr('disabled', 1);
+
+								window.setTimeout(function(){launchRinsing(false);}, 1000);
 							}
 						});
 					}
 
 					function launchInjection()
 					{
+						step = 'injection';
 						$("#injection-confirm").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
-						$('#collapseOne').collapse('toggle');
 						$('#injection-statut').html('Injection en cours...');
+						$('#btn-injection').removeClass('disabled').addClass('btn-warning active');
+						$('#i-injection').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+
+						$("#injection-progress").css('width', '0%');
+						
 			            $.ajax({
-			              type: "POST",
-			              url: "<?php echo $this->url('inject', array('action'=>'alaunchinjection'))?>",
-			              dataType: "json",
-			              data: {}
+			            	type: "POST",
+			            	url: "<?php echo $this->url('inject', array('action'=>'alaunchinjection'))?>",
+			            	dataType: "json",
+			            	data: {}
 			            }).done(function (result) {
 							if (result.error === false) {
 								started = true;
 								$('#btn-play').attr('disabled', 1);
 								$('#btn-pause').removeAttr('disabled');
-								moveProgressBar();
+								moveProgressBarInjection();
 							}				            
 			            });
 					}
@@ -154,6 +257,12 @@ $this->headStyle()->appendStyle('
 					{
 						$('#btn-pause').attr('disabled', 1);
 						$('#btn-play').removeAttr('disabled');
+						if (step == 'injection') {
+							$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-pause');
+						} else if (step == 'rinsing') {
+							$('#i-rinsing').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-pause');
+						}
+						
 			            $.ajax({
 			              type: "POST",
 			              url: "<?php echo $this->url('inject', array('action'=>'apauseinjection'))?>",
@@ -161,13 +270,22 @@ $this->headStyle()->appendStyle('
 			              data: {}
 			            });
 
-						stopProgressBar();
+			            if (step == 'injection') {
+			            	stopProgressBarInjection();
+						} else if (step == 'rinsing') {
+							stopProgressBarRinsing();
+						}
 					}
 
 					function	playInjection()
 					{
 						$('#btn-play').attr('disabled', 1);
 						$('#btn-pause').removeAttr('disabled');
+						if (step == 'injection') {
+							$('#i-injection').removeClass('glyphicon-pause').addClass('glyphicon-refresh glyphicon-refresh-animate');
+						} else if (step == 'rinsing') {
+							$('#i-rinsing').removeClass('glyphicon-pause').addClass('glyphicon-refresh glyphicon-refresh-animate');
+						}
 			            $.ajax({
 			              type: "POST",
 			              url: "<?php echo $this->url('inject', array('action'=>'aplayinjection'))?>",
@@ -175,7 +293,11 @@ $this->headStyle()->appendStyle('
 			              data: {}
 			            });
 
-						moveProgressBar();
+			            if (step == 'injection') {
+							moveProgressBarInjection();
+						} else if (step == 'rinsing') {
+							moveProgressBarRinsing();
+						}
 					}
 
 					function sendSpeedInjection(speed)
@@ -194,6 +316,52 @@ $this->headStyle()->appendStyle('
 							url: "<?php echo $this->url('inject', array('action'=>'amarkasinjected'))?>"
 						});
 					}
+
+					function launchDilution()
+					{
+						step = 'dilution';
+						$("#injection-confirm").attr('disabled', 1);
+						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+						$('#collapseOne').collapse('toggle');
+						$('#injection-statut').html('Dilution en cours...');
+						$('#btn-dilution').removeClass('disabled').addClass('btn-warning active');
+						$('#i-dilution').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+						
+            			$.ajax({
+              				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'alaunchdilution'))?>",
+              				dataType: "json",
+              				data: {}
+            			});
+
+						moveProgressBarDilution();
+					}
+
+					function moveProgressBarDilution()
+					{
+            			$.ajax({
+            				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'agetdilutionprogress'))?>",
+              				dataType: "json",
+              				data: {}
+            			}).done(function (result) {
+							if(result.progress < 100)
+							{
+								$("#injection-progress").css('width', result.progress+'%');
+								window.setTimeout(function(){moveProgressBarDilution();}, frequency);
+							}
+							else
+							{
+								$('#btn-dilution').removeClass('btn-warning active').addClass('btn-success');
+								$('#i-dilution').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
+								$("#injection-progress").css('width', result.progress+'%');
+								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+								$('#injection-statut').html('Dilution terminée ! Médicament prêt');
+								window.setTimeout(function(){launchInjection();}, 1000);
+							}
+						});
+					}
+					
 
 					$(function(){
 						$('#debit-controller').bootstrapSlider({
