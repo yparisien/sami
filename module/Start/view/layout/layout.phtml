@@ -95,7 +95,14 @@ if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").keyboard({
-						autoAccept: true, 
+						autoAccept: true,
+						display : {
+							bksp   : "\u21e6",
+							accept : "' . $this->translate('Valider') . '",
+							cancel : "' . $this->translate('Annuler') . '",
+							default: "ABC",
+							enter  : "' . $this->translate('Entrée') . '",
+						},
 						layout: "french-azerty-1",
 						position     : {
     						of : $("form.form-signin"),
