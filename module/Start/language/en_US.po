@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 10:51+0100\n"
-"PO-Revision-Date: 2015-10-28 10:51+0100\n"
+"POT-Creation-Date: 2015-10-24 15:05+0200\n"
+"PO-Revision-Date: 2015-10-24 15:06+0200\n"
 "Last-Translator: Valentin Leclere <vleclere@softia.fr>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -135,12 +135,12 @@ msgstr ""
 msgid "Operator (%s) has been deleted."
 msgstr ""
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1088
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1082
 #, php-format
 msgid "Source kit already used by %s %s at %s, %s try remaining"
 msgstr ""
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1132
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1126
 #, php-format
 msgid "Patient kit already used by %s %s at %s, %s try remaining"
 msgstr ""
@@ -228,7 +228,7 @@ msgstr ""
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:54
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:115
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:56
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:78
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:79
 msgid "Next"
 msgstr ""
 
@@ -270,8 +270,8 @@ msgstr ""
 #: ../module/Auth/view/auth/login/changepwd.phtml:38
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:79
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:39
-#: ../module/Operator/view/operator/operator/index.phtml:142
-#: ../module/Operator/view/operator/operator/index.phtml:159
+#: ../module/Operator/view/operator/operator/index.phtml:141
+#: ../module/Operator/view/operator/operator/index.phtml:158
 msgid "Confirm"
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:21
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:57
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:59
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:84
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:82
 msgid "Abort"
 msgstr ""
 
@@ -825,8 +825,8 @@ msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:34
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:126
-#: ../module/Operator/view/operator/operator/index.phtml:143
-#: ../module/Operator/view/operator/operator/index.phtml:160
+#: ../module/Operator/view/operator/operator/index.phtml:142
+#: ../module/Operator/view/operator/operator/index.phtml:159
 msgid "Cancel"
 msgstr ""
 
@@ -1100,7 +1100,7 @@ msgid "Error"
 msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/scankitpatient.phtml:109
-#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:100
+#: ../module/Operator/view/operator/inputdata/scankitsource.phtml:102
 msgid "Invalid barcode"
 msgstr ""
 
@@ -1208,7 +1208,7 @@ msgstr ""
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:41
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:19
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:104
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:36
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:35
 msgid "Validation"
 msgstr ""
 
@@ -1219,12 +1219,12 @@ msgstr ""
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:52
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:25
 #: ../module/Operator/view/operator/interactrobot/rinsing.phtml:44
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:48
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:47
 msgid "Status"
 msgstr ""
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:52
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:48
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:47
 msgid "Waiting for patient's datas validation..."
 msgstr ""
 
@@ -1314,23 +1314,19 @@ msgid "Rinsing progress"
 msgstr ""
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:5
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:10
 msgid "Sample"
 msgstr ""
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:10
-msgid "Sample & Dilution"
-msgstr ""
-
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:29
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:149
 msgid "Activity to inject"
 msgstr ""
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:45
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:44
 msgid "Sample progression"
 msgstr ""
 
-#: ../module/Operator/view/operator/interactrobot/sample.phtml:81
+#: ../module/Operator/view/operator/interactrobot/sample.phtml:59
 msgid "Adjust"
 msgstr ""
 
@@ -1376,42 +1372,42 @@ msgid "Loading Source kit & Source"
 msgstr ""
 
 #: ../module/Operator/view/operator/operator/index.phtml:70
-#: ../module/Operator/view/operator/operator/index.phtml:103
+#: ../module/Operator/view/operator/operator/index.phtml:102
 msgid "Action required"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:86
-#: ../module/Operator/view/operator/operator/index.phtml:92
+#: ../module/Operator/view/operator/operator/index.phtml:85
+#: ../module/Operator/view/operator/operator/index.phtml:91
 msgid "Injection - Operator Authentification"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:98
+#: ../module/Operator/view/operator/operator/index.phtml:97
 msgid "List of patients injected"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:105
-#: ../module/Operator/view/operator/operator/index.phtml:111
+#: ../module/Operator/view/operator/operator/index.phtml:104
+#: ../module/Operator/view/operator/operator/index.phtml:110
 msgid "Unloading"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:118
-#: ../module/Operator/view/operator/operator/index.phtml:124
+#: ../module/Operator/view/operator/operator/index.phtml:117
+#: ../module/Operator/view/operator/operator/index.phtml:123
 msgid "Transferting patient's data to software"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:136
+#: ../module/Operator/view/operator/operator/index.phtml:135
 msgid "Remove receipted drug."
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:139
+#: ../module/Operator/view/operator/operator/index.phtml:138
 msgid "Are you sure to remove selected drug ?"
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:153
+#: ../module/Operator/view/operator/operator/index.phtml:152
 msgid "Remove receipted kit source."
 msgstr ""
 
-#: ../module/Operator/view/operator/operator/index.phtml:156
+#: ../module/Operator/view/operator/operator/index.phtml:155
 msgid "Are you sure to remove selected source kit ?"
 msgstr ""
 
