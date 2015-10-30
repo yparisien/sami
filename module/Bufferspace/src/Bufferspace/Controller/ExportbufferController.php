@@ -37,7 +37,6 @@ class ExportbufferController extends AbstractActionController
 		
 		if ($ret === true) {
 			$oExport->cleanDataBase();
-			$oContainer->markedasended = false;
 			$oContainer->fileexported = true;
 		}
 

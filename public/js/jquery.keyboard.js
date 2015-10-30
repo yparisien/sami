@@ -1488,7 +1488,7 @@ var $keyboard = $.keyboard = function(el, options){
 					case 'accept':
 						base
 							.addKey('accept', action)
-							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction);
+							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction + ' btn-success');
 						break;
 
 					case 'alt':
@@ -1507,7 +1507,7 @@ var $keyboard = $.keyboard = function(el, options){
 					case 'cancel':
 						base
 							.addKey('cancel', action)
-							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction);
+							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction + ' btn-danger');
 						break;
 
 					// toggle combo/diacritic key
@@ -1528,7 +1528,7 @@ var $keyboard = $.keyboard = function(el, options){
 					case 'enter':
 						base
 							.addKey('enter', action)
-							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction);
+							.addClass(o.css.buttonAction + ' ' + kbcss.keyAction + ' btn-primary');
 						break;
 
 					case 'lock':

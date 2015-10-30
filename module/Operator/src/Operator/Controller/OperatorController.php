@@ -114,7 +114,7 @@ class OperatorController extends AbstractActionController
 
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
-		$aParam['canExport'] = (!$oContainer->fileexported) ? true : false;
+		$aParam['canExport'] = (!$oContainer->fileexported && $oContainer->markedasended) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
 		

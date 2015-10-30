@@ -139,13 +139,12 @@ class	Exporter
 	{
 		$patientTable = $this->getPatientTable();
 		$injectionTable = $this->getInjectionTable();
-		$injectedTable = $this->getInjectedTable();
 
-		$aoInjected = $injectedTable->fetchAll();
+		$aoInjection = $injectionTable->fetchAll();
 		
-		foreach ($aoInjected as $oInjected) {
-			$patientTable->deletePatient($oInjected->patientid);
-			$injectionTable->deleteInjection($oInjected->injectionid);
+		foreach ($aoInjection as $oInjection) {
+			$patientTable->deletePatient($oInjection->patient_id);
+			$injectionTable->deleteInjection($oInjection->id);
 		}
 	}
 	

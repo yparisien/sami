@@ -237,24 +237,21 @@ if ($virtualkeyboardEnable === true) {
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").keyboard({
 						autoAccept: true,
-					 /**
 						display : {
-							bksp   : "\u2190",
-							accept : "Valider",
-							cancel : "Annuler",
+							bksp   : "\u21e6",
+							accept : "' . $this->translate('Valider') . '",
+							cancel : "' . $this->translate('Annuler') . '",
 							default: "ABC",
+							enter  : "' . $this->translate('Entrée') . '",
 							meta1  : ".?123",
 							meta2  : "#+=",
 						},
-						layout: "french-sami",
-					**/
 						layout: "french-azerty-1",
 						css: {
 					        input: "form-control input-md",
 					        container: "center-block dropdown-menu large-input",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
-					        buttonAction: "active",
 					        buttonDisabled: "disabled",
 					    },
 					});
@@ -274,7 +271,6 @@ if ($virtualkeyboardEnable === true) {
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
-					        buttonAction: "active",
 					        buttonDisabled: "disabled",
 					    },
 					});
@@ -287,7 +283,6 @@ if ($virtualkeyboardEnable === true) {
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
-					        buttonAction: "active",
 					        buttonDisabled: "disabled",
 					    },
 					});
@@ -308,7 +303,6 @@ if ($virtualkeyboardEnable === true) {
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
-					        buttonAction: "active",
 					        buttonDisabled: "disabled",
 					    },
 					});
@@ -329,7 +323,6 @@ if ($virtualkeyboardEnable === true) {
 					        container: "center-block dropdown-menu",
 					        buttonDefault: "btn btn-default",
 					        buttonHover: "btn-primary",
-					        buttonAction: "active",
 					        buttonDisabled: "disabled",
 					    },
 					});
@@ -450,5 +443,6 @@ if ($virtualkeyboardEnable === true) {
 	</div>
 </div>
 		</div>
+		<?php var_dump($_SESSION['automate_setup']); ?>
 	</body>
 </html>

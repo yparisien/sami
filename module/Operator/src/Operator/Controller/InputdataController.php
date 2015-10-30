@@ -345,6 +345,7 @@ class InputdataController extends AbstractActionController
 					$oContainer = new Container('automate_setup');
 					$oContainer->fileloaded = true;
 					$oContainer->fileexported = false;
+					$oContainer->markedasended = false;
 					$oContainer->loadedfilename = $file['name'];
 
 					//Copy file too archive
