@@ -19,20 +19,22 @@ use Zend\Validator\File\Size;
 use Zend\Validator\File\MimeType;
 use Zend\Validator\File\NotExists;
 use Zend\View\View;
+
+use Bufferspace\File\Importer;
+use Bufferspace\Model\Injection;
+use Bufferspace\Model\InjectionTable;
+use Bufferspace\Model\Patient;
+use Bufferspace\Model\PatientTable;
+use Logger\Model\InputAction;
+use Logger\Model\InputDrug;
+use Logger\Model\InputDrugTable;
+use Logger\Model\Logger\Model;
+use Manager\Model\ExaminationTable;
+use Manager\Robot\RobotConstants;
+use Manager\Robot\RobotService;
+use Manager\Model\User;
 use Operator\Model\Sourcekit;
 use Operator\Model\Patientkit;
-use Bufferspace\File\Importer;
-use Bufferspace\Model\Patient;
-use Bufferspace\Model\Injection;
-use Logger\Model\InputDrug;
-use Logger\Model\InputAction;
-use Manager\Robot\RobotService;
-use Manager\Robot\RobotConstants;
-use Bufferspace\Model\PatientTable;
-use Bufferspace\Model\InjectionTable;
-use Logger\Model\InputDrugTable;
-use Manager\Model\ExaminationTable;
-
 
 class InputdataController extends AbstractActionController
 {
@@ -571,7 +573,52 @@ class InputdataController extends AbstractActionController
 		
  		if($perempted)
 		{
-			return new ViewModel();
+			if($this->getRequest()->isPost()) {
+				$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+				$oRequest = $this->getRequest();
+				
+				$superviseur = $this->getUserTable()->searchByLogin($oRequest->getPost('login'));
+
+				if ($superviseur === false) {
+					$message = sprintf($translate("The user (%s) is unknow."), $oRequest->getPost('login'));
+					$this->flashMessenger()->addErrorMessage($message);
+					return $this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
+				} else if ($superviseur instanceof User) {
+					if ($superviseur->admin === true && $superviseur->visible === true) {
+						if ($superviseur->password == sha1($oRequest->getPost('password'))) {
+							/*
+							 * Enregistre l'action en base de donnée
+							 */
+							$action = new InputAction();
+							$action->inputdate = date('Y-m-d H:i:s');
+							$action->userid = $superviseur->id;
+							$action->action = sprintf($translate("Peremption limit reachead. Overpass by %s %s"), $superviseur->firstname, $superviseur->lastname);
+							$this->getInputActionTable()->saveInputAction($action);
+							
+							return $this->redirect()->toRoute('setup', array('action'=>'selectpatient'));
+						} else {
+							$message = sprintf($translate("Authentification failed. Bad password"), $oRequest->getPost('login'));
+							$this->flashMessenger()->addErrorMessage($message);
+							return $this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
+						}
+					} else {
+						$message = sprintf($translate("The user (%s) is not autorized to perform this action."), $oRequest->getPost('login'));
+						$this->flashMessenger()->addErrorMessage($message);
+						return $this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
+					}
+				}
+				return new ViewModel();
+				
+			}
+			else {
+				$inputaction = new InputAction();
+				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+				$inputaction->action = "Peremption date reached.";
+				$this->getInputActionTable()->saveInputAction($inputaction);
+				
+				return new ViewModel();
+			}
 		}
 		else
 		{
