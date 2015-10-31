@@ -140,7 +140,7 @@ class LoginController extends AbstractActionController
 				if ((int) $user->id === 1) {
 					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 1));
 				} else {
-					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 0));
+					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 1));
 				}
 
 				$this->getSessionStorage()->storeAuth();
