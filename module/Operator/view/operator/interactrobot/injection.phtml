@@ -95,7 +95,7 @@ $this->headStyle()->appendStyle('
 					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled><?php echo $this->translate("Next"); ?></button>
 				</div>
 				<div class="col-md-2">
-					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate("Cancel"); ?></button>
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancel()"><?php echo $this->translate("Cancel"); ?></button>
 				</div>
 			</div>
 			<script type="text/javascript">
@@ -373,7 +373,18 @@ $this->headStyle()->appendStyle('
 							}
 						});
 					}
-					
+
+
+					function	cancel()
+					{
+						$.ajax({
+							url: "<?php echo $this->url('setup', array('action' => 'ainputsoftexit'));?>",
+							type: "GET",
+							dataType: "json",
+						}).done(function(result) {
+							location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
+						});
+					}
 
 					$(function(){
 						$('#debit-controller').bootstrapSlider({
