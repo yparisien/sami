@@ -249,6 +249,11 @@ class InteractrobotController extends AbstractActionController
 	{
 		if($this->params('confirm'))
 		{
+			
+			return $this->redirect()->toRoute('operator');
+		}
+		else
+		{
 			/* @var $robotService RobotService */
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			
@@ -276,10 +281,6 @@ class InteractrobotController extends AbstractActionController
 				$fr->haskitsourceloaded = false;
 			}
 			
-			return $this->redirect()->toRoute('operator');
-		}
-		else
-		{
 			return array();
 		}
 	}
@@ -287,7 +288,7 @@ class InteractrobotController extends AbstractActionController
 	public function	endinjectAction()
 	{
 		$oContainer = new Container('automate_setup');
-		if ($oContainer->sourcekitloaded) {
+		if ($oContainer->markedasended === false) {
 			$aParams = array();
 			$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 			return new ViewModel($aParams);

@@ -123,7 +123,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_SAMPLINGEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 10;
+				$progress = (isset($fr->samplingEvolutionStatus) && ($fr->samplingEvolutionStatus == 100)) ? 0 : $fr->samplingEvolutionStatus + 20;
 				$fr->samplingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
@@ -135,7 +135,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_INJECTIONEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 2;
+				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 10;
 				$fr->injectionEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;

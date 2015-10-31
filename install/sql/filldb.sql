@@ -323,8 +323,7 @@ CREATE VIEW `view_export` AS
             JOIN
         `tmp_injection` `i` ON `p`.`id` = `i`.`patient_id`
             LEFT JOIN
-        `input_drug` `d` ON `i`.`drugid` = `d`.`id`
-    WHERE `p`.`injected` = 1;
+        `input_drug` `d` ON `i`.`drugid` = `d`.`id`;
 
 --
 -- Final view structure for view `view_injected`

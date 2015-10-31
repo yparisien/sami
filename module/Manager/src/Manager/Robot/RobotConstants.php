@@ -58,6 +58,7 @@ class RobotConstants {
 	const MAINLOGIC_STATUS_HASKITSOURCESCANNED 				= 'G_MainLogic.status.Has_KitSource_Scanned';
 	const MAINLOGIC_STATUS_HASMEDICAMENTLOADED 				= 'G_MainLogic.status.Has_Medicament_Loaded';
 	const MAINLOGIC_STATUS_INJECTIONEVOLUTION 				= 'G_MainLogic.status.Injection_Evolution';
+	const MAINLOGIC_STATUS_INJECTIONRUN						= 'G_MainLogic.status.Injection_Run';
 	const MAINLOGIC_STATUS_RESTARTTYPE 						= 'G_MainLogic.status.Restart_Type';
 	const MAINLOGIC_STATUS_RINSINGEVOLUTION 				= 'G_MainLogic.status.Rinsing_Evolution';
 	const MAINLOGIC_STATUS_SAMPLINGEVOLUTION 				= 'G_MainLogic.status.Sampling_Evolution';
