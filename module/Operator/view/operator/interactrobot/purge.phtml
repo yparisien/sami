@@ -146,6 +146,8 @@
 				function	connectPatient()
 				{
 					blockNextStep();
+					$("#purge-confirm").attr('disabled', 1);
+					
 					$('#connect-statut-picto').removeClass('glyphicon-remove-sign glyphicon-ok-sign').addClass('glyphicon-time');
 					$('#connect-statut').removeClass('btn-danger btn-success ').addClass('btn-warning');
 					$.ajax({
