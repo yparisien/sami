@@ -470,8 +470,13 @@ class InteractrobotController extends AbstractActionController
 	public function	aplayinjectionAction()
 	{
 		/* @var $robotService RobotService */
+		$speed = $this->getRequest()->getPost('speed');
+		
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_PLAYINJECTION => 1));
+		$robotService->send(array(
+				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTSPEED => $speed,
+				RobotConstants::MAINLOGIC_CMD_INPUTSOFT_PLAYINJECTION => 1,
+		));
 		
 		$aParams = array();
 		$result = new JsonModel($aParams);
