@@ -11,17 +11,21 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-10">
-						
+						<form id="submitedpatient-form" action="<?php echo $this->url('setup', array('action'=>'confirmpatient'))?>" method="post">
+							<input type="hidden" id="patient-id" name="patient-id" value=""  />
+						</form>
 						<div>
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation" class="active">
 									<a href="#compatibles" aria-controls="compatibles" role="tab" data-toggle="tab"><?php echo $this->translate('Compatible patients list'); ?></a>
 								</li>
-								<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><?php echo $this->translate('Other patients list'); ?></a></li>
+								<li role="presentation">
+									<a href="#others" aria-controls="others" role="tab" data-toggle="tab"><?php echo $this->translate('Other patients list'); ?></a>
+								</li>
 							</ul>
 						
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active">
+								<div role="tabpanel" class="tab-pane active" id="compatibles">
 									<table class="table table-condensed <?php if (count($patients_compatible) > 0) { echo 'table-hover'; } ?>" style="margin-bottom: 0;">
 										<thead>
 											<tr>
@@ -63,7 +67,7 @@
 										</table>
 									</div>
 								</div>
-						    	<div role="tabpanel" class="tab-pane" id="profile">
+						    	<div role="tabpanel" class="tab-pane" id="others">
 									<?php if (count($patients_nocompatible) > 0) { ?>
 									<table class="table table-condensed">
 										<tbody>
