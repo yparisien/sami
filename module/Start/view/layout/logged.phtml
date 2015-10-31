@@ -341,7 +341,6 @@ if ($virtualkeyboardEnable === true) {
 							} else {
 								$("#errorMessageSpan").html(result.errorMessage);
 								$("#modalErrorDetected").modal({
-									backdrop: "static",
 									keyboard: false,
 									show: true,
 								});
@@ -426,6 +425,7 @@ if ($virtualkeyboardEnable === true) {
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="autologoutModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('Locking protection system'); ?></h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-warning" role="alert">
@@ -436,7 +436,7 @@ if ($virtualkeyboardEnable === true) {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log'); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Sign In'); ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
 			</div>
 		</div>
 	</div>
