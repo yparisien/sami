@@ -21,7 +21,7 @@
 			</div>
 			<div id="resume">
 				<div class="row">
-					<div class="col-sm-10 col-sm-offset-1">
+					<div class="col-sm-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<?php echo $this->translate('Informations resume'); ?>
@@ -30,20 +30,24 @@
 								<div class="row table-responsive">
 									<table class="table table-bordered table-condensed">
 										<tr>
-											<td style="width: 50%;"><?php echo $patient['lastname']; ?></td>
-											<td style="width: 50%;"><?php echo $patient['weight']; ?>kg</td>
+											<th colspan="2">
+												<?php echo $patient['lastname']; ?> <?php echo $patient['firstname']; ?> [<?php echo $patient['birthdate']; ?>]
+												(<?php echo $patient['weight']; ?>kg)
+											</th>
 										</tr>
 										<tr>
-											<td><?php echo $patient['firstname']; ?></td>
-											<td><?php echo $injection['activity']; ?> <?php echo $unit ; ?></td>
+											<td><?php echo $drug['name']; ?></td>
+											<td><i class="fa fa-eyedropper"></i><?php echo $injection['activity']; ?> <?php echo $unit ; ?></td>
 										</tr>
 										<tr>
-											<td><?php echo $patient['birthdate']; ?></td>
+											<td></td>
 											<td><?php echo $injection['location']; ?></td>
 										</tr>
 										<tr>
-											<td><?php echo $injection['comments']; ?></td>
-											<td><?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?></td>
+											<th colspan="2">
+												<i class="fa fa-user-md"></i> 
+												<?php echo strtoupper($operator['lastname']); ?> <?php echo ucfirst(strtolower($operator['firstname'])); ?>
+											</th>
 										</tr>
 										<tr>
 											<td><?php echo $injection['unique_id']; ?></td>
@@ -54,14 +58,19 @@
 											<td><?php echo $curdrug['batchnum']; ?></td>
 										</tr>
 										<tr>
-											<td><?php echo $drug['name']; ?></td>
-											<td><div style="word-break: break-all;"><?php echo $sourcekit['serialnumber'] . ':' . $patientkit['serialnumber']; ?></div></td>
+											<td>
+												Kit source : <span class="label label-success">OUI</span> <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $sourcekit['serialnumber']; ?>"><i class="glyphicon glyphicon-barcode" ></i></a>
+												<br />
+												Kit patient : <span class="label label-success">OUI</span> <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $patientkit['serialnumber']; ?>"<i class="glyphicon glyphicon-barcode"></i></a>
+											</td>
+											<td><?php echo $injection['comments']; ?></td>
 										</tr>
 									</table>
 								</div>
 							</div>
 						</div>
-						
+					</div>
+					<div class="col-sm-6">	
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<?php echo $this->translate('Printing sticker'); ?>
@@ -184,6 +193,10 @@
 		});
 	});
 
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
 	function	loadActivityData()
 	{
 		$.ajax({

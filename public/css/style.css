@@ -40,7 +40,11 @@ div.container a.brand {
 .non-printable {
 	display: inherit;
 }
- 
+
+.non-printable .breadcrumb {
+	margin-bottom: 10px;
+}
+
 #printSection {
 	display: none;
 }
