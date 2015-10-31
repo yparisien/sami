@@ -68,10 +68,10 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-2 col-md-offset-3">
-					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="gotonext()"><?php echo $this->translate('Next')?></button>
+					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="gotonext()" disabled><?php echo $this->translate('Next')?></button>
 				</div>
 				<div class="col-md-2">
-					<button id="btn-add-activity" class="btn btn-primary btn-block"><?php echo $this->translate("Adjust");?></button>
+					<button id="btn-add-activity" class="btn btn-primary btn-block" disabled><?php echo $this->translate("Adjust");?></button>
 				</div>
 				<div class="col-md-2">
 					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
@@ -104,6 +104,7 @@
 									$("#val-add").val(result.activity)
 									animstep = result.activity;
 									animProgressBar(asked);
+									//?????????????What ?
 								});
 							}
 							else
@@ -127,6 +128,7 @@
 
 					function launchSampling()
 					{
+						lockui();
 						$("#dilution-confirm").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#collapseOne').collapse('toggle');
@@ -182,12 +184,14 @@
 						$("#btn-add-activity").attr('disabled', 1);
 						$("#btn-remove-activity").attr('disabled', 1);
 						$("#btn-next").attr('disabled', 1);
+						$("#btn-exit").attr('disabled', 1);
 					}
 	
 					function	unlockui()
 					{
 						$("#btn-add-activity").removeAttr('disabled');
 						$("#btn-remove-activity").removeAttr('disabled');
+						$("#btn-exit").removeAttr('disabled');
 						if(initial == 1)
 						{
 							$("#btn-next").removeAttr('disabled');
@@ -210,7 +214,6 @@
 					}
 	
 					$(function(){
-						lockui(); // lock ui on page startup
 						// listener on buttons
 						$("#btn-add-activity").click(function(){adjustActivity();});
 					});

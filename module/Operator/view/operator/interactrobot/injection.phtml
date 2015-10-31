@@ -16,9 +16,9 @@ $this->headStyle()->appendStyle('
 			<?php echo $this->translate('Injection')?>
 			
 			<div class="btn-group pull-right" role="group">
-				<button type="button" id="btn-dilution" class="btn btn-default disabled"> Dilution <i id="i-dilution"></i></button>
-				<button type="button" id="btn-injection" class="btn btn-default disabled"> Injection <i id="i-injection"></i></button>
-				<button type="button" id="btn-rinsing" class="btn btn-default disabled"> Rinsage <i id="i-rinsing"></i></button>
+				<button type="button" id="btn-dilution" class="btn btn-default disabled"> <?php echo $this->translate("Dilution"); ?> <i id="i-dilution"></i></button>
+				<button type="button" id="btn-injection" class="btn btn-default disabled"> <?php echo $this->translate("Injection"); ?> <i id="i-injection"></i></button>
+				<button type="button" id="btn-rinsing" class="btn btn-default disabled"> <?php echo $this->translate("Rinsing"); ?> <i id="i-rinsing"></i></button>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -89,13 +89,13 @@ $this->headStyle()->appendStyle('
 			</div>
 			<div class="row">
 				<div class="col-md-2 col-md-offset-3">
-					<button id="btn-relaunch" type="button" class="btn btn-primary btn-block" onclick="launchRinsing(true);" disabled>Relancer un rinsage</button>
+					<button id="btn-relaunch" type="button" class="btn btn-primary btn-block" onclick="launchRinsing(true);" disabled><?php echo $this->translate("Relaunch a rinsing"); ?></button>
 				</div>
 				<div class="col-md-2">
-					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled>Suivant</button>
+					<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('inject', array('action'=>'patientdisconnection'))?>'" disabled><?php echo $this->translate("Next"); ?></button>
 				</div>
 				<div class="col-md-2">
-					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'">Annuler</button>
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate("Cancel"); ?></button>
 				</div>
 			</div>
 			<script type="text/javascript">
@@ -150,6 +150,7 @@ $this->headStyle()->appendStyle('
 					{
 						step = 'rinsing';
 						$("#injection-confirm").attr('disabled', 1);
+						$("#btn-exit").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#btn-rinsing').removeClass('disabled btn-success').addClass('btn-warning active');
 						$('#i-rinsing').removeClass('glyphicon-ok-sign').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
@@ -236,6 +237,7 @@ $this->headStyle()->appendStyle('
 					{
 						step = 'injection';
 						$("#injection-confirm").attr('disabled', 1);
+						$("#btn-exit").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#injection-statut').html('Injection en cours...');
 						$('#btn-injection').removeClass('disabled').addClass('btn-warning active');
@@ -330,6 +332,7 @@ $this->headStyle()->appendStyle('
 						$('#patientResume').html(resume);
 						
 						$("#injection-confirm").attr('disabled', 1);
+						$("#btn-exit").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 						$('#collapseOne').collapse('toggle');
 						$('#injection-statut').html('Dilution en cours...');

@@ -97,6 +97,7 @@
 							$('#purge-statut').html("<?php echo $this->translate('Purge completed! Press the start purge button to restart purge.')?>");
 							purged = 1;
 							$("#connect-btn").removeAttr('disabled');
+							$("#btn-exit").removeAttr('disabled');
 							checkEnableNext();
 						}
 						else
@@ -128,6 +129,7 @@
 					
 					$("#purge-confirm").attr('disabled', 1);
 					$('#connect-btn').attr('disabled', 1);
+					$("#btn-exit").attr('disabled', 1);
 
 					blockNextStep();
 
