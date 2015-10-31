@@ -1232,6 +1232,7 @@ class InputdataController extends AbstractActionController
 		return $result;
 	}
 	
+	//TODO Change par des actions individuelles et faire un log dans la table action
 	public function ainputsoftexitAction() 
 	{
 		/* @var $robotService RobotService  */

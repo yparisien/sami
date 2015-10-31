@@ -33,7 +33,7 @@
 			type: "GET",
 			dataType: "json",
 		}).done(function(result) {
-			location.href = '<?php echo $this->url('operator'); ?>';
+			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
 		});
 	}
 </script>

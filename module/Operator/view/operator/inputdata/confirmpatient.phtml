@@ -243,6 +243,7 @@
 <script type="text/javascript">
 
 	var patientSetted = false;
+	var examinaSetted = false;
 									
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
@@ -344,6 +345,7 @@
 			if (result.error === true) {
 				//TODO FAIRE APPARAITRE MESSAGE D"ERREUR ET ANNULER LE PATIENT EN COURS
 			} else {
+				examinaSetted = true;
 				$('#averageactivity').val(result.examination.rate);
 				$('#minactivity').val(result.examination.min);
 				$('#maxactivity').val(result.examination.max);
@@ -363,6 +365,11 @@
 			dataType: "json"
 		}).done(function(result) {
 			$('#activity').val(result.activity);
+
+			if (result.activity > 0) {
+				setActivity();
+			}
+			
 			$('#comments').val(result.comments);
 			$('#expeditornum').val(result.unique_id);
 			if (result.examinationid > 0)  {
@@ -412,7 +419,7 @@
 				$("#alertlowactivity").modal('show');
 			}
 			else if ($("#activity").val() > 0) {
-				if (patientSetted == true) {
+				if (patientSetted == true && examinaSetted == true) {
 					$('#submitExam').prop('disabled', false);
 				}
 			}
@@ -474,11 +481,9 @@
 		loadActivityData();
 		
 		$('#examination').change(function() {
+			$('#submitExam').prop('disabled', true);
 			if ($('#examination').val() > 0) {
 				loadExamination($('#examination').val());
-			}
-			else {
-				$('#submitExam').prop('disabled', true);
 			}
 		});
 		
