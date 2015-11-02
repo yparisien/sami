@@ -26,6 +26,38 @@ body {
   background-color: #57a900;
 }
 
+.btn-default[disabled],
+.btn-primary[disabled],
+.btn-info[disabled],
+.btn-success[disabled],
+.btn-warning[disabled],
+.btn-danger[disabled],
+.btn-default.disabled,
+.btn-primary.disabled,
+.btn-info.disabled,
+.btn-success.disabled,
+.btn-warning.disabled,
+.btn-danger.disabled {
+	-webkit-filter: grayscale(100%);
+ 	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: url(../img/grayscale.svg); /* Firefox 4+ */
+	filter: gray; /* IE 6-9 */
+}
+
+#connect-statut,
+#showactivityleft-statut {
+	-webkit-filter: inherit;
+ 	-moz-filter: inherit;
+	-ms-filter: inherit;
+	-o-filter: inherit;
+	filter: inherit;
+	filter: inherit; /* Firefox 4+ */
+	filter: inherit; /* IE 6-9 */
+}
+
 .btn-success:active, .btn-success.active {
   background-color: #57a900;
 }
@@ -66,7 +98,7 @@ div.container a.brand {
 }
 
 .content {
-	margin: 5mm;
+	margin: 5mm 5mm 0 5mm;
 }
 
 .print-container:before {
@@ -103,6 +135,27 @@ div.container a.brand {
     color: #31b0d5;
     border-color: #31b0d5;
     background-color: #DEEDF2;
+}
+
+.has-success #activityat {
+  background-color: #dff0d8;
+}
+
+div.tooltip-inner {
+    max-width: 350px;
+}
+
+.rotate-180 {  
+  -webkit-transform	: rotate(180deg);
+  -moz-transform	: rotate(180deg);
+  -o-transform		: rotate(180deg);
+  /* filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2); */
+  -ms-transform		: rotate(180deg);        
+}
+
+.label-as-badge {
+    border-radius: 1em;
+    display: inline-block;
 }
 
 .glyphicon-refresh-animate {

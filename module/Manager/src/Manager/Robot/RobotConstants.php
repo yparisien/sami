@@ -66,6 +66,7 @@ class RobotConstants {
 	const MEDICAMENT_ACTUAL_ACTVOL 							= 'G_Medicament.Actual.Act_Vol';
 	const MEDICAMENT_ACTUAL_ACTDT 							= 'G_Medicament.Actual.Act_DT';
 	const MEDICAMENT_CALCULATION_CACTDISPO 					= 'G_Medicament.Calculation.C_Act_Dispo';
+	const MEDICAMENT_CALCULATION_CACTPREV					= 'G_Medicament.Calculation.C_Act_Prev';
 	const MEDICAMENT_INPUT_ACT								= 'G_Medicament.Input.Act';
 	const MEDICAMENT_INPUT_ACTVOL							= 'G_Medicament.Input.Act_Vol';
 	const MEDICAMENT_INPUT_ACTDT							= 'G_Medicament.Input.Act_DT';
@@ -77,6 +78,7 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_PERIOD							= 'G_Medicament.Input.Period';
 	const MEDICAMENT_INPUT_VOL								= 'G_Medicament.Input.Vol';
 	const MEDICAMENT_INPUT_RADIONUCLIDEID					= 'G_Medicament.Input.ID';
+	
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';

@@ -130,6 +130,7 @@
 </div>
 <script type="text/javascript">
 	var lastChange = null;
+	var focusField = null;
 
 							
 	/**
@@ -179,6 +180,14 @@
 				checkActivityDataByInterval();
 			}
 		});
+	}
+
+	function	setFocusOnField() {
+		if (focusField != '') {
+			$('#' + focusField).val('');
+			$('#' + focusField).focus();
+		}
+		$("#alertdata").modal('hide');
 	}
 
 	$(function() {
@@ -231,7 +240,9 @@
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 	        	dataType: "json",
 	        	data: {'expirationtime': $("#expirationtime").val() }
-	      	});
+	      	}).done(function(result) {
+	      		loadActivityData(false);
+		    });
 		});
 
 		$('#datetimepicker-peremption').change(function() {
@@ -240,7 +251,9 @@
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
 	        	dataType: "json",
 	        	data: {'expirationtime': $("#expirationtime").val() }
-	      	});
+			}).done(function(result) {
+	      		loadActivityData(false);
+		    });
 		});
 
 		$('#vialvol').change(function() {
@@ -265,7 +278,12 @@
  					dataType:"json",
  					data : data
  				}).done(function(result) {
- 					$('#activityconc').val(result.activityconc);
+ 					if (lastChange == 'activityconc') {
+ 				      	data = {"field" : "calib"};
+ 				      	$('#activitycalib').val(result.activitycalib);
+ 			      	} else if (lastChange == 'activitycalib') {
+	 					$('#activityconc').val(result.activityconc);
+ 			      	}
  					loadActivityData(false);
  				});
 			});
@@ -334,24 +352,70 @@
 			var activity = $("#activity").val();
 			if (activity == -1) {
 				if ($("#expirationtime").val() != '') {
-					alert('LA DATE D EXPIRATION EST FAUSSE');
+					focusField = 'expirationtime';
+					$('#titleModal').text("<?php echo $this->translate("Incorrect expiration date"); ?>");
+					$('#messageModal').text("<?php echo $this->translate("The expiration date of the drug is incorrect."); ?>");
+					$('#alertModal').text("<?php echo $this->translate("Set a correct date : greater than the calibration date"); ?>");
+					
+
+					$('#datetimepicker-peremption').val('');
+					$("#alertdata").modal('show');
 				}
 			}
 			else if (activity == -2) {
 				if ($("#activityconc").val() != '') {
-					alert('L ACTIVITE VOLUMIQUE EST FAUSSE');
+					focusField = 'activityconc';
+					$('#titleModal').text("<?php echo $this->translate("Wrong volumic activity"); ?>");
+					$('#messageModal').text("<?php echo $this->translate("The volumic activity of the drug is incorrect."); ?>");
+					$('#alertModal').text("<?php echo $this->translate("Set a correct value : positive"); ?>");
+					
+					
+					$("#alertdata").modal('show');
 				}
 			}
 			else if (activity == -3) {
 				if ($("#activitycalib").val() != '') {
-					alert('L ACTIVITE A CALIBRATION EST FAUSSE');
+					focusField = 'activitycalib';
+					$('#titleModal').text("<?php echo $this->translate("Wrong calibration activity"); ?>");
+					$('#messageModal').text("<?php echo $this->translate("The calibration activity is incorrect."); ?>");
+					$('#alertModal').text("<?php echo $this->translate("Set a correct value : positive"); ?>");
+					
+					
+					$("#alertdata").modal('show');
 				}
 			}
 			else if (activity == -4) {
 				if ($("#vialvol").val() != '') {
-					alert('LE VOLUME DE LA FIOLE EST INCORRECT');
+					focusField = 'vialvol';
+					$('#titleModal').text("<?php echo $this->translate("Incorrect vial volume"); ?>");
+					$('#messageModal').text("<?php echo $this->translate("The volume of the vial is incorrect."); ?>");
+					$('#alertModal').text("<?php echo $this->translate("Set a correct value : between 1 and 15ml"); ?>");
+					
+					
+					$("#alertdata").modal('show');
+					//TODO Rajouter l'appel au setFocusOnField lorsque la popup se ferme
 				}
 			}
 		});
 	});
 </script>
+<div class="modal fade" id="alertdata" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <span id="titleModal">Title Modal</span></h4>
+			</div>
+			<div class="modal-body">
+				<p id="messageModal">Message Modal</p>
+				<div class="alert alert-info">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span id="alertModal">alertModal</span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" onclick="setFocusOnField();"><?php echo $this->translate('OK');?></button>
+			</div>
+		</div>
+	</div>
+</div>

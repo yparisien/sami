@@ -102,9 +102,29 @@ class RobotService implements ServiceLocatorAwareInterface {
 		$cfg = $this->sm->get('Config');
 		switch ($variable) {
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
-			case RobotConstants::MEDICAMENT_ACTUAL_ACTVOL:
-			case RobotConstants::MEDICAMENT_ACTUAL_ACTDT:
+				$fr = new Container('fake_robot');
+				if (isset($fr->expirationtime) && $fr->expirationtime < $fr->calibrationtime) {
+					$mRet = -1;
+				} else if (isset($fr->activityconc) && $fr->activityconc <= 0) {
+					$mRet = -2;
+				} else if (isset($fr->activitycalib) && $fr->activitycalib <= 0) {
+					$mRet = -3;
+				} else if (isset($fr->vialvol) && $fr->vialvol > 15) {
+					$mRet = -4;
+				} else {
+					$mRet = mt_rand(400, 500);
+				}
+				break;
+			case RobotConstants::MEDICAMENT_CALCULATION_CACTPREV:
 				$mRet = mt_rand(400, 500);
+				break;
+			case RobotConstants::MEDICAMENT_ACTUAL_ACTVOL:
+				$fr = new Container('fake_robot');
+				$mRet = $fr->activitycalib / $fr->vialvol;
+				break;
+			case RobotConstants::MEDICAMENT_ACTUAL_ACTDT:
+				$fr = new Container('fake_robot');
+				$mRet = $fr->activityconc * $fr->vialvol;
 				break;
 			case RobotConstants::PATIENT_ACTUAL_ACTTOINJ:
 				$mRet = 300;

@@ -1009,6 +1009,7 @@ class InputdataController extends AbstractActionController
 		
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
+			$fr = new Container('fake_robot');
 			$aDrugData = array();
 			$r = $this->getRequest();
 			if ($r->getPost('drugid')) {
@@ -1021,18 +1022,22 @@ class InputdataController extends AbstractActionController
 			}
 			if ($r->getPost('vialvol'))
 			{
+				$fr->vialvol = $r->getPost('vialvol');
 				$aDrugData[RobotConstants::MEDICAMENT_INPUT_VOL] = $r->getPost('vialvol');
 			}
 			if ($r->getPost('activityconc'))
 			{
+				$fr->activityconc = $r->getPost('activityconc');
 				$aDrugData['G_Medicament.Input.Act_Vol'] = $r->getPost('activityconc');
 			}
 			if ($r->getPost('activitycalib'))
 			{
+				$fr->activitycalib = $r->getPost('activitycalib');
 				$aDrugData['G_Medicament.Input.Act_DT'] = $r->getPost('activitycalib');
 			}
 			if ($r->getPost('calibrationtime'))
 			{
+				$fr->calibrationtime = $r->getPost('calibrationtime');
 				$aDrugData['G_Medicament.Input.DT_Calib'] = str_replace(" ", "-" ,"DT#" . $r->getPost('calibrationtime') . ":00");
 			}
 			if ($r->getPost('batchnum'))
@@ -1041,6 +1046,7 @@ class InputdataController extends AbstractActionController
 			}
 			if ($r->getPost('expirationtime'))
 			{
+				$fr->expirationtime = $r->getPost('expirationtime');
 				$aDrugData['G_Medicament.Input.DT_End'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
 			}
 			$robotService = $this->getServiceLocator()->get('RobotService');
@@ -1056,6 +1062,7 @@ class InputdataController extends AbstractActionController
 	{
 		/* @var $robotService RobotService  */
 		$robotService = $this->getServiceLocator()->get('RobotService');
+		$aParams = array();
 		
 		$r = $this->getRequest();
 		if ($r->getPost('field') == "conc")
@@ -1100,7 +1107,6 @@ class InputdataController extends AbstractActionController
 
 		// make it active with real automate
 		$aParams = array('time'=>date('H:i:s'), 'activity' => $robotService->receive('G_Medicament.Calculation.C_Act_Prev'));
-		//$aParams = array('time'=>date('H:m:i'),'activity'=>500);
 		$result = new JsonModel($aParams);
 		return $result;
 	}
