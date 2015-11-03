@@ -107,13 +107,18 @@ class OperatorController extends AbstractActionController
 			&&	$robotCanInject == true
 		) ? true : false;
 		
+		$canUnload = false;
+		if ($oContainer->drugspecified == true && $oContainer->sourcekitscanned	== true && $oContainer->sourcekitloaded	== true) {
+			$canUnload = true;
+		}
+		
 		if ($oContainer->sourcekitloaded === true && $robotCanInject === false) {
 			//Rajouter log incoherence etat session etat robot
 			$oContainer->sourcekitloaded = false;
 		}
 
 		$aParam['canInject'] = ($ready) ? true : false;
-		$aParam['canUnload'] = ($ready || $oContainer->markedasended) ? true : false;
+		$aParam['canUnload'] = ($canUnload) ? true : false;
 		$aParam['canExport'] = (!$oContainer->fileexported && $oContainer->markedasended) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;

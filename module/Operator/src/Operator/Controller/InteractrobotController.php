@@ -262,7 +262,6 @@ class InteractrobotController extends AbstractActionController
 			$oContainer->drugid = 0;
 			$oContainer->sourcekitscanned = false;
 			$oContainer->sourcekitloaded = false;
-			$oContainer->markedasended = false;
 
 			$inputaction = new InputAction();
 			$inputaction->inputdate = date('Y-m-d H:i:s');
