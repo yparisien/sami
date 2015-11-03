@@ -3,6 +3,16 @@
 	<li><?php echo $this->translate('Injection')?></li>
 	<li class="active"><?php echo $this->translate('Purge')?></li>
 </ol>
+
+<div id="alertNaCl" class="alert alert-dismissable alert-danger fade in">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+		×
+	</button>
+	<p><i class="glyphicon glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate("This step and the next one are going to use NaCl solution."); ?><br />
+		<?php echo $this->translate("Please ensure that the NaCl solution volume is correct before processing steps."); ?>
+	</p>
+</div>
+
 <div class="row">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -117,6 +127,7 @@
 
 				function launchPurge()
 				{
+					$('#alertNaCl').alert('close');
 					$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
 					$("#purge-progress-1").css('width', '0%');
 					$("#purge-progress-2").css('width', '0%');
@@ -190,6 +201,12 @@
 						location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
 					});
 				}
+
+				$(function() {
+					window.setTimeout(function() { 
+						$('#alertNaCl').alert('close');
+					}, 10000);
+				});
 			</script>
 		</div>
 	</div>
