@@ -1,0 +1,14 @@
+{
+	"name": "sami-webapp",
+	"version": "0.0.1",
+	"main": "http://local.sami.com",
+	"window": {
+		"toolbar": false,
+		"width": 1024,
+		"height": 768
+	},
+	"webkit": {
+		"java": true,
+		"plugin": true
+	}
+}
