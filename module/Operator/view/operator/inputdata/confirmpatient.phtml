@@ -156,21 +156,21 @@
 							<input type="submit" id="submitExam" disabled="disabled" class="btn btn-success btn-block" value="<?php echo $this->translate('Next');?>" />
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setMinActivity()"><?php echo $this->translate('Min Activity')?></button>
+							<button type="button" class="btn btn-primary btn-block" onclick="setMinActivity()" id="btnMinActivity" disabled><?php echo $this->translate('Min Activity')?></button>
 							<div class="input-group">
 								<input type="number" class="form-control input-sm" id="minactivity" name="minactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setMaxActivity()"><?php echo $this->translate('Max Activity')?></button>
+							<button type="button" class="btn btn-primary btn-block" onclick="setMaxActivity()" id="btnMaxActivity" disabled><?php echo $this->translate('Max Activity')?></button>
 							<div class="input-group">
 								<input type="number" class="form-control input-sm" id="maxactivity" name="maxactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setNormActivity()"><?php echo $this->translate('Rate')?></button>
+							<button type="button" class="btn btn-primary btn-block" onclick="setNormActivity()" id="btnNormActivity" disabled><?php echo $this->translate('Rate')?></button>
 							<div class="input-group">
 								<input type="number" on class="form-control input-sm" id="averageactivity" name="averageactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
@@ -190,36 +190,37 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Low activity available');?></h4>
 			</div>
 			<div class="modal-body">
-				<?php echo $this->translate('Insufficient activity. Do you want to correct it ?');?>
+				<p><?php echo $this->translate('The available activity in the drug is at a low value.');?></p>
+				<p><?php echo $this->translate('Please set the activity at a lower value than the available activity');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="lowActivityOperatorResponse('correct');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="lowActivityOperatorResponse('ignore');"><?php echo $this->translate('NO');?></button>
+				<button type="button" class="btn btn-primary" onclick="correctActivity('alertlowactivity');"><?php echo $this->translate('Correct the activity');?></button>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="alerthighactivity" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="alertmaxactivity" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Maximum activity reached');?></h4>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Maximum exam activity reached');?></h4>
 			</div>
 			<div class="modal-body">
-				<?php echo $this->translate('You have reached the maximum acivity. Do you want to correct it ?');?>
+				<p><?php echo $this->translate('The activity you setted is above the limit of the current exam.');?></p>
+				<p><?php echo $this->translate('Do you want to correct the activity ?');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="highActivityOperatorResponse('correct');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="highActivityOperatorResponse('abort');"><?php echo $this->translate('NO');?></button>
+				<button type="button" class="btn btn-success" onclick="correctActivity('alertmaxactivity');"><?php echo $this->translate('YES');?></button>
+				<button type="button" class="btn btn-danger" onclick="dontChangeMaxActivity();"><?php echo $this->translate('NO');?></button>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="alertchoosepatient" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="alertminactivity" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -227,15 +228,63 @@
 				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
 			</div>
 			<div class="modal-body">
-				<p><?php echo $this->translate("Insufficient activity. You have choose to don't change the activity."); ?></p>
-				<div class="alert alert-info">
-					<i class="glyphicon glyphicon-question-sign"></i>
-					<?php echo $this->translate('Do you want to create / choose another patient ?'); ?>
+				<p><?php echo $this->translate('Insufficient activity for this exam.');?></p>
+				<p><?php echo $this->translate('The activity is null or above the min limit of this exam.');?></p>
+				<p><?php echo $this->translate('Do you want to correct the activity ?');?></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="correctActivity('alertminactivity');"><?php echo $this->translate('YES');?></button>
+				<button type="button" class="btn btn-danger" onclick="dontChangeMinActivity();"><?php echo $this->translate('NO');?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="alertmaxcenteractivity" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Center maximum activity reached');?></h4>
+			</div>
+			<div class="modal-body">
+				<p><?php echo $this->translate('You have reached the maximum activity authorized for your center.');?></p>
+				<p><?php echo $this->translate('You can correct it or use this value above the limit.');?></p>
+				<p><?php echo $this->translate('The autorization of an autority is required for exceed the maximum value.');?></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="correctActivity('alertmaxcenteractivity');"><?php echo $this->translate('Correct the value');?></button>
+				<button type="button" class="btn btn-danger" onclick="authorityConfirm();"><?php echo $this->translate('Use this value (authority required)');?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="alertconfirmauthority" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Confirmation of maxim center activity exceed'); ?></h3>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger hide" role="alert" id="errorConfirm">
+					<span id="errorConfirmMessage"></span>
+				</div>
+				<h4><?php echo $this->translate('Injection prohibited unless authorized by Radio-Pharmacist'); ?>
+				<p><strong><?php echo $this->translate('To Authorize: Please sign-in with authority account, or Cancel to end the injections.'); ?></strong></p>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+							<div class="form-group">
+								<label for="login"><?php echo $this->translate('User'); ?></label>
+								<input type="text" class="form-control" id="login" name="login" placeholder="" autocomplete="off" maxlength="100" required />
+							</div>
+							<div class="form-group">
+								<label for="password"><?php echo $this->translate('Password'); ?></label>
+								<input type="password" class="form-control" id="password" name="password" placeholder="" autocomplete="off" maxlength="100" required />
+							</div>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="lowActivityOperatorResponse('choose');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="lowActivityOperatorResponse('abort');"><?php echo $this->translate('NO');?></button>
+				<button id="btn-next" type="button" class="btn btn-success" onclick="checkAccessAuthority();"><?php echo $this->translate('Validate'); ?></button>
+				<button id="btn-exit" type="button" class="btn btn-danger" onclick="correctActivity('alertconfirmauthority');"><?php echo $this->translate('Cancel'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -244,11 +293,67 @@
 
 	var patientSetted = false;
 	var examinaSetted = false;
+	var activitySaved = null;
 									
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
 	});
 
+	function	dontChangeMaxActivity() {
+		$('#activity').val(activitySaved);
+		$('#alertmaxactivity').modal('hide');
+		//TODO Appel a un log en ajax et lancement loadactivitydata onresult
+		loadActivityData();
+	}
+	
+	function	dontChangeMinActivity() {
+		$('#activity').val(activitySaved);
+		$('#alertminactivity').modal('hide');
+		//TODO Appel a un log en ajax et lancement loadactivitydata onresult
+		loadActivityData();
+	}
+	
+	function	checkAccessAuthority() {
+		$.ajax({
+			url: "<?php echo $this->url('setup', array('action'=>'confirmauthority'));?>",
+			type: "POST",
+			data: {
+				'login'		: $('#login').val(),
+				'password'	: $('#password').val(),
+				'activity' 	: activitySaved,
+			},
+			dataType: "json"
+		}).done(function(result) {
+			$('#errorConfirm').removeClass('hide');
+			if (result.error == true) {
+				$('#errorConfirm').show();
+				$('#errorConfirmMessage').text(result.message);
+				$('#login').val('');
+				$('#password').val('');
+			} else {
+				$('#activity').val(activitySaved);
+				loadActivityData();
+				$('#errorConfirm').hide();	
+				$("#alertconfirmauthority").modal('hide');
+			}
+		});
+	}
+
+	function	correctActivity(idToClose) {
+		$('#activity').val(0);
+		$('#activity').focus();
+		$("#" + idToClose).modal('hide');
+	}
+
+	function	authorityConfirm() {
+		$("#alertmaxcenteractivity").modal('hide');
+		$("#alertconfirmauthority").modal({
+			backdrop: "static",
+			keyboard: false,
+			show: true,
+		});
+	}
+	
 	function	setPatientAndShowExam()
 	{
 		$('#spanLastname').text($('#lastname').val());
@@ -295,9 +400,7 @@
 			data: {"min" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
-			if (patientSetted == true && result.activity > 0) {
-				$('#submitExam').prop('disabled', false);
-			}
+			loadActivityData();
 		});
 	}
 
@@ -311,9 +414,7 @@
 			data: {"max" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
-			if (patientSetted == true && result.activity > 0) {
-				$('#submitExam').prop('disabled', false);
-			}
+			loadActivityData();
 		});
 	}
 
@@ -327,9 +428,7 @@
 			data: {"norm" : 1}
 		}).done(function(result) {
 			$('#activity').val(result.activity);
-			if (patientSetted == true && result.activity > 0) {
-				$('#submitExam').prop('disabled', false);
-			}
+			loadActivityData();
 		});
 	}
 
@@ -346,6 +445,8 @@
 				//TODO FAIRE APPARAITRE MESSAGE D"ERREUR ET ANNULER LE PATIENT EN COURS
 			} else {
 				examinaSetted = true;
+				
+				
 				$('#averageactivity').val(result.examination.rate);
 				$('#minactivity').val(result.examination.min);
 				$('#maxactivity').val(result.examination.max);
@@ -414,45 +515,15 @@
 			var data = result;
 			$("#activity-time").html(data.time);
 			$("#activityavailable").val(data.activity);
-			if ($("#activity").val() > 0 && (Number(data.activity) < Number($("#activity").val())))
-			{
-				$("#alertlowactivity").modal('show');
-			}
-			else if ($("#activity").val() > 0) {
-				if (patientSetted == true && examinaSetted == true) {
-					$('#submitExam').prop('disabled', false);
-				}
+			if (patientSetted == true && examinaSetted == true && $('#activity').val() > 0) {
+				$('#submitExam').prop('disabled', false);
 			}
 		});
 	}
 
-	function	lowActivityOperatorResponse(response)
-	{
-		$('#alertlowactivity').modal('hide');
-		$('#alertchoosepatient').modal('hide');
-		
-		if (response == 'correct') {
-			$('#activity').val('');
-			$('#activity').focus();
-		} else if (response == 'ignore') {
-			$("#alertchoosepatient").modal('show');
-		}
-// 		else if (response == 'choose') {
-//			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient'));?>';
-// 		} else if (response == 'abort') {
-//			location.href = '<?php echo $this->url('operator');?>';
-// 		}
-		//TODO Appel pour mettre un log en base de donnée
-		
-	}
-
-	function	highActivityOperatorResponse(response)
-	{
-		//TODO
-	}
-
 	//Appel au robot
 	function	setActivity() {
+		activitySaved = $('#activity').val();
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'asetactivity'));?>",
 			type: "POST",
@@ -460,7 +531,37 @@
 			dataType: "json"
 		}).done(function(result) {
 			$('#activity').val(result.activity);
-			loadActivityData();
+
+			if (result.activity < 0) {
+				if (result.activity == -1) {
+					$("#alertlowactivity").modal({
+						backdrop: "static",
+						keyboard: false,
+						show: true,
+					});
+				} else if (result.activity == -2) {
+					$("#alertmaxcenteractivity").modal({
+						backdrop: "static",
+						keyboard: false,
+						show: true,
+					});
+				} else if (result.activity == -3) {
+					$("#alertminactivity").modal({
+						backdrop: "static",
+						keyboard: false,
+						show: true,
+					});
+				} else if (result.activity == -4) {
+					$("#alertmaxactivity").modal({
+						backdrop: "static",
+						keyboard: false,
+						show: true,
+					});
+				}
+			} else {
+				loadActivityData();
+			}
+			
 		});	
 	}
 
@@ -483,11 +584,20 @@
 		$('#examination').change(function() {
 			$('#submitExam').prop('disabled', true);
 			if ($('#examination').val() > 0) {
+				$('#btnNormActivity').removeAttr('disabled');
+				$('#btnMinActivity').removeAttr('disabled');
+				$('#btnMaxActivity').removeAttr('disabled');
+			
 				loadExamination($('#examination').val());
+			} else {
+				$('#btnNormActivity').attr('disabled');
+				$('#btnMinActivity').attr('disabled');
+				$('#btnMaxActivity').attr('disabled');
 			}
 		});
 		
 		$('#activity').change(function () {
+			console.log('activity change =>' + $('#activity').val());
 			$('#submitExam').prop('disabled', true);
 			setActivity();
 		});

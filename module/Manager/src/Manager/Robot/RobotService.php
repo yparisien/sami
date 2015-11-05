@@ -113,6 +113,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 					$mRet = -4;
 				} else {
 					$mRet = mt_rand(400, 500);
+					$fr->lastActDispo = $mRet;
 				}
 				break;
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTPREV:
@@ -127,7 +128,29 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = $fr->activityconc * $fr->vialvol;
 				break;
 			case RobotConstants::PATIENT_ACTUAL_ACTTOINJ:
-				$mRet = 300;
+				$fr = new Container('fake_robot');
+				$oInjection = new Container('injection_profile');
+				$mRet = $fr->activitytoinj;
+				if (isset($fr->confirmpatient) && $fr->confirmpatient === true) {
+					$maxactivity = $this->getServiceLocator()->get('Manager\Model\SystemTable')->getSystem()->maxactivity;
+					$exam = null;
+					if ($oInjection->examinationid > 0) {
+						$exam = $this->getServiceLocator()->get('Manager\Model\ExaminationTable')->getExamination($oInjection->examinationid);
+					}
+					if ($mRet > $maxactivity) {
+						//Activite supérieure à celle du centre
+						$mRet = -2;
+					} else if ($exam != null && $mRet > $exam->max) {
+						//Activité supérieure à celle de l'examen
+						$mRet = -4;
+					} else if ($mRet == 0 || ($exam != null && $mRet < $exam->min)) {
+						//Activité inférieure à celle de l'examen
+						$mRet = -3;
+					} else if ($mRet > $fr->lastActDispo) {
+						//Activité supérieure à celle disponible
+						$mRet = -1;
+					}
+				}
 				break;
 			case RobotConstants::MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE:
 				$mRet = 100;

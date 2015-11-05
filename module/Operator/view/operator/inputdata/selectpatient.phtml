@@ -25,12 +25,12 @@
 							</ul>
 						
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active" id="compatibles">
+								<div role="tabpanel" class="tab-pane active">
 									<table class="table table-condensed <?php if (count($patients_compatible) > 0) { echo 'table-hover'; } ?>" style="margin-bottom: 0;">
 										<thead>
 											<tr>
-												<th>Nom</th>
-												<th>Prénom</th>
+												<th><?php echo $this->translate('Lastname'); ?></th>
+												<th><?php echo $this->translate('Firstname'); ?></th>
 											</tr>
 										</thead>
 									</table>
@@ -45,6 +45,8 @@
 													<td></td>
 												</tr>
 											<?php } ?>
+												<tr><td colspan="3" style="text-align: center;"><i><?php echo $this->translate('End of patients list.'); ?></i></td></tr>
+												<tr><td colspan="3"><hr /></td></tr>
 											<?php } else if ((count($patients_compatible) + count($patients_nocompatible)) == 0) { ?>
 												<tr>
 													<td colspan="3">
@@ -131,6 +133,7 @@
 <?php 	} ?>
 <?php } ?>
 	var scrollPosition = 0;
+	var scrollTop = null;
 	var scrollMax = <?php echo $n - 1; ?>;
 
 	function	scrollToTop() {
@@ -147,6 +150,10 @@
 	}
 
 	function	scrollToDown() {
+		if (scrollTop !== null && scrollTop == $('#compatibles').scrollTop()) {
+			return false;
+		}
+		
 		scrollPosition++;
 		if (scrollPosition > scrollMax) {
 			scrollPosition = scrollMax;
@@ -157,6 +164,8 @@
 		$('#compatibles').animate({
             scrollTop: target.outerHeight() * scrollPosition
         }, 400);
+        
+		scrollTop = $('#compatibles').scrollTop();
 	}
 
 	function	loadPatient(patientid)

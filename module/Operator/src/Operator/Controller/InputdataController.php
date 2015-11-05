@@ -560,6 +560,47 @@ class InputdataController extends AbstractActionController
 		}
 	}
 
+	public function confirmauthorityAction() {
+		if($this->getRequest()->isPost()) {
+			$aParams = array('message' => null, 'error' => false);
+			
+			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+			$oRequest = $this->getRequest();
+		
+			$superviseur = $this->getUserTable()->searchByLogin($oRequest->getPost('login'));
+		
+			if ($superviseur === false) {
+				$message = sprintf($translate("The user (%s) is unknow."), $oRequest->getPost('login'));
+				$aParams['message'] = $message;
+				$aParams['error'] = true;
+			} else if ($superviseur instanceof User) {
+				if ($superviseur->admin === true && $superviseur->visible === true) {
+					if ($superviseur->password == sha1($oRequest->getPost('password'))) {
+						$activity = $oRequest->getPost('activity');
+						/*
+						 * Enregistre l'action en base de donnée
+						 */
+						$action = new InputAction();
+						$action->inputdate = date('Y-m-d H:i:s');
+						$action->userid = $superviseur->id;
+						$action->action = sprintf($translate("Maximum activity of center reachead. Activity setted: %s. Overpass by %s %s"), $activity, $superviseur->firstname, $superviseur->lastname);
+						$this->getInputActionTable()->saveInputAction($action);
+					} else {
+						$message = sprintf($translate("Authentification failed. Bad password"), $oRequest->getPost('login'));
+						$aParams['message'] = $message;
+						$aParams['error'] = true;
+					}
+				} else {
+					$message = sprintf($translate("The user (%s) is not autorized to perform this action."), $oRequest->getPost('login'));
+					$aParams['message'] = $message;
+					$aParams['error'] = true;
+				}
+			}
+			
+			return new JsonModel($aParams);
+		}
+	} 
+	
 	public function	checkperemptionAction()
 	{
 		$oContainer = new Container('automate_setup');
@@ -874,44 +915,56 @@ class InputdataController extends AbstractActionController
 		$cfg = $sm->get('Config');
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		$oContainer = new Container('injection_profile');
+		$fr = new Container('fake_robot');
+		$fr->confirmpatient = false;
 		
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$r = $this->getRequest();
+			
+			if ($simulated) {
+				$exam = null;
+				if ($oContainer->examinationid) {
+					$exam = $this->getExaminationTable()->getExamination($oContainer->examinationid);
+				}
+				$p = $this->getPatientTable()->getPatient($oContainer->patientid);
+			}
 
 			if ($r->getPost('min'))
 			{
+				if ($simulated) {
+					$fr->activitytoinj = $exam->min;
+				}
 				$robotService->send(array('G_Patient.Calculation.Choice_Min' => 1));
 			}
 			if ($r->getPost('max'))
 			{
+				if ($simulated) {
+					$fr->activitytoinj = $exam->max;
+				}
 				$robotService->send(array('G_Patient.Calculation.Choice_Max' => 1));
 			}
 			if ($r->getPost('norm'))
 			{
+				if ($simulated) {
+					$fr->activitytoinj = $exam->rate * $p->weight;
+					if ($fr->activitytoinj > $exam->max) {
+						$fr->activitytoinj = $exam->max;
+					}
+				}
 				$robotService->send(array('G_Patient.Calculation.Choice_Reco' => 1));
 			}
-			if ($r->getPost('activity'))
+			if ($r->getPost('activity') !== null)
 			{
+				$fr->activitytoinj = $r->getPost('activity');
+				if ($simulated && stripos($this->getRequest()->getServer('HTTP_REFERER'), '/setup/confirmpatient') !== false) {
+					$fr->confirmpatient = true;
+				}
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
 			
-			if ($simulated) {
-				$exam = $this->getExaminationTable()->getExamination($oContainer->examinationid);
-				$p = $this->getPatientTable()->getPatient($oContainer->patientid);
-				if ($r->getPost('activity')) {
-					$activity = $r->getPost('activity');
-				} else if ($r->getPost('min')) {
-					$activity = $exam->min;
-				} else if ($r->getPost('max')) {
-					$activity = $exam->max;
-				} else if ($r->getPost('norm')) {
-					$activity = $exam->rate * $p->weight;
-				}
-			} else {
-				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
-			}
+			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			
 			$result = new JsonModel(array('activity' => $activity));
 			$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
@@ -1049,6 +1102,8 @@ class InputdataController extends AbstractActionController
 				$fr->expirationtime = $r->getPost('expirationtime');
 				$aDrugData['G_Medicament.Input.DT_End'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
 			}
+			$fr->activityconfirm = null;
+			
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aDrugData);
 		}
