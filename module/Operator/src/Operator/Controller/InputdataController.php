@@ -294,6 +294,33 @@ class InputdataController extends AbstractActionController
 		}
 	}
 
+	public function unloadpatientAction() {
+		$sm = $this->getServiceLocator();
+		$config = $sm->get('Config');
+		$error = false;
+		$errorMessage = null;
+		
+		$oImporter = new Importer($this->getServiceLocator());
+		$oImporter->cleanDataBase();
+		
+		$oContainer = new Container('automate_setup');
+		$oContainer->fileloaded = false;
+		$oContainer->fileexported = false;
+		$oContainer->markedasended = false;
+		$oContainer->loadedfilename = null;
+		
+		// log action
+		$inputaction = new InputAction();
+		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+		$inputaction->action = "Cancel of import file";
+		$this->getInputActionTable()->saveInputAction($inputaction);
+		
+		$aRetVal = array('error' => $error, 'errorMessage' => $errorMessage);
+		
+		return new JsonModel($aRetVal);
+	}
+	
 	public function loadpatientAction()
 	{
 		$sm = $this->getServiceLocator();

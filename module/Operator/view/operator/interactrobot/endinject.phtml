@@ -10,14 +10,28 @@
 		</div>
 		<div class="panel-body">
 			<p><?php echo $this->translate('End of injections mean rinsing the needle and reinject the content into the source vial.')?></p>
-			<p><?php echo $this->translate('Remaining activity at ')?><span id="activity-time"></span>: <span id="activity"></span><?php echo $unit?></p>
-			<p><?php echo $this->translate('Confirm the end of injection?')?></p>
+			<div class="form-group">
+				<label for="activity" class="col-sm-3 col-sm-offset-3 control-label"><?php echo $this->translate('Remaining activity at ')?>
+					<span id="activity-time">HH.MM</span>
+				</label>
+				<div class="col-sm-3">
+					<div class="input-group">
+						<input type="number" class="form-control input-sm" id="activity" name="activity" value="???" autocomplete="off" readonly/>
+						<span class="input-group-addon"><?php echo $unit?></span>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="alert alert-info" style="margin-top: 10px;">
+			<?php echo $this->translate('Confirm the end of injection?')?>
+			</div>
+		</div>
+		<div class="panel-footer">
 			<div class="row">
 				<div class="col-md-3"></div>
-				<div class="col-md-3 text-center"><button class="btn btn-primary" id="btnconfirm"><?php echo $this->translate('YES')?></button></div>
-				<div class="col-md-3 text-center"><button class="btn btn-danger"  id="btncancel"><?php echo $this->translate('NO')?></button></div>
+				<div class="col-md-3 text-center"><button class="btn btn-primary btn-block" id="btnconfirm"><?php echo $this->translate('YES')?></button></div>
+				<div class="col-md-3 text-center"><button class="btn btn-danger btn-block"  id="btncancel"><?php echo $this->translate('NO')?></button></div>
 				<div class="col-md-3"></div>
-					
 			</div>
 		</div>
 	</div>
@@ -70,7 +84,7 @@
 		}).done(function(result) {
 			var data = result;
 			$("#activity-time").html(data.time);
-			$("#activity").html(data.activity);
+			$("#activity").val(data.activity);
 		});
 		//setTimeout(function(){loadActivityData();}, 5000);
 	}

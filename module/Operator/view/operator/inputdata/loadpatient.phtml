@@ -54,7 +54,7 @@
 						<button id="btn-next" type="button" class="btn btn-success btn-block" onclick="location.href='<?php echo $this->url('operator')?>'" disabled><?php echo $this->translate('Next')?></button>
 					</div>
 					<div class="col-md-2">
-						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="location.href='<?php echo $this->url('operator')?>'"><?php echo $this->translate('Abort')?></button>
+						<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="cancelImport();"><?php echo $this->translate('Abort')?></button>
 					</div>
 				</div>
 			</form>
@@ -78,6 +78,20 @@
 						}
 					});
 				});
+
+				function cancelImport() {
+					$.ajax({
+						type: "POST",
+						url: "<?php echo $this->url('setup', array('action'=>'unloadpatient'));?>",
+						dataType: "json",
+					}).done(function(result) {
+						if(result.error == false)
+						{
+							location.href='<?php echo $this->url('operator')?>';
+						}
+					});
+				}
+				
 				function sendFile()
 				{
 					resetBar();
