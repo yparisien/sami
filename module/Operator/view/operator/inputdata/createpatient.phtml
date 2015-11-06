@@ -26,7 +26,7 @@
 									<div class="col-sm-8">
 										<div class="input-group date" id="datetimepicker-birthday">
 											<input type="text" tabindex="3" class="form-control number" data-format="YYYY-MM-DD" id="birthdate" name="birthdate" 
-											autocomplete="off" maxlength="10" required />
+											autocomplete="off" maxlength="10" placeholder="YYYY-MM-DD" required />
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -94,7 +94,7 @@
 									<label for="input7" class="col-sm-4 control-label"><?php echo $this->translate('Weight');?></label>
 									<div class="col-sm-8">
 										<div class="input-group">
-											<input type="number" min="1" max="500" tabindex="4" class="form-control input-sm" id="weight" name="weight" 
+											<input type="number" min="1" max="500" step="0.01" tabindex="4" class="form-control input-sm" id="weight" name="weight" 
 											 autocomplete="off" />
 											<span class="input-group-addon">Kg</span>
 										</div>

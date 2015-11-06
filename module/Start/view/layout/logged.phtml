@@ -238,6 +238,7 @@ if ($virtualkeyboardEnable === true) {
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").keyboard({
 						autoAccept: true,
+						usePreview: false,
 						display : {
 							bksp   : "\u21e6",
 							accept : "' . $this->translate('Validate') . '",
@@ -257,6 +258,7 @@ if ($virtualkeyboardEnable === true) {
 					
 					$("input[type=text].form-control.barcode").keyboard({
 						autoAccept: true, 
+					    usePreview: false,
 						layout : "custom",
 						maxLength : 35,
 						customLayout: {
@@ -275,7 +277,8 @@ if ($virtualkeyboardEnable === true) {
 					});
 					
 					$("textarea.form-control").keyboard({
-						autoAccept: true, 
+						autoAccept: true,
+						usePreview: false,
 						layout: "french-azerty-1",
 						css: {
 					        input: "form-control input-md",
@@ -288,6 +291,7 @@ if ($virtualkeyboardEnable === true) {
 					
 					$("input[type=number].form-control,input[type=text].form-control.number").keyboard({
 						layout : "custom",
+						usePreview: false,
 						customLayout: {
 							"normal" : [
 								"7 8 9 {b}",
@@ -308,6 +312,7 @@ if ($virtualkeyboardEnable === true) {
 					
 					$("input[type=text].input-date").keyboard({
 						layout : "custom",
+						usePreview: false,
 						customLayout: {
 							"normal" : [
 								"7 8 9 {b}",

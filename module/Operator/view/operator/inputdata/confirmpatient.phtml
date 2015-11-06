@@ -115,7 +115,7 @@
 										<label for="weight" class="col-sm-4 control-label" data-toggle="tooltip" data-placement="top" title="<?php echo $this->translate('This field impact the activity'); ?>"><i class="glyphicon glyphicon-info-sign"></i> <?php echo $this->translate('Weight');?></label>
 										<div class="col-sm-8">
 											<div class="input-group">
-												<input type="number" min="1" max="500" class="form-control input-sm" id="weight" 
+												<input type="number" min="1" max="500" class="form-control input-sm" id="weight" step="0.01"
 												name="weight" tabindex="4" autocomplete="off" placeholder="<?php echo $this->translate('ex: 72,25'); ?>" required />
 												<span class="input-group-addon">Kg</span>
 											</div>
@@ -443,9 +443,15 @@
 		}).done(function(result) {
 			if (result.error === true) {
 				//TODO FAIRE APPARAITRE MESSAGE D"ERREUR ET ANNULER LE PATIENT EN COURS
+				$('#btnNormActivity').attr('disabled');
+				$('#btnMinActivity').attr('disabled');
+				$('#btnMaxActivity').attr('disabled');
 			} else {
 				examinaSetted = true;
 				
+				$('#btnNormActivity').removeAttr('disabled');
+				$('#btnMinActivity').removeAttr('disabled');
+				$('#btnMaxActivity').removeAttr('disabled');
 				
 				$('#averageactivity').val(result.examination.rate);
 				$('#minactivity').val(result.examination.min);
@@ -584,10 +590,6 @@
 		$('#examination').change(function() {
 			$('#submitExam').prop('disabled', true);
 			if ($('#examination').val() > 0) {
-				$('#btnNormActivity').removeAttr('disabled');
-				$('#btnMinActivity').removeAttr('disabled');
-				$('#btnMaxActivity').removeAttr('disabled');
-			
 				loadExamination($('#examination').val());
 			} else {
 				$('#btnNormActivity').attr('disabled');

@@ -114,6 +114,7 @@
 
 				<?php if ($canExport) { ?>
 				<a href="<?php echo $this->url('exportbuffer', array('action'=>'index'))?>" class="list-group-item">
+					<span class="badge" title="<?php echo $this->translate('Action required')?>"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
 					<span class="glyphicon glyphicon-export"></span>
 					<?php echo $this->translate('Transferting patient\'s data to software')?>
 				</a>
