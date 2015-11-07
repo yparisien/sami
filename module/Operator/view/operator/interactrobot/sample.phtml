@@ -20,17 +20,27 @@
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-sm-2"><?php echo $this->translate('Lastname')?></div>
-								<div class="col-sm-2"><input id="lastname" type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
-								<div class="col-sm-2"><?php echo $this->translate('Firstname')?></div>
-								<div class="col-sm-2"><input id="firstname" type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/></div>
-								<div class="col-sm-2"><?php echo $this->translate('Activity to inject')?></div>
-								<div class="col-sm-2">
-									<div class="input-group">
-										<input id="activity" type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/>
-										<span class="input-group-addon"><?php echo $unit;?></span>
+								<form class="form-horizontal" role="form">
+									<div class="col-sm-4">
+										<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Lastname"); ?></label>
+										<div class="input-group col-sm-6">
+											<input id="lastname" type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled />
+										</div>
 									</div>
-								</div>
+									<div class="col-sm-4">
+										<label for="firstname" class="control-label col-sm-6"><?php echo $this->translate("Firstname"); ?></label>
+										<div class="input-group col-sm-6">
+											<input id="firstname" type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<label for="activity" class="control-label col-sm-6"><?php echo $this->translate("Activity to inject"); ?></label>
+										<div class="input-group col-sm-6">
+											<input id="activity" type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/>
+											<span class="input-group-addon"><?php echo $unit;?></span>
+										</div>
+									</div>
+								</form>
 							</div>
 							<div class="row" style="margin-top: 10px;">
 								<div class="col-md-2 col-md-offset-5">
@@ -59,12 +69,29 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-2"><p>Activité prélevée</p></div>
-				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-add" value="0" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
-				<div class="col-sm-2"><p>Activité restante</p></div>
-				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-left" value="500" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
-				<div class="col-sm-2"><p>Activité demandée</p></div>
-				<div class="col-sm-2"><div class="input-group"><input type="number" id="val-asked" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/><span class="input-group-addon"><?php echo $unit;?></span></div></div>
+				<form class="form-horizontal" role="form">
+					<div class="col-sm-4">
+						<label for="val-add" class="control-label col-sm-6"><?php echo $this->translate("Levied activity"); ?></label>
+						<div class="input-group col-sm-6">
+							<input type="number" id="val-add" value="0" class="form-control" autocomplete="off" disabled/>
+							<span class="input-group-addon"><?php echo $unit;?></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label for="val-left" class="control-label col-sm-6"><?php echo $this->translate("Remaining activity"); ?></label>
+						<div class="input-group col-sm-6">
+							<input type="number" id="val-left" value="500" class="form-control" autocomplete="off" disabled/>
+							<span class="input-group-addon"><?php echo $unit;?></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label for="val-asked" class="control-label col-sm-6"><?php echo $this->translate("Requested activity"); ?></label>
+						<div class="input-group col-sm-6">
+							<input type="number" id="val-asked" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/>
+							<span class="input-group-addon"><?php echo $unit;?></span>
+						</div>
+					</div>
+				</form>
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-2 col-md-offset-3">
@@ -126,9 +153,9 @@
 					function launchSampling()
 					{
 						lockui();
+						$('#collapseOne').collapse('toggle');
 						$("#dilution-confirm").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
-						$('#collapseOne').collapse('toggle');
 						$('#dilution-statut').html('Prélèvement en cours...');
 						$("#val-asked").val(<?php echo $injection['activity']?>);
 
@@ -148,7 +175,12 @@
 
 					function	adjustActivity()
 					{
+						lockui();
+						$("#dilution-confirm").attr('disabled', 1);
 						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+						$('#dilution-statut').html('Prélèvement en cours...');
+						$("#val-asked").val(<?php echo $injection['activity']?>);
+						
 						$.ajax({
               				type: "POST",
               				url: "<?php echo $this->url('inject', array('action'=>'aadjustsampling'))?>",
