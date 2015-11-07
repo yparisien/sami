@@ -1,7 +1,7 @@
 {
 	"name": "sami-webapp",
 	"version": "0.0.1",
-	"main": "http://local.sami.com",
+	"main": "http://sami.local",
 	"window": {
 		"toolbar": false,
 		"width": 1024,
