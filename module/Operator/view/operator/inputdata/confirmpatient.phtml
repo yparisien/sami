@@ -9,7 +9,7 @@
 				<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $this->translate("Confirmation of patient's datas")?>
 			</div>
 			<div class="panel-body">
-				<form class="form-horizontal" role="form" novalidate="novalidate"  action="<?php echo $this->url('setup', array('action'=>'storecurrentpatient'))?>" method="POST">
+				<form class="form-horizontal" name="formconfirm" id="formconfirm" role="form" novalidate="novalidate"  action="<?php echo $this->url('setup', array('action'=>'storecurrentpatient'))?>" method="POST">
 					<input type="hidden" id="patient-id" name="patient_id" value="0" />
 					
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -95,7 +95,7 @@
 										<label for="examinationid" class="col-sm-4 control-label"><?php echo $this->translate('Examination')?></label>
 										<div class="col-sm-8">
 											<select class="form-control" id="examination" name="examinationid" tabindex="7" required>
-												<option value=""><?php echo $this->translate('Choose an exam'); ?></option>
+												<option value="">?</option>
 												<optgroup label="<?php echo $this->translate('Compatible exams'); ?>">
 											<?php foreach($examinations['compatible'] as $examination) {?>
 												<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
@@ -153,7 +153,9 @@
 					</div>
 					<div class="row">
 						<div class="col-md-2 col-md-offset-1">
-							<input type="submit" id="submitExam" disabled="disabled" class="btn btn-success btn-block" value="<?php echo $this->translate('Next');?>" />
+							<button id="submitExam" disabled="disabled" onclick="submitForm();" class="btn btn-success btn-block">
+								<?php echo $this->translate('Next');?>
+							</button>
 						</div>
 						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-block" onclick="setMinActivity()" id="btnMinActivity" disabled><?php echo $this->translate('Min Activity')?></button>
@@ -189,15 +191,19 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Low activity available');?></h4>
 			</div>
 			<div class="modal-body">
 				<p><?php echo $this->translate('The available activity in the drug is at a low value.');?></p>
-				<p><?php echo $this->translate('Please set the activity at a lower value than the available activity');?></p>
+				<p><?php echo $this->translate('Please set the activity at a lower value than the available activity or choose another patient.');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="correctActivity('alertlowactivity');"><?php echo $this->translate('Correct the activity');?></button>
+				<div class="col-md-4 col-md-offset-2">
+					<button type="button" class="btn btn-primary btn-block" onclick="correctActivity('alertlowactivity');"><?php echo $this->translate('Correct the activity');?></button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-default btn-block" onclick="chooseAnotherPatient('alertlowactivity');"><?php echo $this->translate('Choose another patient');?></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -206,7 +212,6 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Maximum exam activity reached');?></h4>
 			</div>
 			<div class="modal-body">
@@ -214,8 +219,15 @@
 				<p><?php echo $this->translate('Do you want to correct the activity ?');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="correctActivity('alertmaxactivity');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="dontChangeMaxActivity();"><?php echo $this->translate('NO');?></button>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-success btn-block" onclick="correctActivity('alertmaxactivity');"><?php echo $this->translate('YES');?></button>
+				</div>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-danger btn-block" onclick="dontChangeMaxActivity();"><?php echo $this->translate('NO');?></button>
+				</div>
+				<div class="col-md-5">
+					<button type="button" class="btn btn-default btn-block" onclick="chooseAnotherPatient('alertmaxactivity');"><?php echo $this->translate('Choose another patient');?></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -224,7 +236,6 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Insufficient activity');?></h4>
 			</div>
 			<div class="modal-body">
@@ -233,8 +244,15 @@
 				<p><?php echo $this->translate('Do you want to correct the activity ?');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="correctActivity('alertminactivity');"><?php echo $this->translate('YES');?></button>
-				<button type="button" class="btn btn-danger" onclick="dontChangeMinActivity();"><?php echo $this->translate('NO');?></button>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-success btn-block" onclick="correctActivity('alertminactivity');"><?php echo $this->translate('YES');?></button>
+				</div>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-danger btn-block" onclick="dontChangeMinActivity();"><?php echo $this->translate('NO');?></button>
+				</div>
+				<div class="col-md-5">
+					<button type="button" class="btn btn-default btn-block" onclick="chooseAnotherPatient('alertminactivity');"><?php echo $this->translate('Choose another patient');?></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -251,8 +269,12 @@
 				<p><?php echo $this->translate('The autorization of an autority is required for exceed the maximum value.');?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onclick="correctActivity('alertmaxcenteractivity');"><?php echo $this->translate('Correct the value');?></button>
-				<button type="button" class="btn btn-danger" onclick="authorityConfirm();"><?php echo $this->translate('Use this value (authority required)');?></button>
+				<div class="col-md-4 col-md-offset-2">
+					<button type="button" class="btn btn-success btn-block" onclick="correctActivity('alertmaxcenteractivity');"><?php echo $this->translate('Correct the value');?></button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger btn-block" onclick="authorityConfirm();"><?php echo $this->translate('Use this value (authority required)');?></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -283,8 +305,12 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="btn-next" type="button" class="btn btn-success" onclick="checkAccessAuthority();"><?php echo $this->translate('Validate'); ?></button>
-				<button id="btn-exit" type="button" class="btn btn-danger" onclick="correctActivity('alertconfirmauthority');"><?php echo $this->translate('Cancel'); ?></button>
+				<div class="col-md-4 col-md-offset-2">
+					<button id="btn-next" type="button" class="btn btn-success btn-block " onclick="checkAccessAuthority();"><?php echo $this->translate('Validate'); ?></button>
+				</div>
+				<div class="col-md-4">
+					<button id="btn-exit" type="button" class="btn btn-danger btn-block" onclick="correctActivity('alertconfirmauthority');"><?php echo $this->translate('Cancel'); ?></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -299,6 +325,22 @@
 	  $('[data-toggle="tooltip"]').tooltip()
 	});
 
+	function	chooseAnotherPatient(idToClose) {
+		$.ajax({
+			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
+			type: "GET",
+			dataType: "json",
+		}).done(function(result) {
+			$("#" + idToClose).modal('hide');
+			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
+		});
+	}
+	
+	function 	submitForm() {
+		$('#submitExam').prop('disabled', true);
+ 		setActivity(true);
+	}
+	
 	function	dontChangeMaxActivity() {
 		$('#activity').val(activitySaved);
 		$('#alertmaxactivity').modal('hide');
@@ -382,7 +424,7 @@
 	function	cancelPatient()
 	{
 		$.ajax({
-			url: "<?php echo $this->url('setup', array('action' => 'ainputsoftexit'));?>",
+			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
 			type: "GET",
 			dataType: "json",
 		}).done(function(result) {
@@ -474,7 +516,7 @@
 			$('#activity').val(result.activity);
 
 			if (result.activity > 0) {
-				setActivity();
+				setActivity(false);
 			}
 			
 			$('#comments').val(result.comments);
@@ -528,7 +570,7 @@
 	}
 
 	//Appel au robot
-	function	setActivity() {
+	function	setActivity(submitForm) {
 		activitySaved = $('#activity').val();
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'asetactivity'));?>",
@@ -536,7 +578,7 @@
 			data: { "activity" : $('#activity').val() },
 			dataType: "json"
 		}).done(function(result) {
-			$('#activity').val(result.activity);
+			
 
 			if (result.activity < 0) {
 				if (result.activity == -1) {
@@ -563,9 +605,15 @@
 						keyboard: false,
 						show: true,
 					});
+				} else {
+					$('#activity').val(result.activity);
 				}
 			} else {
-				loadActivityData();
+				if (submitForm == true) {
+					$('#formconfirm').submit();
+				} else {
+					loadActivityData();
+				}
 			}
 			
 		});	
@@ -601,7 +649,7 @@
 		$('#activity').change(function () {
 			console.log('activity change =>' + $('#activity').val());
 			$('#submitExam').prop('disabled', true);
-			setActivity();
+			setActivity(false);
 		});
 
 		$('#weight').change(function () {

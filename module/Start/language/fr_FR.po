@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-05 17:48+0100\n"
-"PO-Revision-Date: 2015-11-05 17:48+0100\n"
+"POT-Creation-Date: 2015-11-03 13:09+0100\n"
+"PO-Revision-Date: 2015-11-03 18:01+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -143,40 +143,31 @@ msgstr "L'Opérateur (%s) a été modifié"
 msgid "Operator (%s) has been deleted."
 msgstr "L'Opérateur (%s) a été effacé"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:573
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:624
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:583
 #, php-format
 msgid "The user (%s) is unknow."
-msgstr ""
+msgstr "L'Utilisateur (%s) est inconnu dans la base de données"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:586
-#, php-format
-msgid ""
-"Maximum activity of center reachead. Activity setted: %s. Overpass by %s %s"
-msgstr ""
-
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:589
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:641
-msgid "Authentification failed. Bad password"
-msgstr ""
-
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:594
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:646
-#, php-format
-msgid "The user (%s) is not autorized to perform this action."
-msgstr ""
-
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:636
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:595
 #, php-format
 msgid "Peremption limit reachead. Overpass by %s %s"
-msgstr ""
+msgstr "La date et heure de Péremption sont dépassée - Autorisation par %s %s"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1197
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:600
+msgid "Authentification failed. Bad password"
+msgstr "Authentification refusée - Mauvais Mot de Passe"
+
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:605
+#, php-format
+msgid "The user (%s) is not autorized to perform this action."
+msgstr "L'Utilisateur (%s) n'est pas autorisé pour réaliser cette action"
+
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1142
 #, php-format
 msgid "Source kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit Source déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1241
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1186
 #, php-format
 msgid "Patient kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit Patient déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
@@ -250,7 +241,6 @@ msgstr ""
 
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:34
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:19
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:275
 msgid "User"
 msgstr "Opérateur"
 
@@ -258,7 +248,6 @@ msgstr "Opérateur"
 #: ../module/Auth/view/auth/auth/swapauth.phtml:35
 #: ../module/Auth/view/auth/login/index.phtml:18
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:23
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:279
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -268,7 +257,7 @@ msgstr "Mot de passe"
 #: ../module/Operator/view/operator/inputdata/drug.phtml:121
 #: ../module/Operator/view/operator/inputdata/loadkitpatient.phtml:18
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:54
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:107
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:105
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:106
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:66
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:71
@@ -313,8 +302,8 @@ msgstr "Confirmer Mot de Passe"
 #: ../module/Auth/view/auth/login/changepwd.phtml:38
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:79
 #: ../module/Operator/view/operator/inputdata/loadpatient.phtml:39
-#: ../module/Operator/view/operator/operator/index.phtml:143
-#: ../module/Operator/view/operator/operator/index.phtml:160
+#: ../module/Operator/view/operator/operator/index.phtml:142
+#: ../module/Operator/view/operator/operator/index.phtml:159
 msgid "Confirm"
 msgstr "Confirmez"
 
@@ -402,7 +391,7 @@ msgid "Launch another injection"
 msgstr "Lancer une nouvelle Injection"
 
 #: ../module/Bufferspace/view/bufferspace/monitor/patientlist.phtml:40
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:114
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:112
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:192
 msgid "End of injections"
 msgstr "Fin des Injections"
@@ -523,7 +512,7 @@ msgstr "Ajouter un Médicament"
 #: ../module/Manager/view/manager/examination/index.phtml:27
 #: ../module/Manager/view/manager/user/index.phtml:19
 msgid "Action"
-msgstr "Action"
+msgstr "Action :"
 
 #: ../module/Manager/view/manager/drug/index.phtml:35
 #: ../module/Manager/view/manager/examination/index.phtml:39
@@ -769,7 +758,6 @@ msgstr "Compte Opérateur"
 #: ../module/Manager/view/manager/user/index.phtml:15
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:26
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:18
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:32
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:47
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:23
 msgid "Lastname"
@@ -794,7 +782,6 @@ msgstr "Nouveau  Mot de Passe"
 #: ../module/Manager/view/manager/user/index.phtml:16
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:55
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:87
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:33
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:49
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:25
 msgid "Firstname"
@@ -852,12 +839,10 @@ msgid "CAUTION: EXPIRY TIME EXCEEDED"
 msgstr "Date & Heure de Péremtion dépassée"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:14
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:270
 msgid "Injection prohibited unless authorized by Radio-Pharmacist"
 msgstr "Injection interdite sans l'Authorisation d'un Superviseur"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:15
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:271
 msgid ""
 "To Authorize: Please sign-in with authority account, or Cancel to end the "
 "injections."
@@ -866,18 +851,16 @@ msgstr ""
 "l’autorité puis Validation  Exit pour retour au Menu Opérateur"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:30
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:286
 #: ../module/Start/view/layout/layout.phtml:101
 #: ../module/Start/view/layout/logged.phtml:243
 msgid "Validate"
 msgstr "Valider"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:33
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:287
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:118
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:116
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:109
-#: ../module/Operator/view/operator/operator/index.phtml:144
-#: ../module/Operator/view/operator/operator/index.phtml:161
+#: ../module/Operator/view/operator/operator/index.phtml:143
+#: ../module/Operator/view/operator/operator/index.phtml:160
 #: ../module/Start/view/layout/layout.phtml:102
 #: ../module/Start/view/layout/logged.phtml:244
 msgid "Cancel"
@@ -929,7 +912,7 @@ msgstr "Commentaire sur l'Examen du Patient"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:87
 msgid "Exams variables"
-msgstr "Réglages de l'injection"
+msgstr "Les différentes Activités pour cet Examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:95
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:53
@@ -966,7 +949,7 @@ msgstr "ex : 72,25"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:127
 msgid "Activity for examination"
-msgstr "Activité à Injecter pour cet Examen"
+msgstr "Activités pour cet Examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:140
 #: ../module/Operator/view/operator/inputdata/drug.phtml:97
@@ -975,93 +958,52 @@ msgstr "Activité disponible à"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:159
 msgid "Min Activity"
-msgstr "Activité minimale"
+msgstr "Activité minimale :"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:166
 msgid "Max Activity"
 msgstr "Activité Max."
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:193
-msgid "Low activity available"
-msgstr ""
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:227
+msgid "Insufficient activity"
+msgstr "Activité insuffisante !"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:196
-msgid "The available activity in the drug is at a low value."
-msgstr ""
+msgid "Insufficient activity. Do you want to correct it ?"
+msgstr "Activité insuffisante ! Voulez faire une correction ?"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:197
-msgid "Please set the activity at a lower value than the available activity"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:200
-msgid "Correct the activity"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:210
-msgid "Maximum exam activity reached"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:213
-msgid "The activity you setted is above the limit of the current exam."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:214
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:233
-msgid "Do you want to correct the activity ?"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:217
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:236
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:199
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:216
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:237
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:17
 msgid "YES"
 msgstr "OUI"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:218
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:237
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:200
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:217
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:238
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:18
 msgid "NO"
 msgstr "NON"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:228
-msgid "Insufficient activity"
-msgstr "Activité insuffisante !"
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:210
+msgid "Maximum activity reached"
+msgstr "Activité mximale autorisée dépassée"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:231
-msgid "Insufficient activity for this exam."
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:213
+msgid "You have reached the maximum acivity. Do you want to correct it ?"
 msgstr ""
+"L'activité maximale autorisée est dépassée ! Voulez-vous apportez une "
+"correction ?"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:232
-msgid "The activity is null or above the min limit of this exam."
-msgstr ""
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:230
+msgid "Insufficient activity. You have choose to don't change the activity."
+msgstr "Moi non plus !"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:246
-msgid "Center maximum activity reached"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:249
-msgid "You have reached the maximum activity authorized for your center."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:250
-msgid "You can correct it or use this value above the limit."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:251
-msgid ""
-"The autorization of an autority is required for exceed the maximum value."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:254
-msgid "Correct the value"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:255
-msgid "Use this value (authority required)"
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:264
-msgid "Confirmation of maxim center activity exceed"
-msgstr ""
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:233
+msgid "Do you want to create / choose another patient ?"
+msgstr "Voulez-vous Créer/Sélectionner un autre Patient ?"
 
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:3
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:11
@@ -1137,56 +1079,56 @@ msgstr "Saisissez le Volume de la fiole pour calculer l'Activité"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:113
 msgid "The last filled value is in yellow"
-msgstr ""
+msgstr "La dernière valeur saisie est en jaune"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:117
 msgid "The green field represents the calculated value"
-msgstr ""
+msgstr "Une zone verte est le résultat d'un calcul"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:357
 msgid "Incorrect expiration date"
-msgstr ""
+msgstr "Date de péremption incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:358
 msgid "The expiration date of the drug is incorrect."
-msgstr ""
+msgstr "La date de Péremptionest incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:359
 msgid "Set a correct date : greater than the calibration date"
-msgstr ""
+msgstr "Saisissez une date postérieure àla date de calibration"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:369
 msgid "Wrong volumic activity"
-msgstr ""
+msgstr "Erreur sur Activité volumique"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:370
 msgid "The volumic activity of the drug is incorrect."
-msgstr ""
+msgstr "L'Activité volumique est incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:371
 #: ../module/Operator/view/operator/inputdata/drug.phtml:382
 msgid "Set a correct value : positive"
-msgstr ""
+msgstr "Saisissez une valeur positive"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:380
 msgid "Wrong calibration activity"
-msgstr ""
+msgstr "Erreur sur Activté à Calibration"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:381
 msgid "The calibration activity is incorrect."
-msgstr ""
+msgstr "L'Acivité à Calibration est incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:391
 msgid "Incorrect vial volume"
-msgstr ""
+msgstr "Volume de la fiole incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:392
 msgid "The volume of the vial is incorrect."
-msgstr ""
+msgstr "Le colme de la fiole est incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:393
 msgid "Set a correct value : between 1 and 15ml"
-msgstr ""
+msgstr "Saissisez une valeur comprise entre 1 et 10ml"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:418
 msgid "OK"
@@ -1277,28 +1219,24 @@ msgstr "Patient(s) compatibles(s) avec le Médicament chargé"
 msgid "Other patients list"
 msgstr "Autre Liste Patient"
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:48
-msgid "End of patients list."
-msgstr ""
-
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:54
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:52
 msgid "No patient loaded. Try to load a file or to create a new one."
 msgstr ""
 "Pas de Fichier Patient téléchargé ! Télécharger un Fichier Patient ou crée "
 "un Patient"
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:55
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:53
 msgid "Import patients"
 msgstr "Importation du Fichier Patient"
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:63
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:61
 msgid ""
 "No compatible patient found. Try to unload the drug or create a new patient."
 msgstr ""
 "Le Médicament chargé ne correspond à aucun des examens prévus pour ces "
 "Patients ! Déchargez le Médicament ou Crée un Patient pour ce Médicament"
 
-#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:110
+#: ../module/Operator/view/operator/inputdata/selectpatient.phtml:108
 msgid "New patient"
 msgstr "Nouveau Patient"
 
@@ -1346,14 +1284,14 @@ msgstr "Confirmez-vous la Fin des Injections ?"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:18
 msgid "This step is going to use NaCl solution."
-msgstr ""
+msgstr "Cette étape nécéssite du NaCl"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:19
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:12
 msgid ""
 "Please ensure that the NaCl solution volume is correct before processing "
 "steps."
-msgstr ""
+msgstr "Veuillez vous assurer que vous disposez suffisamment de NaCl "
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:30
 msgid "Dilution"
@@ -1396,7 +1334,7 @@ msgstr "En attente de la Validation des Données Patient..."
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:103
 msgid "Relaunch a rinsing"
-msgstr ""
+msgstr "Autre rinçage ?"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:344
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:27
@@ -1457,7 +1395,7 @@ msgstr "Purge"
 
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:11
 msgid "This step and the next one are going to use NaCl solution."
-msgstr ""
+msgstr "Contrôler le volume de NaCL disponible"
 
 #: ../module/Operator/view/operator/interactrobot/purge.phtml:24
 msgid "Put the patient kit in the container provided for this purpose"
@@ -1553,7 +1491,6 @@ msgstr "Charger le Kit Source et le Médicament"
 
 #: ../module/Operator/view/operator/operator/index.phtml:70
 #: ../module/Operator/view/operator/operator/index.phtml:103
-#: ../module/Operator/view/operator/operator/index.phtml:117
 msgid "Action required"
 msgstr "Action requise"
 
@@ -1571,24 +1508,24 @@ msgstr "Liste des Patients Injectés"
 msgid "Unloading"
 msgstr "Déchargement"
 
-#: ../module/Operator/view/operator/operator/index.phtml:119
-#: ../module/Operator/view/operator/operator/index.phtml:125
+#: ../module/Operator/view/operator/operator/index.phtml:118
+#: ../module/Operator/view/operator/operator/index.phtml:124
 msgid "Transferting patient's data to software"
 msgstr "Transfert des Données Patient au logiciel de Radiopharmacie"
 
-#: ../module/Operator/view/operator/operator/index.phtml:137
+#: ../module/Operator/view/operator/operator/index.phtml:136
 msgid "Remove receipted drug."
 msgstr "Remplacer le Médicament"
 
-#: ../module/Operator/view/operator/operator/index.phtml:140
+#: ../module/Operator/view/operator/operator/index.phtml:139
 msgid "Are you sure to remove selected drug ?"
 msgstr "Voulez-vous remplacer le Médicament réceptionné ?"
 
-#: ../module/Operator/view/operator/operator/index.phtml:154
+#: ../module/Operator/view/operator/operator/index.phtml:153
 msgid "Remove receipted kit source."
 msgstr "Remplacer le Kit Source "
 
-#: ../module/Operator/view/operator/operator/index.phtml:157
+#: ../module/Operator/view/operator/operator/index.phtml:156
 msgid "Are you sure to remove selected source kit ?"
 msgstr "Voulez-vous remplacer  le Kit Source déjà sélectionné"
 
@@ -1839,23 +1776,6 @@ msgstr "Erreur sur le numéro de série du Kit Source"
 #: ../module/Start/view/start/index/index.phtml:187
 msgid "Check of kit source loading failed."
 msgstr "Erreur fatale - Contrôle du Kit Source en Erreur"
-
-#~ msgid "Insufficient activity. Do you want to correct it ?"
-#~ msgstr "Activité insuffisante ! Voulez faire une correction ?"
-
-#~ msgid "Maximum activity reached"
-#~ msgstr "Activité mximale autorisée dépassée"
-
-#~ msgid "You have reached the maximum acivity. Do you want to correct it ?"
-#~ msgstr ""
-#~ "L'activité maximale autorisée est dépassée ! Voulez-vous apportez une "
-#~ "correction ?"
-
-#~ msgid "Insufficient activity. You have choose to don't change the activity."
-#~ msgstr "Moi non plus !"
-
-#~ msgid "Do you want to create / choose another patient ?"
-#~ msgstr "Voulez-vous Créer/Sélectionner un autre Patient ?"
 
 #~ msgid "Valid"
 #~ msgstr "Validez"

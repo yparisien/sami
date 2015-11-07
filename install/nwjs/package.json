@@ -7,8 +7,10 @@
 		"width": 1024,
 		"height": 768
 	},
+	"chromium-args": "--disable-cache",
 	"webkit": {
 		"java": true,
-		"plugin": true
+		"plugin": true,
+		"cache": false
 	}
 }

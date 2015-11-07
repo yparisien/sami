@@ -994,9 +994,11 @@ class InputdataController extends AbstractActionController
 			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			
 			$result = new JsonModel(array('activity' => $activity));
-			$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
-			$oInjection->activity = $activity;
-			$this->getInjectionTable()->saveInjection($oInjection);
+			if ($activity > 0) {
+				$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
+				$oInjection->activity = $activity;
+				$this->getInjectionTable()->saveInjection($oInjection);
+			}
 			
    			return $result;
 		}	
@@ -1321,8 +1323,16 @@ class InputdataController extends AbstractActionController
 	}
 	
 	//TODO Change par des actions individuelles et faire un log dans la table action
-	public function ainputsoftexitAction() 
-	{
+	public function ainputsoftexitAction() {
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_EXIT => 1));
+		$aParams = array('success' => 1);
+		$result = new JsonModel($aParams);
+		return $result;
+	}
+	
+	public function acancelpatientAction() {
 		/* @var $robotService RobotService  */
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_EXIT => 1));
