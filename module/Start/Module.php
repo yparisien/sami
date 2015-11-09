@@ -137,23 +137,13 @@ class Module
 			return;
 		}
 
-		$baseModel = new ViewModel();
-		$baseModel->setTemplate('layout/layout');
-
-		$model = new ViewModel();
-		$model->setTemplate('error/403');
-
-		$baseModel->addChild($model);
-		$baseModel->setTerminal(true);
-
-		$e->setViewModel($baseModel);
-
+		
+		$urlToLogin = $e->getRouter()->assemble(array('action' => 'logout'), array('name' => 'log'));
+		
 		$response = $e->getResponse();
-		$response->setStatusCode(403);
-
-		$e->setResponse($response);
-		$e->setResult($baseModel);
-
-		return false;
+		$response->getHeaders()->addHeaderLine('Location', $urlToLogin);
+		$response->setStatusCode(302);
+		$response->sendHeaders();
+		exit();
 	}
 }

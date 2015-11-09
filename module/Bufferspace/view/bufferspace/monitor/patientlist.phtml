@@ -16,6 +16,7 @@
 							<th><?php echo $this->translate('Injection date')?></th>
 							<th><?php echo $this->translate('Injected activity')?></th>
 							<th><?php echo $this->translate('Operator name')?></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -25,6 +26,7 @@
 							<td><?php echo $injection->injectiontime?></td>
 							<td><?php echo $injection->activity?> <?php echo $unit?></td>
 							<td><?php echo strtoupper($injection->operatorlastname)?> <?php echo ucfirst(strtolower($injection->operatorfirstname))?></td>
+							<td><button class="btn btn-primary" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button></td>
 						</tr>
 					<?php } ?>
 					</tbody>
@@ -43,3 +45,53 @@
 		</div>
 	</div>
 </div>
+<div class="print-container" id="sticker" style="margin-top: 10px;">
+	<div class="content">
+		<div class="row">
+    		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 0.8em;">&#9762;</span></div>
+    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
+    		<div class="col-xs-4 no-padding" style="margin-top: 1mm;" id="injectionHour">HH:MM</div>
+  		</div>
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-2 no-padding" id="drugName">drugname</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-7 col-xs-offset-5 no-padding"><span  id="activity">xx</span><?php echo ' ' . $unit; ?></div>
+		</div>
+		<div class="row spacer"></div>
+		<div class="row">
+			<div class="col-xs-5 no-padding" id="code">code</div>
+			<div class="col-xs-7 no-padding"><?php echo $this->translate('Serial : '); ?><span id="batchnum">batchnum</span></div>
+		</div>
+		<div class="row spacer"></div>
+		<div class="row">
+			<div class="col-xs-5 no-padding">N&ordm; <span id="uniqueId">uniqueId</span></div>
+			<div class="col-xs-7 no-padding" id="operatorName"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function	printSticker() {
+
+	// Récupération des infos de l'injection et du patient	
+	$.ajax({
+		type: "POST",
+		url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivityat')); ?>",
+		dataType: "json",
+		data: {wantedat : "DT#" + $("#activityattime").val().replace(" ", "-") + ":00"}
+	}).done(function(result) {
+		// Remplissage de l'etiquette
+		$('#injectionHour').html();
+		$('#drugName').html();
+		$('#activity').html();
+		$('#code').html();
+		$('#batchnum').html();
+		$('#uniqueId').html();
+		$('#operatorName').html();
+		
+		//Impression de l'etiquette
+		printElement(document.getElementById("sticker"));
+		window.print();
+	});
+}
+</script>

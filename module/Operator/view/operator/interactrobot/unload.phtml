@@ -1,52 +1,47 @@
-<?php //TODO Trad low prio ?>
 <ol class="breadcrumb">
-	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard'); ?></a></li>
 	<li class="active"><?php echo $this->translate('Unload automate')?></li>
 </ol>
 <div class="row">
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<span class="glyphicon glyphicon-upload"></span> <?php echo $this->translate('Unload kitsource and source')?>
-		</div>
-		<div class="panel-body">
-			<div id="carousel-setup-process" class="carousel slide" data-ride="carousel" data-interval="" data-wrap="false">
-				<div class="carousel-inner">
-					<div class="item active">
-						<img src="/img/slide_carousel.jpg" alt=""/>
-						<div class="carousel-caption">
-							<h3>Ouverture de la Porte</h3>
-							<p>Blabla</p>
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-upload"></span> <?php echo $this->translate('Unload kitsource and source'); ?>
+			</div>
+			<div class="panel-body">
+				<div id="carousel-setup-process" class="carousel slide" data-ride="carousel" data-interval="" data-wrap="false">
+					<div class="carousel-inner">
+						<div class="item active">
+							<img src="/img/slide_carousel.jpg" alt=""/>
+							<div class="carousel-caption">
+								<h3>Ouverture de la Porte</h3>
+								<p>Blabla</p>
+							</div>
+						</div>
+						<div class="item">
+							<img src="/img/slide_carousel.jpg" alt=""/>
+							<div class="carousel-caption">
+								<h3>Fermeture de la Porte</h3>
+								<p>Blabla</p>
+							</div>
 						</div>
 					</div>
-					<div class="item">
-						<img src="/img/slide_carousel.jpg" alt=""/>
-						<div class="carousel-caption">
-							<h3>Fermeture de la Porte</h3>
-							<p>Blabla</p>
-						</div>
+					<a class="right carousel-control" href="#carousel-setup-process" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+				<div class="row" style="margin-top:10px;display:none;" id="btn-next">
+					<div class="col-md-4 col-md-offset-4">
+						<button class="btn btn-primary btn-block btn-lg" onClick="gotonext()"><?php echo $this->translate('Continue');?></button>
 					</div>
 				</div>
-				<a class="right carousel-control" href="#carousel-setup-process" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right"></span>
-				</a>
-			</div>
-			<div class="row" style="margin-top:10px;display:none;" id="btn-next">
-				<div class="col-md-4 col-md-offset-4">
-					<button class="btn btn-primary btn-block btn-lg" onClick="gotonext()"><?php echo $this->translate('Continue');?></button>
-				</div>
-			</div>
-			<script type="text/javascript">
-				$('#carousel-setup-process').on('slid.bs.carousel', function() {
-					if($('.carousel-inner .item:last').hasClass('active')) {
-						$('#btn-next').show();
+				<script type="text/javascript">
+					function	gotonext()
+					{
+						window.location.href = "<?php echo $this->url('inject', array('action'=>'unload','confirm'=>1))?>";
 					}
-				});
-
-				function	gotonext()
-				{
-					window.location.href = "<?php echo $this->url('inject', array('action'=>'unload','confirm'=>1))?>";
-				}
-			</script>
+				</script>
+			</div>
 		</div>
 	</div>
 </div>

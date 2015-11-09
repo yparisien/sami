@@ -1,13 +1,13 @@
 <?php //TODO Trad high prio ?>
 <ol class="breadcrumb">
-	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> Menu opérateur</a></li>
-	<li class="active">Préparation de l'automate pour l'injection</li>
+	<li><a href="<?php echo $this->url('operator')?>"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li class="active"><?php echo $this->translate('Load automate')?></li>
 </ol>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<span class="glyphicon glyphicon-download"></span> Procédure de préparation
+				<span class="glyphicon glyphicon-download"></span> <?php echo $this->translate('Load kitsource and source'); ?>
 			</div>
 			<div class="panel-body">
 				<div id="carousel-setup-process" class="carousel slide" data-ride="carousel" data-interval="" data-wrap="false">
@@ -37,12 +37,6 @@
 					</div>
 				</div>
 				<script type="text/javascript">
-					$('#carousel-setup-process').on('slid.bs.carousel', function() {
-						if($('.carousel-inner .item:last').hasClass('active')) {
-							$('#btn-next').show();
-						}
-					});
-
 					function	gotonext()
 					{
 						window.location.href = "<?php echo $this->url('setup', array('action'=>'loadkitsource','confirm'=>1))?>";

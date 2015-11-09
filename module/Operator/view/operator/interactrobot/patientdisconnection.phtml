@@ -36,7 +36,9 @@
 										<tr>
 											<th colspan="2">
 												<div class="col-sm-6">
-													<span class="label label-primary" style="font-size: 1.2em;" title="<?php echo $this->translate('Prescription book'); ?>"><i class="fa fa-clipboard"></i>&nbsp;<?php echo $injection['unique_id']; ?></span> 
+													<span class="label label-primary" style="font-size: 1.2em;" title="<?php echo $this->translate('Prescription book'); ?>">
+														<i class="fa fa-clipboard"></i>&nbsp;<?php echo $injection['unique_id']; ?>
+													</span>&nbsp;
 													<?php echo $patient['lastname']; ?> <?php echo $patient['firstname']; ?> 
 												</div>
 												<div class="col-sm-3">
@@ -61,8 +63,8 @@
 											</td>
 										</tr>
 										<tr>
-											<td>Injection : &nbsp;<i class="fa fa-clock-o"></i>&nbsp;<?php echo $injection['injection_time']; ?></td>
-											<td><i class="glyphicon glyphicon-screenshot"></i> <?php echo $injection['location']; ?></td>
+											<td><?php echo $this->translate('Injection'); ?> : &nbsp;<i class="fa fa-clock-o"></i>&nbsp;<?php echo $injection['injection_time']; ?></td>
+											<td><i class="glyphicon glyphicon-screenshot"></i> <span id="location"><?php echo $injection['location']; ?><span></td>
 										</tr>
 										<tr>
 											<th colspan="2">
@@ -71,15 +73,34 @@
 											</th>
 										</tr>
 										<tr>
-											<td>Examen : <?php echo $examination['name']; ?></td>
-											<td><i class="fa fa-commenting" title="Commentaire"></i> <?php if (strlen(trim($injection['comments']))) { echo $injection['comments']; } else { echo '<em>' . $this->translate('no comments') . '</em>'; } ?></td>
+											<td><?php echo $this->translate('Exam'); ?> : <?php echo $examination['name']; ?></td>
+											<td>
+												<i class="fa fa-commenting" title="<?php echo $this->translate('Comments'); ?>"></i> 
+												<?php if (strlen(trim($injection['comments']))) { echo $injection['comments']; } else { echo '<em>' . $this->translate('no comments') . '</em>'; } ?>
+											</td>
 										</tr>
 										<tr>
 											<td>
-												Kit source : <span class="label label-success">OUI</span> <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $sourcekit['serialnumber']; ?>"><i class="glyphicon glyphicon-barcode" ></i></a>
+												<?php echo $this->translate('Source kit'); ?> : 
+												<?php if ($sourcekit['serialnumber'] != '') { ?>
+												<span class="label label-success"><?php echo $this->translate('YES'); ?></span> 
+												<a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $sourcekit['serialnumber']; ?>">
+													<i class="glyphicon glyphicon-barcode" ></i>
+												</a>
+												<?php } else { ?>
+												<span class="label label-danger"><?php echo $this->translate('NO'); ?></span> 
+												<?php } ?>
 											</td>
 											<td>
-												Kit patient : <span class="label label-success">OUI</span> <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $patientkit['serialnumber']; ?>"<i class="glyphicon glyphicon-barcode"></i></a>
+												<?php echo $this->translate('Patient kit'); ?> : 
+												<?php if ($patientkit['serialnumber'] != '') { ?>
+												<span class="label label-success"><?php echo $this->translate('YES'); ?></span> 
+												<a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="<?php echo $patientkit['serialnumber']; ?>">
+													<i class="glyphicon glyphicon-barcode"></i>
+												</a>
+												<?php } else { ?>
+												<span class="label label-danger"><?php echo $this->translate('NO'); ?></span> 
+												<?php } ?>
 											</td>
 										</tr>
 									</table>
@@ -166,7 +187,7 @@
 							<label for="activityattime" class="col-sm-2 col-sm-offset-2 control-label"><?php echo $this->translate('Remaining activity at '); ?></label>
 							<div class="col-sm-3">
 								<div id="activity-attime" class="input-group date">
-									<input name="activityattime" id="activityattime" type="text" class="form-control" data-format="YYYY-MM-DD HH:mm" maxlength="16" autocomplete="off"/>
+									<input name="activityattime" id="activityattime" type="text" class="form-control" data-format="<?php echo $this->translate('YYYY-MM-DD HH:mm'); ?>" maxlength="16" autocomplete="off"/>
 									<span class="input-group-addon">
 										<i class="glyphicon glyphicon-calendar"></i>
 									</span>
