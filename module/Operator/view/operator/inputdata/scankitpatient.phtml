@@ -81,7 +81,7 @@
 						dataType: "json",
 						data: postdata,
 					}).done(function(result) {
-						if(result.success == 1)
+						if (result.success == 1)
 						{
 							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-success');
 							$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ok-circle');
@@ -91,13 +91,17 @@
 							}
 							return false;
 						}
-						else
+						else if(result.success == 0)
 						{
 							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 							$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
 							$('#errormsg-content').html(result.msg);
 							$('#errormsg').removeClass('hide');
 							return false;
+						}
+						else
+						{
+ 							$(location).attr('href', result.redirect);
 						}
 					});
 				}

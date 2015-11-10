@@ -1257,7 +1257,7 @@ class InputdataController extends AbstractActionController
 			{
 				$aParams = array(
 					'success'	=> -1,
-					'redirect'	=> $this->url()->fromRoute('operator')
+					'redirect'	=> $this->url()->fromRoute('log', array('action'=>'logout')),
 				);
 			}
 			else
