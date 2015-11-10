@@ -15,7 +15,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-10 col-md-offset-1 alert alert-danger" style="display:none" id="errormsg">
+					<div class="col-md-10 col-md-offset-1 alert alert-danger hide" id="errormsg">
 						<span class="glyphicon glyphicon-exclamation-sign"></span> <strong><?php echo $this->translate('Error')?> : </strong>
 						<span id="errormsg-content"></span>
 					</div>
@@ -45,13 +45,14 @@
 			</form>
 			<script type="text/javascript">
 				$(function() {
-					$('#sourcekit-sn').change(function(){console.log('change'); checkInputVal(false);});
 					$('#sourcekit-sn').focus();
+					$('#sourcekit-sn').on('change', function(e) { if (e.bubbles === true) { checkInputVal(false); }});
 				});
 
 				function checkInputVal(submitForm)
 				{
-					console.log(submitForm);
+					$('#errormsg').removeClass('hide');
+					$('#errormsg').addClass('hide');
 					$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
 					$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
 					var code = $('#sourcekit-sn').val();
@@ -82,8 +83,7 @@
 								$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 								$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
 								$('#errormsg-content').html(result.msg);
-								$('#errormsg').slideToggle();
-								setTimeout(function(){$('#errormsg').slideToggle();},3000);
+								$('#errormsg').removeClass('hide');
 								return false;
 							}
 							else
@@ -98,8 +98,7 @@
 						$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 						$('#btn-next').attr('disabled', 'disabled');
 						$('#errormsg-content').html("<?php echo $this->translate("Invalid barcode")?>");
-						$('#errormsg').slideToggle();
-						setTimeout(function(){$('#errormsg').slideToggle();},3000);
+						$('#errormsg').removeClass('hide');
 						return false;
 					}
 				}
