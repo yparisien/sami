@@ -15,25 +15,23 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-10 col-md-offset-1 alert alert-danger" style="display:none" id="errormsg">
+					<div class="col-md-10 col-md-offset-1 alert alert-danger hide" id="errormsg">
 						<span class="glyphicon glyphicon-exclamation-sign"></span> <strong><?php echo $this->translate('Error')?> : </strong>
 						<span id="errormsg-content"></span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3">
-
-							<div id="inputgroup1" class="form-group has-error">
-								<label for="input1">Kit n°</label>
-								<div class="input-group">
-									<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
-									<input type="text" class="form-control barcode" id="patientkit-sn" name="patientkit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
-									</span>
-								</div>
+						<div id="inputgroup1" class="form-group has-error">
+							<label for="input1">Kit n°</label>
+							<div class="input-group">
+								<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
+								<input type="text" class="form-control barcode" id="patientkit-sn" name="patientkit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
+								</span>
 							</div>
-
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -48,7 +46,7 @@
 			<script type="text/javascript">
 			
 			$(function() {
-				$('#patientkit-sn').change(function(){checkInputVal(false);});
+				$('#patientkit-sn').change(function(e){ if (e.bubbles === true) { checkInputVal(false); }});
 				$('#patientkit-sn').focus();
 			});
 
@@ -70,6 +68,9 @@
 				var code = $('#patientkit-sn').val();
 				if(code.length == 35)
 				{
+					$('#errormsg').removeClass('hide');
+					$('#errormsg').addClass('hide');
+					
 					var sn = $('#patientkit-sn').val();
 					var postdata = {
 						"patientkit-sn": sn,
@@ -95,8 +96,7 @@
 							$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 							$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-ok-circle").addClass('glyphicon-ban-circle');
 							$('#errormsg-content').html(result.msg);
-							$('#errormsg').slideToggle();
-							setTimeout(function(){$('#errormsg').slideToggle();},3000);
+							$('#errormsg').removeClass('hide');
 							return false;
 						}
 					});
@@ -107,8 +107,7 @@
 					$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-error');
 					$('#btn-next').attr('disabled', 'disabled');
 					$('#errormsg-content').html("<?php echo $this->translate("Invalid barcode")?>");
-					$('#errormsg').slideToggle();
-					setTimeout(function(){$('#errormsg').slideToggle();},3000);
+					$('#errormsg').removeClass('hide');
 					return false;
 				}
 			}
