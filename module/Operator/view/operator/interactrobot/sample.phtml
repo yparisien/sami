@@ -256,6 +256,21 @@
 					$(function(){
 						// listener on buttons
 						$("#btn-add-activity").click(function(){adjustActivity();});
+
+						<?php if (isset($launched) && $launched === true) { ?>
+						lockui();
+						$('#collapseOne').collapse('toggle');
+						$("#dilution-confirm").attr('disabled', 1);
+						$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+						$('#dilution-statut').html('Prélèvement en cours...');
+						$("#val-asked").val(<?php echo $injection['activity']?>);
+
+						var resume = ' : ' + $('#firstname').val() + ' ' + $('#lastname').val() + ', <?php echo $this->translate('Activity to inject')?> : ' + $('#activity').val() + ' <?php echo $unit;?>';
+						$('#patientResume').html(resume);
+						
+						loadActivityData();
+						moveProgressBar(<?php echo $injection['activity']?>);
+						<?php } ?>
 					});
 			</script>
 		</div>

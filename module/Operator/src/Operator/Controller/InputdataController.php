@@ -844,6 +844,7 @@ class InputdataController extends AbstractActionController
 		if($this->getRequest()->isPost())
 		{
 			$oContainer = new Container('automate_setup');
+			$operatorId = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
 			
 			$oRequest = $this->getRequest();
 			$oPatient = $this->getPatientTable()->getPatient($oRequest->getPost('patient_id'));
@@ -860,6 +861,8 @@ class InputdataController extends AbstractActionController
 			$oInjection->activity = $oRequest->getPost('activity');
 			$oInjection->examinationid = $oRequest->getPost('examinationid');
 			$oInjection->drugid = $oDrug->id;
+			$oInjection->inputdrugid = $oContainer->inputdrugid;
+			$oInjection->operatorid = $operatorId;
 			$this->getInjectionTable()->saveInjection($oInjection);
 
 			$oInjection = new Container('injection_profile');
@@ -867,7 +870,7 @@ class InputdataController extends AbstractActionController
 			$oInjection->drugid = $oContainer->drugid;
 			$oInjection->examinationid = $oRequest->getPost('examinationid');
 			$oInjection->patientid = $oPatient->id;
-			$oInjection->operatorid = $this->getUserTable()->searchByLogin($sm->get('AuthService')->getIdentity())->id;
+			$oInjection->operatorid = $operatorId;
 
 			
 			// Envoi des infos a l'automate

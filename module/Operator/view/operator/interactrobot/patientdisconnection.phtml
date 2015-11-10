@@ -225,6 +225,26 @@
 		$('#resume').hide();
 		$('#nextstep').hide();
 
+		<?php if (isset($launched) && $launched === true) { ?>
+		$('#nextstep').show();
+		$('#resume').show();
+		$('#location_block').hide();
+		$('#panel-body-infos').collapse('hide');
+		$('#panel-body-sticker').collapse('hide');
+		$('#panel-left-caret').removeClass('rotate-180');
+		$('#panel-right-caret').removeClass('rotate-180');
+
+		$('#showactivityleft-statut-picto').removeClass('glyphicon-calendar').addClass('glyphicon-time');
+		$('#showactivityleft-statut').removeClass('btn-danger').addClass('btn-warning');
+		$('#showactivityleft-statut-picto').removeClass('glyphicon-time').addClass('glyphicon-ok-sign');
+		$('#showactivityleft-statut').removeClass('btn-warning').addClass('btn-success');
+		$('#showactivityleft').attr('disabled', 1);
+
+		loadActivityData();
+		getAvailableActivityAt();
+		
+		<?php } ?>
+
 		$('#location_validation').click(function(){
 			$.ajax({
 				type: "POST",

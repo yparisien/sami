@@ -163,7 +163,6 @@ class LoginController extends AbstractActionController
 						$this->flashmessenger()->addErrorMessage($translate('Could found the patient in the database. No patient is selected.'));
 					}
 					
-					
 					//Chargement des infos en session pour le profil injecté
 					$oInject = new Container('injection_profile');
 					$oInject->drugid = $injection->drugid;
@@ -173,12 +172,11 @@ class LoginController extends AbstractActionController
 					$oInject->operatorid = $injection->operatorid;
 					$oInject->patientkitid = $injection->patientkitid;
 					
-					if ($injection->patientkitid > 0) {
+					if ($injection->patientkitid > 0 && $startPos == 1) {
 						$startPos = 1.5;
 					}
 				}
 					
-
 				$routeDirections = array(
 					0 => array(
 							'routename' => 'operator',
@@ -192,14 +190,49 @@ class LoginController extends AbstractActionController
 							'routename' => 'setup',
 							'routeparam' => array('action'=>'loadkitpatient'),
 					),
+					2 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'purge'),
+					),
+					3 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'purge'),
+					),
+					4 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'sample'),
+					),
+					5 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'sample'),
+					),
+					6 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'injection'),
+					),
+					7 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'injection'),
+					),
+					8 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'patientdisconnection'),
+					),
 				);
 				
+				$url = null;
+				
 				if ($routeDirections[$startPos]['routeparam'] != null) {
-					return $this->redirect()->toRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
+					$url = $this->url()->fromRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
+					if ($startPos == 3 || $startPos == 5 || $startPos == 6 || $startPos == 7 || $startPos == 8) {
+						$url .= '?launched=1';
+					}
 				}
 				else {
-					return $this->redirect()->toRoute($routeDirections[$startPos]['routename']);
+					$url = $this->url()->fromRoute($routeDirections[$startPos]['routename']);
 				}
+				
+				return $this->redirect()->toUrl($url);
 				
 			}	
 			else // then go back to the login form and display error msg

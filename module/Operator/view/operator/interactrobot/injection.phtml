@@ -11,7 +11,7 @@ $this->headStyle()->appendStyle('
 	<li class="active"><?php echo $this->translate('Injection')?></li>
 </ol>
 
-<div id="alertNaCl" class="alert alert-dismissable alert-danger fade in">
+<div id="alertNaCl" class="alert alert-dismissable alert-danger fade in <?php if (isset($launched) && $launched === true) { echo "hide"; } ?>">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
 		×
 	</button>
@@ -38,29 +38,35 @@ $this->headStyle()->appendStyle('
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $this->translate("Patient's data")?><span id="patientResume"></span></a>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $this->translate("Patient's data")?>
+								<span id="patientResume">
+								<?php if (isset($launched) && $launched === true) { ?>
+								<?php 	echo $patient['firstname'] . " " . $patient['lastname'] . ', ' . $this->translate('Activity to inject') . ' : ' . $injection['activity'] . ' ' . $unit; ?>
+								<?php } ?>
+								</span>
+							</a>
 						</div>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse in">
+					<div id="collapseOne" class="panel-collapse collapse <?php if (!isset($launched) || $launched === false) { ?>in<?php } ?>">
 						<div class="panel-body">
 							<div class="row">
 								<form class="form-horizontal" role="form">
 									<div class="col-sm-4">
 										<label for="lastname" class="control-label col-sm-6"><?php echo $this->translate("Lastname"); ?></label>
 										<div class="input-group col-sm-6">
-											<input id="lastname" type="text" value="<?php echo $patient['lastname']?>" class="form-control" autocomplete="off" maxlength="100" disabled />
+											<input id="lastname" type="text" value="<?php echo $patient['lastname']; ?>" class="form-control" autocomplete="off" maxlength="100" disabled />
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<label for="firstname" class="control-label col-sm-6"><?php echo $this->translate("Firstname"); ?></label>
 										<div class="input-group col-sm-6">
-											<input id="firstname" type="text" value="<?php echo $patient['firstname']?>" class="form-control" autocomplete="off" maxlength="100" disabled/>
+											<input id="firstname" type="text" value="<?php echo $patient['firstname']; ?>" class="form-control" autocomplete="off" maxlength="100" disabled/>
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<label for="activity" class="control-label col-sm-6"><?php echo $this->translate("Activity to inject"); ?></label>
 										<div class="input-group col-sm-6">
-											<input id="activity" type="number" value="<?php echo $injection['activity']?>" class="form-control" autocomplete="off" disabled/>
+											<input id="activity" type="number" value="<?php echo $injection['activity']; ?>" class="form-control" autocomplete="off" disabled/>
 											<span class="input-group-addon"><?php echo $unit;?></span>
 										</div>
 									</div>
@@ -430,9 +436,96 @@ $this->headStyle()->appendStyle('
 							sendSpeedInjection(slideEvt.value);
 						});
 
+						<?php if (isset($launched) && $launched === true) { ?>
+						//Gestion optionnel du chargement en cours
+						$.ajax({
+            				type: "POST",
+              				url: "<?php echo $this->url('inject', array('action'=>'agetdilutionprogress'))?>",
+              				dataType: "json",
+              				data: {}
+            			}).done(function (result) {
+            				$('#btn-dilution').removeClass('disabled');
+							$("#injection-confirm").attr('disabled', 1);
+							$("#btn-exit").attr('disabled', 1);
+							$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
+							
+							if(result.progress < 100)
+							{
+								step = 'dilution';
+								
+								$('#injection-statut').html('Dilution en cours...');
+								$('#btn-dilution').removeClass('disabled').addClass('btn-warning active');
+								$('#i-dilution').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+
+								//Mettre à jour l'interface
+								$("#injection-progress").css('width', result.progress+'%');
+								window.setTimeout(function(){moveProgressBarDilution();}, frequency);
+							}
+							else
+							{
+								$('#btn-injection').removeClass('disabled');
+								$('#btn-dilution').removeClass('btn-warning active').addClass('btn-success');
+								$('#i-dilution').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon glyphicon-ok-sign');
+
+								started = true;
+								$('#btn-play').attr('disabled', 1);
+								$('#btn-pause').removeAttr('disabled');
+								
+								$.ajax({
+		              				type: "POST",
+		              				url: "<?php echo $this->url('inject', array('action'=>'agetinjectionprogress'))?>",
+		              				dataType: "json",
+		              				data: {}
+		            			}).done(function (result) {
+			            			
+									if(result.progress < 100)
+									{
+										step = 'injection';
+		
+										$('#injection-statut').html('Injection en cours...');
+										$('#btn-injection').removeClass('disabled').addClass('btn-warning active');
+										$('#i-injection').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+
+										//Mettre à jour l'interface
+										$("#injection-progress").css('width', result.progress+'%');
+										moveProgressBarInjection();
+									}
+									else
+									{
+										$('#btn-rinsing').removeClass('disabled');
+										$('#btn-injection').removeClass('btn-warning active').addClass('btn-success');
+										$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon glyphicon-ok-sign');
+										
+										$.ajax({
+						              		type: "POST",
+						              		url: "<?php echo $this->url('inject', array('action'=>'agetrinsingprogress'))?>",
+						              		dataType: "json",
+						              		data: {}
+						            	}).done(function (result) {
+						            		if(result.progress < 100)
+											{
+												step = 'rinsing';
+
+												$('#btn-rinsing').removeClass('disabled btn-success').addClass('btn-warning active');
+												$('#i-rinsing').removeClass('glyphicon-ok-sign').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+												$("#btn-next").attr('disabled', 1);
+												$("#btn-relaunch").attr('disabled', 1);
+												$('#injection-statut').html('Rinçage en cours...');
+												
+												$("#injection-progress").css('width', result.progress+'%');
+												moveProgressBarRinsing();
+											}
+							            	//MAJ de l'interface
+										});
+									}
+								});
+							}
+						});
+						<?php } else { ?>
 						window.setTimeout(function() { 
 							$('#alertNaCl').alert('close');
 						}, 10000);
+						<?php } ?>
 					});
 				</script>
 		</div>

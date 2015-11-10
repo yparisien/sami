@@ -1,5 +1,9 @@
 <ol class="breadcrumb">
-	<li><a href="<?php echo $this->url('operator')?>"><span class="glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></a></li>
+	<li>
+		<a href="<?php echo $this->url('operator')?>">
+			<span class="glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?>
+		</a>
+	</li>
 	<li><?php echo $this->translate('Injection')?></li>
 	<li class="active"><?php echo $this->translate('Purge')?></li>
 </ol>
@@ -96,6 +100,7 @@
 							value1 = result.progress;
 							value2 = 100 - Number(result.progress);
 						}
+						
 						$("#purge-progress-1").css('width', value1+'%');
 						$("#purge-progress-2").css('width', value2+'%');
 						$("#purge-progress-3").css('width', value3+'%');
@@ -118,9 +123,10 @@
 							}
 							window.setTimeout(function(){moveProgressBar();}, 1000);
 						}
+						
 						if (value1 == 100)
 						{
-								checkEnableNext();
+							checkEnableNext();
 						}
 					});
 				}
@@ -206,6 +212,16 @@
 					window.setTimeout(function() { 
 						$('#alertNaCl').alert('close');
 					}, 10000);
+
+					<?php if (isset($launched) && $launched === true) { ?>
+					$("#purge-confirm").attr('disabled', 1);
+					$('#connect-btn').attr('disabled', 1);
+					$("#btn-exit").attr('disabled', 1);
+
+					blockNextStep();
+
+					moveProgressBar();
+					<?php } ?>
 				});
 			</script>
 		</div>
