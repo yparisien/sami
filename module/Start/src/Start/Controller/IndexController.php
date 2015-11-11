@@ -407,7 +407,7 @@ class IndexController extends AbstractActionController
 		if (is_numeric($restartType)) {
 			$oContainer = new Container('automate_setup');
 			$oContainer->startposition = (int) $restartType;
-			if ($oContainer->startposition > 6) {
+			if ($oContainer->startposition > 7) {
 				$oContainer->startposition = 0;
 				$restartType = 0;
 			}

@@ -210,13 +210,17 @@ class LoginController extends AbstractActionController
 							'routename' => 'inject',
 							'routeparam' => array('action'=>'injection'),
 					),
+					7 => array(
+							'routename' => 'inject',
+							'routeparam' => array('action'=>'injection'),
+					),
 				);
 				
 				$url = null;
 				
 				if ($routeDirections[$startPos]['routeparam'] != null) {
 					$url = $this->url()->fromRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
-					if ($startPos == 3 || $startPos == 5 || $startPos == 6 ) {
+					if ($startPos == 3 || $startPos == 5 || $startPos == 6 || $startPos == 7) {
 						$url .= '?launched=1';
 					}
 				}
