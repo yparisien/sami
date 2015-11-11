@@ -152,15 +152,15 @@ class ExaminationController extends AbstractActionController
 		$examinationID = $this->params('id');
 		$examination = $this->getVExaminationTable()->getVExamination($examinationID);
 		
-		if ($examination->nbExamsInProgress == 0) {
+// 		if ($examination->nbExamsInProgress == 0) {
 			$this->getExaminationTable()->deleteExamination($examinationID);
 			$message = sprintf($translate("Examination (%s) has been deleted."), $examination->examination_name);
 			$this->flashMessenger()->addSuccessMessage($message);
-		}
-		else {
-			$message = sprintf($translate("Examination (%s) can't be deleted. Already %s examinations in progress."), $examination->examination_name, $examination->nbExamsInProgress);
-			$this->flashMessenger()->addErrorMessage($message);
-		}
+// 		}
+// 		else {
+// 			$message = sprintf($translate("Examination (%s) can't be deleted. Already %s examinations in progress."), $examination->examination_name, $examination->nbExamsInProgress);
+// 			$this->flashMessenger()->addErrorMessage($message);
+// 		}
 		
 		return $this->redirect()->toRoute('examination');
 	}
