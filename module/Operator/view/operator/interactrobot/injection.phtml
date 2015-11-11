@@ -502,19 +502,16 @@ $this->headStyle()->appendStyle('
 						              		dataType: "json",
 						              		data: {}
 						            	}).done(function (result) {
-						            		if(result.progress < 100)
-											{
-												step = 'rinsing';
+											step = 'rinsing';
 
-												$('#btn-rinsing').removeClass('disabled btn-success').addClass('btn-warning active');
-												$('#i-rinsing').removeClass('glyphicon-ok-sign').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
-												$("#btn-next").attr('disabled', 1);
-												$("#btn-relaunch").attr('disabled', 1);
-												$('#injection-statut').html('Rinçage en cours...');
+											$('#btn-rinsing').removeClass('disabled btn-success').addClass('btn-warning active');
+											$('#i-rinsing').removeClass('glyphicon-ok-sign').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+											$("#btn-next").attr('disabled', 1);
+											$("#btn-relaunch").attr('disabled', 1);
+											$('#injection-statut').html('Rinçage en cours...');
 												
-												$("#injection-progress").css('width', result.progress+'%');
-												moveProgressBarRinsing();
-											}
+											$("#injection-progress").css('width', result.progress+'%');
+											moveProgressBarRinsing();
 							            	//MAJ de l'interface
 										});
 									}
