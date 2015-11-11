@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-11 14:55+0100\n"
-"PO-Revision-Date: 2015-11-11 14:55+0100\n"
+"PO-Revision-Date: 2015-11-11 17:16+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -153,7 +153,7 @@ msgstr "L'Utilisateur (%s) est inconnu dans la base de données"
 #, php-format
 msgid ""
 "Maximum activity of center reachead. Activity setted: %s. Overpass by %s %s"
-msgstr ""
+msgstr "L'Activité maximale du Centre est dépassée ! %s. Accepté par %s %s"
 
 #: ../module/Operator/src/Operator/Controller/InputdataController.php:616
 #: ../module/Operator/src/Operator/Controller/InputdataController.php:668
@@ -547,7 +547,7 @@ msgstr "Editer"
 
 #: ../module/Manager/view/manager/drug/index.phtml:38
 msgid "Delete drug confirmation title"
-msgstr "Suppression du Médicament"
+msgstr "Suppression du Médicament ?"
 
 #: ../module/Manager/view/manager/drug/index.phtml:38
 msgid "Delete drug confirmation content"
@@ -637,7 +637,7 @@ msgstr "Max."
 
 #: ../module/Manager/view/manager/examination/index.phtml:42
 msgid "Delete examination confirmation title"
-msgstr "Suppression de l'Examen"
+msgstr "Suppression de l'Examen ?"
 
 #: ../module/Manager/view/manager/examination/index.phtml:42
 msgid "Delete examination confirmation content"
@@ -842,7 +842,7 @@ msgstr "Superviseur"
 
 #: ../module/Manager/view/manager/user/index.phtml:41
 msgid "Delete user confirmation title"
-msgstr "Suppression d'un Opérateur"
+msgstr "Suppression de l'Opérateur ?"
 
 #: ../module/Manager/view/manager/user/index.phtml:41
 msgid "Delete user confirmation content"
@@ -993,40 +993,43 @@ msgstr "Activité Max."
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:194
 msgid "Low activity available"
-msgstr ""
+msgstr "Activité disponible insuffisante"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:197
 msgid "The available activity in the drug is at a low value."
-msgstr ""
+msgstr "L'Activité disponible est insuffisante"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:198
 msgid ""
 "Please set the activity at a lower value than the available activity or "
 "choose another patient."
 msgstr ""
+"Activité disponible insuffisante. Adaptez l'Activité en conséquence ou "
+"choisissez un autre Patient"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:202
 msgid "Correct the activity"
-msgstr ""
+msgstr "Corrigez l'Activité"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:205
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:229
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:254
 msgid "Choose another patient"
-msgstr ""
+msgstr "Sélectionnez un autre patient"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:215
 msgid "Maximum exam activity reached"
-msgstr ""
+msgstr "L'Activité maximale pour cet examen est dépassée"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:218
 msgid "The activity you setted is above the limit of the current exam."
 msgstr ""
+"L'Activité demandée est inférieure à l'Activité minimale pour cet Examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:219
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:244
 msgid "Do you want to correct the activity ?"
-msgstr ""
+msgstr "Voulez-vous corriger l'Activité ?"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:223
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:248
@@ -1050,40 +1053,42 @@ msgstr "Activité insuffisante !"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:242
 msgid "Insufficient activity for this exam."
-msgstr ""
+msgstr "Activité insuffisante pour cet Examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:243
 msgid "The activity is null or above the min limit of this exam."
 msgstr ""
+"L'Activité est nulle ou au-dessous de l'Activité minimale pour cette examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:264
 msgid "Center maximum activity reached"
-msgstr ""
+msgstr "Activité maximale pour le Centre dépassée"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:267
 msgid "You have reached the maximum activity authorized for your center."
-msgstr ""
+msgstr "Vous avez atteint l'Activité maximale autorisée pour le Centre"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:268
 msgid "You can correct it or use this value above the limit."
-msgstr ""
+msgstr "Vous pouvez la corriger ou utiliser une valeur inférieure"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:269
 msgid ""
 "The autorization of an autority is required for exceed the maximum value."
 msgstr ""
+"Une Autorisation est requise pour dépasser l'Activité maximale pour le Centre"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:273
 msgid "Correct the value"
-msgstr ""
+msgstr "Corrigez le Volume"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:276
 msgid "Use this value"
-msgstr ""
+msgstr "Utilisez cette valeur"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:286
 msgid "Confirmation of maxim center activity exceed"
-msgstr ""
+msgstr "Confirmation du dépassement de l'Activité autorisée pour le Centre"
 
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:3
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:11
@@ -1230,11 +1235,11 @@ msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:4
 msgid "Load automate"
-msgstr ""
+msgstr "Chargement de l'Injecteur"
 
 #: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:10
 msgid "Load kitsource and source"
-msgstr ""
+msgstr "Chargement du Kit source et de la Source"
 
 #: ../module/Operator/view/operator/inputdata/loadkitsource.phtml:36
 #: ../module/Operator/view/operator/interactrobot/unload.phtml:35
@@ -1313,7 +1318,7 @@ msgstr "Autre Liste Patient"
 
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:48
 msgid "End of patients list."
-msgstr ""
+msgstr "Fin de la liste des Patients"
 
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:54
 msgid "No patient loaded. Try to load a file or to create a new one."
@@ -1457,7 +1462,7 @@ msgstr "Ordonnancier"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:76
 msgid "Exam"
-msgstr ""
+msgstr "Examen"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:79
 msgid "no comments"
@@ -1465,11 +1470,11 @@ msgstr "Aucun commentaire"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:84
 msgid "Source kit"
-msgstr ""
+msgstr "Kit Source"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:95
 msgid "Patient kit"
-msgstr ""
+msgstr "Kit Patient"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:114
 msgid "Printing sticker"
@@ -1483,7 +1488,7 @@ msgstr ""
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:190
 msgid "YYYY-MM-DD HH:mm"
-msgstr ""
+msgstr "AAAA-MM-JJ HH:MM"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:207
 msgid "Injected patients list"
@@ -1547,15 +1552,15 @@ msgstr "Progression du Prélèvement"
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:74
 msgid "Levied activity"
-msgstr ""
+msgstr "Activité prélevée"
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:81
 msgid "Remaining activity"
-msgstr ""
+msgstr "Activité Restante"
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:88
 msgid "Requested activity"
-msgstr ""
+msgstr "Activité requise"
 
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:101
 msgid "Adjust"
