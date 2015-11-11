@@ -169,6 +169,9 @@ $this->headStyle()->appendStyle('
 
 								$('#btn-play').attr('disabled', 1);
 								$('#btn-pause').attr('disabled', 1);
+							} else {
+								started = true;
+								rinsed = 0;
 							}
 						});
 					}
@@ -203,7 +206,7 @@ $this->headStyle()->appendStyle('
 								started = true;
 								$('#btn-play').attr('disabled', 1);
 								$('#btn-pause').removeAttr('disabled');
-								moveProgressBarRinsing();
+								window.setTimeout(function(){ moveProgressBarRinsing() }, 1500);
 							}				            
 			            });
 					}
