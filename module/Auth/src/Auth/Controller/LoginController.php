@@ -151,7 +151,7 @@ class LoginController extends AbstractActionController
 				$this->getInputActionTable()->saveInputAction($inputaction);
 				
 				$startPos = 0;
-				if ($oSetup->startposition > 0) {
+				if ($oSetup->startposition > 0 && $oSetup->startposition <= 6) {
 					$startPos = $oSetup->startposition;
 					
 					
@@ -210,21 +210,13 @@ class LoginController extends AbstractActionController
 							'routename' => 'inject',
 							'routeparam' => array('action'=>'injection'),
 					),
-					7 => array(
-							'routename' => 'inject',
-							'routeparam' => array('action'=>'injection'),
-					),
-					8 => array(
-							'routename' => 'inject',
-							'routeparam' => array('action'=>'patientdisconnection'),
-					),
 				);
 				
 				$url = null;
 				
 				if ($routeDirections[$startPos]['routeparam'] != null) {
 					$url = $this->url()->fromRoute($routeDirections[$startPos]['routename'], $routeDirections[$startPos]['routeparam']);
-					if ($startPos == 3 || $startPos == 5 || $startPos == 6 || $startPos == 7 || $startPos == 8) {
+					if ($startPos == 3 || $startPos == 5 || $startPos == 6 ) {
 						$url .= '?launched=1';
 					}
 				}

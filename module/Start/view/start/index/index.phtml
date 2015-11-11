@@ -100,7 +100,7 @@
 			if (result.error === false) {
 				moveProgressBar(15);
 				//GOTO STEP 3
-				initrn();
+				inithml();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
@@ -119,8 +119,6 @@
 		}).done(function(result){
 			if (result.error === false) {
 				moveProgressBar(15);
-				//GOTO STEP 4
-				inithml();
 			}
 			else {
 				$("#loading-progress").addClass("progress-bar-danger");
@@ -200,6 +198,11 @@
 		}).done(function(result){
 			if (result.error === false) {
 				moveProgressBar(10);
+				if (result.restartType == 0) {
+					initrn();
+				} else {
+					moveProgressBar(15);
+				}
 			}
 			else {
 				//TODO Rajouter message d'erreur

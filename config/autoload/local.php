@@ -23,7 +23,7 @@ return array(
 				'sourcekitscanned'	=> '0',										//Kit source scanné (1) ou non (0)
 				'sourcekitserial'	=> '98230948203984029380923589034798375',	//Numéro de série du kit source chargé et scanné
 				'unit'				=> 'mbq',									//Unit de mesure du robot mbq ou mci
-				'restarttype'		=> '0',										//Point de redemarrage
+				'restarttype'		=> '8',										//Point de redemarrage
 				'patientid'			=> '67',									//Id du patient chargé lors d'un redemarrage
 			),
 		),

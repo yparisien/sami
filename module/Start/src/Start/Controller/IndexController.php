@@ -407,6 +407,10 @@ class IndexController extends AbstractActionController
 		if (is_numeric($restartType)) {
 			$oContainer = new Container('automate_setup');
 			$oContainer->startposition = (int) $restartType;
+			if ($oContainer->startposition > 6) {
+				$oContainer->startposition = 0;
+				$restartType = 0;
+			}
 		} else {
 			$error = true;
 			$errorMessage = sprintf($translate("Don't know if kitsource & source has been loaded (%s)."), $restartType);
@@ -415,6 +419,7 @@ class IndexController extends AbstractActionController
 		$jsonModel = new JsonModel();
 		$jsonModel->setVariable('error', $error);
 		$jsonModel->setVariable('errorMessage', $errorMessage);
+		$jsonModel->setVariable('restartType', $restartType);
 		
 		return $jsonModel;
 	}	
