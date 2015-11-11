@@ -25,7 +25,7 @@
 							</ul>
 						
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active">
+								<div role="tabpanel" class="tab-pane active" id="compatibles">
 									<table class="table table-condensed <?php if (count($patients_compatible) > 0) { echo 'table-hover'; } ?>" style="margin-bottom: 0;">
 										<thead>
 											<tr>
@@ -34,7 +34,7 @@
 											</tr>
 										</thead>
 									</table>
-									<div style="height: 190px; overflow: hidden;"  id="compatibles">
+									<div style="height: 190px; overflow: hidden;" id="compatibles-list">
 										<table class="table table-condensed <?php if (count($patients_compatible) > 0) { echo 'table-hover'; } ?>">
 											<tbody>
 											<?php if (count($patients_compatible) > 0) { ?>
@@ -144,13 +144,13 @@
 
 		var target = $('#patient-' + patientIds[scrollPosition]);
 
-		$('#compatibles').animate({
+		$('#compatibles-list').animate({
             scrollTop: target.outerHeight() * scrollPosition
         }, 400);
 	}
 
 	function	scrollToDown() {
-		if (scrollTop !== null && scrollTop == $('#compatibles').scrollTop()) {
+		if (scrollTop !== null && scrollTop == $('#compatibles-list').scrollTop()) {
 			return false;
 		}
 		
@@ -161,11 +161,11 @@
 
  		var target = $('#patient-' + patientIds[scrollPosition]);
 
-		$('#compatibles').animate({
+		$('#compatibles-list').animate({
             scrollTop: target.outerHeight() * scrollPosition
         }, 400);
         
-		scrollTop = $('#compatibles').scrollTop();
+		scrollTop = $('#compatibles-list').scrollTop();
 	}
 
 	function	loadPatient(patientid)
