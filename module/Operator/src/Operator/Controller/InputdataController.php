@@ -994,6 +994,7 @@ class InputdataController extends AbstractActionController
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
 			
+			sleep(1);
 			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			
 			$result = new JsonModel(array('activity' => $activity));
@@ -1070,6 +1071,7 @@ class InputdataController extends AbstractActionController
 			$robotService->send($aData);
 
 			if ($r->getPost('activity') || $r->getPost('weight')) {
+				sleep(1);
 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 				$ret["activity"] = $activity;
 			}
@@ -1175,7 +1177,6 @@ class InputdataController extends AbstractActionController
 	public function	agetavailableactivityAction()
 	{
 		/* @var $robotService RobotService  */
-		sleep(2);
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$activity = $robotService->receive('G_Medicament.Calculation.C_Act_Dispo');
 		
