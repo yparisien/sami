@@ -26,7 +26,7 @@
 							<td><?php echo $injection->injectiontime?></td>
 							<td><?php echo $injection->activity?> <?php echo $unit?></td>
 							<td><?php echo strtoupper($injection->operatorlastname)?> <?php echo ucfirst(strtolower($injection->operatorfirstname))?></td>
-							<td><button class="btn btn-primary" onclick="printSticker();" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button></td>
+							<td><button class="btn btn-primary" onclick="printSticker(<?php echo $injection->patientid; ?>);" title="<?php echo $this->translate('Send to printer'); ?>"><i class="glyphicon glyphicon-print"></i></button></td>
 						</tr>
 					<?php } ?>
 					</tbody>
@@ -71,23 +71,24 @@
 	</div>
 </div>
 <script type="text/javascript">
-function	printSticker() {
+function	printSticker(patientid) {
 
 	// Récupération des infos de l'injection et du patient	
 	$.ajax({
 		type: "POST",
-		url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivityat')); ?>",
+		url: "<?php echo $this->url('bufferspace', array('action'=>'agetinjectedpatientsdetails')); ?>",
 		dataType: "json",
-		data: {wantedat : "DT#" + $("#activityattime").val().replace(" ", "-") + ":00"}
+		data: {patientid : patientid}
 	}).done(function(result) {
 		// Remplissage de l'etiquette
-		$('#injectionHour').html();
-		$('#drugName').html();
-		$('#activity').html();
-		$('#code').html();
-		$('#batchnum').html();
-		$('#uniqueId').html();
-		$('#operatorName').html();
+		console.log(result);
+		$('#injectionHour').html(result.injection.injection_time);
+		$('#drugName').html(result.drug.name);
+		$('#activity').html(result.injection.activity);
+		$('#code').html(result.inputdrug);
+		$('#batchnum').html(result.inputdrug.batchnum);
+		$('#uniqueId').html(result.injection.unique_id);
+		$('#operatorName').html(result.operator.firstname + ' ' + result.operator.lastname);
 		
 		//Impression de l'etiquette
 		printElement(document.getElementById("sticker"));

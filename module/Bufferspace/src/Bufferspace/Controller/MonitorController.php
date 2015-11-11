@@ -13,14 +13,32 @@ use Zend\Session\Container;
 use Zend\Config\Reader\Json;
 use Zend\View\Helper\ViewModel;
 use Manager\Robot\RobotService;
+use Zend\View\Model\JsonModel;
 
 class MonitorController extends AbstractActionController
 {
+	protected	$drugTable;
 	protected	$injectionTable;
+	protected	$inputdrugTable;
 	protected	$patientTable;
 	protected	$systemTable;
+	protected	$userTable;
 	protected	$viewinjectedTable;
 
+	/**
+	 *
+	 * @return \Manager\Model\DrugTable
+	 */
+	public function getDrugTable()
+	{
+		if(!$this->drugTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->drugTable = $sm->get('Manager\Model\DrugTable');
+		}
+		return $this->drugTable;
+	}
+	
 	/**
 	 * 
 	 * @return \Bufferspace\Model\InjectionTable
@@ -35,6 +53,21 @@ class MonitorController extends AbstractActionController
 		return $this->injectionTable;
 	}
 
+	
+	/**
+	 *
+	 * @return \Logger\Model\InputDrugTable
+	 */
+	public function getInputDrugTable()
+	{
+		if(!$this->inputdrugTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->inputdrugTable = $sm->get('Logger\Model\InputDrugTable');
+		}
+		return $this->inputdrugTable;
+	}
+	
 	/**
 	 * 
 	 * @return \Bufferspace\Model\PatientTable
@@ -49,6 +82,10 @@ class MonitorController extends AbstractActionController
 		return $this->patientTable;
 	}
 
+	/**
+	 *
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -57,6 +94,20 @@ class MonitorController extends AbstractActionController
 			$this->systemTable = $sm->get('Manager\Model\SystemTable');
 		}
 		return $this->systemTable;
+	}
+	
+	/**
+	 *
+	 * @return \Manager\Model\UserTable
+	 */
+	public function getUserTable()
+	{
+		if(!$this->userTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->userTable = $sm->get('Manager\Model\UserTable');
+		}
+		return $this->userTable;
 	}
 
 	public function	getViewinjectedTable()
@@ -81,6 +132,7 @@ class MonitorController extends AbstractActionController
 			'injections'	=> $this->getViewinjectedTable()->fetchAll(),
 			'unit'			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
 		);
+		
 		return $aParam;
 	}
 
@@ -98,7 +150,7 @@ class MonitorController extends AbstractActionController
 		
 		$aParams = $oPatient->toArray();
 		
-		$result = new \Zend\View\Model\JsonModel($aParams);
+		$result = new JsonModel($aParams);
 		return $result;
 	}
 
@@ -114,7 +166,33 @@ class MonitorController extends AbstractActionController
 		}
 		
 		$aParams = $oInjection->toArray();
-		$result = new \Zend\View\Model\JsonModel($aParams);
+		$result = new JsonModel($aParams);
+		return $result;
+	}
+	
+	public function agetinjectedpatientsdetailsAction() {
+		$aParams = array();
+	
+		$patientId = $this->params()->fromQuery('patientid', 0);
+		
+		if ($patientId > 0) {
+			$patient = $this->getPatientTable()->getPatient($patientId);
+			$injection = $this->getInjectionTable()->searchByPatientId($patientId);
+			$operator = $this->getUserTable()->getUser($injection->operatorid);
+			$inputDrug = $this->getInputDrugTable()->getInputDrug($injection->inputdrugid);
+			$drug = $this->getDrugTable()->getDrug($injection->drugid);
+			
+			$aParams['error'] = 0;
+			$aParams['patient'] = $patient;
+			$aParams['injection'] = $injection;
+			$aParams['operator'] = $operator;
+			$aParams['inputdrug'] = $inputDrug;
+			$aParams['drug'] = $drug;
+		} else {
+			$aParams['error'] = 1;
+		}
+		
+		$result = new JsonModel($aParams);
 		return $result;
 	}
 }
