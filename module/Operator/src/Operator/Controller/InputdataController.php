@@ -1175,7 +1175,7 @@ class InputdataController extends AbstractActionController
 	public function	agetavailableactivityAction()
 	{
 		/* @var $robotService RobotService  */
-		usleep(500);
+		sleep(2);
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$activity = $robotService->receive('G_Medicament.Calculation.C_Act_Dispo');
 		
