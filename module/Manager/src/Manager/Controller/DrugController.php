@@ -124,15 +124,15 @@ class DrugController extends AbstractActionController
 		$drugId = $this->params('id');
 		$vdrug = $this->getVDrugTable()->getVDrug($drugId);
 		
-		if ($vdrug->nbExams == 0) {
+// 		if ($vdrug->nbExams == 0) {
 			$this->getDrugTable()->deleteDrug($drugId);
 			$message = sprintf($translate("Drug (%s) has been deleted."), $vdrug->drug_name);
 			$this->flashMessenger()->addSuccessMessage($message);
-		}
-		else {
-			$message = sprintf($translate("Drug (%s) can't be deleted. Already in use in %s examinations"), $vdrug->drug_name, $vdrug->nbExams);
-			$this->flashMessenger()->addErrorMessage($message);
-		}
+// 		}
+// 		else {
+// 			$message = sprintf($translate("Drug (%s) can't be deleted. Already in use in %s examinations"), $vdrug->drug_name, $vdrug->nbExams);
+// 			$this->flashMessenger()->addErrorMessage($message);
+// 		}
 		
 		return $this->redirect()->toRoute('drug');
 	}
