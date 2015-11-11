@@ -151,7 +151,7 @@ class LoginController extends AbstractActionController
 				$this->getInputActionTable()->saveInputAction($inputaction);
 				
 				$startPos = 0;
-				if ($oSetup->startposition > 0 && $oSetup->startposition <= 6) {
+				if ($oSetup->startposition > 0 && $oSetup->startposition <= 7) {
 					$startPos = $oSetup->startposition;
 					
 					
