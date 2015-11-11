@@ -129,11 +129,29 @@ $this->headStyle()->appendStyle('
 					var value = 0;
 					var rinsed = 0;
 					var statut = 1;
+
 					var started = false;
+					var paused = false;
+
+					var relaunched = false;
 					var timerAnim; // instance of timer used by moveProgressBar
-					var frequency = 1000; // value of interval (in ms)
+					var frequency = 2000; // value of interval (in ms)
 					var step = null;
 
+					function	playPauseStates() {
+						if (paused == true && started == false) {
+							$('#btn-play').removeAttr('disabled');
+							$('#btn-pause').attr('disabled', 1);
+						}
+						else if (paused == false && started == true) {
+							$('#btn-pause').removeAttr('disabled');
+							$('#btn-play').attr('disabled', 1);
+						} else {
+							$('#btn-pause').attr('disabled', 1);
+							$('#btn-play').attr('disabled', 1);
+						}
+					}
+					
 					function	moveProgressBarRinsing()
 					{
 						timerAnim = window.setInterval(function(){animProgressBarRinsing();}, frequency);
@@ -157,7 +175,6 @@ $this->headStyle()->appendStyle('
 
 							if(result.progress >= 100)
 							{
-								stopProgressBarRinsing();
 								$('#btn-rinsing').removeClass('btn-warning active').addClass('btn-success');
 								$('#i-rinsing').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
 								$("#injection-progress").css('width', '100%');
@@ -165,19 +182,24 @@ $this->headStyle()->appendStyle('
 								$('#injection-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
 								rinsed = 1;
 								started = false;
-								checkEnableNext();
-
-								$('#btn-play').attr('disabled', 1);
-								$('#btn-pause').attr('disabled', 1);
+								paused = false;
 							} else {
-								started = true;
 								rinsed = 0;
+								if (relaunched === true) {
+									$('#injection-statut').html('Nouveau rinçage en cours...');
+								} else {
+									$('#injection-statut').html('Rinçage en cours...');
+								}
 							}
+
+							checkEnableNext();
+							playPauseStates();
 						});
 					}
 
 					function launchRinsing(relaunch)
 					{
+						stopProgressBarRinsing();
 						step = 'rinsing';
 						$("#injection-confirm").attr('disabled', 1);
 						$("#btn-exit").attr('disabled', 1);
@@ -191,9 +213,10 @@ $this->headStyle()->appendStyle('
 
 						if (relaunch === true) {
 							$('#injection-statut').html('Nouveau rinçage en cours...');
-							var started = false;
+							relaunched = true;
 						} else {
 							$('#injection-statut').html('Rinçage en cours...');
+							relaunched = false;
 						}
 
 						$.ajax({
@@ -204,9 +227,11 @@ $this->headStyle()->appendStyle('
 						}).done(function (result) {
 							if (result.error === false) {
 								started = true;
-								$('#btn-play').attr('disabled', 1);
-								$('#btn-pause').removeAttr('disabled');
-								window.setTimeout(function(){ moveProgressBarRinsing() }, 1500);
+								paused = false;
+								rinsed = 0;
+								playPauseStates();
+								stopProgressBarRinsing();
+								moveProgressBarRinsing();
 							}				            
 			            });
 					}
@@ -217,6 +242,10 @@ $this->headStyle()->appendStyle('
 						{
 							$("#btn-relaunch").removeAttr('disabled');
 							$("#btn-next").removeAttr('disabled');
+						}
+						else {
+							$("#btn-relaunch").attr('disabled', 1);
+							$("#btn-next").attr('disabled', 1);
 						}
 					}
 
@@ -251,11 +280,11 @@ $this->headStyle()->appendStyle('
 								$("#injection-progress").css('width', '100%');
 								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
 								$('#injection-statut').html('Injection terminée !');
+
 								stopProgressBarInjection();
 								sendNotifEndInjection();
 
-								$('#btn-play').attr('disabled', 1);
-								$('#btn-pause').attr('disabled', 1);
+								playPauseStates();
 
 								window.setTimeout(function(){launchRinsing(false);}, 1000);
 							}
@@ -291,8 +320,10 @@ $this->headStyle()->appendStyle('
 
 					function	pauseInjection()
 					{
-						$('#btn-pause').attr('disabled', 1);
-						$('#btn-play').removeAttr('disabled');
+						paused = true;
+						started = false;
+
+						playPauseStates();
 						if (step == 'injection') {
 							$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-pause');
 						} else if (step == 'rinsing') {
@@ -315,8 +346,10 @@ $this->headStyle()->appendStyle('
 
 					function	playInjection()
 					{
-						$('#btn-play').attr('disabled', 1);
-						$('#btn-pause').removeAttr('disabled');
+						paused = false;
+						started = true;
+
+						playPauseStates();
 						if (step == 'injection') {
 							$('#i-injection').removeClass('glyphicon-pause').addClass('glyphicon-refresh glyphicon-refresh-animate');
 						} else if (step == 'rinsing') {
@@ -332,6 +365,7 @@ $this->headStyle()->appendStyle('
 			            if (step == 'injection') {
 							moveProgressBarInjection();
 						} else if (step == 'rinsing') {
+							stopProgressBarRinsing();
 							moveProgressBarRinsing();
 						}
 					}
@@ -382,6 +416,7 @@ $this->headStyle()->appendStyle('
 
 					function moveProgressBarDilution()
 					{
+						playPauseStates();
             			$.ajax({
             				type: "POST",
               				url: "<?php echo $this->url('inject', array('action'=>'agetdilutionprogress'))?>",
@@ -470,8 +505,9 @@ $this->headStyle()->appendStyle('
 								$('#i-dilution').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon glyphicon-ok-sign');
 
 								started = true;
-								$('#btn-play').attr('disabled', 1);
-								$('#btn-pause').removeAttr('disabled');
+								paused = false;
+
+								playPauseStates();
 								
 								$.ajax({
 		              				type: "POST",

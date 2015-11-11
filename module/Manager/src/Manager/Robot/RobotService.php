@@ -52,6 +52,14 @@ class RobotService implements ServiceLocatorAwareInterface {
 		else {
 			foreach ($toWrite as $k => $v)
 			{
+				if ($k == RobotConstants::MAINLOGIC_CMD_INPUTSOFT_RINSINGSEQUENCE) {
+					$fr = new Container('fake_robot');
+					$fr->rinsingEvolutionStatus = 0;
+				}
+				if ($k == RobotConstants::MAINLOGIC_CMD_INPUTSOFT_INJECTIONSEQUENCE) {
+					$fr = new Container('fake_robot');
+					$fr->injectionEvolutionStatus = 0;
+				}
 				$log->debug('[SIMULATED] Send to robot [' . $k . '] : ' . $v);
 			}
 		}
@@ -178,13 +186,13 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_INJECTIONEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus == 100)) ? 0 : $fr->injectionEvolutionStatus + 10;
+				$progress = (isset($fr->injectionEvolutionStatus) && ($fr->injectionEvolutionStatus >= 100)) ? 100 : $fr->injectionEvolutionStatus + 10;
 				$fr->injectionEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_RINSINGEVOLUTION:
 				$fr = new Container('fake_robot');
-				$progress = (isset($fr->rinsingEvolutionStatus) && ($fr->rinsingEvolutionStatus == 100)) ? 0 : $fr->rinsingEvolutionStatus + 10 ;
+				$progress = (isset($fr->rinsingEvolutionStatus) && ($fr->rinsingEvolutionStatus >= 100)) ? 100 : $fr->rinsingEvolutionStatus + 10 ;
 				$fr->rinsingEvolutionStatus = $progress;
 				$mRet = $progress;
 				break;
