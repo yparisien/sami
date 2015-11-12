@@ -61,10 +61,10 @@ class SystemController extends AbstractActionController
 		
 		$aParams = array();
 		$actions = array(
-				"serialnumber"			=> "G_MainLogic.par.Serial_Number_SAMI", 
-				"activimeterversion"	=> "G_MainLogic.par.Serial_Number_Activi", 
-				"softwareversion"		=> "G_MainLogic.par.Software_Version", 
-				"systemversion"			=> "G_MainLogic.par.System_Version",
+				"serialnumber"			=> RobotConstants::MAINLOGIC_PAR_SERIALNUMBERSAMI, 
+				"activimeterversion"	=> RobotConstants::MAINLOGIC_PAR_SERIALNUMBERACTIVI, 
+				"softwareversion"		=> RobotConstants::MAINLOGIC_PAR_SOFTWAREVERSION, 
+				"systemversion"			=> RobotConstants::MAINLOGIC_PAR_SYSTEMVERSION,
 		);
 		
 		foreach ($actions as $k => $v)

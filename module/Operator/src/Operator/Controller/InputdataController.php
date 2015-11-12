@@ -966,14 +966,14 @@ class InputdataController extends AbstractActionController
 				if ($simulated) {
 					$fr->activitytoinj = $exam->min;
 				}
-				$robotService->send(array('G_Patient.Calculation.Choice_Min' => 1));
+				$robotService->send(array(RobotConstants::PATIENT_CALCULATION_CHOICEMIN => 1));
 			}
 			if ($r->getPost('max'))
 			{
 				if ($simulated) {
 					$fr->activitytoinj = $exam->max;
 				}
-				$robotService->send(array('G_Patient.Calculation.Choice_Max' => 1));
+				$robotService->send(array(RobotConstants::PATIENT_CALCULATION_CHOICEMAX => 1));
 			}
 			if ($r->getPost('norm'))
 			{
@@ -983,7 +983,7 @@ class InputdataController extends AbstractActionController
 						$fr->activitytoinj = $exam->max;
 					}
 				}
-				$robotService->send(array('G_Patient.Calculation.Choice_Reco' => 1));
+				$robotService->send(array(RobotConstants::PATIENT_CALCULATION_CHOICERECO => 1));
 			}
 			if ($r->getPost('activity') !== null)
 			{
@@ -991,7 +991,7 @@ class InputdataController extends AbstractActionController
 // 				if ($simulated && stripos($this->getRequest()->getServer('HTTP_REFERER'), '/setup/confirmpatient') !== false) {
 // 					$fr->confirmpatient = true;
 // 				}
-				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
+				$robotService->send(array(RobotConstants::PATIENT_INPUT_ACTTOINJ => $r->getPost('activity')));
 			}
 			
 			$result = new JsonModel(array("error" => false));
@@ -1006,7 +1006,7 @@ class InputdataController extends AbstractActionController
 		
 		$activityIsValid = (int) $robotService->receive(RobotConstants::PATIENT_ACTUAL_VALIDATION);
 			
-		$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+		$activity = $robotService->receive(RobotConstants::PATIENT_ACTUAL_ACTTOINJ);
 			
 		$result = new JsonModel(array('activity' => $activity, 'activityisvalid' => $activityIsValid));
 		if ($activityIsValid == 1) {
@@ -1032,7 +1032,7 @@ class InputdataController extends AbstractActionController
 			$oInjection = null;
 			
 			if ($r->getPost('patientid')) {
-				$aData['G_Patient.Input.Patient_ID'] = $r->getPost('patientid');
+				$aData[RobotConstants::PATIENT_INPUT_PATIENTID] = $r->getPost('patientid');
 				$patientId = $r->getPost('patientid');
 			} else {
 				$oContainer = new Container('injection_profile');
@@ -1047,32 +1047,32 @@ class InputdataController extends AbstractActionController
 			
 			if ($r->getPost('lastname'))
 			{
-				$aData['G_Patient.Input.Nom'] = $r->getPost('lastname');
+				$aData[RobotConstants::PATIENT_INPUT_NOM] = $r->getPost('lastname');
 				$oPatient->lastname = $r->getPost('lastname');
 			}
 			if ($r->getPost('firstname'))
 			{
-				$aData['G_Patient.Input.Prenom'] = $r->getPost('firstname');
+				$aData[RobotConstants::PATIENT_INPUT_PRENOM] = $r->getPost('firstname');
 				$oPatient->firstname = $r->getPost('firstname');
 			}
 			if ($r->getPost('birthdate'))
 			{
-				$aData['G_Patient.Input.DateN'] = $r->getPost('birthdate');
+				$aData[RobotConstants::PATIENT_INPUT_DATENAISSANCE] = $r->getPost('birthdate');
 				$oPatient->birthdate = $r->getPost('birthdate');
 			}
 			if ($r->getPost('expeditornum'))
 			{
-				$aData['G_Patient.Input.Ordonnancier'] = $r->getPost('expeditornum');
+				$aData[RobotConstants::PATIENT_INPUT_ORDONNANCIER] = $r->getPost('expeditornum');
 				$oInjection->unique_id = $r->getPost('expeditornum');
 			}
 // 			if ($r->getPost('activity'))
 // 			{
-// 				$aData['G_Patient.Input.ActToInj'] = $r->getPost('activity');
+// 				$aData[RobotConstants::PATIENT_INPUT_ACTTOINJ] = $r->getPost('activity');
 // 				$oInjection->activity = $r->getPost('activity');
 // 			}
 			if ($r->getPost('weight'))
 			{
-				$aData['G_Patient.Input.Poids'] = $r->getPost('weight');
+				$aData[RobotConstants::PATIENT_INPUT_POIDS] = $r->getPost('weight');
 				$oPatient->weight = $r->getPost('weight');
 			}
 			
@@ -1082,7 +1082,7 @@ class InputdataController extends AbstractActionController
 
 // 			if ($r->getPost('activity') || $r->getPost('weight')) {
 // 				sleep(1);
-// 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+// 				$activity = $robotService->receive(RobotConstants::PATIENT_ACTUAL_ACTTOINJ);
 // 				$ret["activity"] = $activity;
 // 			}
 			
@@ -1112,10 +1112,10 @@ class InputdataController extends AbstractActionController
 			if ($r->getPost('drugid')) {
 				$drug = $this->getDrugTable()->getDrug($r->getPost('drugid'));
 				$radionucleide = $this->getRadionuclideTable()->getRadionuclide($drug->radionuclideid);
-				$aDrugData ['G_Medicament.Input.ID'] = $drug->radionuclideid;
-				$aDrugData ['G_Medicament.Input.Name'] = $drug->name;
-				$aDrugData ['G_Medicament.Input.DCI'] = $drug->dci;
-				$aDrugData ['G_Medicament.Input.Period'] = $radionucleide->period;
+				$aDrugData [RobotConstants::MEDICAMENT_INPUT_ID] = $drug->radionuclideid;
+				$aDrugData [RobotConstants::MEDICAMENT_INPUT_NAME] = $drug->name;
+				$aDrugData [RobotConstants::MEDICAMENT_INPUT_DCI] = $drug->dci;
+				$aDrugData [RobotConstants::MEDICAMENT_INPUT_PERIOD] = $radionucleide->period;
 			}
 			if ($r->getPost('vialvol'))
 			{
@@ -1125,26 +1125,26 @@ class InputdataController extends AbstractActionController
 			if ($r->getPost('activityconc'))
 			{
 				$fr->activityconc = $r->getPost('activityconc');
-				$aDrugData['G_Medicament.Input.Act_Vol'] = $r->getPost('activityconc');
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_ACTVOL] = $r->getPost('activityconc');
 			}
 			if ($r->getPost('activitycalib'))
 			{
 				$fr->activitycalib = $r->getPost('activitycalib');
-				$aDrugData['G_Medicament.Input.Act_DT'] = $r->getPost('activitycalib');
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_ACTDT] = $r->getPost('activitycalib');
 			}
 			if ($r->getPost('calibrationtime'))
 			{
 				$fr->calibrationtime = $r->getPost('calibrationtime');
-				$aDrugData['G_Medicament.Input.DT_Calib'] = str_replace(" ", "-" ,"DT#" . $r->getPost('calibrationtime') . ":00");
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = str_replace(" ", "-" ,"DT#" . $r->getPost('calibrationtime') . ":00");
 			}
 			if ($r->getPost('batchnum'))
 			{
-				$aDrugData['G_Medicament.Input.N_Lot'] = $r->getPost('batchnum');
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_NLOT] = $r->getPost('batchnum');
 			}
 			if ($r->getPost('expirationtime'))
 			{
 				$fr->expirationtime = $r->getPost('expirationtime');
-				$aDrugData['G_Medicament.Input.DT_End'] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime') . ":00");
 			}
 			$fr->activityconfirm = null;
 			
@@ -1166,17 +1166,17 @@ class InputdataController extends AbstractActionController
 		$r = $this->getRequest();
 		if ($r->getPost('field') == "conc")
 		{
-			$activityConc = $robotService->receive('G_Medicament.Actual.Act_Vol');
+			$activityConc = $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTVOL);
 			$aParams = array('success' => 1, "activityconc" => $activityConc);
 		}
 		if ($r->getPost('field') == "calib")
 		{
-			$activityCalib = $robotService->receive('G_Medicament.Actual.Act_DT');
+			$activityCalib = $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTDT);
 			$aParams = array('success' => 1, "activitycalib" => $activityCalib);
 		}
 		if ($r->getPost('field') == "vialvol")
 		{
-			$activityCalib = $robotService->receive('G_Medicament.Actual.Act_DT');
+			$activityCalib = $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTDT);
 			$aParams = array('success' => 1, "activitycalib" => $activityCalib);
 		}
 
@@ -1188,7 +1188,7 @@ class InputdataController extends AbstractActionController
 	{
 		/* @var $robotService RobotService  */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$activity = $robotService->receive('G_Medicament.Calculation.C_Act_Dispo');
+		$activity = $robotService->receive(RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO);
 		
 		$aParams = array('time' => date('H:i:s'), 'activity' => $activity);
 		$result = new JsonModel($aParams);
@@ -1202,10 +1202,10 @@ class InputdataController extends AbstractActionController
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		
 		$oTime= $this->getRequest()->getPost('wantedat');
-		$robotService->send(array('G_MainLogic.cmd.Input_Soft.Date_Prev' => $oTime, 'G_Medicament.Calculation.Cast_Prev_Activity' => 1));
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATEPREV => $oTime, RobotConstants::MEDICAMENT_CALCULATION_CASTPREVACTIVITY => 1));
 
 		// make it active with real automate
-		$aParams = array('time'=>date('H:i:s'), 'activity' => $robotService->receive('G_Medicament.Calculation.C_Act_Prev'));
+		$aParams = array('time'=>date('H:i:s'), 'activity' => $robotService->receive(RobotConstants::MEDICAMENT_CALCULATION_CACTPREV));
 		$result = new JsonModel($aParams);
 		return $result;
 	}
@@ -1289,7 +1289,7 @@ class InputdataController extends AbstractActionController
 		else // sinon on laisse le formulaire être soumis
 		{
 			$robotService = $this->getServiceLocator()->get('RobotService');
-			$robotService->send(array('G_Kit.Val_Kit_P' => 1));
+			$robotService->send(array(RobotConstants::KIT_VALKITP => 1));
 			$aParams = array('success' => 1);
 		}
 
@@ -1315,15 +1315,15 @@ class InputdataController extends AbstractActionController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			
 			$inputExam = array(
-				'G_Patient.Input.Type_Exam'	=> 'typeexam',
-				'G_Patient.Input.DCI'		=> $oExamination->dci,
+				RobotConstants::PATIENT_INPUT_TYPEEXAM	=> 'typeexam',
+				RobotConstants::PATIENT_INPUT_DCI		=> $oExamination->dci,
 			);
 			$robotService->send($inputExam);
 			
 			$inputTaux = array(
-				'G_Patient.Input.Taux' 		=> $oExamination->rate,
-				'G_Patient.Input.Taux_Min'	=> $oExamination->min,
-				'G_Patient.Input.Taux_Max'	=> $oExamination->max,
+				RobotConstants::PATIENT_INPUT_TAUX		=> $oExamination->rate,
+				RobotConstants::PATIENT_INPUT_TAUXMIN	=> $oExamination->min,
+				RobotConstants::PATIENT_INPUT_TAUXMAX	=> $oExamination->max,
 			);
 			$robotService->send($inputTaux);
 			

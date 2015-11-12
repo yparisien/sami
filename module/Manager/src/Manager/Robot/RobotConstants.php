@@ -16,6 +16,7 @@ class RobotConstants {
 	
 	const MAINLOGIC_CMD_INPUTSOFT_ADJUSTSAMPLING			= 'G_MainLogic.cmd.Input_Soft.Adjust_Sampling';
 	const MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME			= 'G_MainLogic.cmd.Input_Soft.ChangeDateTime';
+	const MAINLOGIC_CMD_INPUTSOFT_DATEPREV					= 'G_MainLogic.cmd.Input_Soft.Date_Prev';
 	const MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM				= 'G_MainLogic.cmd.Input_Soft.DateTimeIHM';
 	const MAINLOGIC_CMD_INPUTSOFT_DILUTIONSEQUENCE			= 'G_MainLogic.cmd.Input_Soft.Dilution_Sequence';
 	const MAINLOGIC_CMD_INPUTSOFT_ENDINJECTION 				= 'G_MainLogic.cmd.Input_Soft.End_Injection';
@@ -69,12 +70,14 @@ class RobotConstants {
 	const MEDICAMENT_ACTUAL_ACTDT 							= 'G_Medicament.Actual.Act_DT';
 	const MEDICAMENT_CALCULATION_CACTDISPO 					= 'G_Medicament.Calculation.C_Act_Dispo';
 	const MEDICAMENT_CALCULATION_CACTPREV					= 'G_Medicament.Calculation.C_Act_Prev';
+	const MEDICAMENT_CALCULATION_CASTPREVACTIVITY			= 'G_Medicament.Calculation.Cast_Prev_Activity';
 	const MEDICAMENT_INPUT_ACT								= 'G_Medicament.Input.Act';
 	const MEDICAMENT_INPUT_ACTVOL							= 'G_Medicament.Input.Act_Vol';
 	const MEDICAMENT_INPUT_ACTDT							= 'G_Medicament.Input.Act_DT';
 	const MEDICAMENT_INPUT_DCI								= 'G_Medicament.Input.DCI';
 	const MEDICAMENT_INPUT_DTCALIB							= 'G_Medicament.Input.DT_Calib';
 	const MEDICAMENT_INPUT_DTEND							= 'G_Medicament.Input.DT_End';
+	const MEDICAMENT_INPUT_ID								= 'G_Medicament.Input.ID';
 	const MEDICAMENT_INPUT_NAME								= 'G_Medicament.Input.Name';
 	const MEDICAMENT_INPUT_NLOT								= 'G_Medicament.Input.N_Lot';
 	const MEDICAMENT_INPUT_PERIOD							= 'G_Medicament.Input.Period';
@@ -85,6 +88,24 @@ class RobotConstants {
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';
 	const PATIENT_ACTUAL_VALIDATION							= 'G_Patient.Actual.Validation';
+	const PATIENT_CALCULATION_CHOICEMAX						= 'G_Patient.Calculation.Choice_Max';
+	const PATIENT_CALCULATION_CHOICEMIN						= 'G_Patient.Calculation.Choice_Min';
+	const PATIENT_CALCULATION_CHOICERECO					= 'G_Patient.Calculation.Choice_Reco';
+	const PATIENT_INPUT_ACTTOINJ							= 'G_Patient.Input.ActToInj';
+	const PATIENT_INPUT_NOM									= 'G_Patient.Input.Nom';
+	const PATIENT_INPUT_PRENOM								= 'G_Patient.Input.Prenom';
+	const PATIENT_INPUT_DATENAISSANCE						= 'G_Patient.Input.DateN';
+	const PATIENT_INPUT_ORDONNANCIER						= 'G_Patient.Input.Ordonnancier';
+	const PATIENT_INPUT_POIDS								= 'G_Patient.Input.Poids';
+	const PATIENT_INPUT_PATIENTID							= 'G_Patient.Input.Patient_ID';
+	const PATIENT_INPUT_TYPEEXAM							= 'G_Patient.Input.Type_Exam';
+	const PATIENT_INPUT_DCI									= 'G_Patient.Input.DCI';
+	const PATIENT_INPUT_TAUX								= 'G_Patient.Input.Taux';
+	const PATIENT_INPUT_TAUXMAX 							= 'G_Patient.Input.Taux_Max';
+	const PATIENT_INPUT_TAUXMIN 							= 'G_Patient.Input.Taux_Min';
+	
+	const KIT_VALKITP										= 'G_Kit.Val_Kit_P';
+	
 	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	

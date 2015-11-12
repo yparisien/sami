@@ -14,6 +14,7 @@ use Zend\Config\Reader\Json;
 use Zend\View\Helper\ViewModel;
 use Manager\Robot\RobotService;
 use Zend\View\Model\JsonModel;
+use Manager\Robot\RobotConstants;
 
 class MonitorController extends AbstractActionController
 {
@@ -162,7 +163,7 @@ class MonitorController extends AbstractActionController
 		
 		if ($oInjection->activity > 0) {
 			$robotService = $this->getServiceLocator()->get('RobotService');
-			$robotService->send(array('G_Patient.Input.ActToInj' => $oInjection->activity));
+			$robotService->send(array(RobotConstants::PATIENT_INPUT_ACTTOINJ => $oInjection->activity));
 		}
 		
 		$aParams = $oInjection->toArray();
