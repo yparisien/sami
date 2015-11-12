@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-11 14:55+0100\n"
-"PO-Revision-Date: 2015-11-12 01:04+0100\n"
+"PO-Revision-Date: 2015-11-12 01:55+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -26,9 +26,7 @@ msgstr "Confirmez votre Identité"
 
 #: ../module/Auth/src/Auth/Controller/AuthController.php:137
 msgid "You are not authorized to perform this action for the moment"
-msgstr ""
-"Après avoir Valider la Fin des Injections, vous ne pouvez plus injecter un "
-"autre Patient !"
+msgstr "Vous ne pouvez pas réaliser cette opération pour le moment."
 
 #: ../module/Auth/src/Auth/Controller/AuthController.php:170
 msgid "Switching user successfull"
@@ -877,7 +875,8 @@ msgid ""
 "injections."
 msgstr ""
 "Pour Autorisation : Veuillez saisir le Diminutif et le Mot de Passe de "
-"l’autorité puis Validation  Exit pour retour au Menu Opérateur"
+"l’autorité puis Validation. Appuyez sur Annulation pour retour au Menu "
+"Opérateur"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:30
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:309
@@ -954,7 +953,7 @@ msgstr "Examen"
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:99
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:57
 msgid "Compatible exams"
-msgstr "Examen compatible"
+msgstr "Examens compatibles"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:104
 #: ../module/Operator/view/operator/inputdata/createpatient.phtml:63
@@ -1024,7 +1023,7 @@ msgstr "L'Activité maximale pour cet examen est dépassée"
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:218
 msgid "The activity you setted is above the limit of the current exam."
 msgstr ""
-"L'Activité demandée est supérieure à l'Activité maximale pour cet Examen"
+"L'Activité demandée est supérieure à l'Activité maximale pour cet examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:219
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:244
@@ -1058,7 +1057,7 @@ msgstr "Activité insuffisante pour cet Examen"
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:243
 msgid "The activity is null or above the min limit of this exam."
 msgstr ""
-"L'Activité est nulle ou au-dessous de l'Activité minimale pour cette examen"
+"L'Activité est nulle ou au-dessous de l'Activité minimale pour cet examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:264
 msgid "Center maximum activity reached"
@@ -1184,7 +1183,7 @@ msgstr "La date de Péremptionest incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:358
 msgid "Set a correct date : greater than the calibration date"
-msgstr "Saisissez une date postérieure àla date de calibration"
+msgstr "Saisissez une date postérieure à la date de calibration"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:368
 msgid "Wrong volumic activity"
@@ -1213,7 +1212,7 @@ msgstr "Volume de la fiole incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:391
 msgid "The volume of the vial is incorrect."
-msgstr "Le colme de la fiole est incorrecte"
+msgstr "Le volume de la fiole est incorrecte"
 
 #: ../module/Operator/view/operator/inputdata/drug.phtml:392
 msgid "Set a correct value : between 1 and 15ml"
@@ -1382,7 +1381,7 @@ msgstr "Confirmez la fin des Injections"
 
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:47
 msgid "Are you sure to confirm the end of injection"
-msgstr "Confirmez-vous la Fin des Injections ?"
+msgstr "Confirmez-vous la fin des injections ?"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:18
 msgid "This step is going to use NaCl solution."
@@ -1437,11 +1436,11 @@ msgstr "Statut"
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:88
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:59
 msgid "Waiting for patient's datas validation..."
-msgstr "En attente de la Validation des Données Patient..."
+msgstr "En attente de la validation des données patient..."
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:119
 msgid "Relaunch a rinsing"
-msgstr "Autre rinçage ?"
+msgstr "Relancer un rincage"
 
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:5
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:10
@@ -1720,7 +1719,8 @@ msgstr ""
 
 #: ../module/Start/view/error/404.phtml:10
 msgid "The requested controller was unable to dispatch the request."
-msgstr "Comprennes qui pourra"
+msgstr ""
+"J'ai cru entendre le mot dispatch controlleur. Y'avais même le mot requête."
 
 #: ../module/Start/view/error/404.phtml:13
 msgid ""
@@ -1729,7 +1729,7 @@ msgstr "Comprennes qui pourra"
 
 #: ../module/Start/view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
-msgstr "Le dispositif de commande demandée n'était pas répartissable."
+msgstr "J'ai cru entendre le mot dispatch et controlleur"
 
 #: ../module/Start/view/error/404.phtml:19
 msgid "The requested URL could not be matched by routing."
@@ -1757,12 +1757,12 @@ msgstr "S.A.M.I."
 #: ../module/Start/view/layout/layout.phtml:58
 #: ../module/Start/view/layout/logged.phtml:64
 msgid "The Javascript of your browser seems to be desactivated."
-msgstr "Vous n'avez pas payé la licence Java. Régularisez votre situation"
+msgstr "Javascript ne semble pas activé."
 
 #: ../module/Start/view/layout/layout.phtml:59
 #: ../module/Start/view/layout/logged.phtml:65
 msgid "Please enable it to use S.A.M.I or contact the support."
-msgstr "Alors là !"
+msgstr "Veuillez activer Javascript ou contacter le support."
 
 #: ../module/Start/view/layout/layout.phtml:68
 #: ../module/Start/view/layout/logged.phtml:75
@@ -1823,7 +1823,7 @@ msgstr "S'Identifier"
 
 #: ../module/Start/view/layout/logged.phtml:412
 msgid "System error detected"
-msgstr "Erreur System détectée"
+msgstr "Erreur système détectée"
 
 #: ../module/Start/view/layout/logged.phtml:416
 msgid "An error has been raised by the robot :"
