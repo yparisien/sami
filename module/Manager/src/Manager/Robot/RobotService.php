@@ -120,7 +120,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				} else if (isset($fr->vialvol) && $fr->vialvol > 15) {
 					$mRet = -4;
 				} else {
-					$mRet = mt_rand(400, 500);
+					$mRet = mt_rand(4000, 5000);
 					$fr->lastActDispo = $mRet;
 				}
 				break;
@@ -137,28 +137,33 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::PATIENT_ACTUAL_ACTTOINJ:
 				$fr = new Container('fake_robot');
-				$oInjection = new Container('injection_profile');
 				$mRet = $fr->activitytoinj;
-				if (isset($fr->confirmpatient) && $fr->confirmpatient === true) {
+				break;
+			case RobotConstants::PATIENT_ACTUAL_VALIDATION:
+				$fr = new Container('fake_robot');
+				$oInjection = new Container('injection_profile');
+// 				if (isset($fr->confirmpatient) && $fr->confirmpatient === true) {
 					$maxactivity = $this->getServiceLocator()->get('Manager\Model\SystemTable')->getSystem()->maxactivity;
 					$exam = null;
+					$mRet = 1;
 					if ($oInjection->examinationid > 0) {
 						$exam = $this->getServiceLocator()->get('Manager\Model\ExaminationTable')->getExamination($oInjection->examinationid);
 					}
-					if ($mRet > $maxactivity) {
-						//Activite supérieure à celle du centre
-						$mRet = -2;
-					} else if ($exam != null && $mRet > $exam->max) {
-						//Activité supérieure à celle de l'examen
-						$mRet = -4;
-					} else if ($mRet == 0 || ($exam != null && $mRet < $exam->min)) {
-						//Activité inférieure à celle de l'examen
-						$mRet = -3;
-					} else if ($mRet > $fr->lastActDispo) {
+					if ($fr->activitytoinj > $fr->lastActDispo) {
 						//Activité supérieure à celle disponible
 						$mRet = -1;
 					}
-				}
+					else if ($fr->activitytoinj > $maxactivity) {
+						//Activite supérieure à celle du centre
+						$mRet = -2;
+					} else if ($exam != null && $fr->activitytoinj > $exam->max) {
+						//Activité supérieure à celle de l'examen
+						$mRet = -4;
+					} else if ($fr->activitytoinj == 0 || ($exam != null && $fr->activitytoinj < $exam->min)) {
+						//Activité inférieure à celle de l'examen
+						$mRet = -3;
+					}
+// 				}
 				break;
 			case RobotConstants::MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE:
 				$mRet = 100;

@@ -84,6 +84,7 @@ class RobotConstants {
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';
+	const PATIENT_ACTUAL_VALIDATION							= 'G_Patient.Actual.Validation';
 	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	

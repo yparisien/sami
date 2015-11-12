@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-11 14:55+0100\n"
-"PO-Revision-Date: 2015-11-11 17:16+0100\n"
+"PO-Revision-Date: 2015-11-12 01:04+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -976,7 +976,7 @@ msgstr "ex : 72,25"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:127
 msgid "Activity for examination"
-msgstr "Activités pour cet Examen"
+msgstr "Activité pour cet examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:140
 #: ../module/Operator/view/operator/inputdata/drug.phtml:97
@@ -1024,7 +1024,7 @@ msgstr "L'Activité maximale pour cet examen est dépassée"
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:218
 msgid "The activity you setted is above the limit of the current exam."
 msgstr ""
-"L'Activité demandée est inférieure à l'Activité minimale pour cet Examen"
+"L'Activité demandée est supérieure à l'Activité maximale pour cet Examen"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:219
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:244

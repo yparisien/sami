@@ -946,7 +946,7 @@ class InputdataController extends AbstractActionController
 		$simulated = isset($cfg['robot']['simulated']) ? $cfg['robot']['simulated'] : false;
 		$oContainer = new Container('injection_profile');
 		$fr = new Container('fake_robot');
-		$fr->confirmpatient = false;
+// 		$fr->confirmpatient = false;
 		
 		if ($this->getRequest()->isPost()) // process the submitted form
 		{
@@ -988,24 +988,34 @@ class InputdataController extends AbstractActionController
 			if ($r->getPost('activity') !== null)
 			{
 				$fr->activitytoinj = $r->getPost('activity');
-				if ($simulated && stripos($this->getRequest()->getServer('HTTP_REFERER'), '/setup/confirmpatient') !== false) {
-					$fr->confirmpatient = true;
-				}
+// 				if ($simulated && stripos($this->getRequest()->getServer('HTTP_REFERER'), '/setup/confirmpatient') !== false) {
+// 					$fr->confirmpatient = true;
+// 				}
 				$robotService->send(array('G_Patient.Input.ActToInj' => $r->getPost('activity')));
 			}
 			
-			sleep(1);
-			$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+			$result = new JsonModel(array("error" => false));
+			return $result;
+		}
+	}
+	
+	public function agetactivityAction() {
+		/* @var $robotService RobotService  */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$oContainer = new Container('injection_profile');
+		
+		$activityIsValid = (int) $robotService->receive(RobotConstants::PATIENT_ACTUAL_VALIDATION);
 			
-			$result = new JsonModel(array('activity' => $activity));
-			if ($activity > 0) {
-				$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
-				$oInjection->activity = $activity;
-				$this->getInjectionTable()->saveInjection($oInjection);
-			}
+		$activity = $robotService->receive('G_Patient.Actual.ActToInj');
 			
-   			return $result;
-		}	
+		$result = new JsonModel(array('activity' => $activity, 'activityisvalid' => $activityIsValid));
+		if ($activityIsValid == 1) {
+			$oInjection = $this->getInjectionTable()->searchByPatientId($oContainer->patientid);
+			$oInjection->activity = $activity;
+			$this->getInjectionTable()->saveInjection($oInjection);
+		}
+			
+   		return $result;
 	}
 
 	public function aupdatepatientAction()
@@ -1055,11 +1065,11 @@ class InputdataController extends AbstractActionController
 				$aData['G_Patient.Input.Ordonnancier'] = $r->getPost('expeditornum');
 				$oInjection->unique_id = $r->getPost('expeditornum');
 			}
-			if ($r->getPost('activity'))
-			{
-				$aData['G_Patient.Input.ActToInj'] = $r->getPost('activity');
-				$oInjection->activity = $r->getPost('activity');
-			}
+// 			if ($r->getPost('activity'))
+// 			{
+// 				$aData['G_Patient.Input.ActToInj'] = $r->getPost('activity');
+// 				$oInjection->activity = $r->getPost('activity');
+// 			}
 			if ($r->getPost('weight'))
 			{
 				$aData['G_Patient.Input.Poids'] = $r->getPost('weight');
@@ -1070,11 +1080,11 @@ class InputdataController extends AbstractActionController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aData);
 
-			if ($r->getPost('activity') || $r->getPost('weight')) {
-				sleep(1);
-				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
-				$ret["activity"] = $activity;
-			}
+// 			if ($r->getPost('activity') || $r->getPost('weight')) {
+// 				sleep(1);
+// 				$activity = $robotService->receive('G_Patient.Actual.ActToInj');
+// 				$ret["activity"] = $activity;
+// 			}
 			
 			if ($oPatient instanceof Patient) {
 				$this->getPatientTable()->savePatient($oPatient);
