@@ -750,6 +750,7 @@ class InputdataController extends AbstractActionController
 			$oInjection = new Injection();
 			$oInjection->patient_id 	= $oPatient->id;
 			$oInjection->type			= 'infuse';
+			$oInjection->injection_date	= date('Y-m-d');
 			$oInjection->injection_time	= date('H:i:s');
 			$oInjection->activity		= 0;
 			$oInjection->dose_status	= '';

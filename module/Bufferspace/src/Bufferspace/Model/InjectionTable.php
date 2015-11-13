@@ -54,6 +54,7 @@ class InjectionTable
 		$data = array(
 			'patient_id'		=> $injection->patient_id,
 			'type'				=> $injection->type,
+			'injection_date'	=> $injection->injection_date,
 			'injection_time'	=> $injection->injection_time,
 			'activity'			=> $injection->activity,
 			'dose_status'		=> $injection->dose_status,

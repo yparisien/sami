@@ -583,6 +583,7 @@ class InteractrobotController extends AbstractActionController
 		$oInjection->inputdrugid = $oInputDrug->id;
 		$oInjection->examinationid = $injectionProfile->examinationid;
 		$oInjection->operatorid = $injectionProfile->operatorid;
+		$oInjection->injection_date = date('Y-m-d');
 		$this->getInjectionTable()->saveInjection($oInjection);
 		
 		return new JsonModel(array('success'=>true));

@@ -6,6 +6,7 @@ class Injection
 	public	$id;
 	public	$patient_id;
 	public	$type;
+	public  $injection_date;
 	public	$injection_time;
 	public	$activity;
 	public	$dose_status;
@@ -29,6 +30,7 @@ class Injection
 		$this->id				= (!empty($data['id'])) ? (int) $data['id'] : null;
 		$this->patient_id		= (!empty($data['patient_id'])) ? $data['patient_id'] : null;
 		$this->type				= (!empty($data['type'])) ? $data['type'] : null;
+		$this->injection_date	= (!empty($data['injection_date'])) ? $data['injection_date'] : null;
 		$this->injection_time	= (!empty($data['injection_time'])) ? $data['injection_time'] : null;
 		$this->activity			= (!empty($data['activity'])) ? (int) $data['activity'] : null;
 		$this->dose_status		= (!empty($data['dose_status'])) ? $data['dose_status'] : null;
@@ -51,6 +53,7 @@ class Injection
 		$data['id']				= $this->id;
 		$data['patient_id']		= $this->patient_id;
 		$data['type']			= $this->type;
+		$data['injection_date']	= $this->injection_date;
 		$data['injection_time']	= $this->injection_time;
 		$data['activity']		= $this->activity;
 		$data['dose_status']	= $this->dose_status;

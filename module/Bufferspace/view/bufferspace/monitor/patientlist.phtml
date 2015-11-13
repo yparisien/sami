@@ -45,11 +45,11 @@
 		</div>
 	</div>
 </div>
-<div class="print-container" id="sticker" style="margin-top: 10px;">
+<div class="print-container hide" id="sticker" style="margin-top: 10px;">
 	<div class="content">
 		<div class="row">
     		<div class="col-xs-2 no-padding"><span style="font-size: 2.6em; font-weight: normal; line-height: 0.8em;">&#9762;</span></div>
-    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;"><?php echo date('d/m/Y'); ?></div>
+    		<div class="col-xs-6 no-padding" style="margin-top: 1mm;" id="injectionDate">JJ/MM/AAAA</div>
     		<div class="col-xs-4 no-padding" style="margin-top: 1mm;" id="injectionHour">HH:MM</div>
   		</div>
 		<div class="row">
@@ -75,13 +75,13 @@ function	printSticker(patientid) {
 
 	// Récupération des infos de l'injection et du patient	
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		url: "<?php echo $this->url('bufferspace', array('action'=>'agetinjectedpatientsdetails')); ?>",
 		dataType: "json",
 		data: {patientid : patientid}
 	}).done(function(result) {
 		// Remplissage de l'etiquette
-		console.log(result);
+		$('#injectionDate').html(result.injection.injection_date);
 		$('#injectionHour').html(result.injection.injection_time);
 		$('#drugName').html(result.drug.name);
 		$('#activity').html(result.injection.activity);
