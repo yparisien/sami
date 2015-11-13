@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-11 14:55+0100\n"
-"PO-Revision-Date: 2015-11-12 01:55+0100\n"
+"PO-Revision-Date: 2015-11-12 19:40+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -1079,7 +1079,7 @@ msgstr ""
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:273
 msgid "Correct the value"
-msgstr "Corrigez le Volume"
+msgstr "Corrigez la Valeur"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:276
 msgid "Use this value"
