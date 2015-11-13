@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-11 14:55+0100\n"
-"PO-Revision-Date: 2015-11-12 19:40+0100\n"
+"POT-Creation-Date: 2015-11-13 10:56+0100\n"
+"PO-Revision-Date: 2015-11-13 11:00+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: fr_FR\n"
@@ -47,33 +47,33 @@ msgstr ""
 "Patient inexistant dans les Données Patient - Pas de Pa\n"
 "tient sélectionné"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:242
+#: ../module/Auth/src/Auth/Controller/LoginController.php:246
 msgid "No user matching"
 msgstr "Pas d'Opérateur correspondant à cet Identifiant"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:245
+#: ../module/Auth/src/Auth/Controller/LoginController.php:249
 msgid "Login and password doesn't match"
 msgstr "L'Identifiant et le Mot de Passe ne correspondent pas !"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:248
+#: ../module/Auth/src/Auth/Controller/LoginController.php:252
 msgid "Error during the process, please retry later"
 msgstr "Erreur durant l'Authentification, merci de réessayer ultérieurement"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:284
+#: ../module/Auth/src/Auth/Controller/LoginController.php:288
 msgid "New password is setted."
 msgstr "Nouveau Mot de Passe enregistré"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:289
+#: ../module/Auth/src/Auth/Controller/LoginController.php:293
 msgid "Old password don't match with current password please retry."
 msgstr "Ce Mot de Passe ne correspond pas au Mot de Passe actif ! Réessayez"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:295
+#: ../module/Auth/src/Auth/Controller/LoginController.php:299
 msgid ""
 "New password is not confirmed, no match with confirmation, please retry."
 msgstr "Erreur dans la Confirmation du Mot de Passe"
 
-#: ../module/Auth/src/Auth/Controller/LoginController.php:316
-#: ../module/Auth/src/Auth/Controller/LoginController.php:337
+#: ../module/Auth/src/Auth/Controller/LoginController.php:320
+#: ../module/Auth/src/Auth/Controller/LoginController.php:341
 msgid "You have been logged out."
 msgstr "Vous avez été déconnecté"
 
@@ -92,13 +92,6 @@ msgstr "Le Médicament (%s) a été modifié"
 msgid "Drug (%s) has been deleted."
 msgstr "Le Médicament (%s) a été effacé"
 
-#: ../module/Manager/src/Manager/Controller/DrugController.php:133
-#, php-format
-msgid "Drug (%s) can't be deleted. Already in use in %s examinations"
-msgstr ""
-"Le Médicament (%s) ne peut être effacé. En cours d'utlisation dans l'examen "
-"%s"
-
 #: ../module/Manager/src/Manager/Controller/ExaminationController.php:102
 #, php-format
 msgid "Examination (%s) has been created."
@@ -113,13 +106,6 @@ msgstr "L'Examen (%s) a été modifié"
 #, php-format
 msgid "Examination (%s) has been deleted."
 msgstr "L'Examen (%s) a été effacé"
-
-#: ../module/Manager/src/Manager/Controller/ExaminationController.php:161
-#, php-format
-msgid "Examination (%s) can't be deleted. Already %s examinations in progress."
-msgstr ""
-"L'Examen (%s) ne peut être effacé. En cours d'utlisation pour %s Injections "
-"à venir"
 
 #: ../module/Manager/src/Manager/Controller/UserController.php:50
 #: ../module/Manager/src/Manager/Controller/UserController.php:83
@@ -169,12 +155,12 @@ msgstr "L'Utilisateur (%s) n'est pas autorisé pour réaliser cette action"
 msgid "Peremption limit reachead. Overpass by %s %s"
 msgstr "La date et heure de Péremption sont dépassée - Autorisation par %s %s"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1231
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1241
 #, php-format
 msgid "Source kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit Source déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
 
-#: ../module/Operator/src/Operator/Controller/InputdataController.php:1275
+#: ../module/Operator/src/Operator/Controller/InputdataController.php:1285
 #, php-format
 msgid "Patient kit already used by %s %s at %s, %s try remaining"
 msgstr "Kit Patient déjà utilisé par %s %s à %s, %s essai(s) restant(s)"
@@ -249,15 +235,16 @@ msgstr ""
 
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:20
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:19
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:297
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:298
 msgid "User"
 msgstr "Opérateur"
 
 #: ../module/Auth/view/auth/auth/confirmauth.phtml:24
 #: ../module/Auth/view/auth/auth/swapauth.phtml:21
 #: ../module/Auth/view/auth/login/index.phtml:18
+#: ../module/Manager/view/manager/user/add.phtml:28
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:23
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:301
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:302
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -527,7 +514,7 @@ msgid " at least one drug."
 msgstr "Créer au moins un médicament"
 
 #: ../module/Manager/view/manager/drug/index.phtml:17
-#: ../module/Manager/view/manager/drug/index.phtml:52
+#: ../module/Manager/view/manager/drug/index.phtml:46
 msgid "Add a drug"
 msgstr "Ajouter un Médicament"
 
@@ -543,26 +530,19 @@ msgstr "Action :"
 msgid "Edit"
 msgstr "Editer"
 
-#: ../module/Manager/view/manager/drug/index.phtml:38
+#: ../module/Manager/view/manager/drug/index.phtml:37
 msgid "Delete drug confirmation title"
 msgstr "Suppression du Médicament ?"
 
-#: ../module/Manager/view/manager/drug/index.phtml:38
+#: ../module/Manager/view/manager/drug/index.phtml:37
 msgid "Delete drug confirmation content"
 msgstr "Veuillez confirmer la suppression de ce Médicament"
 
-#: ../module/Manager/view/manager/drug/index.phtml:39
-#: ../module/Manager/view/manager/drug/index.phtml:43
-#: ../module/Manager/view/manager/examination/index.phtml:44
-#: ../module/Manager/view/manager/examination/index.phtml:49
+#: ../module/Manager/view/manager/drug/index.phtml:38
+#: ../module/Manager/view/manager/examination/index.phtml:43
 #: ../module/Manager/view/manager/user/index.phtml:42
 msgid "Delete"
 msgstr "Supprimer"
-
-#: ../module/Manager/view/manager/drug/index.phtml:42
-#, php-format
-msgid "%s examination(s) use this drug."
-msgstr "%s examen(s) utilise(nt) ce médicament"
 
 #: ../module/Manager/view/manager/examination/add.phtml:3
 #: ../module/Manager/view/manager/examination/edit.phtml:3
@@ -621,7 +601,7 @@ msgid " at least one exam."
 msgstr "Créer au moins un examen"
 
 #: ../module/Manager/view/manager/examination/index.phtml:17
-#: ../module/Manager/view/manager/examination/index.phtml:58
+#: ../module/Manager/view/manager/examination/index.phtml:51
 msgid "Add an examination"
 msgstr "Ajouter un Examen"
 
@@ -633,18 +613,13 @@ msgstr "Min."
 msgid "Max"
 msgstr "Max."
 
-#: ../module/Manager/view/manager/examination/index.phtml:42
+#: ../module/Manager/view/manager/examination/index.phtml:41
 msgid "Delete examination confirmation title"
 msgstr "Suppression de l'Examen ?"
 
-#: ../module/Manager/view/manager/examination/index.phtml:42
+#: ../module/Manager/view/manager/examination/index.phtml:41
 msgid "Delete examination confirmation content"
 msgstr "Veuillez confirmer la suppression de cet Examen"
-
-#: ../module/Manager/view/manager/examination/index.phtml:47
-#, php-format
-msgid "%s examination(s) actually in progress."
-msgstr "%s examen(s)  et prévu pour des patients en attete d'être injecté !"
 
 #: ../module/Manager/view/manager/manager/index.phtml:7
 #: ../module/Manager/view/manager/radionuclide/index.phtml:16
@@ -797,10 +772,6 @@ msgstr "DURAND"
 msgid "durandm"
 msgstr "durandm"
 
-#: ../module/Manager/view/manager/user/add.phtml:28
-msgid "New Password"
-msgstr "Nouveau  Mot de Passe"
-
 #: ../module/Manager/view/manager/user/add.phtml:36
 #: ../module/Manager/view/manager/user/edit.phtml:36
 #: ../module/Manager/view/manager/user/index.phtml:16
@@ -864,12 +835,12 @@ msgid "CAUTION: EXPIRY TIME EXCEEDED"
 msgstr "Date & Heure de Péremtion dépassée"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:14
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:292
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:293
 msgid "Injection prohibited unless authorized by Radio-Pharmacist"
 msgstr "Injection interdite sans l'Authorisation d'un Superviseur"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:15
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:293
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:294
 msgid ""
 "To Authorize: Please sign-in with authority account, or Cancel to end the "
 "injections."
@@ -879,14 +850,14 @@ msgstr ""
 "Opérateur"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:30
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:309
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:310
 #: ../module/Start/view/layout/layout.phtml:102
 #: ../module/Start/view/layout/logged.phtml:244
 msgid "Validate"
 msgstr "Valider"
 
 #: ../module/Operator/view/operator/inputdata/checkperemption.phtml:33
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:312
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:313
 #: ../module/Operator/view/operator/inputdata/selectpatient.phtml:118
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:125
 #: ../module/Operator/view/operator/operator/index.phtml:144
@@ -1011,81 +982,86 @@ msgid "Correct the activity"
 msgstr "Corrigez l'Activité"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:205
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:229
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:254
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:230
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:255
 msgid "Choose another patient"
 msgstr "Sélectionnez un autre patient"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:215
-msgid "Maximum exam activity reached"
-msgstr "L'Activité maximale pour cet examen est dépassée"
+msgid "Too much activity"
+msgstr "Activité trop haute !"
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:218
-msgid "The activity you setted is above the limit of the current exam."
-msgstr ""
-"L'Activité demandée est supérieure à l'Activité maximale pour cet examen"
+msgid "Exceeded maximum activity"
+msgstr "Activité trop haute pour cet examen."
 
 #: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:219
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:244
+msgid "The activity you setted is above the maximum limit of the current exam."
+msgstr ""
+"L'activité demandée est au dessus de l'activité maximale autorisée pour "
+"l'examen."
+
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:220
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:245
 msgid "Do you want to correct the activity ?"
 msgstr "Voulez-vous corriger l'Activité ?"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:223
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:248
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:224
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:249
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:32
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:86
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:97
 msgid "YES"
 msgstr "OUI"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:226
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:251
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:227
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:252
 #: ../module/Operator/view/operator/interactrobot/endinject.phtml:33
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:91
 #: ../module/Operator/view/operator/interactrobot/patientdisconnection.phtml:102
 msgid "NO"
 msgstr "NON"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:239
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:240
 msgid "Insufficient activity"
 msgstr "Activité insuffisante !"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:242
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:243
 msgid "Insufficient activity for this exam."
 msgstr "Activité insuffisante pour cet Examen"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:243
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:244
 msgid "The activity is null or above the min limit of this exam."
 msgstr ""
-"L'Activité est nulle ou au-dessous de l'Activité minimale pour cet examen"
+"L'Activité est nulle ou en-dessous de l'Activité minimale pour cette examen"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:264
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:265
 msgid "Center maximum activity reached"
 msgstr "Activité maximale pour le Centre dépassée"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:267
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:268
 msgid "You have reached the maximum activity authorized for your center."
 msgstr "Vous avez atteint l'Activité maximale autorisée pour le Centre"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:268
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:269
 msgid "You can correct it or use this value above the limit."
 msgstr "Vous pouvez la corriger ou utiliser une valeur inférieure"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:269
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:270
 msgid ""
 "The autorization of an autority is required for exceed the maximum value."
 msgstr ""
 "Une Autorisation est requise pour dépasser l'Activité maximale pour le Centre"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:273
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:274
 msgid "Correct the value"
 msgstr "Corrigez la Valeur"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:276
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:277
 msgid "Use this value"
 msgstr "Utilisez cette valeur"
 
-#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:286
+#: ../module/Operator/view/operator/inputdata/confirmpatient.phtml:287
 msgid "Confirmation of maxim center activity exceed"
 msgstr "Confirmation du dépassement de l'Activité autorisée pour le Centre"
 
@@ -1409,7 +1385,7 @@ msgstr "Donnée Patient"
 
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:44
 #: ../module/Operator/view/operator/interactrobot/injection.phtml:67
-#: ../module/Operator/view/operator/interactrobot/injection.phtml:360
+#: ../module/Operator/view/operator/interactrobot/injection.phtml:396
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:37
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:162
 #: ../module/Operator/view/operator/interactrobot/sample.phtml:268
@@ -1895,6 +1871,33 @@ msgstr "Erreur sur le numéro de série du Kit Source"
 #: ../module/Start/view/start/index/index.phtml:185
 msgid "Check of kit source loading failed."
 msgstr "Erreur fatale - Contrôle du Kit Source en Erreur"
+
+#~ msgid "Drug (%s) can't be deleted. Already in use in %s examinations"
+#~ msgstr ""
+#~ "Le Médicament (%s) ne peut être effacé. En cours d'utlisation dans "
+#~ "l'examen %s"
+
+#~ msgid ""
+#~ "Examination (%s) can't be deleted. Already %s examinations in progress."
+#~ msgstr ""
+#~ "L'Examen (%s) ne peut être effacé. En cours d'utlisation pour %s "
+#~ "Injections à venir"
+
+#~ msgid "%s examination(s) use this drug."
+#~ msgstr "%s examen(s) utilise(nt) ce médicament"
+
+#~ msgid "%s examination(s) actually in progress."
+#~ msgstr "%s examen(s)  et prévu pour des patients en attete d'être injecté !"
+
+#~ msgid "New Password"
+#~ msgstr "Nouveau  Mot de Passe"
+
+#~ msgid "Maximum exam activity reached"
+#~ msgstr "L'Activité maximale pour cet examen est dépassée"
+
+#~ msgid "The activity you setted is above the limit of the current exam."
+#~ msgstr ""
+#~ "L'Activité demandée est supérieure à l'Activité maximale pour cet examen"
 
 #~ msgid "Activity injected"
 #~ msgstr "Activité Injectée"
