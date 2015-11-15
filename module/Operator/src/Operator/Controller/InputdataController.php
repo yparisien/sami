@@ -35,6 +35,7 @@ use Manager\Robot\RobotService;
 use Manager\Model\User;
 use Operator\Model\Sourcekit;
 use Operator\Model\Patientkit;
+use Logger\Model\InputFile;
 
 class InputdataController extends AbstractActionController
 {
@@ -43,6 +44,7 @@ class InputdataController extends AbstractActionController
 	protected $examinationTable;
 	protected $injectionTable;
 	protected $inputdrugTable;
+	protected $inputfileTable;
 	protected $patientTable;
 	protected $patientkitTable;
 	protected $radionuclideTable;
@@ -67,6 +69,20 @@ class InputdataController extends AbstractActionController
 			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
 		return $this->inputActionTable;
+	}
+	
+	/**
+	 *
+	 * @return \Logger\Model\InputFileTable
+	 */
+	public function getInputFileTable()
+	{
+		if(!$this->inputfileTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->inputfileTable = $sm->get('Logger\Model\InputFileTable');
+		}
+		return $this->inputfileTable;
 	}
 
 	/**
@@ -316,6 +332,10 @@ class InputdataController extends AbstractActionController
 		$inputaction->action = "Cancel of import file";
 		$this->getInputActionTable()->saveInputAction($inputaction);
 		
+		$inputfile = $this->getInputFileTable()->getLastInputFile();
+		$inputfile->deleted = 1;
+		$this->getInputFileTable()->saveInputFile($inputfile);
+		
 		$aRetVal = array('error' => $error, 'errorMessage' => $errorMessage);
 		
 		return new JsonModel($aRetVal);
@@ -323,6 +343,7 @@ class InputdataController extends AbstractActionController
 	
 	public function loadpatientAction()
 	{
+		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$sm = $this->getServiceLocator();
 		$config = $sm->get('Config');
 
@@ -335,7 +356,7 @@ class InputdataController extends AbstractActionController
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
 			if (class_exists('finfo', false) === false) {
-				$aRetVal['msg'][] = "PHP Fileinfo extension is missing. Contact your administrator.";
+				$aRetVal['msg'] = $translate("PHP Fileinfo extension is missing. Contact your administrator.");
 				return new JsonModel($aRetVal);
 			}
 			
@@ -346,8 +367,15 @@ class InputdataController extends AbstractActionController
 			$adapter	= new \Zend\File\Transfer\Adapter\Http();
 			$adapter->setValidators(array($size,$type,$exist), $file['name']);
 			
+			$todayString = date('Ymd');
+			$pattern = '#^' . $todayString . '\d{4}#';
+			preg_match($pattern, $file['name'], $matches);
 			
-			if ($adapter->isValid())
+			if (count($matches) == 0) {
+				$aRetVal['success'] = 0;
+				$aRetVal['msg'] = $translate("Bad file format, filename must be named '" . $todayString . "HHMM.csv' ");
+			}
+			else if ($adapter->isValid())
 			{
 				//DEPRECATED
 				$adapter->setDestination($destPath);
@@ -369,6 +397,14 @@ class InputdataController extends AbstractActionController
 					$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 					$inputaction->action = "Import new patients file";
 					$this->getInputActionTable()->saveInputAction($inputaction);
+					
+					$now = new \DateTime();
+					$inputFile = new InputFile();
+					$inputFile->name = $file['name'];
+					$inputFile->in = file_get_contents($destPath . '/' . $file['name']);
+					$inputFile->creation_date = $now->format('Y-m-d H:i:s');
+					$inputFile->deleted = 0;
+					$this->getInputFileTable()->saveInputFile($inputFile);
 
 					// for the moment, store the log id but use a clever way for final version
 					$oContainer = new Container('automate_setup');
@@ -384,7 +420,7 @@ class InputdataController extends AbstractActionController
 					if (!is_dir($pathname)) {
 						if (@mkdir($pathname, 0777, true) === false) {
 							$aRetVal['success'] = 0;
-							$aRetVal['msg'] = "Can't create directory " . $pathname;
+							$aRetVal['msg'] = $translate("Can't create directory " . $pathname);
 						}
 					}
 					
@@ -398,14 +434,14 @@ class InputdataController extends AbstractActionController
 						}
 						else {
 							$aRetVal['success'] = 0;
-							$aRetVal['msg'] = "Can't copy file " . $source . " to " . $archive;
+							$aRetVal['msg'] = $translate("Can't copy file " . $source . " to " . $archive);
 						}
 					}
 				}
 				else
 				{
 					// error!
-					$aRetVal['msg'] = "Can't store to ".$destPath."/".$file['name'];
+					$aRetVal['msg'] = $translate("Can't store to " . $destPath . "/" . $file['name']);
 				}
 				
 			}

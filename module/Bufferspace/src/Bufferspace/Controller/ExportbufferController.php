@@ -19,6 +19,22 @@ use Zend\Session\Container;
 
 class ExportbufferController extends AbstractActionController
 {
+	protected $inputfileTable;	
+	
+	/**
+	 *
+	 * @return \Logger\Model\InputFileTable
+	 */
+	public function getInputFileTable()
+	{
+		if(!$this->inputfileTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->inputfileTable = $sm->get('Logger\Model\InputFileTable');
+		}
+		return $this->inputfileTable;
+	}
+	
 	public function indexAction()
 	{
 		return array();
@@ -29,11 +45,19 @@ class ExportbufferController extends AbstractActionController
 		$destPath = dirname(__DIR__) . '/../../../../public/tmp';
 		$oContainer = new Container('automate_setup');
 		$oContainer->fileloaded = false;
+		
+		$inputFile = $this->getInputFileTable()->getLastInputFile();
+		$filename = $inputFile->name;
 
 		$oExport = new Exporter($this->getServiceLocator());
 		$oExport->setPathfile($destPath);
-		$oExport->generateFile('schedule.csv');
+		$oExport->generateFile($filename);
 		$ret = $oExport->historyPatient();
+		
+		$exportFileContent = file_get_contents($destPath . '/' . $filename);
+		$inputFile->out = $exportFileContent;
+		$inputFile->export_date = date('Y-m-d H:i:s');
+		$this->getInputFileTable()->saveInputFile($inputFile);
 		
 		if ($ret === true) {
 			$oExport->cleanDataBase();

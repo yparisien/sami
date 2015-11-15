@@ -18,6 +18,8 @@ use Logger\Model\InputAction;
 use Logger\Model\InputActionTable;
 use Logger\Model\InputDrug;
 use Logger\Model\InputDrugTable;
+use Logger\Model\InputFile;
+use Logger\Model\InputFileTable;
 
 
 class Module implements AutoloaderProviderInterface
@@ -76,6 +78,17 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new InputDrug());
 					return new TableGateway('input_drug', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Logger\Model\InputFileTable' =>  function($sm) {
+					$tableGateway = $sm->get('LogInputFileTableGateway');
+					$table = new InputFileTable($tableGateway);
+					return $table;
+				},
+				'LogInputFileTableGateway' => function ($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new InputFile());
+					return new TableGateway('input_file', $dbAdapter, null, $resultSetPrototype);
 				},
 			),
 		);
