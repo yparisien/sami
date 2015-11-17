@@ -71,6 +71,22 @@ CREATE TABLE `input_drug` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `input_file`
+--
+
+CREATE TABLE `input_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `in` blob NOT NULL,
+  `out` blob,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `export_date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+--
 -- Table structure for table `patient_history`
 --
 
