@@ -17,11 +17,26 @@ use Manager\Robot\RobotConstants;
 
 class OperatorController extends AbstractActionController
 {
+	protected $inputfileTable;
 	protected $systemTable;
 	protected $drugTable;
 	protected $examinationTable;
 	protected $injectedTable;
 
+	/**
+	 *
+	 * @return \Logger\Model\InputFileTable
+	 */
+	public function getInputFileTable()
+	{
+		if(!$this->inputfileTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->inputfileTable = $sm->get('Logger\Model\InputFileTable');
+		}
+		return $this->inputfileTable;
+	}
+	
 	/**
 	 * 
 	 * @return \Manager\Model\SystemTable
@@ -92,6 +107,11 @@ class OperatorController extends AbstractActionController
 		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
 		if ($robotCanInject === true) {
 			$oContainer->sourcekitloaded = true;
+		}
+		
+		$inputFile = $this->getInputFileTable()->getLastInputFile();
+		if ($inputFile != null) {
+			$oContainer->fileloaded = true;
 		}
 		
 		//TODO Continuer à doubler la vérif automate

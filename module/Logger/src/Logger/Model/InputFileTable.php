@@ -65,7 +65,7 @@ class InputFileTable
 		$row = $rowset->current();
 		if (!$row)
 		{
-			throw new \Exception("Could not find lastest row");
+			return null;
 		}
 		return $row;
 	}
