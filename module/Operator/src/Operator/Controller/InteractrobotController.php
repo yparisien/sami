@@ -226,9 +226,9 @@ class InteractrobotController extends AbstractActionController
 			$aParams['launched'] = true;
 		}
 		
-		$aParams['patient'] = $this->getPatientTable()->getPatient($patientId)->toArray();
-		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		$aParams['patient'] 	= $this->getPatientTable()->getPatient($patientId)->toArray();
+		$aParams['injection']	= $this->getInjectionTable()->searchByPatientId($patientId)->toArray();
+		$aParams['unit'] 		= ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 		
 		return new ViewModel($aParams);
 	}
@@ -248,16 +248,16 @@ class InteractrobotController extends AbstractActionController
 			$aParams['launched'] = true;
 		}
 
-		$aParams['patient'] = $this->getPatientTable()->getPatient($injection->patientid)->toArray();
-		$aParams['injection'] = $this->getInjectionTable()->searchByPatientId($injection->patientid)->toArray();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		$aParams['patient'] 	= $this->getPatientTable()->getPatient($injection->patientid)->toArray();
+		$aParams['injection'] 	= $this->getInjectionTable()->searchByPatientId($injection->patientid)->toArray();
+		$aParams['unit'] 		= ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 		$aParams['examination'] = $this->getExaminationTable()->getExamination($injection->examinationid)->toArray();
-		$aParams['operator'] = $this->getUserTable()->getUser($injection->operatorid)->toArray();
-		$aParams['curdrug'] = $inputdrug->toArray();
-		$aParams['drug'] = $this->getDrugTable()->getDrug($inputdrug->drugid)->toArray();
-		$aParams['radionuclide'] = $this->getRadionuclideTable()->getRadionuclide($aParams['drug']['radionuclideid'])->toArray();
-		$aParams['sourcekit'] = $this->getSourcekitTable()->getSourcekit($setup->sourcekitid)->toArray();
-		$aParams['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
+		$aParams['operator'] 	= $this->getUserTable()->getUser($injection->operatorid)->toArray();
+		$aParams['curdrug'] 	= $inputdrug->toArray();
+		$aParams['drug'] 		= $this->getDrugTable()->getDrug($inputdrug->drugid)->toArray();
+		$aParams['radionuclide']= $this->getRadionuclideTable()->getRadionuclide($aParams['drug']['radionuclideid'])->toArray();
+		$aParams['sourcekit'] 	= $this->getSourcekitTable()->getSourcekit($setup->sourcekitid)->toArray();
+		$aParams['unit'] 		= ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 
 		if ($kitpatient === true) {
 			$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid)->toArray();
