@@ -274,6 +274,9 @@ if ($virtualkeyboardEnable === true) {
 					        buttonHover: "btn-primary",
 					        buttonDisabled: "disabled",
 					    },
+						beforeClose: function() {
+							checkInputVal();
+						}
 					});
 					
 					$("textarea.form-control").keyboard({

@@ -46,8 +46,11 @@
 			<script type="text/javascript">
 				$(function() {
 					$('#sourcekit-sn').focus();
+					<?php if ($this->layout()->virtualkeyboardEnable === false) { ?>
 					$('#sourcekit-sn').on('change', function(e) { checkInputVal(false); });
+					<?php } ?>
 				});
+
 
 				function checkInputVal(submitForm)
 				{

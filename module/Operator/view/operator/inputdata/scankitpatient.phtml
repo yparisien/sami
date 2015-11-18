@@ -46,8 +46,10 @@
 			<script type="text/javascript">
 			
 			$(function() {
-				$('#patientkit-sn').change(function(e){ checkInputVal(false); });
 				$('#patientkit-sn').focus();
+				<?php if ($this->layout()->virtualkeyboardEnable === false) { ?>
+				$('#patientkit-sn').on('change', function(e) { checkInputVal(false); });
+				<?php } ?>
 			});
 
 			function	cancel()
