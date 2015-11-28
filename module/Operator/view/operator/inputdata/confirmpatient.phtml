@@ -470,6 +470,14 @@
 			data: {"min" : 1}
 		}).done(function(result) {
 			getActivity(false);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		}).always(function(data, textStatus, errorThrown) {
+			console.info(data);
+			console.info(textStatus);
+			console.info(errorThrown);
 		});
 	}
 
@@ -484,6 +492,16 @@
 			data: {"max" : 1}
 		}).done(function(result) {
 			getActivity(false);
+		}).done(function(result) {
+			getActivity(false);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		}).always(function(data, textStatus, errorThrown) {
+			console.info(data);
+			console.info(textStatus);
+			console.info(errorThrown);
 		});
 	}
 
@@ -498,6 +516,16 @@
 			data: {"norm" : 1}
 		}).done(function(result) {
 			getActivity(false);
+		}).done(function(result) {
+			getActivity(false);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		}).always(function(data, textStatus, errorThrown) {
+			console.info(data);
+			console.info(textStatus);
+			console.info(errorThrown);
 		});
 	}
 
@@ -673,7 +701,8 @@
 		});	
 	}
 
-	$(function(){
+	$(function() {
+		alert('MODIF 1');
 		loadPatient(<?php echo $patientid;?>);
 		loadActivityData();
 		

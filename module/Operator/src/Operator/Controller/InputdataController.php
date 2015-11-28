@@ -469,8 +469,8 @@ class InputdataController extends AbstractActionController
 		
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
-			$sourcekitId = $this->getRequest()->getPost('sourcekit-sn');
-			$kit = $this->getSourcekitTable()->searchBySerialNumber($sourcekitId);
+			$sourcekitSN = $this->getRequest()->getPost('sourcekit-sn');
+			$kit = $this->getSourcekitTable()->searchBySerialNumber($sourcekitSN);
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
 				$inputaction = new InputAction();
@@ -486,10 +486,10 @@ class InputdataController extends AbstractActionController
 				$oUser = $this->getUserTable()->searchByLogin($login);
 
 				$oKit = new Sourcekit();
-				$oKit->serialnumber = $sourcekitId;
+				$oKit->serialnumber = $sourcekitSN;
 				$oKit->usedate = date("Y-m-d H:i:s");
 				$oKit->operatorid = $oUser->id;
-				$this->getSourcekitTable()->saveSourcekit($oKit);
+				$oKit = $this->getSourcekitTable()->saveSourcekit($oKit);
 
 				$inputaction = new InputAction();
 				$inputaction->inputdate = date('Y-m-d H:i:s');
@@ -500,7 +500,7 @@ class InputdataController extends AbstractActionController
 				// for the moment, store the log id but use a clever way for final version
 				$oContainer = new Container('automate_setup');
 				$oContainer->sourcekitscanned = true;
-				$oContainer->sourcekitbarcode = $sourcekitId;
+				$oContainer->sourcekitbarcode = $sourcekitSN;
 				$oContainer->sourcekitid = $oKit->id;
 
 				$robotService = $this->getServiceLocator()->get('RobotService');

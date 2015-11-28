@@ -61,6 +61,7 @@ class SourcekitTable
 		{
 			$this->tableGateway->insert($data);
 			$sourcekit->id = $this->tableGateway->lastInsertValue;
+			return $sourcekit;
 		}
 		else
 		{
