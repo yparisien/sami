@@ -492,8 +492,6 @@
 			data: {"max" : 1}
 		}).done(function(result) {
 			getActivity(false);
-		}).done(function(result) {
-			getActivity(false);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			console.log(jqXHR);
 			console.log(textStatus);
@@ -514,8 +512,6 @@
 			type: "POST",
 			dataType: "json",
 			data: {"norm" : 1}
-		}).done(function(result) {
-			getActivity(false);
 		}).done(function(result) {
 			getActivity(false);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -702,7 +698,6 @@
 	}
 
 	$(function() {
-		alert('MODIF 1');
 		loadPatient(<?php echo $patientid;?>);
 		loadActivityData();
 		

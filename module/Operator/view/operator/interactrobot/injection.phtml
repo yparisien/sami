@@ -194,7 +194,15 @@ $this->headStyle()->appendStyle('
 
 							checkEnableNext();
 							playPauseStates();
-						});
+		            	}).fail(function(jqXHR, textStatus, errorThrown) {
+		        			console.log(jqXHR);
+		        			console.log(textStatus);
+		        			console.log(errorThrown);
+		        		}).always(function(data, textStatus, errorThrown) {
+		        			console.info(data);
+		        			console.info(textStatus);
+		        			console.info(errorThrown);
+		        		});
 					}
 
 					function launchRinsing(relaunch)
