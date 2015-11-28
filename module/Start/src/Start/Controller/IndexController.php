@@ -453,7 +453,7 @@ class IndexController extends AbstractActionController
 	public function restartAction() {
 		/* @var $robotService RobotService */
 		$robotService = $this->getServiceLocator()->get('RobotService');
-		$robotService->send(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_RAZ);
+		$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_RAZ => 1));
 		
 		//Reinitilise les session du setup Automate à vide
 		$oSetup = new Container('automate_setup');
