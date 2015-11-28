@@ -76,6 +76,7 @@ function	printSticker(patientid) {
 	// Récupération des infos de l'injection et du patient	
 	$.ajax({
 		type: "GET",
+		cache: false,
 		url: "<?php echo $this->url('bufferspace', array('action'=>'agetinjectedpatientsdetails')); ?>",
 		dataType: "json",
 		data: {patientid : patientid}

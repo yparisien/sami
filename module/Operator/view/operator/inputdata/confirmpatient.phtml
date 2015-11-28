@@ -351,6 +351,7 @@
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
 			type: "GET",
+			cache: false,
 			dataType: "json",
 		}).done(function(result) {
 			$("#" + idToClose).modal('hide');
@@ -451,6 +452,7 @@
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action' => 'acancelpatient'));?>",
 			type: "GET",
+			cache: false,
 			dataType: "json",
 		}).done(function(result) {
 			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
@@ -582,6 +584,7 @@
 	{
 		$.ajax({
 			type: "GET",
+			cache: false,
 			url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity'))?>",
 			dataType: "json"
 		}).done(function(result) {

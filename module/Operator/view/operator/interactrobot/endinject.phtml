@@ -80,7 +80,8 @@
 		$.ajax({
 			type: "GET",
 			url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity')); ?>",
-			dataType: "json"
+			dataType: "json",
+			cache: false,
 		}).done(function(result) {
 			var data = result;
 			$("#activity-time").html(data.time);

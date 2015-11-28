@@ -335,6 +335,7 @@
 	{
 		$.ajax({
 			type: "GET",
+			cache: false,
 			url: "<?php echo $this->url('setup', array('action'=>'agetavailableactivity'))?>",
 			dataType: "json"
 		}).done(function(result) {

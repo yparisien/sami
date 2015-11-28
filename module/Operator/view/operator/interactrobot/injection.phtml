@@ -446,6 +446,7 @@ $this->headStyle()->appendStyle('
 						$.ajax({
 							url: "<?php echo $this->url('setup', array('action' => 'ainputsoftexit'));?>",
 							type: "GET",
+							cache: false,
 							dataType: "json",
 						}).done(function(result) {
 							location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';

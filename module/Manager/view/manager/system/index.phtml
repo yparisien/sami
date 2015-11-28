@@ -115,6 +115,7 @@
 	{
 		$.ajax({
 			type: "GET",
+			cache: false,
 			url: "<?php echo $this->url('system', array('action'=>'agetsystem'))?>",
 			dataType: "json"
 		}).done(function(result) {
