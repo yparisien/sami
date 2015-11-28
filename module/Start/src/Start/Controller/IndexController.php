@@ -206,7 +206,7 @@ class IndexController extends AbstractActionController
  				$rn->id = (int) $id;
  				$rn->code = $shortName;
 				$rn->name = $name;
-				$rn->period = (int) $period;
+				$rn->period = $period;
 				$rn->coefficient = (float) $coefficient;
 				//Todo Modifier le saveRadionuclide
 				$rnTable->saveRadionuclide($rn);

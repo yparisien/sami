@@ -217,7 +217,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = $cfg['robot']['simulation']['init']['restarttype'];
 				break;
 			case RobotConstants::ISOTOPES_NB:
-				$mRet = 5;
+				$mRet = 6;
 				break;
 			case stripos($variable, 'Isotopes['):
 				$rnitems = [
@@ -228,7 +228,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 					'Isotopes[1].ID_Isotope' 	=> '2',
 					'Isotopes[1].ShortName' 	=> 'T99',
 					'Isotopes[1].Name' 			=> 'Technetium 99',
-					'Isotopes[1].HalfLife' 		=> '360',
+					'Isotopes[1].HalfLife' 		=> '21600',
 					'Isotopes[2].ID_Isotope' 	=> '3',
 					'Isotopes[2].ShortName' 	=> 'F18',
 					'Isotopes[2].Name' 			=> 'Fluorine 18',
@@ -241,6 +241,10 @@ class RobotService implements ServiceLocatorAwareInterface {
 					'Isotopes[4].ShortName' 	=> 'I131',
 					'Isotopes[4].Name' 			=> 'Iodine 131',
 					'Isotopes[4].HalfLife' 		=> '692928',
+					'Isotopes[5].ID_Isotope' 	=> '5',
+					'Isotopes[5].ShortName' 	=> 'GE68',
+					'Isotopes[5].Name' 			=> 'Germanium 68',
+					'Isotopes[5].HalfLife' 		=> '2.339885e+07',
 				];
 				$mRet = $rnitems[$variable];
 				break;

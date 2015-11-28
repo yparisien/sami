@@ -38,7 +38,7 @@ class RadionuclideTable
 			'id'			=> (int) $radionuclide->id,
 			'code'			=> $radionuclide->code,
 			'name'			=> $radionuclide->name,
-			'period'		=> (int) $radionuclide->period,
+			'period'		=> $radionuclide->period,
 			'coefficient'	=> (float) $radionuclide->coefficient,
 		);
 
