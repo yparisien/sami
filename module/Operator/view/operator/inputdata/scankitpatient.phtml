@@ -26,7 +26,7 @@
 							<label for="input1">Kit n°</label>
 							<div class="input-group">
 								<span class="input-group-addon"><span id="input-statut" class="glyphicon glyphicon-ban-circle"></span></span>
-								<input type="text" class="form-control barcode" id="patientkit-sn" name="patientkit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="35" autocomplete="off"/>
+								<input type="text" class="form-control barcode" id="patientkit-sn" name="patientkit-sn" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" maxlength="38" autocomplete="off" autofocus="autofocus" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="resetInputVal()"><span class="glyphicon glyphicon-remove"></span></button>
 								</span>
@@ -46,7 +46,16 @@
 			<script type="text/javascript">
 			
 			$(function() {
-				$('#patientkit-sn').focus();
+				$('#patientkit-sn').keydown(function(e) {
+					if(e.keyCode == 13) {
+				<?php if ($this->layout()->virtualkeyboardEnable === true) { ?>
+						var keyboard = $("input[type=text].form-control.barcode").keyboard().getkeyboard();
+						keyboard.accept();
+				<?php } ?>
+						return false;
+					}
+				});
+
 				<?php if ($this->layout()->virtualkeyboardEnable === false) { ?>
 				$('#patientkit-sn').on('change', function(e) { checkInputVal(false); });
 				<?php } ?>
@@ -68,7 +77,7 @@
 				$('#inputgroup1').removeClass("has-success has-warning has-error").addClass('has-warning');
 				$('#input-statut').removeClass("glyphicon-ban-circle glyphicon-time glyphicon-time glyphicon-ok-circle").addClass('glyphicon-time');
 				var code = $('#patientkit-sn').val();
-				if(code.length == 35)
+				if(code.length == 38)
 				{
 					$('#errormsg').removeClass('hide');
 					$('#errormsg').addClass('hide');

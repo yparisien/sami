@@ -21,7 +21,7 @@ return array(
 				'loadedmed'			=> 'Flucis',								//Nom du médicament chargé dans le robot
 				'loadedsourcekit'	=> '0',										//Kit source chargé (1) ou non (0)
 				'sourcekitscanned'	=> '0',										//Kit source scanné (1) ou non (0)
-				'sourcekitserial'	=> '98230948203984029380923589034798375',	//Numéro de série du kit source chargé et scanné
+				'sourcekitserial'	=> '013366081202181517201231305010241115EG',//Numéro de série du kit source chargé et scanné
 				'unit'				=> 'mbq',									//Unit de mesure du robot mbq ou mci
 				'restarttype'		=> '8',										//Point de redemarrage
 				'patientid'			=> '67',									//Id du patient chargé lors d'un redemarrage

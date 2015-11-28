@@ -126,8 +126,8 @@ CREATE TABLE `patient_history` (
   `drug_input_activity` FLOAT NOT NULL,
   `drug_input_activity_conc` FLOAT NOT NULL,
   `drug_input_activity_calib` FLOAT NOT NULL,
-  `patient_kit_serial` VARCHAR(35) NOT NULL,
-  `source_kit_serial` VARCHAR(35) NOT NULL,
+  `patient_kit_serial` VARCHAR(38) NOT NULL,
+  `source_kit_serial` VARCHAR(38) NOT NULL,
   `radionuclide_id` INT(11) NOT NULL,
   `radionuclide_code` VARCHAR(8) NOT NULL,
   `radionuclide_name` VARCHAR(255) NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE `patient_history` (
 DROP TABLE IF EXISTS `patientkit`;
 CREATE TABLE `patientkit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `serialnumber` varchar(35) NOT NULL,
+  `serialnumber` varchar(38) NOT NULL,
   `usedate` datetime NOT NULL,
   `operatorid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -170,7 +170,7 @@ CREATE TABLE `radionuclide` (
 DROP TABLE IF EXISTS `sourcekit`;
 CREATE TABLE `sourcekit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `serialnumber` varchar(35) NOT NULL,
+  `serialnumber` varchar(38) NOT NULL,
   `usedate` datetime NOT NULL,
   `operatorid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
