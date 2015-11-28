@@ -1,45 +1,119 @@
 <?php
+namespace Bufferspace\Model;
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+/**
+ * 
+ * @author yohann.parisien
+ *
+ */
 class PatientHistory {
-// `id` INT NOT NULL AUTO_INCREMENT,
-// `patient_id` VARCHAR(25) NULL,
-// `lastname` VARCHAR(100) NOT NULL,
-// `firstname` VARCHAR(100) NOT NULL,
-// `gender` ENUM('M', 'F', 'U') NOT NULL,
-// `birthdate` DATE NOT NULL,
-// `weight` DECIMAL(5,2) NOT NULL,
-// `height` DECIMAL(3,0) NULL,
-// `patient_type` VARCHAR(25) NULL,
-// `doctor_name` VARCHAR(100) NULL,
-// `injection_type` VARCHAR(6) NULL,
-// `injection_time` TIME NOT NULL,
-// `injection_activity` INT(11) NOT NULL,
-// `injection_prescription_id` VARCHAR(255) NULL,
-// `injection_dose_status` VARCHAR(255) NULL,
-// `injection_val_id` INT(11) NULL,
-// `injection_location` VARCHAR(255) NOT NULL,
-// `injection_comments` TEXT NULL,
-// `examination_name` VARCHAR(255) NOT NULL,
-// `examination_dci` VARCHAR(255) NOT NULL,
-// `examination_rate` FLOAT NOT NULL,
-// `examination_min` FLOAT NOT NULL,
-// `examination_max` FLOAT NOT NULL,
-// `drug_name` VARCHAR(255) NOT NULL,
-// `drug_dci` VARCHAR(255) NOT NULL,
-// `drug_radionuclide_id` INT(11) NOT NULL,
-// `drug_input_date` DATETIME NOT NULL,
-// `drug_input_operator_name` VARCHAR(200) NOT NULL,
-// `drug_input_batchnum` VARCHAR(255) NULL,
-// `drug_input_calibration_time` DATETIME NOT NULL,
-// `drug_input_expiration_time` DATETIME NOT NULL,
-// `drug_input_vialvol` FLOAT NOT NULL,
-// `drug_input_activity` FLOAT NOT NULL,
-// `drug_input_activity_conc` FLOAT NOT NULL,
-// `drug_input_activity_calib` FLOAT NOT NULL,
-// `patient_kit_serial` VARCHAR(35) NOT NULL,
-// `source_kit_serial` VARCHAR(35) NOT NULL,
-// `radionuclide_id` INT(11) NOT NULL,
-// `radionuclide_code` VARCHAR(8) NOT NULL,
-// `radionuclide_name` VARCHAR(255) NOT NULL,
+	/*
+	 * General variables
+	 */
+	public	$id;
+	public	$patientId;
+	public	$lastname;
+	public	$firstname;
+	public	$gender;
+	public	$birthdate;
+	public	$weight;
+	public	$height;
+	public	$patientType;
+	public	$doctorName;
 	
+	/*
+	 * Injection variables
+	 */
+	public	$injectionType;
+	public	$injectionTime;
+	public	$injectionActivity;
+	public	$injectionPrescriptionId;
+	public	$injectionDoseStatus;
+	public	$injectionValId;
+	public	$injectionLocation;
+	public	$injectionComments;
+	
+	/*
+	 * Examination variables
+	 */
+	public	$examinationName;
+	public	$examinationDCI;
+	public	$examinationRate;
+	public	$examinationMin;
+	public	$examinationMax;
+	
+	/*
+	 * Drug variables
+	 */
+	public	$drugName;
+	public	$drugDCI;
+	public	$drugRadionuclideId;
+	
+	/*
+	 * DrugInput variables
+	 */
+	public	$drugInputDate;
+	public	$drugInputOperatorName;
+	public	$drugInputBatchnum;
+	public	$drugInputCalibrationTime;
+	public	$drugInputExpirationTime;
+	public	$drugInputVialvol;
+	public	$drugInputActivity;
+	public	$drugInputActivityConc;
+	public	$drugInputActivityCalib;
+	
+	/*
+	 * Kit variables
+	 */
+	public	$patientKitSerial;
+	public	$sourceKitSerial;
+	
+	/*
+	 * Radionuclide variables
+	 */
+	public	$radionuclideId;
+	public	$radionuclideCode;
+	public	$radionuclideName;
+	
+	public static function generateByPatientId($patientId, ServiceLocatorInterface $sm) {
+		/* @var $patientTable PatientTable */
+		$patientTable = $sm->get('PatientTable');
+		$patient = $patientTable->getPatient($patientId);
+		
+		/* @var $injectionTable InjectionTable */
+		$injectionTable = $sm->get('InjectionTable');
+		$injection = $injectionTable->searchByPatientId($patientId);
+		
+		/*
+		 * Create object
+		 */
+		$patientHistory = new PatientHistory();
+		
+		/*
+		 * Fill object [Patient part]
+		 */
+		$patientHistory->patientId		= $patient->id;
+		$patientHistory->lastname		= $patient->lastname;
+		$patientHistory->firstname		= $patient->firstname;
+		$patientHistory->gender			= $patient->gender;
+		$patientHistory->birthdate		= $patient->birthdate;
+		$patientHistory->weight			= $patient->weight;
+		$patientHistory->height			= $patient->height;
+		$patientHistory->patientType	= $patient->patienttype;
+		$patientHistory->doctorName		= $patient->doctorname;
+		
+		/*
+		 * Fill object [Injection part]
+		 */
+		$patientHistory->injectionType				= $injection->type;
+		$patientHistory->injectionTime				= $injection->injection_time;
+		$injection->injection_date;
+// 		$patientHistory->injectionActivity			= $injection->activity;
+// 		$patientHistory->injectionPrescriptionId	= $injection->;
+		$patientHistory->injectionDoseStatus		= $injection->dose_status;
+		$patientHistory->injectionValId				= $injection->vial_id;
+		$patientHistory->injectionLocation			= $injection->location;
+		$patientHistory->injectionComments			= $injection->comments;
+	}
 }

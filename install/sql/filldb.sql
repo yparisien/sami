@@ -206,6 +206,7 @@ CREATE TABLE `tmp_injection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NULL,
   `type` varchar(6) NOT NULL DEFAULT 'infuse',
+  `injection_date` date DEFAULT NULL,
   `injection_time` time NOT NULL,
   `activity` int(11) NOT NULL,
   `dose_status` varchar(255) NOT NULL,

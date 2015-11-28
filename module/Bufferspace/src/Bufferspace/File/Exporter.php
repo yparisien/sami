@@ -147,12 +147,4 @@ class	Exporter
 			$injectionTable->deleteInjection($oInjection->id);
 		}
 	}
-	
-	public function historyPatient() {
-		$bRet = false;
-		
-		$bRet = true;
-		
-		return $bRet;
-	}
 }

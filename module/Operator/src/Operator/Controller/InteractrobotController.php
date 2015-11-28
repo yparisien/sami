@@ -33,6 +33,7 @@ class InteractrobotController extends AbstractActionController
 	protected $sourcekitTable;
 	protected $systemTable;
 	protected $userTable;
+	protected $patienthistoryTable;
 
 	
 	/*
@@ -162,6 +163,20 @@ class InteractrobotController extends AbstractActionController
 			$this->userTable = $sm->get('Manager\Model\UserTable');
 		}
 		return $this->userTable;
+	}
+	
+	/**
+	 *
+	 * @return \Bufferspace\Model\PatientHistoryTable
+	 */
+	public function getPatientHistoryTable()
+	{
+		if(!$this->patienthistoryTable)
+		{
+			$sm = $this->getServiceLocator();
+			$this->patienthistoryTable = $sm->get('Bufferspace\Model\PatientHistoryTable');
+		}
+		return $this->patienthistoryTable;
 	}
 
 	public function readData($toRead)
@@ -585,6 +600,8 @@ class InteractrobotController extends AbstractActionController
 		$oInjection->operatorid = $injectionProfile->operatorid;
 		$oInjection->injection_date = date('Y-m-d');
 		$this->getInjectionTable()->saveInjection($oInjection);
+		
+		$this->getPatientHistoryTable()->save($patientHistory);
 		
 		return new JsonModel(array('success'=>true));
 	}

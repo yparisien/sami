@@ -52,7 +52,6 @@ class ExportbufferController extends AbstractActionController
 		$oExport = new Exporter($this->getServiceLocator());
 		$oExport->setPathfile($destPath);
 		$oExport->generateFile($filename);
-		$ret = $oExport->historyPatient();
 		
 		$exportFileContent = file_get_contents($destPath . '/' . $filename);
 		$inputFile->out = $exportFileContent;
