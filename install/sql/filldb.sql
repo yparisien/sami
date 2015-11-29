@@ -79,7 +79,7 @@ CREATE TABLE `input_file` (
   `name` varchar(128) NOT NULL,
   `in` blob NOT NULL,
   `out` blob,
-  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creation_date` datetime NOT NULL,
   `export_date` datetime DEFAULT NULL,
   `deleted` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
