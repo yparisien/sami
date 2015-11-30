@@ -42,27 +42,32 @@ class ExportbufferController extends AbstractActionController
 
 	public function agenfileAction()
 	{
+		$success = 0;
 		$destPath = dirname(__DIR__) . '/../../../../public/tmp';
 		$oContainer = new Container('automate_setup');
 		$oContainer->fileloaded = false;
 		
 		$inputFile = $this->getInputFileTable()->getLastInputFile();
-		$filename = $inputFile->name;
-
-		$oExport = new Exporter($this->getServiceLocator());
-		$oExport->setPathfile($destPath);
-		$oExport->generateFile($filename);
-		
-		$exportFileContent = file_get_contents($destPath . '/' . $filename);
-		$inputFile->out = $exportFileContent;
-		$inputFile->export_date = date('Y-m-d H:i:s');
-		$this->getInputFileTable()->saveInputFile($inputFile);
-		
-		if ($ret === true) {
-			$oExport->cleanDataBase();
-			$oContainer->fileexported = true;
+		if (!is_null($inputFile)) {
+			$filename = $inputFile->name;
+	
+			$oExport = new Exporter($this->getServiceLocator());
+			$oExport->setPathfile($destPath);
+			$oExport->generateFile($filename);
+			
+			$exportFileContent = file_get_contents($destPath . '/' . $filename);
+			$inputFile->out = $exportFileContent;
+			$inputFile->export_date = date('Y-m-d H:i:s');
+			$ret = $this->getInputFileTable()->saveInputFile($inputFile);
+			
+			if ($ret === true) {
+				$oExport->cleanDataBase();
+				$oContainer->fileexported = true;
+				$success = 1;
+			}
 		}
+		
 
-		return new JsonModel(array('succes' => 1));
+		return new JsonModel(array('succes' => $success));
 	}
 }

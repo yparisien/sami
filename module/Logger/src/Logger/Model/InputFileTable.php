@@ -103,5 +103,7 @@ class InputFileTable
 				throw new \Exception('InputFile id does not exist');
 			}
 		}
+		
+		return true;
 	}
 }
