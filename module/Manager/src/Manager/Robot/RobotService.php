@@ -61,6 +61,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 					$fr->injectionEvolutionStatus = 0;
 				}
 				$log->debug('[SIMULATED] Send to robot [' . $k . '] : ' . $v);
+				sleep(2);
 			}
 		}
 		
@@ -77,6 +78,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 		if ($simulated) {
 			$retsim = $this->fakeReceive($variable);
 			$log->debug('[SIMULATED] Get from robot [' . $variable . '] : ' . $retsim);
+			sleep(2);
 			return $retsim;
 		}
 		else {

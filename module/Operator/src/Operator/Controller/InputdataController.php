@@ -1102,11 +1102,6 @@ class InputdataController extends AbstractActionController
 				$aData[RobotConstants::PATIENT_INPUT_ORDONNANCIER] = $r->getPost('expeditornum');
 				$oInjection->unique_id = $r->getPost('expeditornum');
 			}
-// 			if ($r->getPost('activity'))
-// 			{
-// 				$aData[RobotConstants::PATIENT_INPUT_ACTTOINJ] = $r->getPost('activity');
-// 				$oInjection->activity = $r->getPost('activity');
-// 			}
 			if ($r->getPost('weight'))
 			{
 				$aData[RobotConstants::PATIENT_INPUT_POIDS] = $r->getPost('weight');
@@ -1117,12 +1112,6 @@ class InputdataController extends AbstractActionController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send($aData);
 
-// 			if ($r->getPost('activity') || $r->getPost('weight')) {
-// 				sleep(1);
-// 				$activity = $robotService->receive(RobotConstants::PATIENT_ACTUAL_ACTTOINJ);
-// 				$ret["activity"] = $activity;
-// 			}
-			
 			if ($oPatient instanceof Patient) {
 				$this->getPatientTable()->savePatient($oPatient);
 			}
