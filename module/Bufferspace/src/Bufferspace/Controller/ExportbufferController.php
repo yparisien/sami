@@ -43,6 +43,7 @@ class ExportbufferController extends AbstractActionController
 	public function agenfileAction()
 	{
 		$success = 0;
+		$filename = '';
 		$destPath = dirname(__DIR__) . '/../../../../public/tmp';
 		$oContainer = new Container('automate_setup');
 		$oContainer->fileloaded = false;
@@ -58,6 +59,7 @@ class ExportbufferController extends AbstractActionController
 			$exportFileContent = file_get_contents($destPath . '/' . $filename);
 			$inputFile->out = $exportFileContent;
 			$inputFile->export_date = date('Y-m-d H:i:s');
+			$inputFile->deleted = 0;
 			$ret = $this->getInputFileTable()->saveInputFile($inputFile);
 			
 			if ($ret === true) {
@@ -68,6 +70,6 @@ class ExportbufferController extends AbstractActionController
 		}
 		
 
-		return new JsonModel(array('succes' => $success));
+		return new JsonModel(array('succes' => $success, 'filename' => $filename));
 	}
 }

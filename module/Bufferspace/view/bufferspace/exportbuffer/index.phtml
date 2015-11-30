@@ -63,6 +63,7 @@
 		}).done(function(result){
 			if(result.success = 1)
 			{
+				$('#downloadbtn').attr('onclick', "window.open('/tmp/" + result.filename + "')");
 				$('#downloadbtn').removeAttr('disabled');
 				$('#genbtn').attr('disabled', 1);
 				$('#loading-screen').modal('hide');

@@ -144,16 +144,19 @@ class Module implements AutoloaderProviderInterface
 
 		$appendSupervisorJsTimeout = false;
 		$matchRoute = $e->getRouter()->match($e->getRequest());
-		$timeout = $matchRoute->getParam('timeout', null);
 		
-		$serviceManager = $e->getApplication()->getServiceManager();
-		$config = $serviceManager->get('config');
-		
-		if ($timeout == 'supervisor') {
-			$appendSupervisorJsTimeout = true;
-			$layoutViewModel->supervisorTimeout = $config['timeout']['supervisor'];
+		if (!is_null($matchRoute)) {
+			$timeout = $matchRoute->getParam('timeout', null);
+			
+			$serviceManager = $e->getApplication()->getServiceManager();
+			$config = $serviceManager->get('config');
+			
+			if ($timeout == 'supervisor') {
+				$appendSupervisorJsTimeout = true;
+				$layoutViewModel->supervisorTimeout = $config['timeout']['supervisor'];
+			}
+			
+			$layoutViewModel->appendSupervisorJsTimeout = $appendSupervisorJsTimeout;
 		}
-		
-		$layoutViewModel->appendSupervisorJsTimeout = $appendSupervisorJsTimeout;
 	}
 }

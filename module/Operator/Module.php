@@ -80,18 +80,20 @@ class Module implements AutoloaderProviderInterface
 		
 		$appendOperatorJsTimeout = false;
 		$matchRoute = $e->getRouter()->match($e->getRequest());
-		$timeout = $matchRoute->getParam('timeout', null);
-		$disableLinks = $matchRoute->getParam('disable_links', false);
-		
-		$serviceManager = $e->getApplication()->getServiceManager();
-		$config = $serviceManager->get('config');
-		
-		if ($timeout == 'operator') {
-			$appendOperatorJsTimeout = true;
-			$layoutViewModel->operatorTimeout = $config['timeout']['operator'];
+		if (!is_null($matchRoute)) {
+			$timeout = $matchRoute->getParam('timeout', null);
+			$disableLinks = $matchRoute->getParam('disable_links', false);
+			
+			$serviceManager = $e->getApplication()->getServiceManager();
+			$config = $serviceManager->get('config');
+			
+			if ($timeout == 'operator') {
+				$appendOperatorJsTimeout = true;
+				$layoutViewModel->operatorTimeout = $config['timeout']['operator'];
+			}
+			
+			$layoutViewModel->disableLinks = $disableLinks;
+			$layoutViewModel->appendOperatorJsTimeout = $appendOperatorJsTimeout;
 		}
-		
-		$layoutViewModel->disableLinks = $disableLinks;
-		$layoutViewModel->appendOperatorJsTimeout = $appendOperatorJsTimeout;
 	}
 }

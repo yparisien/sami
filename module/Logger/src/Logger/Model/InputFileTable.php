@@ -60,7 +60,7 @@ class InputFileTable
 	{
 		$rowset = $this->tableGateway->select(function (Select $select) {
 			$where = new \Zend\Db\Sql\Where;
-			$where->isNull('deleted');
+			$where->equalTo('deleted', 0);
 			$where->AND->isNull('out');
 			
 			$select->where($where);
