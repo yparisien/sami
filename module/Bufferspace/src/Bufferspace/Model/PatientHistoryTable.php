@@ -19,6 +19,7 @@ class PatientHistoryTable {
 	
 	public function save(PatientHistory $patientHistory)
 	{
+		return true;
 		$data = array(
 				'patient_id'					=> $patientHistory->patientId,
 				'lastname'						=> $patientHistory->lastname,
