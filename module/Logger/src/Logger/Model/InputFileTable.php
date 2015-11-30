@@ -59,9 +59,14 @@ class InputFileTable
 	public function getLastInputFile()
 	{
 		$rowset = $this->tableGateway->select(function (Select $select) {
-     		$select->where->isNull('out')->and->equalTo('deleted', 0);
+			$where = new \Zend\Db\Sql\Where;
+			$where->isNull('deleted');
+			$where->AND->isNull('out');
+			
+			$select->where($where);
 			$select->order('creation_date DESC')->limit(1);
 		});
+		
 		$row = $rowset->current();
 		if (!$row)
 		{
