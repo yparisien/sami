@@ -356,6 +356,8 @@
 		}).done(function(result) {
 			$("#" + idToClose).modal('hide');
 			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on acancelpatient");
 		});
 	}
 	
@@ -404,6 +406,8 @@
 				$('#errorConfirm').hide();	
 				$("#alertconfirmauthority").modal('hide');
 			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on confirmauthority");
 		});
 	}
 
@@ -444,6 +448,8 @@
 			$('#collapseOne').collapse('hide');
 			$('#collapseTwo').collapse('show');
 			patientSetted = true;
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on aupdatepatient");
 		});
 	}
 				
@@ -456,6 +462,8 @@
 			dataType: "json",
 		}).done(function(result) {
 			location.href = '<?php echo $this->url('setup', array('action'=>'selectpatient')); ?>';
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on acancelpatient");
 		});
 	}
 
@@ -471,13 +479,7 @@
 		}).done(function(result) {
 			getActivity(false);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(errorThrown);
-		}).always(function(data, textStatus, errorThrown) {
-			console.info(data);
-			console.info(textStatus);
-			console.info(errorThrown);
+			console.error("fail on asetactivity min");
 		});
 	}
 
@@ -493,13 +495,7 @@
 		}).done(function(result) {
 			getActivity(false);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(errorThrown);
-		}).always(function(data, textStatus, errorThrown) {
-			console.info(data);
-			console.info(textStatus);
-			console.info(errorThrown);
+			console.error("fail on asetactivity max");
 		});
 	}
 
@@ -515,13 +511,7 @@
 		}).done(function(result) {
 			getActivity(false);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(errorThrown);
-		}).always(function(data, textStatus, errorThrown) {
-			console.info(data);
-			console.info(textStatus);
-			console.info(errorThrown);
+			console.error("fail on asetactivity norm");
 		});
 	}
 
@@ -551,6 +541,8 @@
 				$('#maxactivity').val(result.examination.max);
 				setActivity(false);
 			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on aloadexamination");
 		});
 
 	}
@@ -576,6 +568,8 @@
 				$('#examination').val(result.examinationid);
 				loadExamination(result.examinationid);
 			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on aloadinjection");
 		});
 	}
 
@@ -599,6 +593,8 @@
 			$('#weight').val(result.weight);
 			$('#comments').val(result.comments);
 			$('#expeditornum').val(result.expeditornum);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on aloadpatient");
 		});
 		$('#btn-next').removeAttr('disabled');
 	}
@@ -618,6 +614,8 @@
 			if (patientSetted == true && examinaSetted == true && $('#activity').val() > 0 && activityIsValid == 1) {
 				$('#submitExam').prop('disabled', false);
 			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on agetavailableactivity");
 		});
 	}
 
@@ -625,7 +623,8 @@
 		stopValidActivityInterval();
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'agetactivity'));?>",
-			type: "POST",
+			type: "GET",
+			cache: false,
 			dataType: "json"
 		}).done(function(result) {
 			activityIsValid = result.activityisvalid;
@@ -669,7 +668,9 @@
 			} else if (activityIsValid == 0) {
 				checkValidActivityInterval(submitForm);
 			}
-		});	
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on agetactivity");
+		});
 	}
 	
 	//Appel au robot
@@ -683,7 +684,9 @@
 			if (result.error == false) {
 				getActivity(submitForm);
 			}
-		});	
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on asetactivity activity");
+		});
 	}
 
 	function	updateWeight() {
@@ -694,7 +697,9 @@
 			dataType: "json"
 		}).done(function(result) {
 			getActivity(false);
-		});	
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("fail on aupdatepatient weight");
+		});
 	}
 
 	$(function() {
@@ -713,7 +718,6 @@
 		});
 		
 		$('#activity').change(function () {
-			console.log('activity change =>' + $('#activity').val());
 			$('#submitExam').prop('disabled', true);
 			resetOverpass();
 			setActivity(false);

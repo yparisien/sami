@@ -176,10 +176,10 @@ $(function() {
 
 function removeDrug() {
 	  $.ajax({
-          type: "POST",
+          type: "GET",
           url: "<?php echo $this->url('setup', array('action'=>'aunloaddrug'))?>",
+          cache: false,
           dataType: "json",
-          data: {}
         }).done(function (result) {
             location.reload();
         });
@@ -187,10 +187,10 @@ function removeDrug() {
 
 function removeSourceKit() {
 	  $.ajax({
-        type: "POST",
+        type: "GET",
         url: "<?php echo $this->url('setup', array('action'=>'aunloadsourcekit'))?>",
+        cache: false,
         dataType: "json",
-        data: {}
       }).done(function (result) {
           location.reload();
       });

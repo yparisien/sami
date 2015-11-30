@@ -85,10 +85,10 @@
 				function moveProgressBar()
 				{
 					$.ajax({
-						type: "POST",
+						type: "GET",
 						url: "<?php echo $this->url('inject', array('action'=>'agetpurgeprogress'))?>",
+						cache: false,
 						dataType: "json",
-						data: {}
 					}).done(function (result) {
 						if(way == 0)
 						{
@@ -153,10 +153,10 @@
 					$('#purge-statut').html('<?php echo $this->translate('Purge in progress...')?>');
 
 					$.ajax({
-						type: "POST",
+						type: "GET",
 						url: "<?php echo $this->url('inject', array('action'=>'alaunchpurge'))?>",
+						cache: false,
 						dataType: "json",
-						data: {}
 					});
 
 					window.setTimeout(function(){moveProgressBar();}, 1000);
@@ -170,10 +170,10 @@
 					$('#connect-statut-picto').removeClass('glyphicon-remove-sign glyphicon-ok-sign').addClass('glyphicon-time');
 					$('#connect-statut').removeClass('btn-danger btn-success ').addClass('btn-warning');
 					$.ajax({
-						type: "POST",
+						type: "GET",
 						url: "<?php echo $this->url('inject', array('action'=>'amarkpatientconnected'))?>",
 						dataType: "json",
-						data: {}
+						cache: false,
 					}).done(function (result) {
 						$('#connect-statut-picto').removeClass('glyphicon-time').addClass('glyphicon-ok-sign');
 						$('#connect-statut').removeClass('btn-warning').addClass('btn-success');

@@ -298,8 +298,9 @@
 			getAvailableActivityAt();
 			
 			$.ajax({
-				type: "POST",
-				url: "<?php echo $this->url('inject', array('action'=>'adisconnectpatient')); ?>"
+				type: "GET",
+				url: "<?php echo $this->url('inject', array('action'=>'adisconnectpatient')); ?>",
+				cache: false,
 			}).done(function(result) {
 				setTimeout(function() {
 					$('#showactivityleft-statut-picto').removeClass('glyphicon-time').addClass('glyphicon-ok-sign');

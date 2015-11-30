@@ -81,8 +81,9 @@
 
 				function cancelImport() {
 					$.ajax({
-						type: "POST",
+						type: "GET",
 						url: "<?php echo $this->url('setup', array('action'=>'unloadpatient'));?>",
+						cache: false,
 						dataType: "json",
 					}).done(function(result) {
 						if(result.error == false)

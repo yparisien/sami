@@ -114,19 +114,19 @@
 					{
 						lockui();
 						$.ajax({
-              				type: "POST",
+              				type: "GET",
               				url: "<?php echo $this->url('inject', array('action'=>'agetsamplingprogress'))?>",
+              				cache: false,
               				dataType: "json",
-              				data: {}
             			}).done(function (result) {
 							animProgressBar(result.progress);
 							if (result.progress == 100)
 							{
 		            			$.ajax({
-  	            					type: "POST",
+  	            					type: "GET",
     	        					url: "<?php echo $this->url('inject', array('action'=>'agetsamplingactivity'))?>",
+    	        					cache: false,
       	        					dataType: "json",
-        	      					data: {}
   		      	    			}).done(function (result) {
 									$("#val-add").val(result.activity)
 								});
@@ -163,10 +163,10 @@
 						$('#patientResume').html(resume);
 						
 						$.ajax({
-              				type: "POST",
+              				type: "GET",
               				url: "<?php echo $this->url('inject', array('action'=>'alaunchsampling'))?>",
+              				cache: false,
               				dataType: "json",
-              				data: {}
             			});
 
 						loadActivityData();
@@ -182,10 +182,10 @@
 						$("#val-asked").val(<?php echo $injection['activity']?>);
 						
 						$.ajax({
-              				type: "POST",
+              				type: "GET",
               				url: "<?php echo $this->url('inject', array('action'=>'aadjustsampling'))?>",
+              				cache: false,
               				dataType: "json",
-              				data: {}
             			}).done(function(){
 							moveProgressBar(<?php echo $injection['activity']?>);
 						});
