@@ -179,7 +179,6 @@
 			data: { 'patientid': patientid },
 			dataType: "json"
 		}).done(function(result) {
-
 			$('#name').val(result.lastname + ', ' + result.firstname);
 			$('#gender').val(result.gender);
 			$('#birthdate').val(result.birthdate);
@@ -187,8 +186,10 @@
 			$('#btn-next').removeAttr('disabled');
 		});
 	}
+	
 	$(function(){
-		$('#btn-next').click(function(){
+		$('#btn-next').click(function() {
+			$('button').attr('disabled', 1);
 			$('#submitedpatient-form').submit();
 		});
 	});

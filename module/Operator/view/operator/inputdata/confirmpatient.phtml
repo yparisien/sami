@@ -76,7 +76,7 @@
 								</div>
 					    	</div>
 							<div class="col-md-4 col-md-offset-4">
-								<a class="btn btn-success btn-block" onclick="setPatientAndShowExam();"><?php echo $this->translate('Confirm');?></a>
+								<button class="btn btn-success btn-block" id="patientConfirm" disabled="disabled" onclick="setPatientAndShowExam();"><?php echo $this->translate('Confirm');?></button>
 							</div>
 					      </div>
 					    </div>
@@ -158,28 +158,28 @@
 							</button>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setMinActivity()" id="btnMinActivity" disabled><?php echo $this->translate('Min Activity')?></button>
+							<button type="button" class="btn btn-primary btn-block btn-activity" onclick="setMinActivity()" id="btnMinActivity" disabled><?php echo $this->translate('Min Activity')?></button>
 							<div class="input-group">
 								<input type="number" class="form-control input-sm" id="minactivity" name="minactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setMaxActivity()" id="btnMaxActivity" disabled><?php echo $this->translate('Max Activity')?></button>
+							<button type="button" class="btn btn-primary btn-block btn-activity" onclick="setMaxActivity()" id="btnMaxActivity" disabled><?php echo $this->translate('Max Activity')?></button>
 							<div class="input-group">
 								<input type="number" class="form-control input-sm" id="maxactivity" name="maxactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?></span>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary btn-block" onclick="setNormActivity()" id="btnNormActivity" disabled><?php echo $this->translate('Rate')?></button>
+							<button type="button" class="btn btn-primary btn-block btn-activity" onclick="setNormActivity()" id="btnNormActivity" disabled><?php echo $this->translate('Rate')?></button>
 							<div class="input-group">
 								<input type="number" on class="form-control input-sm" id="averageactivity" name="averageactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-danger btn-block" onclick="cancelPatient();"><?php echo $this->translate('Abort');?></button>
+							<button type="button" class="btn btn-danger btn-block" id="btn-cancel" onclick="cancelPatient();"><?php echo $this->translate('Abort');?></button>
 						</div>
 					</div>
 				</form>
@@ -330,8 +330,17 @@
 	  $('[data-toggle="tooltip"]').tooltip()
 	});
 
-	function	resetOverpass() {
+	function	disableButtons() {
+		$('button.btn-activity').prop('disabled', true);
 		$('#submitExam').prop('disabled', true);
+	}
+
+	function	enableButtons() {
+		$('button.btn-activity').prop('disabled', false);
+	}
+	
+	function	resetOverpass() {
+		disableButtons();
 		overPassMinActivity = false;
 		overPassMaxActivity = false;
 		overPassCenterActivity = false;
@@ -362,7 +371,10 @@
 	}
 	
 	function 	submitForm() {
+		disableButtons();
 		$('#submitExam').prop('disabled', true);
+		$('#submitExam').prop('disabled', true);
+		$('#btn-cancel').prop('disabled', true);
  		setActivity(true);
 	}
 	
@@ -412,6 +424,7 @@
 	}
 
 	function	correctActivity(idToClose) {
+		enableButtons();
 		$('#activity').val('');
 		$('#activity').focus();
 		$("#" + idToClose).modal('hide');
@@ -428,6 +441,7 @@
 	
 	function	setPatientAndShowExam()
 	{
+		$('#patientConfirm').attr('disabled', 1);
 		$('#spanLastname').text($('#lastname').val());
 		$('#spanFirstname').text($('#firstname').val());
 		
@@ -518,6 +532,7 @@
 	// Pas d'appel fait au robot
 	function	loadExamination(examinationid)
 	{
+		disableButtons();
 		$.ajax({
 			url: "<?php echo $this->url('setup', array('action'=>'aloadexamination'));?>",
 			type: "POST",
@@ -526,15 +541,10 @@
 		}).done(function(result) {
 			if (result.error === true) {
 				//TODO FAIRE APPARAITRE MESSAGE D"ERREUR ET ANNULER LE PATIENT EN COURS
-				$('#btnNormActivity').attr('disabled');
-				$('#btnMinActivity').attr('disabled');
-				$('#btnMaxActivity').attr('disabled');
 			} else {
 				examinaSetted = true;
 				
-				$('#btnNormActivity').removeAttr('disabled');
-				$('#btnMinActivity').removeAttr('disabled');
-				$('#btnMaxActivity').removeAttr('disabled');
+				enableButtons();
 				
 				$('#averageactivity').val(result.examination.rate);
 				$('#minactivity').val(result.examination.min);
@@ -593,6 +603,8 @@
 			$('#weight').val(result.weight);
 			$('#comments').val(result.comments);
 			$('#expeditornum').val(result.expeditornum);
+
+			$('#patientConfirm').removeAttr('disabled');
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			console.error("fail on aloadpatient");
 		});
@@ -612,6 +624,7 @@
 			$("#activity-time").html(data.time);
 			$("#activityavailable").val(data.activity);
 			if (patientSetted == true && examinaSetted == true && $('#activity').val() > 0 && activityIsValid == 1) {
+				enableButtons();
 				$('#submitExam').prop('disabled', false);
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -666,6 +679,7 @@
 					loadActivityData();
 				}
 			} else if (activityIsValid == 0) {
+				enableButtons();
 				checkValidActivityInterval(submitForm);
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -718,9 +732,11 @@
 		});
 		
 		$('#activity').change(function () {
-			$('#submitExam').prop('disabled', true);
-			resetOverpass();
-			setActivity(false);
+			if ($('#activity').val() != '' && $('#activity').val() >= 0) {
+				$('#submitExam').prop('disabled', true);
+				resetOverpass();
+				setActivity(false);
+			}
 		});
 
 		$('#weight').change(function () {
