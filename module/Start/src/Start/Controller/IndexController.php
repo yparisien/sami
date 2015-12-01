@@ -479,6 +479,7 @@ class IndexController extends AbstractActionController
 		$oAuthtry = new Container('authtry');
 		$oAuthtry->confirmtrynumber = 0;
 		$oAuthtry->swaptrynumber = 0;
+		$oAuthtry->peremptiontrynumber = 0;
 		
 		//Reinitialisation du nombre d'essais de scan codes barres
 		$oBarcodetry = new Container('barcodetry');
@@ -530,6 +531,7 @@ class IndexController extends AbstractActionController
 			$oAuthtry = new Container('authtry');
 			$oAuthtry->confirmtrynumber = 0;
 			$oAuthtry->swaptrynumber = 0;
+			$oAuthtry->peremptiontrynumber = 0;
 
 			$oBarcodetry = new Container('barcodetry');
 			$oBarcodetry->sourcekittry = 0;

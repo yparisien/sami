@@ -13,6 +13,7 @@ namespace Operator\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
+use Zend\Session\Zend\Session;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\Validator\File\Size;
@@ -28,6 +29,7 @@ use Bufferspace\Model\PatientTable;
 use Logger\Model\InputAction;
 use Logger\Model\InputDrug;
 use Logger\Model\InputDrugTable;
+use Logger\Model\InputFile;
 use Logger\Model\Logger\Model;
 use Manager\Model\ExaminationTable;
 use Manager\Robot\RobotConstants;
@@ -35,7 +37,6 @@ use Manager\Robot\RobotService;
 use Manager\Model\User;
 use Operator\Model\Sourcekit;
 use Operator\Model\Patientkit;
-use Logger\Model\InputFile;
 
 class InputdataController extends AbstractActionController
 {
@@ -667,6 +668,7 @@ class InputdataController extends AbstractActionController
 	public function	checkperemptionAction()
 	{
 		$oContainer = new Container('automate_setup');
+		$oAuthtry = new Container('authtry');
 		$inputdrugid = $oContainer->inputdrugid;
 		$inputDrug = $this->getInputDrugTable()->getInputDrug($inputdrugid);
 		
@@ -690,6 +692,7 @@ class InputdataController extends AbstractActionController
 				} else if ($superviseur instanceof User) {
 					if ($superviseur->admin === true && $superviseur->visible === true) {
 						if ($superviseur->password == sha1($oRequest->getPost('password'))) {
+							$oAuthtry->peremptiontrynumber = 0;
 							/*
 							 * Enregistre l'action en base de donnée
 							 */
@@ -701,7 +704,13 @@ class InputdataController extends AbstractActionController
 							
 							return $this->redirect()->toRoute('setup', array('action'=>'selectpatient'));
 						} else {
-							$message = sprintf($translate("Authentification failed. Bad password"), $oRequest->getPost('login'));
+							$oAuthtry->peremptiontrynumber = $oAuthtry->peremptiontrynumber + 1;
+							
+							if ($oAuthtry->peremptiontrynumber == 3) {
+								return $this->redirect()->toRoute('log', array('action'=>'logout'));
+							}
+							
+							$message = sprintf($translate("Authentification failed. Bad password, %s try(s) remaining"), (3 - $oAuthtry->peremptiontrynumber));
 							$this->flashMessenger()->addErrorMessage($message);
 							return $this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
 						}
