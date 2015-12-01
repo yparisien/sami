@@ -163,6 +163,32 @@
 		</div>
 	</div>
 </div>
+<?php
+	$this->inlineScript()->appendScript('
+		$(function() {
+			setTimeout(function() {
+				reloadOperatorScreen();
+			}, 10000);
+		});
+		
+		function reloadOperatorScreen() {
+			$.ajax({
+				type: "GET",
+	       		url: "'. $this->url('operator', array('action' => 'areloadoperatorscreen')) . '",
+	       		cache: false,
+	       		dataType: "json",
+			}).done(function (result) {
+				if (result.error == false) {
+					$("#mainContent").html(result.html);
+				}
+			
+				setTimeout(function() {
+					reloadOperatorScreen();
+				}, 10000);
+			});
+		}
+	');
+?>
 <script type="text/javascript">
 $(function() {
 	$('#removeDrugButton').click(function() {
@@ -175,25 +201,25 @@ $(function() {
 });
 
 function removeDrug() {
-	  $.ajax({
-          type: "GET",
-          url: "<?php echo $this->url('setup', array('action'=>'aunloaddrug'))?>",
-          cache: false,
-          dataType: "json",
-        }).done(function (result) {
-            location.reload();
-        });
+	$.ajax({
+		type: "GET",
+        url: "<?php echo $this->url('setup', array('action'=>'aunloaddrug'))?>",
+        cache: false,
+        dataType: "json",
+	}).done(function (result) {
+		location.reload();
+	});
 }
 
 function removeSourceKit() {
-	  $.ajax({
-        type: "GET",
-        url: "<?php echo $this->url('setup', array('action'=>'aunloadsourcekit'))?>",
-        cache: false,
-        dataType: "json",
-      }).done(function (result) {
-          location.reload();
-      });
+	$.ajax({
+		type: "GET",
+		url: "<?php echo $this->url('setup', array('action'=>'aunloadsourcekit'))?>",
+		cache: false,
+		dataType: "json",
+	}).done(function (result) {
+		location.reload();
+	});
 }
 </script>
 <?php } ?>

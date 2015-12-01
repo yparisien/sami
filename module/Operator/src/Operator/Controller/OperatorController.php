@@ -14,6 +14,7 @@ use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
+use Zend\View\Model\JsonModel;
 
 class OperatorController extends AbstractActionController
 {
@@ -171,5 +172,17 @@ class OperatorController extends AbstractActionController
 		$aParam['operator'] = $operator;
 		
 		return new ViewModel($aParam);
+	}
+	
+	public function areloadoperatorscreenAction() {
+		$view = $this->indexAction();
+		$view->setTemplate('operator/operator/index');
+		
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$html = $viewRender->render($view);
+		
+		$json = array('error' => false, 'html' => $html);
+		
+		return new JsonModel($json);
 	}
 }
