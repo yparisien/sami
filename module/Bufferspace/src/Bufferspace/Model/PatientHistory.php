@@ -76,13 +76,66 @@ class PatientHistory {
 	public	$radionuclideCode;
 	public	$radionuclideName;
 	
+	public function	exchangeArray($data)
+	{
+		$this->id			= (!empty($data['id']))				? (int) $data['id']			: null;
+		$this->patient_id	= (!empty($data['patient_id']))		? $data['patient_id']		: null;
+		$this->lastname		= (!empty($data['lastname']))		? $data['lastname']			: null;
+		$this->firstname	= (!empty($data['firstname']))		? $data['firstname']		: null;
+		$this->gender		= (!empty($data['gender']))			? $data['gender']			: null;
+		$this->birthdate	= (!empty($data['birthdate']))		? $data['birthdate']		: null;
+		$this->age			= (!empty($data['age']))			? (int) $data['age']		: null;
+		$this->weight		= (!empty($data['weight']))			? (float) $data['weight']	: null;
+		$this->height		= (!empty($data['height']))			? (float) $data['height']	: null;
+		$this->patienttype	= (!empty($data['patienttype']))	? $data['patienttype']		: null;
+		$this->doctorname	= (!empty($data['doctorname']))		? $data['doctorname']		: null;
+		
+		//TODO TO COMPLETE
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+		
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+// 		$this->			= (!empty($data['']))				? (int) $data['']			: null;
+	}
+	
 	public static function generateByPatientId($patientId, ServiceLocatorInterface $sm) {
 		/* @var $patientTable PatientTable */
-		$patientTable = $sm->get('PatientTable');
+		$patientTable = $sm->get('Bufferspace\Model\PatientTable');
 		$patient = $patientTable->getPatient($patientId);
 		
 		/* @var $injectionTable InjectionTable */
-		$injectionTable = $sm->get('InjectionTable');
+		$injectionTable = $sm->get('Bufferspace\Model\InjectionTable');
 		$injection = $injectionTable->searchByPatientId($patientId);
 		
 		/*
@@ -115,5 +168,9 @@ class PatientHistory {
 		$patientHistory->injectionValId				= $injection->vial_id;
 		$patientHistory->injectionLocation			= $injection->location;
 		$patientHistory->injectionComments			= $injection->comments;
+		
+		//TODO To Achieve
+		
+		return $patientHistory;
 	}
 }

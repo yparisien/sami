@@ -19,6 +19,7 @@ use Logger\Model\InputAction;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Zend\View\Model\Zend\View\Model;
+use Bufferspace\Model\PatientHistory;
 
 class InteractrobotController extends AbstractActionController
 {
@@ -601,6 +602,7 @@ class InteractrobotController extends AbstractActionController
 		$oInjection->injection_date = date('Y-m-d');
 		$this->getInjectionTable()->saveInjection($oInjection);
 		
+		$patientHistory = PatientHistory::generateByPatientId($oPatient->id, $this->serviceLocator);
 		$this->getPatientHistoryTable()->save($patientHistory);
 		
 		return new JsonModel(array('success'=>true));

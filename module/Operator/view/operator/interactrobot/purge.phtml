@@ -40,13 +40,13 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="progress">
-								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-1">
+								<div aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-success" style="width: 0%" id="purge-progress-green">
 									<span class="sr-only"></span>
 								</div>
-								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="purge-progress-2">
+								<div aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-default" style="width: 0%" id="purge-progress-blue">
 									<span class="sr-only"></span>
 								</div>
-								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="purge-progress-3">
+								<div aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-danger" style="width: 100%" id="purge-progress-red">
 									<span class="sr-only"></span>
 								</div>
 							</div>
@@ -75,9 +75,9 @@
 			</div>
 
 			<script type="text/javascript">
-				var value1 = 0;
-				var value2 = 0;
-				var value3 = 100;
+				var green = 0;
+				var blue = 0;
+				var red = 100;
 				var way = 0;
 				var patientConnected = 0;
 				var purged = 0;
@@ -90,22 +90,23 @@
 						cache: false,
 						dataType: "json",
 					}).done(function (result) {
-						if(way == 0)
+						var prc = result.progress;
+						if (way == 0)
 						{
-							value2 = result.progress;
-							value3 = 100 - Number(result.progress);
+							blue = prc * 2;
+							red = 100 - Number(blue);
 						}
 						else
 						{
-							value1 = result.progress;
-							value2 = 100 - Number(result.progress);
+							green = (prc - 50) * 2;
+							blue = 100 - Number(green);
 						}
 						
-						$("#purge-progress-1").css('width', value1+'%');
-						$("#purge-progress-2").css('width', value2+'%');
-						$("#purge-progress-3").css('width', value3+'%');
+						$("#purge-progress-red").css('width', red + '%');
+						$("#purge-progress-blue").css('width', blue + '%');
+						$("#purge-progress-green").css('width', green + '%');
 	
-						if(value1 == 100 && way == 1)
+						if (prc == 100 && way == 1)
 						{
 							$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
 							$("#purge-confirm").removeAttr('disabled');
@@ -117,16 +118,11 @@
 						}
 						else
 						{
-							if(value2 == 100)
+							if (blue == 100)
 							{
 								way = 1;
 							}
 							window.setTimeout(function(){moveProgressBar();}, 1000);
-						}
-						
-						if (value1 == 100)
-						{
-							checkEnableNext();
 						}
 					});
 				}
@@ -135,12 +131,12 @@
 				{
 					$('#alertNaCl').alert('close');
 					$('#statut-block').removeClass('panel-danger panel-success panel-warning').addClass('panel-warning');
-					$("#purge-progress-1").css('width', '0%');
-					$("#purge-progress-2").css('width', '0%');
-					$("#purge-progress-3").css('width', '100%');
-					value1 = 0;
-					value2 = 0;
-					value3 = 100;
+					$("#purge-progress-green").css('width', '0%');
+					$("#purge-progress-blue").css('width', '0%');
+					$("#purge-progress-red").css('width', '100%');
+					green = 0;
+					blue = 0;
+					red = 100;
 					way = 0;
 					purged = 0;
 					
@@ -186,7 +182,7 @@
 				
 				function	checkEnableNext()
 				{
-					if(purged == 1 && patientConnected == 1)
+					if (purged == 1 && patientConnected == 1)
 					{
 						$("#btn-next").removeAttr('disabled');
 					}
