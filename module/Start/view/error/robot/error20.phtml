@@ -1,0 +1,23 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title" id="errordetectedModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('System error detected'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<div class="alert alert-danger" role="alert">
+			<p>Activité maximale autorisée pour le centre non renseignée</p>
+			<p>Superviseur - Menu Système - Saisir l'activité maximale autorisée.</p>
+			<img src="/img/tutos/aur.gif">
+		</div>
+	</div>
+	<div class="modal-footer">
+		<?php if ($isAdmin) { ?>
+		<button type="button" class="btn btn-primary" data-dismiss="modal">
+			<i class="glyphicon glyphicon-ok-sign"></i> <?php echo $this->translate('Ok'); ?>
+		</button>
+		<?php } else { ?>
+		<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('operator'); ?>">
+			<i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Exit'); ?>
+		</button>
+		<?php } ?>
+	</div>
+</div>
