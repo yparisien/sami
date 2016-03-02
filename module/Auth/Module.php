@@ -70,10 +70,10 @@ class Module implements AutoloaderProviderInterface
 	public function	checkLoginChangeLayout(MvcEvent $e)
 	{
 		$sm = $e->getApplication()->getServiceManager();
-		if ($sm->get('AuthService')->hasIdentity()) {
+		$controller = $e->getTarget();
+		if ($controller->layout()->terminate() === false && $sm->get('AuthService')->hasIdentity()) {
 			$identity = $sm->get('AuthService')->getIdentity();
 			$oUser = $sm->get('Manager\Model\UserTable')->searchByLogin($identity);
-			$controller = $e->getTarget();
 			$controller->layout('layout/logged');
 			$controller->layout()->login = $oUser->login;
 			$controller->layout()->isAdmin = $oUser->admin;

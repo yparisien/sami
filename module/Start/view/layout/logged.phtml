@@ -1,6 +1,6 @@
 <?php echo $this->doctype(); ?>
 <?php
-if ($virtualkeyboardEnable === true) {
+if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 	$this->headStyle()->appendStyle('
 			.ui-keyboard-button span { font-size: ' . $virtualkeyboardSize . 'em; }
 			.ui-keyboard-button { 
@@ -22,7 +22,6 @@ if ($virtualkeyboardEnable === true) {
 			->appendName('viewport', 'width=device-width, initial-scale=1.0')
 			->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
 		?>
-
 		<!-- Le styles -->
 		<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/injection.ico'))
 						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
@@ -40,22 +39,22 @@ if ($virtualkeyboardEnable === true) {
 
 		<!-- Scripts -->
 		<?php echo $this->headScript()
+			->prependFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js')
 			->prependFile($this->basepath() . '/js/bootstrap-slider.min.js')
+			->prependFile($this->basepath() . '/js/moment-with-locales.min.js')
 			->prependFile($this->basepath() . '/js/jquery.keyboard.layout-french.js')
 			->prependFile($this->basepath() . '/js/jquery.keyboard.extension-all.js')
 			->prependFile($this->basepath() . '/js/jquery.keyboard.js')
 			->prependFile($this->basepath() . '/js/jquery-barcode.min.js')
-			->prependFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
 			->prependFile($this->basePath() . '/js/jquery-ui.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
-			->prependFile($this->basepath() . '/js/moment-with-langs.min.js')
 			->prependFile($this->basePath() . '/js/respond.min.js',	'text/javascript', array('conditional' => 'lt IE 9',))
 			->prependFile($this->basePath() . '/js/html5shiv.js', 	'text/javascript', array('conditional' => 'lt IE 9',));
 		?>
 		<?php echo $this->headStyle(); ?>
 	</head>
-	<body>
+	<body oncontextmenu="return false;">
 		<div class="non-printable">
 			<noscript style="width: 100%; height: 100%; position: absolute; background-color: white; z-index: 10000;">
 				<div class="col-md-3"></div>
@@ -173,7 +172,7 @@ if ($virtualkeyboardEnable === true) {
 				
 			}');
 		
-		if ($appendSupervisorJsTimeout === true) {
+		if (isset($appendSupervisorJsTimeout) && $appendSupervisorJsTimeout === true) {
 			$this->inlineScript()->appendScript('
 					$(function() {
 						setTimeout(function(){
@@ -191,7 +190,7 @@ if ($virtualkeyboardEnable === true) {
 			');
 		}
 		
-		if ($appendOperatorJsTimeout === true) {
+		if (isset($appendOperatorJsTimeout) && $appendOperatorJsTimeout === true) {
 			$this->inlineScript()->appendScript('
 					$(function() {
 						setTimeout(function(){
@@ -209,7 +208,7 @@ if ($virtualkeyboardEnable === true) {
 			');
 		}
 
-		if ($disableLinks === true) {
+		if (isset($disableLinks) && $disableLinks === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("nav.navbar li").addClass("disabled");
@@ -233,7 +232,7 @@ if ($virtualkeyboardEnable === true) {
 			');
 		}
 		
-		if ($virtualkeyboardEnable === true) {
+		if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").keyboard({
@@ -315,6 +314,7 @@ if ($virtualkeyboardEnable === true) {
 					    },
 					});
 					
+					/*
 					$("input[type=text].input-date").keyboard({
 						layout : "custom",
 						usePreview: false,
@@ -335,30 +335,40 @@ if ($virtualkeyboardEnable === true) {
 					        buttonDisabled: "disabled",
 					    },
 					});
+					*/
 				});
 			');
 		}
 		
 		$this->inlineScript()->appendScript('
+			var autorizeCheckErrorSystem = true;
+				
 			$(function() {
 				function checkErrorSystem() {
 					setTimeout(function(){
+						doCheckErrorSystem();
+					}, 15000);
+				}
+				
+				function doCheckErrorSystem() {
+					if (autorizeCheckErrorSystem) {
 						$.ajax({
 							url: "'. $this->url('checkerrorstatus', array()) . '",
 						}).done(function(result){
 							if (result.error === false) {
 								checkErrorSystem();
 							} else {
-								$("#errorMessageSpan").html(result.errorMessage);
+								$("#popupErrorSystem").html(result.html);
 								$("#modalErrorDetected").modal({
 									keyboard: false,
 									show: true,
 								});
 							}
 						});
-					}, 15000);
+					}
 				}
 				
+				doCheckErrorSystem();
 				checkErrorSystem();
 			});
 		');
@@ -388,7 +398,7 @@ if ($virtualkeyboardEnable === true) {
 			</div>
 		</div>
 		
-<?php if ($appendOperatorJsTimeout === true) { ?>
+<?php if (isset($appendOperatorJsTimeout) && $appendOperatorJsTimeout === true) { ?>
 		<div class="modal fade" id="modalAutoLogout" tabindex="-1" role="dialog" aria-labelledby="autologoutModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -411,26 +421,9 @@ if ($virtualkeyboardEnable === true) {
 		</div>
 <?php } ?>
 <div class="modal fade" id="modalErrorDetected" tabindex="-1" role="dialog" aria-labelledby="errordetectedModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="errordetectedModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('System error detected'); ?></h4>
-			</div>
-			<div class="modal-body">
-				<div class="alert alert-danger" role="alert">
-					<p><?php echo $this->translate('An error has been raised by the robot :'); ?></p>
-					<p><?php echo $this->translate('Error message : ');?><span id="errorMessageSpan"></span></p>
-					<br />
-					<p><?php echo $this->translate('Please check the manual for instructions.'); ?></p>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log'); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Sign In'); ?></button>
-			</div>
-		</div>
-	</div>
+	<div class="modal-dialog" role="document" id="popupErrorSystem"></div>
 </div>
-<?php if ($appendSupervisorJsTimeout === true) { ?>
+<?php if (isset($appendSupervisorJsTimeout) && $appendSupervisorJsTimeout === true) { ?>
 <div class="modal fade" id="modalAutoLogout" tabindex="-1" role="dialog" aria-labelledby="autologoutModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -454,5 +447,13 @@ if ($virtualkeyboardEnable === true) {
 </div>
 <?php } ?>
 		</div>
+		<script language="javascript">
+			document.onmousedown=disableclick;
+			function disableclick(event) {
+  				if (event.button==2) {
+					return false;    
+   				}
+			}
+		</script>
 	</body>
 </html>

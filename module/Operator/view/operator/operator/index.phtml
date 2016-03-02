@@ -1,7 +1,14 @@
 <ol class="breadcrumb">
 	<li class="active"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></li>
 </ol>
-<?php if ($hasExams === false) { ?>
+<?php if ($canWork === false) { ?>
+<div class="alert alert-danger" role="alert">
+	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
+	<p>Une erreur est en cours sur le système veuillez la corriger.</p>
+	
+	<p><button class="btn btn-primary" onClick="window.location.reload()"><?php echo $this->translate('I\'ve fixed it, reload!')?></button></p>
+</div>
+<?php } else if ($hasExams === false) { ?>
 <div class="alert alert-danger" role="alert">
 	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
 	<p><?php echo sprintf('%s <a href="' . $this->url("examination", array("action" => "add")) . '" class="alert-link">%s</a> %s', $this->translate('No exams found in database. Please '), $this->translate('create an exam'), $this->translate(' to start injections.')); ?></p>

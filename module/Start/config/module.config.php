@@ -18,6 +18,7 @@ return array(
 					'defaults' => array(
 						'controller' => 'Start\Controller\Index',
 						'action'	 => 'checkerrorstatus',
+						'pagetype'	 => 'ajax',
 					),
 				),
 			),

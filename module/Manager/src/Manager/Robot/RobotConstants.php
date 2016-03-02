@@ -109,10 +109,10 @@ class RobotConstants {
 	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	
-	const ERROR_CODE_1										= 'Fiole non conforme';
-	const ERROR_CODE_2										= 'Erreur sur les informations pour le calcul de l\'activité volumique';
-	const ERROR_CODE_3										= 'Erreur sur les informations pour le calcul de l\'activité total à heure de calibration';
-	const ERROR_CODE_4										= 'Erreur sur les informations pour le calcul du volume de la fiole';
+// 	const ERROR_CODE_1										= 'Fiole non conforme';
+// 	const ERROR_CODE_2										= 'Erreur sur les informations pour le calcul de l\'activité volumique';
+// 	const ERROR_CODE_3										= 'Erreur sur les informations pour le calcul de l\'activité total à heure de calibration';
+// 	const ERROR_CODE_4										= 'Erreur sur les informations pour le calcul du volume de la fiole';
 	
 	const ERROR_CODE_5										= 'Disjoncteur général tombé';
 	const ERROR_CODE_6										= 'Disjoncteur général tombé et batterie faible. Injection interdite !';

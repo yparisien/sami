@@ -9,14 +9,14 @@
 
 namespace Operator\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Zend\View\Model\JsonModel;
+use Start\Controller\CommonController;
 
-class OperatorController extends AbstractActionController
+class OperatorController extends CommonController
 {
 	protected $inputfileTable;
 	protected $systemTable;
@@ -138,6 +138,7 @@ class OperatorController extends AbstractActionController
 			$oContainer->sourcekitloaded = false;
 		}
 
+		$aParam['canWork'] = ($oContainer->canWork) ? true : false;
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($canUnload) ? true : false;
 		$aParam['canExport'] = (!$oContainer->fileexported && $oContainer->markedasended) ? true : false;
@@ -171,7 +172,10 @@ class OperatorController extends AbstractActionController
 		$aParam['radionuclide'] = $radionuclide;
 		$aParam['operator'] = $operator;
 		
-		return new ViewModel($aParam);
+		$view = new ViewModel($aParam);
+		$view->setTerminal(true);
+		
+		return $view;
 	}
 	
 	public function areloadoperatorscreenAction() {

@@ -21,8 +21,9 @@ use Manager\Model\Drug;
 use Logger\Model\InputDrug;
 use Operator\Model\Sourcekit;
 use Zend\I18n\View\Helper\Translate;
+use Zend\View\Model\Zend\View\Model;
 
-class IndexController extends AbstractActionController
+class IndexController extends CommonController
 {
 	protected $authservice;
 	protected $drugTable;
@@ -31,6 +32,7 @@ class IndexController extends AbstractActionController
 	protected $storage;
 	protected $systemTable;
 
+	private	$errorMessageTemplate;	
 	
 	public function getAuthService()
 	{
@@ -116,21 +118,100 @@ class IndexController extends AbstractActionController
 		/* @var $robotService RobotService */
 		/* @var $translate Translate */
 		
-	
+		$oContainer = new Container('automate_setup');
+		$oContainer->canWork = true;
 		$jsonModel = new JsonModel();
 	
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$error = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
+		
 		if ($error === true) {
 			$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
+			switch ($errorID) {
+				case 5:
+					$this->errorCode5();
+					break;
+				case 6:
+					$this->errorCode6();
+					break;
+				case 7:
+					$this->errorCode7();
+					break;
+				case 20:
+					$oContainer->canWork = false;
+					$this->errorCode20();
+					break;
+				case 21:
+					$this->errorCode21();
+					break;
+				case 22:
+					$this->errorCode22();
+					break;
+				default:
+					throw new \Exception("Le code d'erreur n'est pas géré. Code reçu : " . $errorID, 500);
+					break;
+			}
+
 			$jsonModel->setVariable('error', true);
-			$jsonModel->setVariable('errorMessage', $translate(constant('\Manager\Robot\RobotConstants::ERROR_CODE_' . $errorID)));
+			$jsonModel->setVariable('html', $this->errorMessageTemplate);
 		} else {
 			$jsonModel->setVariable('error', false);
 		}
 	
 		return $jsonModel;
+	}
+	
+	private function errorCode5() {
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error5');
+		
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
+	}
+	
+	private function errorCode6() {
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error6');
+		
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
+	}
+	
+	private function errorCode7() {
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error7');
+	
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
+	}
+	
+	private function errorCode20() {
+		$identity = $this->getServiceLocator()->get('AuthService')->getIdentity();
+		$oUser = $this->getServiceLocator()->get('Manager\Model\UserTable')->searchByLogin($identity);
+		
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error20');
+		$view->setVariable('isAdmin', $oUser->admin);
+	
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
+	}
+	
+	private function errorCode21() {
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error21');
+	
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
+	}
+	
+	private function errorCode22() {
+		$view = new ViewModel();
+		$view->setTemplate('error/robot/error22');
+	
+		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
+		$this->errorMessageTemplate = $viewRender->render($view);
 	}
 	
 	/**
@@ -149,16 +230,9 @@ class IndexController extends AbstractActionController
 		$jsonModel->setVariable('active', (!$active) ? false : true);
 		
 		if ($active) {
-			$isError = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
-			if ($isError === true) {
-				$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
-				$jsonModel->setVariable('error', true);
-				$jsonModel->setVariable('errorMessage', $translate(constant('\Manager\Robot\RobotConstants::ERROR_CODE_' . $errorID)));
-			} else {
-				$now = new \DateTime();
-				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM => "DT#" . $now->format('Y-m-d-H:i:s')));
-				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME => 1));
-			}
+			$now = new \DateTime();
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM => "DT#" . $now->format('Y-m-d-H:i:s')));
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME => 1));
 		}
 		
 		return $jsonModel;

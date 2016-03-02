@@ -11,7 +11,6 @@
 
 namespace Operator\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\Session\Zend\Session;
 use Zend\View\Model\JsonModel;
@@ -37,8 +36,9 @@ use Manager\Robot\RobotService;
 use Manager\Model\User;
 use Operator\Model\Sourcekit;
 use Operator\Model\Patientkit;
+use Start\Controller\CommonController;
 
-class InputdataController extends AbstractActionController
+class InputdataController extends CommonController
 {
 	protected $inputActionTable;
 	protected $drugTable;

@@ -73,19 +73,11 @@
 				//GOTO STEP 1 LOOP
 				initping();
 			} else {
-				if (result.error === true) {
-					$("#loading-progress").removeClass("progress-bar-warning");
-					$("#loading-progress").addClass("progress-bar-danger");
-					$("#loading-error").html("<?php echo $this->translate('An error occured during setup. Robot is returning an error at starting : &laquo;'); ?>" + result.errorMessage + '&raquo;');
-					$("#loading-error").show();
-					return false;
-				} else {
-					$("#loading-progress").removeClass("progress-bar-warning");
-					$("#loading-error").hide();
-					moveProgressBar(0, 15);
-					//GOTO STEP 2
-					initmu();
-				}
+				$("#loading-progress").removeClass("progress-bar-warning");
+				$("#loading-error").hide();
+				moveProgressBar(0, 15);
+				//GOTO STEP 2
+				initmu();
 			}
 		});
 	}

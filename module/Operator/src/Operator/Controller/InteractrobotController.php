@@ -9,7 +9,6 @@
 
 namespace Operator\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -20,8 +19,9 @@ use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Zend\View\Model\Zend\View\Model;
 use Bufferspace\Model\PatientHistory;
+use Start\Controller\CommonController;
 
-class InteractrobotController extends AbstractActionController
+class InteractrobotController extends CommonController
 {
 	protected $inputActionTable;
 	protected $drugTable;
