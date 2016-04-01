@@ -349,7 +349,7 @@ class InputdataController extends CommonController
 		$config = $sm->get('Config');
 
 		$aRetVal = array(
-			'success'	=> 0,
+			'success'	=> 1,
 			'msg'		=> '',
 		);
 		
@@ -382,61 +382,63 @@ class InputdataController extends CommonController
 				$adapter->setDestination($destPath);
 				if ($adapter->receive($file['name']))
 				{
-					// all is ok
-					$aRetVal['success'] = 1;
-
 					// parse it and load it
 					$oImporter = new Importer($this->getServiceLocator());
 					$oImporter->setPathFile($destPath);
-					$oImporter->loadFile($file['name']);
-					$oImporter->cleanDataBase();
-					$oImporter->fillDataBase();
-
-					// log action
-					$inputaction = new InputAction();
-					$inputaction->inputdate = date('Y-m-d H:i:s');
-					$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
-					$inputaction->action = "Import new patients file";
-					$this->getInputActionTable()->saveInputAction($inputaction);
-					
-					$now = new \DateTime();
-					$inputFile = new InputFile();
-					$inputFile->name = $file['name'];
-					$inputFile->in = file_get_contents($destPath . '/' . $file['name']);
-					$inputFile->creation_date = $now->format('Y-m-d H:i:s');
-					$inputFile->deleted = 0;
-					$this->getInputFileTable()->saveInputFile($inputFile);
-
-					// for the moment, store the log id but use a clever way for final version
-					$oContainer = new Container('automate_setup');
-					$oContainer->fileloaded = true;
-					$oContainer->fileexported = false;
-					$oContainer->markedasended = false;
-					$oContainer->loadedfilename = $file['name'];
-
-					//Copy file too archive
-					$source = realpath($destPath . DIRECTORY_SEPARATOR . $file['name']);
-					$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
-
-					if (!is_dir($pathname)) {
-						if (@mkdir($pathname, 0777, true) === false) {
-							$aRetVal['success'] = 0;
-							$aRetVal['msg'] = $translate("Can't create directory " . $pathname);
-						}
-					}
-					
-					if (is_dir($pathname) === true) {
-						$archive = realpath($pathname) . DIRECTORY_SEPARATOR . basename($file['name'], '.csv') . '_' . date('Ymd-His') . '.csv';
-						if (@copy($source, $archive) === true) {
-							//Delete file
-							if (file_exists($source)) {
-								unlink($source);
+					try {
+						$oImporter->loadFile($file['name']);
+						$oImporter->cleanDataBase();
+						$oImporter->fillDataBase();
+	
+						// log action
+						$inputaction = new InputAction();
+						$inputaction->inputdate = date('Y-m-d H:i:s');
+						$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
+						$inputaction->action = "Import new patients file";
+						$this->getInputActionTable()->saveInputAction($inputaction);
+						
+						$now = new \DateTime();
+						$inputFile = new InputFile();
+						$inputFile->name = $file['name'];
+						$inputFile->in = file_get_contents($destPath . '/' . $file['name']);
+						$inputFile->creation_date = $now->format('Y-m-d H:i:s');
+						$inputFile->deleted = 0;
+						$this->getInputFileTable()->saveInputFile($inputFile);
+	
+						// for the moment, store the log id but use a clever way for final version
+						$oContainer = new Container('automate_setup');
+						$oContainer->fileloaded = true;
+						$oContainer->fileexported = false;
+						$oContainer->markedasended = false;
+						$oContainer->loadedfilename = $file['name'];
+	
+						//Copy file too archive
+						$source = realpath($destPath . DIRECTORY_SEPARATOR . $file['name']);
+						$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
+	
+						if (!is_dir($pathname)) {
+							if (@mkdir($pathname, 0777, true) === false) {
+								$aRetVal['success'] = 0;
+								$aRetVal['msg'] = $translate("Can't create directory " . $pathname);
 							}
 						}
-						else {
-							$aRetVal['success'] = 0;
-							$aRetVal['msg'] = $translate("Can't copy file " . $source . " to " . $archive);
+						
+						if (is_dir($pathname) === true) {
+							$archive = realpath($pathname) . DIRECTORY_SEPARATOR . basename($file['name'], '.csv') . '_' . date('Ymd-His') . '.csv';
+							if (@copy($source, $archive) === true) {
+								//Delete file
+								if (file_exists($source)) {
+									unlink($source);
+								}
+							}
+							else {
+								$aRetVal['success'] = 0;
+								$aRetVal['msg'] = $translate("Can't copy file " . $source . " to " . $archive);
+							}
 						}
+					} catch (\Exception $e) {
+						$aRetVal['success'] = 0;
+						$aRetVal['msg'] = $e->getMessage();
 					}
 				}
 				else
@@ -454,8 +456,14 @@ class InputdataController extends CommonController
 				{
 					$error[] = $row;
 				}
+				$aRetVal['success'] = 0;
 				$aRetVal['msg'] = $error;
 			}
+			
+			if ($aRetVal['success'] == 0) {
+				unlink($destPath . DIRECTORY_SEPARATOR . $file['name']);
+			}
+			
 			return new JsonModel($aRetVal);
 		}
 		else // pas de post, on affiche simplement la page

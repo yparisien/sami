@@ -45,8 +45,8 @@
 						<div id="usb-finished" class="alert alert-success" style="display:none"><span class="glyphicon glyphicon-ok"></span> <?php echo $this->translate('Transfert OK - Unplug the USB key and press Next')?></div>
 						<div id="usb-error" class="alert alert-danger" style="display:none">
 							<span class="glyphicon glyphicon-remove"></span> <?php echo $this->translate('Error during transfert!')?><br />
-							<ul id="error-list"></ul>
 						</div>
+						<div id="error-msg"></div>
 					</div>
 				</div>
 				<div class="row">
@@ -123,8 +123,8 @@
 								else
 								{
 									// an error occured, show it
-									$('#error-list').empty();
-									$('#error-list').append('<li>'+resp.msg+'</li>');
+									$('#error-msg').empty();
+									$('#error-msg').html(resp.msg);
 									markAsFailed();
 								}
 							} catch (e){

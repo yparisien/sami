@@ -5,9 +5,13 @@
 <div class="alert alert-danger" role="alert">
 	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
 	<p>Une erreur est en cours sur le système veuillez la corriger.</p>
-	
-	<p><button class="btn btn-primary" onClick="window.location.reload()"><?php echo $this->translate('I\'ve fixed it, reload!')?></button></p>
 </div>
+<div class="well">
+	<?php echo $globalErrorMessage; ?>
+</div>
+<p class="text-center">
+	<button class="btn btn-primary" onClick="window.location.reload()"><?php echo $this->translate('I\'ve fixed it, reload!')?></button>
+</p>
 <?php } else if ($hasExams === false) { ?>
 <div class="alert alert-danger" role="alert">
 	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 

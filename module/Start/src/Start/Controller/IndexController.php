@@ -115,104 +115,18 @@ class IndexController extends CommonController
 	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function checkerrorstatusAction() {
-		/* @var $robotService RobotService */
-		/* @var $translate Translate */
+		/*@var $errorService \Start\Services\ErrorService */
+		$errorService = $this->getServiceLocator()->get('Start\Services\ErrorService');
 		
-		$oContainer = new Container('automate_setup');
-		$oContainer->canWork = true;
+		$ret = $errorService->checkErrorStatus(true);
+		
 		$jsonModel = new JsonModel();
-	
-		$robotService = $this->getServiceLocator()->get('RobotService');
-		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
-		$error = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
+		$jsonModel->setVariables($ret);
 		
-		if ($error === true) {
-			$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
-			switch ($errorID) {
-				case 5:
-					$this->errorCode5();
-					break;
-				case 6:
-					$this->errorCode6();
-					break;
-				case 7:
-					$this->errorCode7();
-					break;
-				case 20:
-					$oContainer->canWork = false;
-					$this->errorCode20();
-					break;
-				case 21:
-					$this->errorCode21();
-					break;
-				case 22:
-					$this->errorCode22();
-					break;
-				default:
-					throw new \Exception("Le code d'erreur n'est pas géré. Code reçu : " . $errorID, 500);
-					break;
-			}
-
-			$jsonModel->setVariable('error', true);
-			$jsonModel->setVariable('html', $this->errorMessageTemplate);
-		} else {
-			$jsonModel->setVariable('error', false);
-		}
-	
 		return $jsonModel;
 	}
 	
-	private function errorCode5() {
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error5');
-		
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
 	
-	private function errorCode6() {
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error6');
-		
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
-	
-	private function errorCode7() {
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error7');
-	
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
-	
-	private function errorCode20() {
-		$identity = $this->getServiceLocator()->get('AuthService')->getIdentity();
-		$oUser = $this->getServiceLocator()->get('Manager\Model\UserTable')->searchByLogin($identity);
-		
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error20');
-		$view->setVariable('isAdmin', $oUser->admin);
-	
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
-	
-	private function errorCode21() {
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error21');
-	
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
-	
-	private function errorCode22() {
-		$view = new ViewModel();
-		$view->setTemplate('error/robot/error22');
-	
-		$viewRender = $this->getServiceLocator()->get('ViewRenderer');
-		$this->errorMessageTemplate = $viewRender->render($view);
-	}
 	
 	/**
 	 * Initialisation Ping (Vérification activité automate) (STEP 1)

@@ -15,6 +15,7 @@ use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
 use Zend\View\Model\JsonModel;
 use Start\Controller\CommonController;
+use Zend\View\Model\Zend\View\Model;
 
 class OperatorController extends CommonController
 {
@@ -148,6 +149,13 @@ class OperatorController extends CommonController
 		if ($oContainer->drugspecified == true) {
 			$drug = $this->getDrugTable()->getDrug($oContainer->drugid);
 			$aParam['selectedDrugName'] = '[' . $drug->dci . ']' . ' ' . $drug->name;
+		}
+		
+		if ($oContainer->canWork == false) {
+			/* @var $errorService \Start\Services\ErrorService */
+			$errorService = $sm->get('Start\Services\ErrorService');
+			$ret = $errorService->checkErrorStatus(false);
+			$aParam['globalErrorMessage'] = $ret['html'];
 		}
 		
 		return new ViewModel($aParam);

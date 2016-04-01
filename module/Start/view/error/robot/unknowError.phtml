@@ -1,0 +1,17 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title" id="errordetectedModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('System error detected'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<div class="alert alert-danger" role="alert">
+			<p><strong>Une erreur inconnue a été remontée dans le système.</strong></p>
+			<p>Merci de contacter le support technique en leur transmettant toutes les informations suivantes:
+				<ul>
+				</ul>
+			</p>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log', array('action' => 'logout')); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Exit'); ?></button>
+	</div>
+</div>

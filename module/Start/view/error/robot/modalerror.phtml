@@ -1,0 +1,11 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title" id="errordetectedModalLabel"><i class="glyphicon glyphicon-time"></i> <?php echo $this->translate('System error detected'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<?php echo $errorMessage; ?>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log', array('action' => 'logout')); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Exit'); ?></button>
+	</div>
+</div>

@@ -162,6 +162,9 @@ return array(
 		'aliases' => array(
 			'translator' => 'MvcTranslator',
 		),
+		'invokables' => array(
+			'Start\Services\ErrorService' => 'Start\Services\ErrorService'
+		),
 	),
 	'translator' => array(
 		'locale' => 'en_US',
