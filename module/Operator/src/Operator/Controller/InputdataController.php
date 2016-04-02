@@ -1186,7 +1186,7 @@ class InputdataController extends CommonController
 			}
 			if ($r->getPost('expirationtime'))
 			{
-				$expiration = new \DateTime($r->getPost('expirationtime'));
+				$expiration = \DateTime::createFromFormat('d/m/Y H:i', $r->getPost('expirationtime'));
 				$fr->expirationtime = $expiration->format("Y-m-d H:i:s");
 				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = str_replace(" ", "-","DT#" . $fr->expirationtime);
 			}
