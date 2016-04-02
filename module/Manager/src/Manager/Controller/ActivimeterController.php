@@ -17,7 +17,6 @@ class ActivimeterController extends AbstractActionController
 
 	public function	indexAction()
 	{
-		exec("echo 'c' | vncviewer 10.0.0.100 -bgr233 -autopass");
 		$aParam = array();
 		return new ViewModel($aParam);
 	}
