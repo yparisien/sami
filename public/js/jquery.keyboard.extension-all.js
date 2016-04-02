@@ -1,13 +1,12 @@
-
 /*** This file is dynamically generated ***
 █████▄ ▄████▄   █████▄ ▄████▄ ██████   ███████▄ ▄████▄ █████▄ ██ ██████ ██  ██
 ██  ██ ██  ██   ██  ██ ██  ██   ██     ██ ██ ██ ██  ██ ██  ██ ██ ██     ██  ██
 ██  ██ ██  ██   ██  ██ ██  ██   ██     ██ ██ ██ ██  ██ ██  ██ ██ ██▀▀   ▀▀▀▀██
 █████▀ ▀████▀   ██  ██ ▀████▀   ██     ██ ██ ██ ▀████▀ █████▀ ██ ██     █████▀
 */
-/*! jQuery UI Virtual Keyboard - ALL Extensions + Mousewheel */
-/*! jQuery UI Virtual Keyboard Alt Key Popup v1.0.1 *//*
- * for Keyboard v1.18+ only (7/7/2015)
+/*! jQuery UI Virtual Keyboard (1.25.25) - ALL Extensions + Mousewheel */
+/*! jQuery UI Virtual Keyboard Alt Key Popup v1.1.1 *//*
+ * for Keyboard v1.18+ only (1/10/2016)
  *
  * By Rob Garrison (aka Mottie)
  * Licensed under the MIT License
@@ -81,13 +80,24 @@
 		')' : '\u300b \u3011 \u3015'  // » 】 〕
 	}, $keyboard.altKeys );
 
+	// physical keyboard navigation inside popup
+	$keyboard.navigationKeys = $.extend({
+		enter      : 13,
+		escape     : 27,
+		end        : 35,
+		home       : 36,
+		left       : 37,
+		right      : 39,
+	}, $keyboard.navigationKeys );
+
 	$.fn.addAltKeyPopup = function( options ) {
 		//Set the default values, use comma to separate the settings, example:
 		var defaults = {
 			// time to hold down a button in ms to trigger a popup
 			holdTime : 500,
 			// event triggered when popup is visible
-			popupVisible : 'popup-visible'
+			popupVisible : 'popup-visible',
+			popupHidden  : 'popup-hidden'
 		};
 		return this.each( function() {
 			// make sure a keyboard is attached
@@ -110,10 +120,11 @@
 
 				// add hold key functionality for popups
 				base.$allKeys
+					.unbind( namespace )
 					.bind( start, function() {
 						clearTimeout( timer );
 						var $key = $( this ),
-							key = $key.attr( 'data-action' ) || '';
+							key = $key.attr( 'data-value' ) || '';
 						if ( key in $keyboard.altKeys ) {
 							timer = setTimeout( function() {
 								base.altKeyPopup_popup( key, $key );
@@ -123,10 +134,65 @@
 					.bind( end, function() {
 						clearTimeout( timer );
 					});
+
+				base.altkeypopup_blockingFlag = false;
+				base.$preview
+					.unbind( namespace )
+					.bind( 'keypress keydown keyup'.split( ' ' ).join( namespace + ' ' ), function( event ) {
+
+						if ( event.type === 'keyup' ) {
+							clearTimeout( timer );
+							base.altkeypopup_blockingFlag = false;
+							return true;
+						}
+						var tmp,
+							layout = $keyboard.builtLayouts[ base.layout ],
+							keyCodes = $keyboard.keyCodes,
+							$key = $( event.target ),
+							k = event.charCode || event.which,
+							key = String.fromCharCode( k );
+
+						if ( event.type === 'keydown' && key in $keyboard.altKeys ) {
+							tmp = base.altkeypopup_blockingFlag;
+							base.altkeypopup_blockingFlag = true;
+							// return true on initial keydown or keypress never fires
+							// then return false to prevent repeat key
+							return !tmp;
+						} else if ( base.altkeypopup_blockingFlag ) {
+							if ( ( k >= keyCodes.a && k <= keyCodes.z ) && !event.shiftKey ) {
+								key = key.toLowerCase();
+							}
+							// find mapped key, if any
+							if ( layout.hasMappedKeys && layout.mappedKeys.hasOwnProperty( key ) ) {
+								key = layout.mappedKeys[ key ];
+							}
+							if ( key in $keyboard.altKeys ) {
+								timer = setTimeout( function(){
+									if ( base.altkeypopup_blockingFlag ) {
+										base.altKeyPopup_popup( key, $key );
+									}
+								}, base.altkeypopup_options.holdTime );
+							}
+							return true;
+						}
+					});
+			};
+
+			base.altKeyPopup_close = function() {
+				base.altkeypopup_blockingFlag = false;
+				base.altKeyPopup_$overlay = null;
+				base.$keyboard.find( '.' + $keyboard.css.altKeyOverlay ).remove();
+				$( document ).unbind( namespace );
+				base.$preview.focus();
+				// restore ignoreEsc option
+				base.options.ignoreEsc = base.altKeyPopup_savedIgnoreEsc;
+				// trigger popup hidden event
+				base.$el.trigger( base.altkeypopup_options.popupHidden, [ base ] );
 			};
 
 			base.altKeyPopup_popup = function( key, $key ) {
-				var keys, $keys, positionHoriz, positionVert, top,
+				if ( base.$keyboard.find( '.' + $keyboard.css.altKeyOverlay ).length ) { return; }
+				var keys, $container, $keys, positionHoriz, positionVert, top,
 					kbcss = $keyboard.css,
 					kbWidth = base.$keyboard.outerWidth(),
 					kbHeight = base.$keyboard.outerHeight();
@@ -138,7 +204,7 @@
 					})
 					.appendTo( base.$keyboard )
 					.bind( 'click touchstart', function() {
-						base.altKeyPopup_$overlay.remove();
+						base.altKeyPopup_close();
 					});
 
 				// remove character added when key was initially pressed, unless it was a backspace key
@@ -147,12 +213,12 @@
 				}
 
 				// make popup; use the same classes as the keyboard container
-				$keys = $( '<div class="' + kbcss.altKeyPopup + ' ' + base.options.css.container + '" />' );
+				$container = $( '<div class="' + kbcss.altKeyPopup + ' ' + base.options.css.container + '" />' );
 				keys = $keyboard.altKeys[ key ].split( /\s+/ );
 				// make popup keys
-				base.buildRow( $keys, 0, keys, [] );
+				base.buildRow( $container, 0, keys, [] );
 				// add popup & add bindings
-				$keys
+				$keys = $container
 					.appendTo( base.altKeyPopup_$overlay )
 					.children()
 					.bind( 'mousedown touchstart', function( event ) {
@@ -163,18 +229,43 @@
 						} else {
 							base.insertText( action );
 						}
-						base.altKeyPopup_$overlay.remove();
+						base.altKeyPopup_close();
 					})
 					.bind( 'mouseover mouseleave', function( event ){
-						$( this ).toggleClass( base.options.css.buttonHover, event.type === 'mouseover' );
+						if ( event.type === 'mouseleave' ) {
+							// remove hover from physical keyboard highlighted key
+							$keys.removeClass( base.options.css.buttonHover );
+						} else {
+							$( this ).addClass( base.options.css.buttonHover );
+						}
+					});
+
+				// popup opened... add key highlight
+				base.altKeyPopup_navigate( true ); // init
+				// set ignoreEsc to allow escape to ONLY close the popup
+				base.altKeyPopup_savedIgnoreEsc = base.options.ignoreEsc;
+				base.options.ignoreEsc = true;
+				$( document )
+					.unbind( namespace )
+					.bind( 'keydown' + namespace, function( event ) {
+						// keep home & end from scrolling the page
+						return false;
+					})
+					.bind( 'keyup' + namespace, function( event ) {
+						if ( event.which === $keyboard.navigationKeys.escape ) {
+							base.altKeyPopup_close();
+						} else {
+							base.altKeyPopup_navigate( event );
+						}
+						return false;
 					});
 
 				// position popup within $keyboard container
-				positionHoriz = $key.position().left - ( $keys.outerWidth() / 2 ) + ( $key.outerWidth() / 2 );
-				if ( positionHoriz + $keys.outerWidth() > kbWidth ) {
-					positionHoriz = kbWidth - $keys.outerWidth();
+				positionHoriz = $key.position().left - ( $container.outerWidth() / 2 ) + ( $container.outerWidth() / 2 );
+				if ( positionHoriz + $container.outerWidth() > kbWidth ) {
+					positionHoriz = kbWidth - $container.outerWidth();
 					if ( positionHoriz < 0 ) {
-						$keys.css({
+						$container.css({
 							width : kbWidth,
 							height : 'auto'
 						});
@@ -182,22 +273,59 @@
 				}
 				positionVert = $key.position().top - $key.outerHeight() - 5;
 				top = base.$keyboard.find( '.' + kbcss.keySet ).position().top;
-				if ( positionVert + $keys.outerHeight() > kbHeight ) {
-					positionVert = kbHeight - $keys.outerHeight();
+				if ( positionVert + $container.outerHeight() > kbHeight ) {
+					positionVert = kbHeight - $container.outerHeight();
 					if ( positionVert < top ) {
-						$keys.css({
+						$container.css({
 							height : kbHeight - top,
 							width : 'auto'
 						});
 					}
 				}
-				$keys.css({
+				$container.css({
 					position : 'relative',
 					top : positionVert < top ? top : positionVert,
 					left : positionHoriz < 0 ? 0 : positionHoriz
 				});
+				base.$preview.blur();
 				// trigger popup visible event
 				base.$el.trigger( base.altkeypopup_options.popupVisible, [ base ] );
+			};
+
+			base.altKeyPopup_navigate = function( event ) {
+				var indx,
+					kbcss = $keyboard.css,
+					k = $keyboard.navigationKeys,
+					hover = base.options.css.buttonHover,
+					$keys = base.$keyboard.find( '.' + kbcss.altKeyPopup ).find( '.' + kbcss.keyButton ),
+					max = $keys.length - 1;
+				// popup visible, add key highlight
+				if ( event === true ) {
+					$keys.eq( 0 ).addClass( hover );
+					base.altKeyPopup_currentIndex = 0;
+					return;
+				}
+
+				indx = base.altKeyPopup_currentIndex;
+				if ( event.which === k.enter ) {
+					base.insertText( $keys.eq( indx ).attr( 'data-value' ) );
+					base.altKeyPopup_close();
+					return true;
+				}
+
+				switch( event.which ) {
+					case k.end   : indx = max; break; // End
+					case k.home  : indx = 0; break; // Home
+					case k.left  : indx -= 1; break; // Left
+					case k.right : indx += 1; break; // Right
+				}
+				if ( indx < 0 ) { indx = 0; }
+				if ( indx > max ) { indx = max; }
+				base.altKeyPopup_currentIndex = indx;
+				$keys
+					.removeClass( hover )
+					.eq( indx )
+					.addClass( hover );
 			};
 
 			// visible event is fired before this extension is initialized, so check!
@@ -216,8 +344,8 @@
 
 }));
 
-/*! jQuery UI Virtual Keyboard Autocomplete v1.9.1 *//*
- * for Keyboard v1.18+ only (7/7/2015)
+/*! jQuery UI Virtual Keyboard Autocomplete v1.9.2 *//*
+ * for Keyboard v1.18+ only (8/17/2015)
  *
  * By Rob Garrison (aka Mottie & Fudgey)
  * Licensed under the MIT License
@@ -302,9 +430,11 @@ $.fn.addAutocomplete = function(options){
 				.bind('autocompleteopen' + base.autocomplete_namespace, function() {
 					if (base.hasAutocomplete){
 						// default to $keyboard if no position.of defined
-						o.position.of = o.position.of || base.$keyboard;
+						var position = $.extend( {}, o.position );
+						// refresh base.$keyboard (it gets destroyed after use); fixes #382
+						position.of = position.of || base.$keyboard;
 						// reposition autocomplete window next to the keyboard
-						base.$autocomplete.menu.element.position( o.position );
+						base.$autocomplete.menu.element.position( position );
 					}
 				})
 				.bind('autocompleteselect' + base.autocomplete_namespace, function(e, ui){
@@ -362,8 +492,8 @@ $.fn.addAutocomplete = function(options){
 
 }));
 
-/*! jQuery UI Virtual Keyboard Virtual Caret v1.0.1 (beta) *//*
- * for Keyboard v1.18+ only (7/7/2015)
+/*! jQuery UI Virtual Keyboard Virtual Caret v1.1.5 (beta) *//*
+ * for Keyboard v1.18+ only (2/20/2016)
  * modified from https://github.com/component/textarea-caret-position
  *
  * By Rob Garrison (aka Mottie)
@@ -391,7 +521,8 @@ $.fn.addAutocomplete = function(options){
 	$keyboard.firefox = typeof window.mozInnerScreenX !== 'undefined';
 
 	$.extend( $keyboard.css, {
-		caret : 'ui-keyboard-caret'
+		caret : 'ui-keyboard-caret',
+		caretMirror : 'ui-keyboard-mirror-div'
 	});
 
 	$.fn.addCaret = function( options ) {
@@ -408,13 +539,15 @@ $.fn.addAutocomplete = function(options){
 		};
 		return this.each( function() {
 			// make sure a keyboard is attached
-			var o, base = $( this ).data( 'keyboard' );
+			var o, namespace,
+				kbevents = $keyboard.events,
+				base = $( this ).data( 'keyboard' );
 			if ( !base ) { return; }
 
 			// variables
 			o = base.caret_options = $.extend( {}, defaults, options );
-			base.caret_namespace = base.namespace + 'caret';
-			base.extensionNamespace.push( base.caret_namespace );
+			namespace = base.caret_namespace = base.namespace + 'caret';
+			base.extensionNamespace.push( namespace );
 
 			// modified from https://github.com/component/textarea-caret-position
 			// The properties that we copy into a mirrored div.
@@ -431,20 +564,24 @@ $.fn.addAutocomplete = function(options){
 			];
 
 			base.caret_setup = function() {
-				var events = 'keyup keypress mouseup mouseleave '.split( ' ' ).join( base.caret_namespace + ' ' ),
+				var kbcss = $keyboard.css,
+					events = 'keyup keypress mouseup mouseleave '.split( ' ' ).join( namespace + ' ' ),
 					style = 'position:absolute;visibility:hidden;top:-9999em;left:-9999em;' +
-						'white-space:pre-wrap;' +
+						'white-space:pre-wrap;z-index:-10;' +
 						( base.preview.nodeName === 'INPUT' ? '' : 'word-wrap:break-word;' );
 				// add mirrored div
-				base.caret_$div = $( '<div class="ui-keyboard-mirror-div" style="' + style + '">' )
+				base.$keyboard.find( '.' + kbcss.caretMirror ).remove();
+				base.caret_$div = $( '<div class="' + kbcss.caretMirror + '" style="' + style + '">' )
 					.appendTo( base.$keyboard );
 
-				base.$caret = $( '<div class="ui-keyboard-caret ' + o.caretClass + '" style="position:absolute;">' )
+				// remove caret, just-in-case
+				if (base.$caret) { base.$caret.remove(); }
+				base.$caret = $( '<div class="' + kbcss.caret + ' ' + o.caretClass + '" style="position:absolute;">' )
 					.insertAfter( base.$preview );
 
 				base.$el
-					.unbind( $keyboard.events.kbChange + base.caret_namespace )
-					.bind( $keyboard.events.kbChange + base.caret_namespace, function() {
+					.unbind( kbevents.kbChange + namespace )
+					.bind( kbevents.kbChange + namespace, function() {
 						base.findCaretPos();
 					});
 				base.$preview
@@ -456,13 +593,16 @@ $.fn.addAutocomplete = function(options){
 
 			// getCaretCoordinatesFn = function (element, position, recalculate) {
 			base.findCaretPos = function() {
-				var style, computed, margin, pos, position, txt,
+				if ( !base.caret_$div ) { return; }
+				var style, computed, margin, pos, position, txt, span, offset,
 					element = base.preview,
+					fontWidth = parseFloat( base.$preview.css('fontSize') ),
 					isInput = element.nodeName === 'INPUT',
 					div = base.caret_$div[0];
 
 				style = div.style;
-				computed = window.getComputedStyle ? getComputedStyle( element ) : element.currentStyle;
+				// getComputedStyle with null - fixes #384
+				computed = window.getComputedStyle ? getComputedStyle( element, null ) : element.currentStyle;
 				// get caret position based on text-direction
 				pos = $keyboard.caret( base.$preview );
 				position = Math[ computed.direction === 'ltr' ? 'max' : 'min' ]( pos.start, pos.end );
@@ -480,13 +620,13 @@ $.fn.addAutocomplete = function(options){
 					if ( element.scrollHeight > parseInt( computed.height, 10 ) ) {
 						style.overflowY = 'scroll';
 					}
-				} else {
-					// for Chrome to not render a scrollbar; IE keeps overflowY = 'scroll'
-					// style.overflow = 'hidden';
-					style.width = parseInt( isInput ? element.scrollWidth : computed.width, 10 ) +
-						// add 50 extra px if it's an input to prevent wrap
-						( isInput ? 50 : 0 ) + 'px';
 				}
+
+				// for Chrome to not render a scrollbar; IE keeps overflowY = 'scroll'
+				// style.overflow = 'hidden';
+				style.width = parseInt( isInput ? element.scrollWidth : computed.width, 10 ) +
+					// add 2em extra width if it's an input to prevent wrap
+					( isInput ? fontWidth * 2 : 0 ) + 'px';
 
 				div.textContent = element.value.substring( 0, position );
 				// the second special handling for input type="text" vs textarea:
@@ -495,56 +635,72 @@ $.fn.addAutocomplete = function(options){
 					div.textContent = div.textContent.replace( /\x20/g, '\xa0' );
 				}
 
-				var span = document.createElement( 'span' );
+				span = document.createElement( 'span' );
 				// Wrapping must be replicated *exactly*, including when a long word gets
 				// onto the next line, with whitespace at the end of the line before (#7).
 				// The *only* reliable way to do that is to copy the *entire* rest of the
 				// textarea's content into the <span> created at the caret position.
 				// for inputs, just '.' would be enough, but why bother?
 				// || because a completely empty faux span doesn't render at all
-				span.textContent = element.value.substring( position ) || '.';
+				// changed to zero-width space due to inaccuracy when textAlign = center; see #436
+				span.textContent = element.value.substring( position ) || '\u200b';
 				div.appendChild( span );
 
+				offset = $(span).position();
+
+				// adjust for 2em added to width moves caret, use half; see #436
+				pos = style.textAlign === 'center' ? fontWidth : 0;
+
 				base.caretPos = {
-					top: span.offsetTop + parseInt( computed.borderTopWidth, 10 ) + o.offsetY,
-					left: span.offsetLeft + parseInt( computed.borderLeftWidth, 10 ) + o.offsetX
+					top: offset.top + parseInt( computed.borderTopWidth, 10 ) + o.offsetY,
+					left: offset.left + parseInt( computed.borderLeftWidth, 10 ) + o.offsetX - pos
 				};
 
 				// make caret height = font-size + any margin-top x2 added by the css
 				margin = parseInt( base.$caret.css( 'margin-top' ), 10 );
-				style = Math.round( parseFloat( base.$preview.css( 'font-size' ) ) + margin * 2 ) + o.adjustHt;
+				style = Math.round( fontWidth + margin * 2 ) + o.adjustHt;
+				offset = base.$preview.position();
 
 				base.$caret.css({
-					top: element.offsetTop - element.scrollTop + base.caretPos.top - margin,
-					left: element.offsetLeft - element.scrollLeft + base.caretPos.left,
+					top: offset.top - element.scrollTop + base.caretPos.top - margin,
+					left: offset.left - element.scrollLeft + base.caretPos.left,
 					height: style
 				});
 				txt = element.value.substring( position, position + o.charIndex ).replace(/\s/, '\xa0' ) || '\xa0';
 				base.$caret.attr( o.charAttr, txt );
 			};
 
-			// visible event is fired before this extension is initialized, so check!
-			if ( base.options.alwaysOpen && base.isVisible() ) {
-				base.caret_setup();
-			}
 			// setup caret when keyboard is visible
 			base.$el
-				.unbind( base.caret_namespace )
-				.bind( $keyboard.events.kbBeforeVisible + base.caret_namespace, function() {
+				.unbind( namespace )
+				.bind( kbevents.kbBeforeVisible + namespace, function() {
 					base.caret_setup();
 				})
-				.bind( $keyboard.events.kbHidden + base.caret_namespace, function() {
+				.bind( kbevents.kbVisible + namespace, function() {
+					base.findCaretPos();
+				})
+				.bind( kbevents.kbHidden + namespace, function() {
+					// unbind events in case usePreview: false; see #376
+					var events = 'keyup keypress mouseup mouseleave '.split( ' ' ).join( namespace + ' ' );
+					base.$preview.unbind( events );
+					base.$caret.remove();
 					base.$caret = null;
 					base.caret_$div = null;
 				});
+
+			// visible event is fired before this extension is initialized, so check!
+			if ( base.options.alwaysOpen && base.isVisible() ) {
+				base.caret_setup();
+				base.findCaretPos();
+			}
 
 		});
 	};
 
 }));
 
-/*! jQuery UI Virtual Keyboard Extender v1.0.1 *//*
- * for Keyboard v1.18+ only (7/7/2015)
+/*! jQuery UI Virtual Keyboard Extender v1.0.3 *//*
+ * for Keyboard v1.18+ only (12/5/2015)
  *
  * By Rob Garrison (aka Mottie)
  * Licensed under the MIT License
@@ -552,42 +708,37 @@ $.fn.addAutocomplete = function(options){
 */
 /*jshint browser:true, jquery:true, unused:false */
 /*global require:false, define:false, module:false */
-;(function(factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
-	} else if (typeof module === 'object' && typeof module.exports === 'object') {
-		module.exports = factory(require('jquery'));
+;( function( factory ) {
+	if ( typeof define === 'function' && define.amd ) {
+		define( [ 'jquery' ], factory );
+	} else if ( typeof module === 'object' && typeof module.exports === 'object' ) {
+		module.exports = factory( require( 'jquery' ) );
 	} else {
-		factory(jQuery);
+		factory( jQuery );
 	}
-}(function($) {
+}( function( $ ) {
 'use strict';
 
 	var $keyboard = $.keyboard;
 
-	$.extend( $keyboard.css, {
-		extender : 'ui-keyboard-extender'
-	});
+	$keyboard.css.extender = 'ui-keyboard-extender';
+	$keyboard.language.en.display.extender = ' :toggle_numpad';
 
-	$.extend( $keyboard.layouts, {
-		'numpad' : {
-			'normal' : [
-				'{clear} / * -',
-				'7 8 9 +',
-				'4 5 6 %',
-				'1 2 3 =',
-				'0 {dec} {left} {right}'
-			]
-		}
-	});
+	$keyboard.layouts.numpad = {
+		'normal' : [
+			'{clear} / * -',
+			'7 8 9 +',
+			'4 5 6 %',
+			'1 2 3 =',
+			'0 {dec} {left} {right}'
+		]
+	};
 
 	// add {extender} keyaction
-	$.extend( $keyboard.keyaction, {
-		extender: function( base, el ) {
-			base.extender_toggle();
-			return false;
-		}
-	});
+	$keyboard.keyaction.extender = function( base, el ) {
+		base.extender_toggle();
+		return false;
+	};
 
 	$.fn.addExtender = function(options) {
 		//Set the default values, use comma to separate the settings, example:
@@ -597,58 +748,58 @@ $.fn.addAutocomplete = function(options){
 			reposition : true
 		};
 		return this.each( function() {
+			var opts,
+				base = $( this ).data( 'keyboard' );
+
 			// make sure a keyboard is attached
-			var o, base = $( this ).data( 'keyboard' );
-			if (!base) { return; }
+			if ( !base ) { return; }
 
 			// variables
-			o = base.extender_options = $.extend( {}, defaults, options );
-			$.extend( true, $keyboard.language.en, {
-				display : {
-					'extender' : ' '
-				}
-			});
+			opts = base.extender_options = $.extend( {}, defaults, options );
+
 			base.extender_namespace = base.namespace + 'extender';
 			base.extensionNamespace.push( base.extender_namespace );
 
 			base.extender_setup = function() {
 				var $kb,
-					layout = o.layout;
+					layout = opts.layout;
 				if ( typeof $keyboard.builtLayouts[ layout ] === 'undefined' ) {
 					base.buildKeyboard( layout );
 				}
 				$kb = $keyboard.builtLayouts[ layout ].$keyboard.find( '.' + $keyboard.css.keySet + '-normal' ).clone();
 				$kb
 					.removeClass()
-					.removeAttr('name')
+					.removeAttr( 'name' )
 					.addClass( $keyboard.css.extender )
-					.toggle( o.showing )
-					.children('button')
-					.removeAttr('data-pos');
+					.children( 'button' )
+					.removeAttr( 'data-pos' );
+
+				// show extender using inline-block - allows the removal of css float
+				$kb[ 0 ].style.display = opts.showing ? 'inline-block' : 'none';
+
+				// remove previous extender... just-in-case
+				base.$keyboard.find( 'div.' + $keyboard.css.extender ).remove();
 				base.$keyboard.append( $kb );
-				base.extender_toggle( base.extender_options.showing );
+				base.extender_toggle( opts.showing );
 				base.bindKeys();
 			};
 
-			base.extender_toggle = function(set) {
-				base.extender_options.showing = typeof set === 'undefined' ? !base.extender_options.showing : set;
+			base.extender_toggle = function( set ) {
+				opts.showing = typeof set === 'undefined' ? !opts.showing : set;
 				base.$keyboard
-					.find( 'div.' + $keyboard.css.extender )
-					.toggle( base.extender_options.showing )
-					.end()
-					.find( '.' + $keyboard.css.keySet )
-					.css('float', base.extender_options.showing ? 'left' : 'none')
-					.end()
 					.find( 'button.' + $keyboard.css.extender )
-					.toggleClass( base.options.css.buttonActive, base.extender_options.showing );
+					.toggleClass( base.options.css.buttonActive, opts.showing )
+					.end()
+					.find( 'div.' + $keyboard.css.extender )[ 0 ].style.display = opts.showing ? 'inline-block' : 'none';
+
 				// force keyboard reposition
-				if (base.extender_options.reposition) {
-					$(window).trigger('resize');
+				if ( opts.reposition ) {
+					$( window ).trigger( 'resize' );
 				}
 			};
 
 			// visible event is fired before this extension is initialized, so check!
-			if (base.options.alwaysOpen && base.isVisible()) {
+			if ( base.options.alwaysOpen && base.isVisible() ) {
 				base.extender_setup();
 			}
 			// setup extender
@@ -1164,7 +1315,7 @@ $.fn.previewKeyset = function( options ) {
 }));
 
 /*
- * jQuery UI Virtual Keyboard Scramble Extension v1.6.1 for Keyboard v1.18+ (updated 7/7/2015)
+ * jQuery UI Virtual Keyboard Scramble Extension v1.6.2 for Keyboard v1.18+ (updated 2/1/2016)
  *
  * By Rob Garrison (aka Mottie & Fudgey)
  * Licensed under the MIT License
@@ -1203,8 +1354,7 @@ $.keyboard = $.keyboard || {};
 
 	$.fn.addScramble = function(options) {
 		//Set the default values, use comma to separate the settings, example:
-		var savedLayout,
-		defaults = {
+		var defaults = {
 			targetKeys    : /[a-z\d]/i, // keys to randomize
 			byRow         : true,  // randomize by row, otherwise randomize all keys
 			byKeySet      : false, // if true, randomize one keyset & duplicate
@@ -1261,8 +1411,8 @@ $.keyboard = $.keyboard || {};
 								tmp = $(this).attr('data-value') || '';
 								tmp = tmp.length === 1 && o.targetKeys.test(tmp) ? tmp : false;
 								if (o.byRow) {
-									row.push( this );
-									map.push ( tmp );
+									row.push(this);
+									map.push (tmp);
 								} else {
 									keyboard[rowIndex] = this;
 									keyboardmap[rowIndex] = tmp;
@@ -1324,16 +1474,25 @@ $.keyboard = $.keyboard || {};
 					$sets = $keyboard.find('.' + $.keyboard.css.keySet),
 					$orig = $sets.eq(0);
 				$sets = $sets.filter(':gt(0)');
-				$orig.children().each(function(i, cell){
+				$orig.children().each(function(i, cell) {
 					typ = cell.tagName === 'BR';
 					pos = $(cell).attr('data-pos');
 					/*jshint loopfunc:true */
-					$sets.each(function(j, k){
+					$sets.each(function(j, k) {
 						selector = typ ? 'br:first' : 'button[data-pos="' + pos + '"]';
 						$(k).find(selector).appendTo( k );
 					});
 				});
 				return $keyboard;
+			};
+
+			base.setScrambleLayout = function() {
+				// scrambled layout already initialized
+				if (!/^scrambled/.test(opts.layout)) {
+					base.orig_layout = opts.layout;
+					var savedLayout = savedLayout || 'scrambled' + Math.round(Math.random() * 10000);
+					opts.layout = o.sameForAll ? savedLayout : 'scrambled' + Math.round(Math.random() * 10000);
+				}
 			};
 
 			// create scrambled keyboard layout
@@ -1342,7 +1501,7 @@ $.keyboard = $.keyboard || {};
 				$.keyboard.builtLayouts[layout] = {
 					mappedKeys   : {},
 					acceptedKeys : [],
-					$keyboard: null
+					$keyboard    : null
 				};
 				if ( typeof $.keyboard.builtLayouts[base.orig_layout] === 'undefined' ) {
 					base.layout = opts.layout = base.orig_layout;
@@ -1353,7 +1512,8 @@ $.keyboard = $.keyboard || {};
 				// clone, scramble then save layout
 				$.keyboard.builtLayouts[layout] = $.extend(true, {}, $.keyboard.builtLayouts[base.orig_layout]);
 				if (o.randomizeOnce) {
-					$.keyboard.builtLayouts[layout].$keyboard = base.scramble_setup( $.keyboard.builtLayouts[base.orig_layout].$keyboard.clone() );
+					$.keyboard.builtLayouts[layout].$keyboard =
+						base.scramble_setup( $.keyboard.builtLayouts[base.orig_layout].$keyboard.clone() );
 				}
 				base.$keyboard = $.keyboard.builtLayouts[layout].$keyboard;
 				if ( !o.randomizeOnce ) {
@@ -1368,17 +1528,21 @@ $.keyboard = $.keyboard || {};
 				}
 			};
 
-			// scrambled layout already initialized
-			if (!/^scrambled/.test(opts.layout)) {
-				base.orig_layout = opts.layout;
-				savedLayout = savedLayout || 'scrambled' + Math.round(Math.random() * 10000);
-				opts.layout = o.sameForAll ? savedLayout : 'scrambled' + Math.round(Math.random() * 10000);
-			}
+			base.setScrambleLayout();
 
 			// special case when keyboard is set to always be open
 			if (opts.alwaysOpen && base.$keyboard.length) {
-				setTimeout(function(){
+				setTimeout(function() {
+					var built = $.keyboard.builtLayouts;
 					base.$keyboard = base.scramble_setup(base.$keyboard);
+					base.setScrambleLayout();
+					if (typeof built[opts.layout] === 'undefined') {
+						built[opts.layout] = {
+							mappedKeys   : $.extend({}, built[base.layout].mappedKeys),
+							acceptedKeys : $.extend([], built[base.layout].acceptedKeys),
+							$keyboard    : base.$keyboard.clone()
+						};
+					}
 					if ($.isFunction(o.init)) {
 						o.init(base);
 					}
@@ -1394,8 +1558,8 @@ $.keyboard = $.keyboard || {};
 
 }));
 
-/*! jQuery UI Virtual Keyboard Typing Simulator v1.9.1 *//*
- * for Keyboard v1.18+ only (7/7/2015)
+/*! jQuery UI Virtual Keyboard Typing Simulator v1.10.2 *//*
+ * for Keyboard v1.18+ only (1/10/2016)
  *
  * By Rob Garrison (aka Mottie & Fudgey)
  * Licensed under the MIT License
@@ -1481,6 +1645,8 @@ $.keyboard = $.keyboard || {};
 				9  : 'tab',
 				13 : 'enter',
 				32 : 'space',
+				37 : 'left',
+				39 : 'right',
 				46 : 'del'
 			};
 			base.typing_event = false;
@@ -1492,8 +1658,8 @@ $.keyboard = $.keyboard || {};
 			base.typing_setup = function(){
 				var kbevents = $keyboard.events,
 					namespace = base.typing_namespace;
-				base.$el.add( base.$preview ).unbind(namespace);
 				base.$el
+					.unbind( namespace )
 					.bind([ kbevents.kbHidden, kbevents.kbInactive, '' ].join( namespace + ' ' ), function(e){
 						base.typing_reset();
 					})
@@ -1501,10 +1667,12 @@ $.keyboard = $.keyboard || {};
 						base.typing_setup();
 					});
 				base.$allKeys
+					.unbind( namespace )
 					.bind('mousedown' + namespace, function(){
 						base.typing_reset();
 					});
 				base.$preview
+				.unbind( namespace )
 				.bind('keyup' + namespace, function(e){
 					if (o.init && o.lockTypeIn) { return false; }
 					if (e.which >= 37 && e.which <=40) { return; } // ignore arrow keys
@@ -1530,7 +1698,7 @@ $.keyboard = $.keyboard || {};
 					}
 					base.typing_event = true;
 					// Simulate key press for tab and backspace since they don't fire the keypress event
-					if (e.which === 8 || e.which === 9) {
+					if (base.typing_xref[e.which]) {
 						base.typing_findKey( '', e ); // pass event object
 					}
 
@@ -1603,14 +1771,15 @@ $.keyboard = $.keyboard || {};
 				// All of this breaks when the CapLock is on... unable to find a cross-browser method that works.
 				tar = '.' + kbcss.keyButton + '[data-action="' + k + '"]';
 				if (base.typing_event && e) {
-					if (base.typing_xref.hasOwnProperty(e.keyCode || e.which)) {
+					// xref used for keydown ( 46 = delete in keypress & period on keydown )
+					if (e.type !== 'keypress' && base.typing_xref.hasOwnProperty(e.keyCode || e.which)) {
 						// special named keys: bksp, tab and enter
-						tar = '.' + kbcss.keyPrefix + base.typing_xref[e.keyCode || e.which];
+						tar = '.' + kbcss.keyPrefix + base.processName( base.typing_xref[e.keyCode || e.which] );
 					} else {
 						m = String.fromCharCode(e.charCode || e.which);
 						tar = (mappedKeys.hasOwnProperty(m)) ?
-							'.' + kbcss.keyButton + '[data-action="' + mappedKeys[m]  + '"]' :
-							'.' + kbcss.keyPrefix + (e.charCode || e.which);
+							'.' + kbcss.keyButton + '[data-value="' + mappedKeys[m].replace(/"/g, '\\"') + '"]' :
+							'.' + kbcss.keyPrefix + base.processName( m );
 					}
 				}
 				// find key
@@ -1624,14 +1793,12 @@ $.keyboard = $.keyboard || {};
 						key = ks.find(tar);
 					} else {
 						// key not found, check if it is in the keymap (tab, space, enter, etc)
-						n = txt in base.typing_keymap ? base.typing_keymap[txt] : txt.charCodeAt(0);
+						n = txt in base.typing_keymap ? base.typing_keymap[txt] : base.processName( txt );
 						// find actual key on keyboard
 						key = ks.find('.' + kbcss.keyPrefix + n);
 					}
-
 					// find the keyset
 					set = key.closest('.' + kbcss.keySet);
-
 					// figure out which keyset the key is in then simulate clicking on that meta key, then on the key
 					if (set.attr('name')) {
 						// get meta key name
@@ -1641,8 +1808,7 @@ $.keyboard = $.keyboard || {};
 						base.altActive = /alt/.test(meta);
 						base.metaActive = base.last.keyset[2] = (meta).match(/meta\d+/) || false;
 						// make the plugin think we're passing it a jQuery object with a name
-						base.showSet({ name : base.metaActive });
-
+						base.showSet( base.metaActive );
 						// Add the key
 						base.typing_simulateKey(key, txt, e);
 					} else {
@@ -1707,13 +1873,14 @@ $.keyboard = $.keyboard || {};
 				// visible event is fired before this extension is initialized, so check!
 				if (base.options.alwaysOpen && base.isVisible()) {
 					base.typing_setup();
+				} else {
+					// capture and simulate typing
+					base.$el
+						.unbind( $keyboard.events.kbBeforeVisible + base.typing_namespace )
+						.bind( $keyboard.events.kbBeforeVisible + base.typing_namespace, function(){
+							base.typing_setup();
+						});
 				}
-				// capture and simulate typing
-				base.$el
-					.unbind( $keyboard.events.kbBeforeVisible + base.typing_namespace )
-					.bind( $keyboard.events.kbBeforeVisible + base.typing_namespace, function(){
-						base.typing_setup();
-					});
 			}
 
 		});

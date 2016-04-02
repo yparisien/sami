@@ -62,12 +62,12 @@ class InputDrugTable
 	public function saveInputDrug(InputDrug &$inputdrug)
 	{
 		$data = array(
-			'inputdate'			=> $inputdrug->inputdate,
+			'inputdate'			=> $inputdrug->inputdate->format('c'),
 			'userid'			=> $inputdrug->userid,
 			'drugid'			=> $inputdrug->drugid,
 			'batchnum'			=> $inputdrug->batchnum,
-			'calibrationtime'	=> $inputdrug->calibrationtime,
-			'expirationtime'	=> $inputdrug->expirationtime,
+			'calibrationtime'	=> $inputdrug->calibrationtime->format('c'),
+			'expirationtime'	=> $inputdrug->expirationtime->format('c'),
 			'vialvol'			=> $inputdrug->vialvol,
 			'activity'			=> $inputdrug->activity,
 			'activityconc'		=> $inputdrug->activityconc,

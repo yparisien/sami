@@ -33,8 +33,7 @@
 									<label for="birthdate" class="col-sm-4 control-label"><?php echo $this->translate('Birthdate')?></label>
 									<div class="col-sm-8">
 										<div class="input-group date" id="datetimepicker-birthday">
-											<input type="text" class="form-control number" data-format="YYYY-MM-DD" id="birthdate" maxlength="10"
-											name="birthdate" tabindex="3" placeholder="<?php echo $this->translate('ex: 1984-03-02'); ?>" autocomplete="off" maxlength="10" required />
+											<input type="text" class="form-control input-sm input-date" id="birthdate" maxlength="10" name="birthdate" tabindex="3" placeholder="<?php echo $this->translate('ex: 1984-03-02'); ?>" autocomplete="off" maxlength="10" required />
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -44,7 +43,9 @@
 									$(function() {
 										$('#datetimepicker-birthday').datetimepicker({
 											locale: 'fr',
-											pickTime: false
+											format: 'YYYY-MM-DD',
+											allowInputToggle: true,
+											viewMode: 'decades',
 										});
 									});
 									</script>
@@ -599,7 +600,8 @@
 			$('#firstname').val(result.firstname);
 			$('#spanLastname').text(result.lastname);
 			$('#spanFirstname').text(result.firstname);
-			$('#datetimepicker-birthday').data('DateTimePicker').setDate(result.birthdate);
+			$('#birthdate').val(result.birthdate);
+			$('#datetimepicker-birthday').data('DateTimePicker').defaultDate(moment(result.birthdate, "YYYY-MM-DD"));
 			$('#weight').val(result.weight);
 			$('#comments').val(result.comments);
 			$('#expeditornum').val(result.expeditornum);

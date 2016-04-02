@@ -152,56 +152,47 @@ $this->headStyle()->appendStyle('
 						}
 					}
 					
-					function	moveProgressBarRinsing()
-					{
-						timerAnim = window.setInterval(function(){animProgressBarRinsing();}, frequency);
-					}
-
-					function	stopProgressBarRinsing()
-					{
-						window.clearInterval(timerAnim);
-					}
-
-
 					function	animProgressBarRinsing()
 					{
-		            	$.ajax({
-		              		type: "GET",
-		              		url: "<?php echo $this->url('inject', array('action'=>'agetrinsingprogress'))?>",
-		              		cache: false,
-		              		dataType: "json",
-		            	}).done(function (result) {
-							$("#injection-progress").css('width', result.progress+'%');
-
-							if(result.progress >= 100)
-							{
-								$('#btn-rinsing').removeClass('btn-warning active').addClass('btn-success');
-								$('#i-rinsing').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
-								$("#injection-progress").css('width', '100%');
-								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
-								$('#injection-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
-								rinsed = 1;
-								started = false;
-								paused = false;
-							} else {
-								rinsed = 0;
-								if (relaunched === true) {
-									$('#injection-statut').html('Nouveau rinçage en cours...');
+						if (paused == false) {
+			            	$.ajax({
+			              		type: "GET",
+			              		url: "<?php echo $this->url('inject', array('action'=>'agetrinsingprogress'))?>",
+			              		cache: false,
+			              		dataType: "json",
+			            	}).done(function (result) {
+								$("#injection-progress").css('width', result.progress+'%');
+	
+								if(result.progress >= 100)
+								{
+									$('#btn-rinsing').removeClass('btn-warning active').addClass('btn-success');
+									$('#i-rinsing').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
+									$("#injection-progress").css('width', '100%');
+									$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+									$('#injection-statut').html('Rinçage terminé ! Appuyez sur le bouton "Lancer le rinçage" pour relancer un rinçage');
+									rinsed = 1;
+									started = false;
+									paused = false;
 								} else {
-									$('#injection-statut').html('Rinçage en cours...');
+									rinsed = 0;
+									if (relaunched === true) {
+										$('#injection-statut').html('Nouveau rinçage en cours...');
+									} else {
+										$('#injection-statut').html('Rinçage en cours...');
+									}
+									window.setTimeout(function(){animProgressBarRinsing();}, frequency);
 								}
-							}
-
-							checkEnableNext();
-							playPauseStates();
-		            	}).fail(function(jqXHR, textStatus, errorThrown) {
-							console.error("fail on agetrinsingprogress");
-						});
+	
+								checkEnableNext();
+								playPauseStates();
+			            	}).fail(function(jqXHR, textStatus, errorThrown) {
+								console.error("fail on agetrinsingprogress");
+							});
+						}
 					}
 
 					function launchRinsing(relaunch)
 					{
-						stopProgressBarRinsing();
 						step = 'rinsing';
 						$("#injection-confirm").attr('disabled', 1);
 						$("#btn-exit").attr('disabled', 1);
@@ -232,8 +223,7 @@ $this->headStyle()->appendStyle('
 								paused = false;
 								rinsed = 0;
 								playPauseStates();
-								stopProgressBarRinsing();
-								moveProgressBarRinsing();
+								animProgressBarRinsing();
 							}				            
 			            }).fail(function(jqXHR, textStatus, errorThrown) {
 							console.error("fail on alaunchrinsing");
@@ -253,48 +243,38 @@ $this->headStyle()->appendStyle('
 						}
 					}
 
-					function	moveProgressBarInjection()
-					{
-						timerAnim = window.setInterval(function(){animProgressBarInjection();}, frequency);
-					}
-
-					function	stopProgressBarInjection()
-					{
-						window.clearInterval(timerAnim);
-					}
-
 					function	animProgressBarInjection()
 					{
-              			$.ajax({
-              				type: "GET",
-              				url: "<?php echo $this->url('inject', array('action'=>'agetinjectionprogress'))?>",
-              				cache: false,
-              				dataType: "json",
-            			}).done(function (result) {
-							if(result.progress < 100)
-							{
-								// mockup to simulate automate "life", in fact automate send the real %, no recalculation needed
-								//value += Math.round($("#debit-controller").slider('getValue'));
-								$("#injection-progress").css('width', result.progress+'%');
-							}
-							else
-							{
-								$('#btn-injection').removeClass('btn-warning active').addClass('btn-success');
-								$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
-								$("#injection-progress").css('width', '100%');
-								$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
-								$('#injection-statut').html('Injection terminée !');
-
-								stopProgressBarInjection();
-								sendNotifEndInjection();
-
-								playPauseStates();
-
-								window.setTimeout(function(){launchRinsing(false);}, 1000);
-							}
-						}).fail(function(jqXHR, textStatus, errorThrown) {
-							console.error("fail on agetinectionprogress");
-						});
+						if (paused === false) {
+	              			$.ajax({
+	              				type: "GET",
+	              				url: "<?php echo $this->url('inject', array('action'=>'agetinjectionprogress'))?>",
+	              				cache: false,
+	              				dataType: "json",
+	            			}).done(function (result) {
+								if(result.progress < 100)
+								{
+									$("#injection-progress").css('width', result.progress+'%');
+									window.setTimeout(function(){animProgressBarInjection();}, frequency);
+								}
+								else
+								{
+									$('#btn-injection').removeClass('btn-warning active').addClass('btn-success');
+									$('#i-injection').removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-ok-sign');
+									$("#injection-progress").css('width', '100%');
+									$('#statut-block').removeClass('panel-info panel-success panel-warning').addClass('panel-success');
+									$('#injection-statut').html('Injection terminée !');
+	
+									sendNotifEndInjection();
+	
+									playPauseStates();
+	
+									window.setTimeout(function(){launchRinsing(false);}, 1000);
+								}
+							}).fail(function(jqXHR, textStatus, errorThrown) {
+								console.error("fail on agetinectionprogress");
+							});
+						}
 					}
 
 					function launchInjection()
@@ -319,7 +299,7 @@ $this->headStyle()->appendStyle('
 								started = true;
 								$('#btn-play').attr('disabled', 1);
 								$('#btn-pause').removeAttr('disabled');
-								moveProgressBarInjection();
+								window.setTimeout(function(){animProgressBarInjection();}, 1000);
 							}				            
 			            }).fail(function(jqXHR, textStatus, errorThrown) {
 							console.error("fail on alaunchinjection");
@@ -344,12 +324,6 @@ $this->headStyle()->appendStyle('
 			              cache: false,
 			              dataType: "json",
 			            });
-
-			            if (step == 'injection') {
-			            	stopProgressBarInjection();
-						} else if (step == 'rinsing') {
-							stopProgressBarRinsing();
-						}
 					}
 
 					function	playInjection()
@@ -371,10 +345,9 @@ $this->headStyle()->appendStyle('
 			            });
 
 			            if (step == 'injection') {
-							moveProgressBarInjection();
+			            	animProgressBarInjection();
 						} else if (step == 'rinsing') {
-							stopProgressBarRinsing();
-							moveProgressBarRinsing();
+							animProgressBarRinsing();
 						}
 					}
 
@@ -542,7 +515,7 @@ $this->headStyle()->appendStyle('
 
 										//Mettre à jour l'interface
 										$("#injection-progress").css('width', result.progress+'%');
-										moveProgressBarInjection();
+										animProgressBarInjection();
 									}
 									else
 									{
@@ -566,7 +539,7 @@ $this->headStyle()->appendStyle('
 											$('#injection-statut').html('Rinçage en cours...');
 												
 											$("#injection-progress").css('width', result.progress+'%');
-											moveProgressBarRinsing();
+											animProgressBarRinsing();
 							            	//MAJ de l'interface
 										}).fail(function(jqXHR, textStatus, errorThrown) {
 											console.error("fail on agetrinsingprogress");

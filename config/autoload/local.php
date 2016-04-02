@@ -15,7 +15,7 @@ return array(
 		'simulation'	=> array(
 			'init' => array( 													//Paramètres de la séquence de démarrage
 				'trytogood'			=> '1',										//Nb d'essai avant OK
-				'robotinerror'		=> '1',										//Déamarrage du robot en erreur 1=Erreur 0=OK
+				'robotinerror'		=> '0',										//Déamarrage du robot en erreur 1=Erreur 0=OK
 				'roboterrorcode'	=> '21',									//Code de démarrage renvoyé par le robot en cas  d'erreur au démarrage
 				'hasmed' 			=> '0',										//Un médicament est chargé (1) ou non (0) dans le robot
 				'loadedmed'			=> 'Flucis',								//Nom du médicament chargé dans le robot
@@ -32,7 +32,7 @@ return array(
 	 * Configuration du clavier virtuel
 	 */
 	'virtualkeyboard' => array(
-		'enable'	=> false,	//Clavier virtuel activé (true) ou non (false)
+		'enable'	=> true,	//Clavier virtuel activé (true) ou non (false)
 		'size'		=> 1.55,	//Taille du clavier
 	),
 	/**

@@ -187,7 +187,7 @@
 							<label for="activityattime" class="col-sm-2 col-sm-offset-2 control-label"><?php echo $this->translate('Remaining activity at '); ?></label>
 							<div class="col-sm-3">
 								<div id="activity-attime" class="input-group date">
-									<input name="activityattime" id="activityattime" type="text" class="form-control" data-format="<?php echo $this->translate('YYYY-MM-DD HH:mm'); ?>" maxlength="16" autocomplete="off"/>
+									<input name="activityattime" id="activityattime" type="text" class="form-control input-sm input-date" maxlength="16" autocomplete="off"/>
 									<span class="input-group-addon">
 										<i class="glyphicon glyphicon-calendar"></i>
 									</span>
@@ -257,9 +257,12 @@
 		});
 
 		$('#activity-attime').datetimepicker({
-			locale: 'en',
-			setDate: new Date()
-		}).on("change", function (e) {
+			locale: 'fr',
+			showClose: true,
+			allowInputToggle: true,
+		});
+
+		$('#activity-attime').on("dp.hide", function (e) {
 			getAvailableActivityAt();
 		});
 

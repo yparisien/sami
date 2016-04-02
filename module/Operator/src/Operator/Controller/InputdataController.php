@@ -259,21 +259,22 @@ class InputdataController extends CommonController
 			$r = $this->getRequest();
 			$user = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity());
 			$aDrugData = array(
-				'inputdate'			=> date('Y-m-d H:i:s'),
+				'inputdate'			=> new \DateTime(),
 				'userid'			=> $user->id,
 				'drugid'			=> $r->getPost('drugid'),
 				'batchnum'			=> $r->getPost('batchnum'),
-				'calibrationtime'	=> $r->getPost('calibrationtime'),
+				'calibrationtime'	=> \DateTime::createFromFormat('H:i', $r->getPost('calibrationtime')),
 				'vialvol'			=> $r->getPost('vialvol'),
 				'activity'			=> $r->getPost('activity'),
 				'activityconc'		=> $r->getPost('activityconc'),
 				'activitycalib'		=> $r->getPost('activitycalib'),
-				'expirationtime'	=> $r->getPost('expirationtime'),
+				'expirationtime'	=> \DateTime::createFromFormat('d/m/Y H:i', $r->getPost('expirationtime')),
 			);
+			
 			$inputdrug = new InputDrug();
 			$inputdrug->exchangeArray($aDrugData);
 			$this->getInputDrugTable()->saveInputDrug($inputdrug);
-
+			
 			// log action
 			$inputaction = new InputAction();
 			$inputaction->inputdate = date('Y-m-d H:i:s');
@@ -304,8 +305,9 @@ class InputdataController extends CommonController
 			));
 			
 			$aParam = array(
-				'drugs'	=> $this->getDrugTable()->fetchAll(),
-				'unit' => ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
+				'drugs'		=> $this->getDrugTable()->fetchAll(),
+				'unit' 		=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
+				'locale'	=> explode('_', $this->getSystemTable()->getSystem()->language)[0],
 			);
 			return new ViewModel($aParam);
 		}
@@ -443,25 +445,23 @@ class InputdataController extends CommonController
 				}
 				else
 				{
-					// error!
-					$aRetVal['msg'] = $translate("Can't store to " . $destPath . "/" . $file['name']);
-				}
+					$dataError = $adapter->getMessages();
+					$error = array();
+					foreach($dataError as $key=>$row)
+					{
+						$error[] = $row;
+					}
 				
-			}
-			else
-			{
-				$dataError = $adapter->getMessages();
-				$error = array();
-				foreach($dataError as $key=>$row)
-				{
-					$error[] = $row;
+					$aRetVal['success'] = 0;
+					$aRetVal['msg'] = $error;
+					$aRetVal['msg'] .= $translate("Can't store to " . $destPath . "/" . $file['name']);
 				}
-				$aRetVal['success'] = 0;
-				$aRetVal['msg'] = $error;
 			}
 			
 			if ($aRetVal['success'] == 0) {
-				unlink($destPath . DIRECTORY_SEPARATOR . $file['name']);
+				if (file_exists($destPath . DIRECTORY_SEPARATOR . $file['name'])) {
+					unlink($destPath . DIRECTORY_SEPARATOR . $file['name']);
+				}
 			}
 			
 			return new JsonModel($aRetVal);
@@ -1178,7 +1178,7 @@ class InputdataController extends CommonController
 			if ($r->getPost('calibrationtime'))
 			{
 				$fr->calibrationtime = $r->getPost('calibrationtime');
-				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = str_replace(" ", "-" ,"DT#" . $r->getPost('calibrationtime') . ":00");
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = "DT#" . date("d/m/Y") . "-" . $r->getPost('calibrationtime') . ":00";
 			}
 			if ($r->getPost('batchnum'))
 			{

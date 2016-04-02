@@ -26,16 +26,19 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 							<div class="col-sm-6">
 								<div class="input-group date" id="datetimepicker-calibration">
-									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="16" required />
+									<input type="text" class="form-control input-sm input-date" data-format="hh:mm" placeholder="hh:mm" id="calibrationtime" name="calibrationtime" autocomplete="off" tabindex="5" maxlength="5" required />
 									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
+										<span class="glyphicon glyphicon-time" style="padding-left: 30px; padding-right: 30px;"></span>
 									</span>
 								</div>
 							</div>
 							<script type="text/javascript">
 								$(function() {
 									$('#datetimepicker-calibration').datetimepicker({
-										locale: 'en'
+										locale: '<?php echo $locale; ?>',
+										format: 'HH:mm',
+										showClose: true,
+										allowInputToggle: true,
 									});
 								});
 							</script>
@@ -53,7 +56,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="any" min="0"  placeholder="ex: 200,52" autocomplete="off"  tabindex="7" disabled required />
+									<input type="number" class="form-control input-sm" id="activityconc" name="activityconc" step="0.01" min="0"  placeholder="ex: 200,52" autocomplete="off"  tabindex="7" disabled required />
 									<span class="input-group-addon"><?php echo $unit?>/ml</span>
 								</div>
 							</div>
@@ -72,14 +75,18 @@
 								<div class="input-group date" id="datetimepicker-peremption">
 									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="16" required />
 									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
+										<span class="glyphicon glyphicon-calendar" style="padding-left: 30px; padding-right: 30px;"></span>
 									</span>
 								</div>
 							</div>
 							<script type="text/javascript">
 								$(function() {
 									$('#datetimepicker-peremption').datetimepicker({
-										locale: 'en'
+										locale: '<?php echo $locale; ?>',
+										minDate: moment(),
+										sideBySide: true,
+										allowInputToggle: true,
+										showClose: true,
 									});
 								});
 							</script>
@@ -216,17 +223,7 @@
 		});
 
 		//Envoie la date de calibration
-		$("#calibrationtime").change(function() {
-	    	$.ajax({
-	        	type: "POST",
-	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
-	        	dataType: "json",
-	        	data: {'calibrationtime': $("#calibrationtime").val() }
-	      	});
-		});
-
-		//Envoie la date de calibration
-		$('#datetimepicker-calibration').change(function() {
+		$("#datetimepicker-calibration").on("dp.hide", function(e) {
 			$.ajax({
 	        	type: "POST",
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
@@ -234,20 +231,9 @@
 	        	data: {'calibrationtime': $("#calibrationtime").val() }
 	      	});
 		});
-
+		
 		//Envoie la date d'expiration
-		$("#expirationtime").change(function() {
-	    	$.ajax({
-	        	type: "POST",
-	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
-	        	dataType: "json",
-	        	data: {'expirationtime': $("#expirationtime").val() }
-	      	}).done(function(result) {
-	      		loadActivityData(false);
-		    });
-		});
-
-		$('#datetimepicker-peremption').change(function() {
+		$("#datetimepicker-peremption").on("dp.hide", function(e) {
 			$.ajax({
 	        	type: "POST",
 	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
