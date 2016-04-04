@@ -6,9 +6,11 @@
 	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo $this->translate('Warning');?> <i class="glyphicon glyphicon-exclamation-sign"></i></strong> 
 	<p>Une erreur est en cours sur le système veuillez la corriger.</p>
 </div>
+<?php if ($showGloballErrorMessage === true) { ?>
 <div class="well">
 	<?php echo $globalErrorMessage; ?>
 </div>
+<?php } ?>
 <p class="text-center">
 	<button class="btn btn-primary" onClick="window.location.reload()"><?php echo $this->translate('I\'ve fixed it, reload!')?></button>
 </p>

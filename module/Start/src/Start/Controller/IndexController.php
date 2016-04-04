@@ -21,7 +21,6 @@ use Manager\Model\Drug;
 use Logger\Model\InputDrug;
 use Operator\Model\Sourcekit;
 use Zend\I18n\View\Helper\Translate;
-use Zend\View\Model\Zend\View\Model;
 
 class IndexController extends CommonController
 {
@@ -527,10 +526,22 @@ class IndexController extends CommonController
 
 			$viewModel = new ViewModel();
 			$viewModel->setVariables(array(
-				'version' 					=> $config['version'],
+				'version' => $config['version'],
 			));
 			
 			return $viewModel;
 		}
+	}
+	
+	public function skiperrorAction() {
+		
+		if($this->getRequest()->isPost()) {
+			$errorID = $this->getRequest()->getPost('errorID');
+			$operator = new Container('operator');
+			$operator->skippedErrors[$errorID] = $errorID;
+		}
+		
+		$jsonModel = new JsonModel();
+		return $jsonModel;
 	}
 }

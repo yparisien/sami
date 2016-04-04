@@ -6,6 +6,35 @@
 		<?php echo $errorMessage; ?>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log', array('action' => 'logout')); ?>'"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Exit'); ?></button>
+		<?php if (isset($btnLogout) && $btnLogout === true) { ?>
+		<button type="button" class="btn btn-primary" onclick="location.href='<?php echo $this->url('log', array('action' => 'logout')); ?>'">
+			<i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Exit'); ?>
+		</button>
+		<?php } ?>
+		<?php if (isset($btnOkSkip) && $btnOkSkip === true) { ?>
+		<button type="button" class="btn btn-primary" onclick="skipCurrentError()" data-dismiss="modal">
+			<i class="glyphicon glyphicon-ok"></i> <?php echo $this->translate('Ok'); ?>
+		</button>
+		<?php } ?>
 	</div>
 </div>
+<script>
+function skipCurrentError() {
+	$.ajax({
+		type: "POST",
+		cache: false,
+		url: "<?php echo $this->url('skiperror'); ?>",
+		dataType: "json",
+		data: {errorID: <?php echo $errorID; ?>}
+	}).done(function(result) {
+		checkErrorSystem();
+	});
+}
+
+<?php if ($btnLogout) { ?>
+$("#modalErrorDetected").modal({
+	keyboard: false,
+	backdrop: 'static',
+});
+<?php } ?>
+</script>

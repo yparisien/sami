@@ -323,33 +323,32 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		$this->inlineScript()->appendScript('
 			var autorizeCheckErrorSystem = true;
 				
+			function checkErrorSystem() {
+				setTimeout(function(){
+					doCheckErrorSystem();
+				}, 15000);
+			}
+
+			function doCheckErrorSystem() {
+				if (autorizeCheckErrorSystem) {
+					$.ajax({
+						url: "'. $this->url('checkerrorstatus', array()) . '",
+					}).done(function(result){
+						if (result.error === false) {
+							checkErrorSystem();
+						} else {
+							$("#popupErrorSystem").html(result.html);
+							$("#modalErrorDetected").modal({
+								keyboard: false,
+								show: true,
+							});
+						}
+					});
+				}
+			}
+
 			$(function() {
-				function checkErrorSystem() {
-					setTimeout(function(){
-						doCheckErrorSystem();
-					}, 15000);
-				}
-				
-				function doCheckErrorSystem() {
-					if (autorizeCheckErrorSystem) {
-						$.ajax({
-							url: "'. $this->url('checkerrorstatus', array()) . '",
-						}).done(function(result){
-							if (result.error === false) {
-								checkErrorSystem();
-							} else {
-								$("#popupErrorSystem").html(result.html);
-								$("#modalErrorDetected").modal({
-									keyboard: false,
-									show: true,
-								});
-							}
-						});
-					}
-				}
-				
 				doCheckErrorSystem();
-				checkErrorSystem();
 			});
 		');
 		
@@ -427,7 +426,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 </div>
 <?php } ?>
 		</div>
-		<script language="javascript">
+		<script>
 			document.onmousedown=disableclick;
 			function disableclick(event) {
   				if (event.button==2) {

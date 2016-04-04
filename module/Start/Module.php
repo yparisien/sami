@@ -80,13 +80,9 @@ class Module
 				$acl->allow($role, $resource);
 			}
 		}
-		//testing
-		//var_dump($acl->isAllowed('admin','home'));
-		//true
 
 		//setting to view
 		$e->getViewModel()->acl = $acl;
-
 	}
 
 	public function checkAcl(MvcEvent $e)

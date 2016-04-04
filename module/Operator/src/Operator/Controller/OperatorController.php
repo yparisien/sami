@@ -98,9 +98,14 @@ class OperatorController extends CommonController
 	public function indexAction()
 	{
 		/* @var $robotService RobotService  */
-		$oContainer = new Container('automate_setup');
+		/* @var $errorService \Start\Services\ErrorService */
 		$sm = $this->getServiceLocator();
 		$config = $sm->get('Config');
+
+		$errorService = $sm->get('Start\Services\ErrorService');
+		$ret = $errorService->checkErrorStatus(false);
+		
+		$oContainer = new Container('automate_setup');
 		$aParam = array();
 		
 		$nbExams = $this->getExaminationTable()->count();
@@ -151,10 +156,8 @@ class OperatorController extends CommonController
 			$aParam['selectedDrugName'] = '[' . $drug->dci . ']' . ' ' . $drug->name;
 		}
 		
-		if ($oContainer->canWork == false) {
-			/* @var $errorService \Start\Services\ErrorService */
-			$errorService = $sm->get('Start\Services\ErrorService');
-			$ret = $errorService->checkErrorStatus(false);
+		if ($oContainer->canWork === false) {
+			$aParam['showGloballErrorMessage'] = $ret['error'];
 			$aParam['globalErrorMessage'] = $ret['html'];
 		}
 		

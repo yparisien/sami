@@ -124,12 +124,13 @@ class LoginController extends AbstractActionController
 			$sLogin = $this->getRequest()->getPost('login');
 			$sPassword = $this->getRequest()->getPost('password');
 			// inject them in auth service (db match against)
-			$this->getAuthService()->getAdapter()
-				->setIdentity($sLogin)
-				->setCredential($sPassword);
+			$this->getAuthService()->getAdapter()->setIdentity($sLogin)->setCredential($sPassword);
 			$result = $this->getAuthService()->authenticate();
 			if($result->isValid()) // if credential is valid
 			{
+				$operator = new Container('operator');
+				$operator->skippedErrors = array();
+				
 				/* @var $robotService RobotService */
 				$robotService = $this->getServiceLocator()->get('RobotService');
 				
