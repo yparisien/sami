@@ -25,7 +25,7 @@
 									<label for="birthdate" class="col-sm-4 control-label"><?php echo $this->translate('Birthdate')?></label>
 									<div class="col-sm-8">
 										<div class="input-group date" id="datetimepicker-birthday">
-											<input type="text" tabindex="3" class="form-control number" data-format="YYYY-MM-DD" id="birthdate" name="birthdate" 
+											<input type="text" tabindex="3" class="form-control input-sm input-date" data-format="YYYY-MM-DD" id="birthdate" name="birthdate" 
 											autocomplete="off" maxlength="10" placeholder="YYYY-MM-DD" required />
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
@@ -36,7 +36,9 @@
 									$(function() {
 										$('#datetimepicker-birthday').datetimepicker({
 											locale: 'fr',
-											pickTime: false
+											format: 'YYYY-MM-DD',
+											allowInputToggle: true,
+											viewMode: 'decades',
 										});
 									});
 									</script>
