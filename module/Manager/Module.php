@@ -147,6 +147,7 @@ class Module implements AutoloaderProviderInterface
 		
 		if (!is_null($matchRoute)) {
 			$timeout = $matchRoute->getParam('timeout', null);
+			$pagetype =  $matchRoute->getParam('pagetype', null);
 			
 			$serviceManager = $e->getApplication()->getServiceManager();
 			$config = $serviceManager->get('config');
@@ -154,6 +155,12 @@ class Module implements AutoloaderProviderInterface
 			if ($timeout == 'supervisor') {
 				$appendSupervisorJsTimeout = true;
 				$layoutViewModel->supervisorTimeout = $config['timeout']['supervisor'];
+			}
+			
+			if ($pagetype == 'admin') {
+				$layoutViewModel->isAdminPage = true;
+			} else {
+				$layoutViewModel->isAdminPage = false;
 			}
 			
 			$layoutViewModel->appendSupervisorJsTimeout = $appendSupervisorJsTimeout;

@@ -320,38 +320,39 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			');
 		}
 		
-		$this->inlineScript()->appendScript('
-			var autorizeCheckErrorSystem = true;
-				
-			function checkErrorSystem() {
-				setTimeout(function(){
-					doCheckErrorSystem();
-				}, 15000);
-			}
-
-			function doCheckErrorSystem() {
-				if (autorizeCheckErrorSystem) {
-					$.ajax({
-						url: "'. $this->url('checkerrorstatus', array()) . '",
-					}).done(function(result){
-						if (result.error === false) {
-							checkErrorSystem();
-						} else {
-							$("#popupErrorSystem").html(result.html);
-							$("#modalErrorDetected").modal({
-								keyboard: false,
-								show: true,
-							});
-						}
-					});
+		if (!$isAdminPage) {
+			$this->inlineScript()->appendScript('
+				var autorizeCheckErrorSystem = true;
+					
+				function checkErrorSystem() {
+					setTimeout(function(){
+						doCheckErrorSystem();
+					}, 15000);
 				}
-			}
-
-			$(function() {
-				doCheckErrorSystem();
-			});
-		');
-		
+	
+				function doCheckErrorSystem() {
+					if (autorizeCheckErrorSystem) {
+						$.ajax({
+							url: "'. $this->url('checkerrorstatus', array()) . '",
+						}).done(function(result){
+							if (result.error === false) {
+								checkErrorSystem();
+							} else {
+								$("#popupErrorSystem").html(result.html);
+								$("#modalErrorDetected").modal({
+									keyboard: false,
+									show: true,
+								});
+							}
+						});
+					}
+				}
+	
+				$(function() {
+					doCheckErrorSystem();
+				});
+			');
+		}
 		?>
 		<?php echo $this->inlineScript() ?>
 		<?php if ($this->login == "DelphInnove") {
