@@ -256,6 +256,8 @@ class InputdataController extends CommonController
 
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
+			var_dump($_POST);
+			
 			$r = $this->getRequest();
 			$user = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity());
 			$aDrugData = array(
@@ -263,12 +265,12 @@ class InputdataController extends CommonController
 				'userid'			=> $user->id,
 				'drugid'			=> $r->getPost('drugid'),
 				'batchnum'			=> $r->getPost('batchnum'),
-				'calibrationtime'	=> \DateTime::createFromFormat('H:i', $r->getPost('calibrationtime')),
+				'calibrationtime'	=> \DateTime::createFromFormat('Y-m-d H:i', $r->getPost('calibrationdate') . ' ' . $r->getPost('calibrationtime')),
 				'vialvol'			=> $r->getPost('vialvol'),
 				'activity'			=> $r->getPost('activity'),
 				'activityconc'		=> $r->getPost('activityconc'),
 				'activitycalib'		=> $r->getPost('activitycalib'),
-				'expirationtime'	=> \DateTime::createFromFormat('d/m/Y H:i', $r->getPost('expirationtime')),
+				'expirationtime'	=> \DateTime::createFromFormat('Y-m-d H:i', $r->getPost('expirationdate') . ' ' . $r->getPost('expirationtime')),
 			);
 			
 			$inputdrug = new InputDrug();

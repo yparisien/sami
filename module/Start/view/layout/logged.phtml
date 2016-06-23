@@ -314,6 +314,9 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 					        buttonHover: "btn-primary",
 					        buttonDisabled: "disabled",
 					    },
+						change: function(e, keyboard, el) {
+							checkInputOnChange(e, keyboard, el);
+						},
 					});
 					
 				});

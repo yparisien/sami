@@ -22,6 +22,42 @@
 								</select>
 							</div>
 						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="ex: FG120925A-04" autocomplete="off" tabindex="2" maxlength="100" required />
+							</div>
+						</div>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration date')?></label>
+							<div class="col-sm-6">
+								<div class="input-group date" id="datepicker-calibration">
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" id="calibrationdate" name="calibrationdate" autocomplete="off" tabindex="4" maxlength="10" required />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar" style="padding-left: 30px; padding-right: 30px;"></span>
+									</span>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#datepicker-calibration').datetimepicker({
+										locale: '<?php echo $locale; ?>',
+										minDate: moment(),
+										allowInputToggle: true,
+										showClose: true,
+										format: 'YYYY-MM-DD',
+									});
+								});
+							</script>
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Calibration time')?></label>
 							<div class="col-sm-6">
@@ -43,6 +79,59 @@
 								});
 							</script>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration date')?></label>
+							<div class="col-sm-6">
+								<div class="input-group date" id="datepicker-peremption">
+									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" id="expirationdate" name="expirationdate" autocomplete="off" tabindex="4" maxlength="10" required />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar" style="padding-left: 30px; padding-right: 30px;"></span>
+									</span>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#datepicker-peremption').datetimepicker({
+										locale: '<?php echo $locale; ?>',
+										minDate: moment(),
+										allowInputToggle: true,
+										showClose: true,
+										format: 'YYYY-MM-DD',
+									});
+								});
+							</script>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
+							<div class="col-sm-6">
+								<div class="input-group date" id="datetimepicker-expiration">
+									<input type="text" class="form-control input-sm input-date" data-format="hh:mm" placeholder="hh:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="5" maxlength="5" required />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-time" style="padding-left: 30px; padding-right: 30px;"></span>
+									</span>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#datetimepicker-expiration').datetimepicker({
+										locale: '<?php echo $locale; ?>',
+										format: 'HH:mm',
+										showClose: true,
+										allowInputToggle: true,
+									});
+								});
+							</script>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group has-info">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 							<div class="col-sm-6">
@@ -52,6 +141,21 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group" id="divActivityCalib">
+							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="ex: 123.45" step="0.01" tabindex="6" autocomplete="off" disabled required />
+									<span class="input-group-addon"><?php echo $unit?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group" id="divActivityConc">
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity concentration')?></label>
 							<div class="col-sm-6">
@@ -63,43 +167,6 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group">
-							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Batch number')?></label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control input-sm" id="batchnum" name="batchnum" placeholder="ex: FG120925A-04" autocomplete="off" tabindex="2" maxlength="100" required />
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Expiration time')?></label>
-							<div class="col-sm-6">
-								<div class="input-group date" id="datetimepicker-peremption">
-									<input type="text" class="form-control input-sm input-date" data-format="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm" id="expirationtime" name="expirationtime" autocomplete="off" tabindex="4" maxlength="16" required />
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar" style="padding-left: 30px; padding-right: 30px;"></span>
-									</span>
-								</div>
-							</div>
-							<script type="text/javascript">
-								$(function() {
-									$('#datetimepicker-peremption').datetimepicker({
-										locale: '<?php echo $locale; ?>',
-										minDate: moment(),
-										sideBySide: true,
-										allowInputToggle: true,
-										showClose: true,
-									});
-								});
-							</script>
-						</div>
-						<div class="form-group" id="divActivityCalib">
-							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Activity at calibration time')?></label>
-							<div class="col-sm-6">
-								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activitycalib" name="activitycalib" placeholder="ex: 123.45" step="0.01" tabindex="6" autocomplete="off" disabled required />
-									<span class="input-group-addon"><?php echo $unit?></span>
-								</div>
-							</div>
-						</div>
 						<div class="form-group">
 							<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
 							<div class="col-sm-6">
@@ -139,6 +206,11 @@
 	var lastChange = null;
 	var focusField = null;
 
+	function checkInputOnChange(e, keyboard, el) {
+// 		console.log(e);
+// 		console.warn(keyboard);
+		console.info(keyboard.preview.value);
+	}	
 							
 	/**
 	 * @todo fill the tests
