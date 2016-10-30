@@ -600,15 +600,7 @@ class InputdataController extends CommonController
 		}
 		else // pas de post, on affiche simplement la page
 		{
-			$system = $this->getSystemTable()->getSystem();
-			if($system->genuinekit)
-			{
-				return array();
-			}
-			else
-			{
-				return $this->redirect()->toRoute('setup', array('action'=>'loadkitpatient'));
-			}
+			return array();
 		}
 	}
 

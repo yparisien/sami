@@ -12,7 +12,7 @@
 				<form role="form">
 					<div class="panel panel-default">
   						<div class="panel-body">
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-sm-4"><?php echo $this->translate('Language')?></label>
 									<div class="col-sm-8">
@@ -26,18 +26,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-4">
-								<div class="form-group">
-									<label class="col-sm-6"><?php echo $this->translate('Use DelphInnove Kit')?></label>
-									<div class="col-sm-6">
-										<select class="form-control" id="genuinekit">
-											<option value="0"><?php echo $this->translate('No')?></option>
-											<option value="1"><?php echo $this->translate('Yes')?></option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-sm-6"><?php echo $this->translate('Max activity')?></label>
 									<div class="input-group col-sm-6">
@@ -107,7 +96,6 @@
 	{
 		$("#language").val("<?php echo $locale;?>");
 		$("#unit").val("<?php echo $unit;?>");
-		$("#genuinekit").val(<?php echo (int)$genuinekit;?>);
 		$("#maxactivity").val(<?php echo (int)$maxactivity;?>);
 	}
 	
@@ -152,20 +140,6 @@
 			url: "<?php echo $this->url('system', array('action'=>'asetmaxactivity'));?>",
 			dataType:"json",
 			data: {"maxactivity": $("#maxactivity").val() },
-		}).done(function(result) {
-			if(result.success == 1)
-			{
-				window.location.reload();
-			}
-		});
-	});
-	
-	$("#genuinekit").change(function(){
-		$.ajax({
-			type: "POST",
-			url: "<?php echo $this->url('system', array('action'=>'asetgenuinekit'));?>",
-			dataType:"json",
-			data: {"genuinekit": $("#genuinekit").val() },
 		}).done(function(result) {
 			if(result.success == 1)
 			{

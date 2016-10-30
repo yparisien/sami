@@ -252,7 +252,6 @@ class InteractrobotController extends CommonController
 	public function	patientdisconnectionAction()
 	{
 		$aParams = array();
-		$kitpatient = (bool) $this->getSystemTable()->getSystem()->genuinekit;
 		
 		$injection = new Container('injection_profile');
 		$setup = new Container('automate_setup');
@@ -274,10 +273,7 @@ class InteractrobotController extends CommonController
 		$aParams['radionuclide']= $this->getRadionuclideTable()->getRadionuclide($aParams['drug']['radionuclideid'])->toArray();
 		$aParams['sourcekit'] 	= $this->getSourcekitTable()->getSourcekit($setup->sourcekitid)->toArray();
 		$aParams['unit'] 		= ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
-
-		if ($kitpatient === true) {
-			$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid)->toArray();
-		}
+		$aParams['patientkit'] = $this->getPatientkitTable()->getPatientkit($injection->patientkitid)->toArray();
 
 		return new ViewModel($aParams);
 	}

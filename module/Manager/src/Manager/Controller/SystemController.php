@@ -42,7 +42,6 @@ class SystemController extends AbstractActionController
 		return new ViewModel(array(
 			'locale'		=> $oSystem->language,
 			'unit'			=> ($oSystem->unit == 'mbq') ? 'MBq' : 'mCi',
-			'genuinekit'	=> $oSystem->genuinekit,
 			'maxactivity'	=> $oSystem->maxactivity,
 		));
 	}
@@ -89,17 +88,6 @@ class SystemController extends AbstractActionController
 	}
 
 
-	/**
-	 * @todo insert http call to robot (set mode)
-	 * @return \Zend\View\Model\JsonModel
-	 */
-	public function	asetgenuinekitAction()
-	{
-		$oSystem = $this->getSystemTable()->getSystem();
-		$oSystem->genuinekit = $this->getRequest()->getPost("genuinekit");
-		$this->getSystemTable()->saveSystem($oSystem);
-		return new JsonModel(array('success'=>1));
-	}
 	
 	/**
 	 * @return \Zend\View\Model\JsonModel

@@ -41,7 +41,7 @@ class SystemTable
 	{
 		$data = array(
 			'language'		=> $system->language,
-			'genuinekit'	=> $system->genuinekit,
+			'genuinekit'	=> true,
 			'maxactivity'	=> $system->maxactivity,
 			'unit'			=> $system->unit,
 		);

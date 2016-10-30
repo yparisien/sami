@@ -14,7 +14,7 @@ class System
 		$this->id = (!empty($data['id'])) ? (int) $data['id'] : null;
 		$this->language = (!empty($data['language'])) ? $data['language'] : null;
 		$this->unit = (!empty($data['unit'])) ? $data['unit'] : null;
-		$this->genuinekit = (!empty($data['genuinekit'])) ? (bool) $data['genuinekit'] : null;
+		$this->genuinekit = true;
 		$this->maxactivity = (!empty($data['maxactivity'])) ? (int) $data['maxactivity'] : 0;
 	}
 }
