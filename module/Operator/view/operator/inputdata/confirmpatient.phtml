@@ -99,13 +99,15 @@
 												<option value="">?</option>
 												<optgroup label="<?php echo $this->translate('Compatible exams'); ?>">
 											<?php foreach($examinations['compatible'] as $examination) {?>
-												<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
+													<option value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
 											<?php } ?>
+												</optgroup>
 											<?php if (count($examinations['others']) > 0) { ?>
 												<optgroup label="<?php echo $this->translate('Other exams'); ?>">
 											<?php foreach($examinations['others'] as $examination) {?>
-												<option disabled value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
+													<option disabled value="<?php echo $examination->id;?>"><?php echo $examination->name;?></option>
 											<?php } ?>
+												</optgroup>
 											<?php } ?>
 											</select>
 										</div>
@@ -175,7 +177,7 @@
 						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-block btn-activity" onclick="setNormActivity()" id="btnNormActivity" disabled><?php echo $this->translate('Rate')?></button>
 							<div class="input-group">
-								<input type="number" on class="form-control input-sm" id="averageactivity" name="averageactivity" autocomplete="off" disabled />
+								<input type="number" class="form-control input-sm" id="averageactivity" name="averageactivity" autocomplete="off" disabled />
 								<span class="input-group-addon"><?php echo $unit?>/Kg</span>
 							</div>
 						</div>
@@ -291,7 +293,7 @@
 				<div class="alert alert-danger hide" role="alert" id="errorConfirm">
 					<span id="errorConfirmMessage"></span>
 				</div>
-				<h4><?php echo $this->translate('Injection prohibited unless authorized by Radio-Pharmacist'); ?>
+				<h4><?php echo $this->translate('Injection prohibited unless authorized by Radio-Pharmacist'); ?></h4>
 				<p><strong><?php echo $this->translate('To Authorize: Please sign-in with authority account, or Cancel to end the injections.'); ?></strong></p>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">

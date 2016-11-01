@@ -58,18 +58,19 @@
 											<option value=""><?php echo $this->translate('Choose an exam'); ?></option>
 											<optgroup label="<?php echo $this->translate('Compatible exams'); ?>">
 										<?php foreach($examinations['compatible'] as $examination) {?>
-											<option value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
-												<?php echo $examination->name;?>
-											</option>
+												<option value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
+													<?php echo $examination->name;?>
+												</option>
 										<?php } ?>
+											</optgroup>
 											<optgroup label="<?php echo $this->translate('Other exams'); ?>">
 										<?php foreach($examinations['others'] as $examination) {?>
-											<option disabled value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
-												<?php echo $examination->name;?>
-											</option>
+												<option disabled value="<?php echo $examination->id;?>" data-dci="<?php echo $examination->dci; ?>">
+													<?php echo $examination->name;?>
+												</option>
 										<?php } ?>
+											</optgroup>
 										</select>
-										
 									</div>
 								</div>
 								<div class="form-group">
