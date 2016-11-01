@@ -34,7 +34,7 @@
 											</tr>
 										</thead>
 									</table>
-									<div style="height: 190px; overflow: hidden;" id="compatibles-list">
+									<div class="patientList" style="height: 190px; overflow: hidden;" id="compatibles-list">
 										<table class="table table-condensed <?php if (count($patients_compatible) > 0) { echo 'table-hover'; } ?>">
 											<tbody>
 											<?php if (count($patients_compatible) > 0) { ?>
@@ -71,17 +71,19 @@
 								</div>
 						    	<div role="tabpanel" class="tab-pane" id="others">
 									<?php if (count($patients_nocompatible) > 0) { ?>
-									<table class="table table-condensed">
-										<tbody>
-										<?php foreach($patients_nocompatible as $patient) { ?>
-											<tr id="patient-<?php echo $patient->patientId;?>">
-												<td><?php echo $patient->patientLastname;?></td>
-												<td><?php echo $patient->patientFirstname;?></td>
-												<td></td>
-											</tr>
-										<?php } ?>
-										</tbody>
-									</table>
+									<div class="patientList" style="height: 190px; overflow: hidden;" id="others-list">
+										<table class="table table-condensed">
+											<tbody>
+											<?php foreach($patients_nocompatible as $patient) { ?>
+												<tr id="patient-<?php echo $patient->patientId;?>">
+													<td><?php echo $patient->patientLastname;?></td>
+													<td><?php echo $patient->patientFirstname;?></td>
+													<td></td>
+												</tr>
+											<?php } ?>
+											</tbody>
+										</table>
+									</div>
 									<?php } ?>
 								</div>
 						  	</div>
