@@ -78,6 +78,7 @@ class Module implements AutoloaderProviderInterface
 		$moduleRouteListener = new ModuleRouteListener();
 		$moduleRouteListener->attach($eventManager);
 		
+		
 		$appendOperatorJsTimeout = false;
 		$matchRoute = $e->getRouter()->match($e->getRequest());
 		if (!is_null($matchRoute)) {
@@ -86,6 +87,7 @@ class Module implements AutoloaderProviderInterface
 			
 			$serviceManager = $e->getApplication()->getServiceManager();
 			$config = $serviceManager->get('config');
+			$layoutViewModel->disableRightClick = $config['disableRightClick'];
 			
 			if ($timeout == 'operator') {
 				$appendOperatorJsTimeout = true;
