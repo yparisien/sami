@@ -5,6 +5,8 @@ namespace Manager\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 
+//TODO Rajouter une colonne killed car on ne pas perdre des données du fait que tous les input drug sont sauvegardés
+
 class DrugTable
 {
 	protected $tableGateway;

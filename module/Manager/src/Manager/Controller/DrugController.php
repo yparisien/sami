@@ -16,7 +16,6 @@ use Zend\View\Model\JsonModel;
 
 class DrugController extends AbstractActionController
 {
-	//TODO Rajouter une colonne killed car on ne pas perdre des données du fait que tous les input drug sont sauvegardés
 	protected	$drugTable;
 	protected	$radionuclideTable;
 	protected	$vdrugTable;
