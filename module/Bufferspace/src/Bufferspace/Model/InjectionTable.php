@@ -51,25 +51,7 @@ class InjectionTable
 
 	public function saveInjection(Injection $injection)
 	{
-		$data = array(
-			'patient_id'		=> $injection->patient_id,
-			'type'				=> $injection->type,
-			'injection_date'	=> $injection->injection_date,
-			'injection_time'	=> $injection->injection_time,
-			'activity'			=> $injection->activity,
-			'dose_status'		=> $injection->dose_status,
-			'unique_id'			=> $injection->unique_id,
-			'vial_id'			=> $injection->vial_id,
-			'location'			=> $injection->location,
-			'comments'			=> $injection->comments,
-			'dci'				=> $injection->dci,
-			'drugid'			=> $injection->drugid,
-			'inputdrugid'		=> $injection->inputdrugid,
-			'examinationid'		=> $injection->examinationid,
-			'operatorid'		=> $injection->operatorid,
-			'patientkitid'		=> $injection->patientkitid,
-		);
-
+		$data = $injection->toArray();
 		$id = (int) $injection->id;
 		if ($id == 0)
 		{

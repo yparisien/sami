@@ -61,11 +61,13 @@ class PatientTable
 			'height'		=> $patient->height,
 			'injected'		=> $patient->injected,
 		);
-
+		
+		$data = $patient->toArray();
+		
 		$id = (int) $patient->id;
 		if ($id == 0)
 		{
-			$this->tableGateway->insert($data);
+			$ret = $this->tableGateway->insert($data);
 			$patient->id = $this->tableGateway->lastInsertValue;
 		}
 		else

@@ -146,9 +146,13 @@ class	Importer
 						}
 						
 						$aCurPatient = array();
-						foreach($aRead as $k=>$v)
+						foreach($aRead as $k => $v)
 						{
-							$aCurPatient[$this->_datastruct[$k]] = $v;
+							$value = null;
+							if ($v != '') {
+								$value = $v;
+							}
+							$aCurPatient[$this->_datastruct[$k]] = $value;
 						}
 						$this->_patients[] = $aCurPatient;
 					}
@@ -164,9 +168,10 @@ class	Importer
 
 	public function	fillDataBase()
 	{
+		/* @var $patientTable \Bufferspace\Model\PatientTable */
 		$patientTable = $this->_servicelocator->get('Bufferspace\Model\PatientTable');
+		/* @var $injectionTable \Bufferspace\Model\InjectionTable */
 		$injectionTable = $this->_servicelocator->get('Bufferspace\Model\InjectionTable');
-
 
 		foreach($this->_patients as $patient)
 		{
@@ -180,9 +185,9 @@ class	Importer
 			$oPatient->firstname	= $firstName;
 			$oPatient->gender		= $patient['Gender'];
 			$oPatient->birthdate	= str_replace('/', '-', $patient['BirthDate']);
-			$oPatient->age			= $patient['Age'];
-			$oPatient->weight		= $patient['Weight'];
-			$oPatient->height		= $patient['Height'];
+			$oPatient->age			= (int) $patient['Age'];
+			$oPatient->weight		= (int) $patient['Weight'];
+			$oPatient->height		= (int) $patient['Height'];
 			$oPatient->patienttype	= $patient['PatientType'];
 			$oPatient->doctorname	= $patient['DoctorName'];
 			$oPatient->injected		= false;
@@ -195,10 +200,8 @@ class	Importer
 			$oInjection->activity		= $patient['Activity'];
 			$oInjection->dose_status	= $patient['DoseStatus'];
 			$oInjection->unique_id		= $patient['UniqueID'];
-			$oInjection->vial_id		= $patient['VialID'];
+			$oInjection->vial_id		= ((int) $patient['VialID']) > 0 ? (int) $patient['VialID'] : null;
 			$oInjection->dci			= $patient['MedicamentID'];			
-			$oInjection->location		= '';
-			$oInjection->comments		= '';
 			
 			$injectionTable->saveInjection($oInjection);
 		}

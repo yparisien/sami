@@ -15,9 +15,9 @@ use Zend\Session\Container;
 use Zend\Session\Zend\Session;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Zend\Validator\File\NotExists;
 use Zend\Validator\File\Size;
 use Zend\Validator\File\MimeType;
-use Zend\Validator\File\NotExists;
 use Zend\View\View;
 
 use Bufferspace\File\Importer;
@@ -256,8 +256,6 @@ class InputdataController extends CommonController
 
 		if($this->getRequest()->isPost()) // process the submitted form
 		{
-			var_dump($_POST);
-			
 			$r = $this->getRequest();
 			$user = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity());
 			$aDrugData = array(
@@ -302,14 +300,18 @@ class InputdataController extends CommonController
 		}
 		else // simply display the form
 		{
+			$config = $this->getServiceLocator()->get('Config');
+			
 			$robotService->send(array(
 					RobotConstants::MAINLOGIC_CMD_INPUTSOFT_LOADMEDICAMENT => 1,
 			));
 			
 			$aParam = array(
-				'drugs'		=> $this->getDrugTable()->fetchAll(),
-				'unit' 		=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
-				'locale'	=> explode('_', $this->getSystemTable()->getSystem()->language)[0],
+				'drugs'			=> $this->getDrugTable()->fetchAll(),
+				'unit' 			=> ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi',
+				'locale'		=> explode('_', $this->getSystemTable()->getSystem()->language)[0],
+				'vialvol_min'	=> $config['robot']['vialvol']['min'],
+				'vialvol_max'	=> $config['robot']['vialvol']['max'],
 			);
 			return new ViewModel($aParam);
 		}
@@ -338,8 +340,10 @@ class InputdataController extends CommonController
 		$this->getInputActionTable()->saveInputAction($inputaction);
 		
 		$inputfile = $this->getInputFileTable()->getLastInputFile();
-		$inputfile->deleted = 1;
-		$this->getInputFileTable()->saveInputFile($inputfile);
+		if ($inputfile) {
+			$inputfile->deleted = 1;
+			$this->getInputFileTable()->saveInputFile($inputfile);
+		}
 		
 		$aRetVal = array('error' => $error, 'errorMessage' => $errorMessage);
 		
@@ -356,6 +360,7 @@ class InputdataController extends CommonController
 			'success'	=> 1,
 			'msg'		=> '',
 		);
+		
 		
 		$destPath = $config['import_export']['upload_path'];
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
@@ -457,6 +462,11 @@ class InputdataController extends CommonController
 					$aRetVal['success'] = 0;
 					$aRetVal['msg'] = $error;
 					$aRetVal['msg'] .= $translate("Can't store to " . $destPath . "/" . $file['name']);
+				}
+			} else {
+				if ($adapter->getErrors()[0] == NotExists::DOES_EXIST) {
+					$aRetVal['success'] = 0;
+					$aRetVal['msg'] = $translate("File " . realpath($destPath) . DIRECTORY_SEPARATOR  . $file['name'] . " already exists. Try to delete it.");
 				}
 			}
 			
