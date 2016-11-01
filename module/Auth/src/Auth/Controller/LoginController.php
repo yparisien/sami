@@ -13,11 +13,12 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Session\Container;
-use Logger\Model\InputAction;
 use Zend\View\Model\JsonModel;
+
+use Logger\Model\InputAction;
 use Manager\Robot\RobotConstants;
 use Manager\Robot\RobotService;
-use Bufferspace\Model\Patient;
+use Manager\Model\User;
 
 class LoginController extends AbstractActionController
 {
@@ -30,18 +31,16 @@ class LoginController extends AbstractActionController
 
 	public function getAuthService()
 	{
-		if(!$this->authservice) {
-			$this->authservice = $this->getServiceLocator()
-			->get('AuthService');
+		if (!$this->authservice) {
+			$this->authservice = $this->getServiceLocator()->get('AuthService');
 		}
 		return $this->authservice;
 	}
 
 	public function getSessionStorage()
 	{
-		if(!$this->storage) {
-			$this->storage = $this->getServiceLocator()
-				->get('Auth\Model\AuthStorage');
+		if (!$this->storage) {
+			$this->storage = $this->getServiceLocator()->get('Auth\Model\AuthStorage');
 		}
 		return $this->storage;
 	}
@@ -52,8 +51,7 @@ class LoginController extends AbstractActionController
 	 */
 	public function getInputActionTable()
 	{
-		if(!$this->inputActionTable)
-		{
+		if (!$this->inputActionTable) {
 			$sm = $this->getServiceLocator();
 			$this->inputActionTable = $sm->get('Logger\Model\InputActionTable');
 		}
@@ -66,8 +64,7 @@ class LoginController extends AbstractActionController
 	 */
 	public function getUserTable()
 	{
-		if(!$this->userTable)
-		{
+		if (!$this->userTable) {
 			$sm = $this->getServiceLocator();
 			$this->userTable = $sm->get('Manager\Model\UserTable');
 		}
@@ -110,23 +107,43 @@ class LoginController extends AbstractActionController
 		}
 		else // display form
 		{
-			return new ViewModel();
+			$oContainer = new Container('authtry');
+			$sAction = $this->getRequest()->getPost('action', null);
+			$sLogin = $this->getRequest()->getPost('login', null);
+			
+			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+			$user = $this->getUserTable()->searchByLogin($sLogin);
+			
+			if ($sLogin != null && $user == null) {
+				$oContainer->login = null;
+				$this->flashmessenger()->addErrorMessage($translate('No user matching'));
+				$this->redirect()->toRoute('log', array('action'=>'index'));
+			} else if ($sAction === 'login' && $user instanceof User) {
+				$oContainer->login = $user->login;
+				$this->getAuthService()->getAdapter();
+				return new ViewModel(array('action' => 'logindone', 'login' => $sLogin));
+			}
+			
 		}
 	}
 
 	public function	signinAction()
 	{
 		$oSetup = new Container('automate_setup');
+		$oAuthTry = new Container('authtry');
+		
 		if($oSetup->issetup == true)
 		{
 			$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 			// grab datas from submitted form
-			$sLogin = $this->getRequest()->getPost('login');
-			$sPassword = $this->getRequest()->getPost('password');
+			$sAction = $this->getRequest()->getPost('action', null);
+			$sLogin = $oAuthTry->login;
+			$sPassword = $this->getRequest()->getPost('password', null);
+			
 			// inject them in auth service (db match against)
 			$this->getAuthService()->getAdapter()->setIdentity($sLogin)->setCredential($sPassword);
 			$result = $this->getAuthService()->authenticate();
-			if($result->isValid()) // if credential is valid
+			if ($result->isValid()) // if credential is valid
 			{
 				$operator = new Container('operator');
 				$operator->skippedErrors = array();
@@ -143,6 +160,10 @@ class LoginController extends AbstractActionController
 				} else {
 					$robotService->send(array(RobotConstants::MAINLOGIC_PAR_DEMOMODE => 1));
 				}
+				
+				$now = new \DateTime();
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_DATETIMEIHM => "DT#" . $now->format('Y-m-d-H:i:s')));
+				$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_CHANGEDATETIME => 1));
 
 				$this->getSessionStorage()->storeAuth();
 				$inputaction = new InputAction();
@@ -230,7 +251,6 @@ class LoginController extends AbstractActionController
 				}
 				
 				return $this->redirect()->toUrl($url);
-				
 			}	
 			else // then go back to the login form and display error msg
 			{

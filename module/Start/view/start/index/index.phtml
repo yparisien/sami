@@ -3,6 +3,7 @@
 	<p><?php echo sprintf($this->translate('Loading...')) ?> 
 		<span id="loading-success" style="display:none"><?php echo sprintf($this->translate('Done')); ?></span>
 		<span id="loading-error" style="display:none"></span>
+		<span id="loading-step-ok" style="display:none"></span>
 	</p>
 	<div class="progress progress-striped active">
 		<div id="loading-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
@@ -33,6 +34,7 @@
 					$("#loading-progress").css('width', '100%');
 					$("#loading-progress").addClass("progress-bar-success");
 					$("#loading-success").show();
+					$("#loading-step-ok").hide();
 					window.setTimeout(function(){gotoindex();}, 1000);
 				}
 				else {
@@ -57,6 +59,7 @@
 			$("#loading-progress").addClass("progress-bar-danger");
 			$("#loading-error").html("<?php echo sprintf($this->translate('An error occured during setup. Robot is not responding. Please retry or restart system.')); ?>");
 			$("#loading-error").show();
+			$("#loading-step-ok").hide();
 			return false;
 		}
 		
@@ -68,8 +71,8 @@
 				moveProgressBar(0, 10);
 				$("#loading-progress").removeClass("progress-bar-warning");
 				$("#loading-progress").addClass("progress-bar-warning");
-				$("#loading-error").html(nbConnectionAttempt + 1 + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
-				$("#loading-error").show();
+				$("#loading-step-ok").html(nbConnectionAttempt + 1 + "/" + nbConnectionTry + " <?php echo sprintf($this->translate('connections attempt(s)')); ?>");
+				$("#loading-step-ok").show();
 				//GOTO STEP 1 LOOP
 				initping();
 			} else {
@@ -86,6 +89,7 @@
 	 * Chargement de l'unité de mesure STEP 2
 	 */
 	function initmu() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Recovering measure unit')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('initmu', array()); ?>",
 		}).done(function(result){
@@ -98,6 +102,7 @@
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Loading of measure unit failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}
@@ -106,6 +111,7 @@
 	 * Chargement des radionucléides STEP 3
 	 */
 	function initrn() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Loading radionuclides database.')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('initrn', array()); ?>",
 		}).done(function(result){
@@ -116,6 +122,7 @@
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Loading of radionuclides failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}
@@ -124,6 +131,7 @@
 	 * Vérification et chargement du médicament STEP 4
 	 */
 	 function inithml() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Checking of loaded drug.')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('inithml', array()); ?>",
 		}).done(function(result){
@@ -136,6 +144,7 @@
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Check of loaded drug failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}
@@ -144,6 +153,7 @@
 	 * Vérification et chargement du kit source STEP 5
 	 */
 	function initsks() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Checking source-kit serial')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('initsks', array()); ?>",
 		}).done(function(result){
@@ -156,6 +166,7 @@
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Check of kit source serial failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}
@@ -164,6 +175,7 @@
 	 * Vérification et chargement du médicament STEP 6
 	 */
 	function initlks() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Checking source-kit loading')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('initlks', array()); ?>",
 		}).done(function(result){
@@ -176,15 +188,16 @@
 				$("#loading-progress").addClass("progress-bar-danger");
 				$("#loading-error").html("<?php echo sprintf($this->translate('Check of kit source loading failed.')); ?> : " + result.errorMessage);
 				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}
 
 	/*
 	 * Vérification du point de démarrage STEP 7
-	 * PROBABLEMT OBSOLETE
 	 */
 	function initsp() {
+		$("#loading-step-ok").html("<?php echo sprintf($this->translate('Starting User Interface')); ?>");
 		$.ajax({
 			url: "<?php echo $this->url('initsp', array()); ?>",
 		}).done(function(result){
