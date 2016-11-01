@@ -11,11 +11,11 @@ CREATE TABLE `drug` (
   `name` varchar(255) NOT NULL,
   `radionuclideid` int(11) DEFAULT NULL,
   `dci` varchar(255) NOT NULL,
+  `dilutable` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `radionuclideid` (`radionuclideid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ALTER TABLE `sami`.`drug` ADD UNIQUE INDEX `UNIQUE_NAME` (`name` ASC);
-
 
 --
 -- Table structure for table `examination`
@@ -209,11 +209,11 @@ CREATE TABLE `tmp_injection` (
   `injection_date` date DEFAULT NULL,
   `injection_time` time NOT NULL,
   `activity` int(11) NOT NULL,
-  `dose_status` varchar(255) NOT NULL,
+  `dose_status` varchar(255) NULL DEFAULT NULL,
   `unique_id` varchar(255) NOT NULL,
-  `vial_id` int(11) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `comments` text NOT NULL,
+  `vial_id` int(11) NULL DEFAULT NULL,
+  `location` varchar(255) NULL DEFAULT NULL,
+  `comments` text NULL DEFAULT NULL,
   `dci` VARCHAR(255) NULL DEFAULT NULL,
   `drugid` int(11) DEFAULT NULL,
   `inputdrugid` INT(11) DEFAULT NULL,
@@ -280,6 +280,7 @@ CREATE VIEW `view_drug` AS
         `d`.`id` AS `id`,
         `d`.`name` AS `drug_name`,
         `d`.`dci` AS `dci`,
+        `d`.`dilutable` AS `dilutable`,
         `r`.`name` AS `radionuclide_name`,
         COUNT(`e`.`id`) AS `nbExams`
     FROM
