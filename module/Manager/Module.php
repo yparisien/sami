@@ -18,6 +18,8 @@ use Manager\Model\Drug;
 use Manager\Model\DrugTable;
 use Manager\Model\Examination;
 use Manager\Model\ExaminationTable;
+use Manager\Model\InjectionProfile;
+use Manager\Model\InjectionProfileTable;
 use Manager\Model\Radionuclide;
 use Manager\Model\RadionuclideTable;
 use Manager\Model\System;
@@ -28,6 +30,7 @@ use Manager\View\VDrug;
 use Manager\View\VDrugTable;
 use Manager\View\VExamination;
 use Manager\View\VExaminationTable;
+
 class Module implements AutoloaderProviderInterface
 {
 	public function getAutoloaderConfig()
@@ -75,6 +78,17 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new Examination());
 					return new TableGateway('examination', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Manager\Model\InjectionProfileTable' =>  function($sm) {
+					$tableGateway = $sm->get('InjectionProfileTableGateway');
+					$table = new InjectionProfileTable($tableGateway);
+					return $table;
+				},
+				'InjectionProfileTableGateway' => function ($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new InjectionProfile());
+					return new TableGateway('injection_profile', $dbAdapter, null, $resultSetPrototype);
 				},
 				'Manager\Model\RadionuclideTable' =>  function($sm) {
 					$tableGateway = $sm->get('RadionuclideTableGateway');

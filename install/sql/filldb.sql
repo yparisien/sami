@@ -14,7 +14,7 @@ CREATE TABLE `drug` (
   `dilutable` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `radionuclideid` (`radionuclideid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `sami`.`drug` ADD UNIQUE INDEX `UNIQUE_NAME` (`name` ASC);
 
 --
@@ -31,7 +31,7 @@ CREATE TABLE `examination` (
   `max` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `dci` (`dci`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `sami`.`examination` 
 ADD INDEX `INDEX` (`dci` ASC);
 --
@@ -46,7 +46,7 @@ CREATE TABLE `input_action` (
   `action` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `input_drug`
@@ -68,7 +68,7 @@ CREATE TABLE `input_drug` (
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`,`drugid`),
   KEY `drugid` (`drugid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `input_file`
@@ -83,7 +83,7 @@ CREATE TABLE `input_file` (
   `export_date` datetime DEFAULT NULL,
   `deleted` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
@@ -146,7 +146,7 @@ CREATE TABLE `patientkit` (
   `operatorid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `serialnumber` (`serialnumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
@@ -161,7 +161,7 @@ CREATE TABLE `radionuclide` (
   `period` varchar(32) NOT NULL,
   `coefficient` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `sourcekit`
@@ -176,7 +176,7 @@ CREATE TABLE `sourcekit` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `serialnumber` (`serialnumber`),
   KEY `operatorid` (`operatorid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `system`
@@ -190,7 +190,7 @@ CREATE TABLE `system` (
   `genuinekit` tinyint(1) NOT NULL,
   `maxactivity` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Dumping data for table `system`
 --
@@ -223,7 +223,7 @@ CREATE TABLE `tmp_injection` (
   PRIMARY KEY (`id`),
   KEY `patient_id` (`patient_id`),
   KEY `drugid` (`drugid`,`examinationid`,`operatorid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `tmp_patient`
@@ -245,7 +245,7 @@ CREATE TABLE `tmp_patient` (
   `injected` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`patient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `user`
@@ -262,13 +262,34 @@ CREATE TABLE `user` (
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `login` (`login`,`password`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` VALUES (1,'DelphInnove','1eaa1c5c50a7ceb103fcb8eae65395a5372a6766',1,'Michel','Henri',0);
+
+--
+-- Table structure for table `injection_profile`
+--
+
+CREATE TABLE `injection_profile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `label` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `injection_profile` VALUES (1,'baby','Bébé');
+INSERT INTO `injection_profile` VALUES (1,'child','Enfant');
+INSERT INTO `injection_profile` VALUES (1,'adult','Adulte');
+
 
 --
 -- Final view structure for view `view_drug`
