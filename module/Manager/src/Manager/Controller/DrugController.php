@@ -12,7 +12,6 @@ namespace Manager\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Manager\Model\Drug;
-use Manager\Model\Radionuclide;
 use Zend\View\Model\JsonModel;
 
 class DrugController extends AbstractActionController
@@ -71,9 +70,10 @@ class DrugController extends AbstractActionController
 		{
 			$oRequest = $this->getRequest();
 			$oDrug = new Drug();
-			$oDrug->name = $oRequest->getPost('name');
-			$oDrug->radionuclideid = $oRequest->getPost('radionuclideid');
-			$oDrug->dci = $oRequest->getPost('dci');
+			$oDrug->name 			= $oRequest->getPost('name');
+			$oDrug->radionuclideid 	= $oRequest->getPost('radionuclideid');
+			$oDrug->dci 			= $oRequest->getPost('dci');
+			$oDrug->dilutable 		= ($oRequest->getPost('dilutable', 0) == 1) ? true : false;
 			$this->getDrugTable()->saveDrug($oDrug);
 			
 			$message = sprintf($translate("Drug (%s) has been created."), $oDrug->name);
@@ -100,6 +100,7 @@ class DrugController extends AbstractActionController
 			$oDrug->name			= $oRequest->getPost('name');
 			$oDrug->radionuclideid	= $oRequest->getPost('radionuclideid');
 			$oDrug->dci				= $oRequest->getPost('dci');
+			$oDrug->dilutable 		= ($oRequest->getPost('dilutable', 0) == 1) ? true : false;
 			$this->getDrugTable()->saveDrug($oDrug);
 			
 			$message = sprintf($translate("Drug (%s) has been modified."), $oDrug->name);
@@ -144,8 +145,10 @@ class DrugController extends AbstractActionController
 		{
 			$oRequest = $this->getRequest();
 			$drugName = $oRequest->getPost('name');
+			$currentDrugId = (int) $oRequest->getPost('currentDrugId', 0);
 			$oDrug = $this->getDrugTable()->getDrugByName($drugName);
-			if ($oDrug === null) {
+			
+			if ($oDrug === null || $oDrug->id == $currentDrugId) {
 				$aParams = array('error' => false);
 			}
 		}

@@ -11,10 +11,13 @@
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" role="form" method="post" action="<?php echo $this->url('drug', array('action'=>'edit'))?>" onsubmit="return checkForm()">
+					<div id="errorMessage" class="alert alert-danger hide" role="alert">
+						<i class=""><?php echo $this->translate('This drug is already existing in database. Please choose another name.'); ?></i>
+					</div>
 					<div class="form-group">
 						<label for="name" class="control-label col-md-2"><?php echo $this->translate("Name")?></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->drug->name;?>" autocomplete="off" maxlength="100" required/>
+							<input type="text" class="form-control col-md-6" id="name" name="name" value="<?php echo $this->drug->name;?>" autocomplete="off" maxlength="100" onchange="checkUniqueName()" required/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -34,6 +37,19 @@
 							<input type="text" class="form-control" id="dci" name="dci" value="<?php echo $this->drug->dci;?>" autocomplete="off" maxlength="100" required />
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="dilutable" class="control-label col-md-2"><?php echo $this->translate("Dilutable")?></label>
+						<div class="col-md-6">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default <?php if(!$this->drug->dilutable){echo "active";}?>">
+									<input type="radio" name="dilutable" id="no" autocomplete="off" value="0" <?php if (!$this->drug->dilutable) { echo "checked"; }?> /> <?php echo $this->translate('No'); ?>
+								</label>
+								<label class="btn btn-default <?php if($this->drug->dilutable){echo "active";}?>">
+									<input type="radio" name="dilutable" id="yes" autocomplete="off" value="1" <?php if ($this->drug->dilutable) { echo "checked"; }?> /> <?php echo $this->translate('Yes'); ?>
+								</label>
+							</div>
+						</div>
+					</div>
 					<input type="hidden" id="id" name="id" value="<?php echo $this->drug->id;?>" />
 					<button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit")?></button>
 					<button type="button" class="btn btn-danger" onClick="window.location='<?php echo $this->url('drug')?>'"><?php echo $this->translate("Abort")?></button>
@@ -44,16 +60,30 @@
 </div>
 
 <script type="text/javascript">
-//TODO Recopier check du ADD
+	var canSubmit = false;
+
 	function	checkForm()
 	{
-		if(true)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return canSubmit;
+	}
+
+	function checkUniqueName()
+	{
+		canSubmit = false;
+		$.ajax({
+			type: "POST",
+			url: "<?php echo $this->url('drug', array('action' => 'acheckunique'));?>",
+			dataType:"json",
+			data : {"name" : $('#name').val(), "currentDrugId" : <?php echo $this->drug->id; ?>}
+		}).done(function(result) {
+			if (result.error === false) {
+				$("#errorMessage").removeClass("hide");
+				$("#errorMessage").addClass("hide");
+				canSubmit = true;
+			}
+			else {
+				$("#errorMessage").removeClass("hide");
+			}
+		});
 	}
 </script>

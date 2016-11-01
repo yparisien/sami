@@ -93,6 +93,7 @@ class DrugTable
 			'name'				=> $drug->name,
 			'radionuclideid'	=> $drug->radionuclideid,
 			'dci'				=> $drug->dci,
+			'dilutable'			=> $drug->dilutable === true ? 1 : 0,
 		);
 
 		$id = (int) $drug->id;
