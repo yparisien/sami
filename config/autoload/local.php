@@ -11,6 +11,10 @@ return array(
 	 * Configuration du robot
 	 */
 	'robot' => array(
+		'vialvol' => array(
+			'min' => 1,
+			'max' => 10,
+		),
 		'simulated'		=> true,												//Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
 			'init' => array( 													//Paramètres de la séquence de démarrage
@@ -47,8 +51,12 @@ return array(
 	 * Configuration des locks-screen (en secondes)
 	 */
 	'timeout' => array(
-			'operator'		=> 60 * 60, //Temps d'inactivité avec lock des écrans opérateurs
-			'supervisor'	=> 60 * 60, //Temps d'inactivité avec lock des écrans superviseurs
-			'robot'			=> 0.5, 		//Temps d'attente entre les essais de démarrage
+			'operator'		=> 60 * 20, //Temps d'inactivité avec lock des écrans opérateurs
+			'supervisor'	=> 60 * 10, //Temps d'inactivité avec lock des écrans superviseurs
+			'robot'			=> 2.5, 		//Temps d'attente entre les essais de démarrage
 	),
+	/**
+	 * Disable right click
+	 */
+	'disableRightClick' => false,
 );

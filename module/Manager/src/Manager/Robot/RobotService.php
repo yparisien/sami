@@ -119,7 +119,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 					$mRet = -2;
 				} else if (isset($fr->activitycalib) && $fr->activitycalib <= 0) {
 					$mRet = -3;
-				} else if (isset($fr->vialvol) && $fr->vialvol > 15) {
+				} else if (isset($fr->vialvol) && $fr->vialvol < $cfg['robot']['vialvol']['min'] && $fr->vialvol > $cfg['robot']['vialvol']['max']) {
 					$mRet = -4;
 				} else {
 					$mRet = mt_rand(4000, 5000);
