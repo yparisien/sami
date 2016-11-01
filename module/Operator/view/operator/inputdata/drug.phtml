@@ -136,7 +136,7 @@
 							<label for="input3" class="col-sm-6 control-label"><?php echo $this->translate('Vial volume')?></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="0.01" min="0" max="10" placeholder="ex: 10" autocomplete="off" tabindex="3" required  />
+									<input type="number" class="form-control input-sm" id="vialvol" name="vialvol" step="0.01" min="<?php echo $vialvol_min; ?>" max="<?php echo $vialvol_max; ?>" placeholder="ex: 10" autocomplete="off" tabindex="3" required  />
 									<span class="input-group-addon">ml</span>
 								</div>
 							</div>
@@ -171,7 +171,7 @@
 							<label for="activity" class="col-sm-6 control-label"><?php echo $this->translate('Activity available at')?> <span id="activity-time">HH.MM</span></label>
 							<div class="col-sm-6">
 								<div class="input-group">
-									<input type="number" class="form-control input-sm" id="activity" name="activity" value="???" autocomplete="off" readonly/>
+									<input type="number" class="form-control input-sm" id="activity" name="activity" value="" autocomplete="off" readonly/>
 									<span class="input-group-addon"><?php echo $unit?></span>
 								</div>
 							</div>
@@ -449,7 +449,7 @@
 					focusField = 'vialvol';
 					$('#titleModal').text("<?php echo $this->translate("Incorrect vial volume"); ?>");
 					$('#messageModal').text("<?php echo $this->translate("The volume of the vial is incorrect."); ?>");
-					$('#alertModal').text("<?php echo $this->translate("Set a correct value : between 1 and 15ml"); ?>");
+					$('#alertModal').text("<?php echo $this->translate("Set a correct value : between $vialvol_min and $vialvol_max ml"); ?>");
 					
 					
 					$("#alertdata").modal('show');
