@@ -4,6 +4,7 @@ namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
+use Zend\Session\Container;
 
 class InputDrugTable
 {
@@ -73,6 +74,12 @@ class InputDrugTable
 			'activityconc'		=> $inputdrug->activityconc,
 			'activitycalib'		=> $inputdrug->activitycalib,
 		);
+		
+		$fr = new Container('fake_robot');
+		$fr->vialvol = $inputdrug->vialvol;
+		$fr->activity = $inputdrug->activity;
+		$fr->activityconc = $inputdrug->activityconc;
+		$fr->activitycalib = $inputdrug->activitycalib;
 
 		$id = (int) $inputdrug->id;
 		if ($id == 0)

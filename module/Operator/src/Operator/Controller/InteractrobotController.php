@@ -295,6 +295,9 @@ class InteractrobotController extends CommonController
 			$oContainer->drugid = 0;
 			$oContainer->sourcekitscanned = false;
 			$oContainer->sourcekitloaded = false;
+			$oContainer->vialcontrolled = false;
+			$oContainer->vialisdilutable = false;
+			$oContainer->vialdilutabled = false;
 
 			$inputaction = new InputAction();
 			$inputaction->inputdate = date('Y-m-d H:i:s');
@@ -624,5 +627,92 @@ class InteractrobotController extends CommonController
 		
 		
 		return new JsonModel(array('success'=>true));
+	}
+	
+	public function	alaunchcheckvialAction()
+	{
+		$success = false;
+		$automateSetup = new Container('automate_setup');
+		
+		if ($automateSetup->vialcontrolled === false) {
+			/* @var $robotService RobotService */
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROL => 1));
+			$success = true;
+		}
+		
+		return new JsonModel(array('success' => $success));
+	}
+	
+	public function	agetcheckvialstatusAction()
+	{
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		$automateSetup = new Container('automate_setup');
+	
+		$success = false;
+		$status = 'unknow';
+		$actuals = null;
+		$controls = null;
+		$mustChoose = null;
+		
+		if ($automateSetup->vialcontrolled === false) {
+			$vialControlResult = $robotService->receive(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT);
+			
+			if ($vialControlResult == 0) {
+				$status = 'inprogress';
+				$success = true;
+			} else if ($vialControlResult == 1) {
+				$status = 'error';
+				$success = false;
+			} else if ($vialControlResult == 2) {
+				$inputDrug = $this->getInputDrugTable()->getInputDrug($automateSetup->inputdrugid);
+				
+				$actualActVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTVOL);
+				$actualActDt = (float) $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTDT);
+				$actualVol = (float) $inputDrug->vialvol;
+				
+				$actuals = array('actvol' => $actualActVol, 'actdt' => $actualActDt, 'vol' => (float) $actualVol);
+
+				$controlActVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_ACTVOL);
+				$controlActDt = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_ACTDT);
+				$controlVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_VOLUME);
+				
+				$controls = array('actvol' => $controlActVol, 'actdt' => $controlActDt, 'vol' => (float) $controlVol);
+				
+				//TODO Voir avec Michel et Matthieu les seuils
+				$diffActVol = (1 - (min($actualActVol, $controlActVol) / max($actualActVol, $controlActVol))) * 100;
+				$diffActDt = (1 - (min($actualActDt, $controlActDt) / max($actualActDt, $controlActDt))) * 100;
+				$diffVol = (1 - (min($actualVol, $controlVol) / max($actualVol, $controlVol))) * 100;
+				if ($diffActDt > 10 || $diffActDt > 10 || $diffVol > 10) {
+					$mustChoose = true;
+				} else {
+					$mustChoose = false;
+					$automateSetup->vialcontrolled = true;
+					$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => 1));
+				}
+				
+				$status = 'done';
+				$success = true;
+			}
+			
+		}
+	
+		return new JsonModel(array('success' => $success, 'status' => $status, 'actuals' => $actuals, 'controls' => $controls, 'mustchoose' => $mustChoose));
+	}
+	
+	
+	public function	arejectoracceptvialresultAction()
+	{
+		$automateSetup = new Container('automate_setup');
+	
+		if ($automateSetup->vialcontrolled === false) {
+			/* @var $robotService RobotService */
+			$robotService = $this->getServiceLocator()->get('RobotService');
+			$accept = (int) $this->getRequest()->getPost('accept', 0);
+			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => $accept));
+		}
+	
+		return new JsonModel(array('success' => true));
 	}
 }

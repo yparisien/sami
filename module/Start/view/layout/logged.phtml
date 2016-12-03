@@ -115,7 +115,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 					echo $flash->render('default',	array('alert', 'alert-dismissable', 'alert-warning'));
 					echo $flash->render('success',	array('alert', 'alert-dismissable', 'alert-success'));
 				?>
-				<div id="mainContent"><?php echo $this->content; ?></div>
+				<?php echo $this->content; ?>
 			</div> <!-- /container -->
 			<div class="container" style="display: none;">
 				<div class="panel panel-default">
@@ -282,7 +282,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
-					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").keyboard({
+					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").not(":disabled").keyboard({
 						autoAccept: true,
 						usePreview: false,
 						display : {
@@ -302,7 +302,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 					    },
 					});
 					
-					$("input[type=text].form-control.barcode").keyboard({
+					$("input[type=text].form-control.barcode").not(":disabled").keyboard({
 						autoAccept: true, 
 					    usePreview: false,
 						layout : "custom",
@@ -327,7 +327,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 						}
 					});
 					
-					$("textarea.form-control").keyboard({
+					$("textarea.form-control").not(":disabled").keyboard({
 						autoAccept: true,
 						usePreview: false,
 						layout: "french-azerty-1",
@@ -340,7 +340,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 					    },
 					});
 					
-					$("input[type=number].form-control,input[type=text].form-control.number").keyboard({
+					$("input[type=number].form-control,input[type=text].form-control.number").not(":disabled").keyboard({
 						layout : "custom",
 						usePreview: true,
 						customLayout: {

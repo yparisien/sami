@@ -542,9 +542,16 @@ class InputdataController extends CommonController
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		if($this->params('confirm'))
 		{
+			
 			// for the moment, store the log id but use a clever way for final version
 			$oContainer = new Container('automate_setup');
 			$oContainer->sourcekitloaded = true;
+
+			$drug = $this->getDrugTable()->getDrug($oContainer->drugid);
+			
+			$oContainer->vialcontrolled = false;
+			$oContainer->vialdilutabled = false;
+			$oContainer->vialisdilutable = $drug->dilutable;
 			
 			$sm = $this->getServiceLocator();
 			$cfg = $sm->get('Config');

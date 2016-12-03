@@ -95,7 +95,7 @@ class OperatorController extends CommonController
 		return $this->injectedTable;
 	}
 
-	public function indexAction()
+	public function indexAction($partial = false)
 	{
 		/* @var $robotService RobotService  */
 		/* @var $errorService \Start\Services\ErrorService */
@@ -144,12 +144,15 @@ class OperatorController extends CommonController
 			$oContainer->sourcekitloaded = false;
 		}
 
+		$aParam['partial'] = $partial;
 		$aParam['canWork'] = ($oContainer->canWork) ? true : false;
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($canUnload) ? true : false;
 		$aParam['canExport'] = (!$oContainer->fileexported && $oContainer->markedasended) ? true : false;
 		$aParam['needScan'] = true;
+		$aParam['showGloballErrorMessage'] = false;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;
+		$aParam['unit'] = ($this->getSystemTable()->getSystem()->unit == 'mbq') ? 'MBq' : 'mCi';
 		
 		if ($oContainer->drugspecified == true) {
 			$drug = $this->getDrugTable()->getDrug($oContainer->drugid);
@@ -190,7 +193,7 @@ class OperatorController extends CommonController
 	}
 	
 	public function areloadoperatorscreenAction() {
-		$view = $this->indexAction();
+		$view = $this->indexAction(true);
 		$view->setTemplate('operator/operator/index');
 		
 		$viewRender = $this->getServiceLocator()->get('ViewRenderer');

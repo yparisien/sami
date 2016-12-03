@@ -141,6 +141,18 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$fr = new Container('fake_robot');
 				$mRet = $fr->activitytoinj;
 				break;
+			case RobotConstants::MEDICAMENT_CONTROL_ACTVOL:
+				$fr = new Container('fake_robot');
+				$mRet = ($fr->activitycalib / $fr->vialvol) * 0.95;
+				break;
+			case RobotConstants::MEDICAMENT_CONTROL_ACTDT:
+				$fr = new Container('fake_robot');
+				$mRet = ($fr->activityconc * $fr->vialvol) * 0.85;
+				break;
+			case RobotConstants::MEDICAMENT_CONTROL_VOLUME:
+				$fr = new Container('fake_robot');
+				$mRet = 9.63;
+				break;
 			case RobotConstants::PATIENT_ACTUAL_VALIDATION:
 				$fr = new Container('fake_robot');
 				$oInjection = new Container('injection_profile');
@@ -292,6 +304,26 @@ class RobotService implements ServiceLocatorAwareInterface {
 			case RobotConstants::PATIENT_ACTUAL_PATIENTID:
 				$mRet = $cfg['robot']['simulation']['init']['patientid'];
 				break;
+			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT:
+				$fr = new Container('fake_robot');
+				if ($fr->vialcontroltry == 10) {
+					$fr->vialcontroltry = 0;
+					$mRet = 2;
+				} else {
+					$fr->vialcontroltry += 1;
+					$mRet = 0;
+				}
+				break;
+			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT:
+					$fr = new Container('fake_robot');
+					if ($fr->vialcontroltry == 10) {
+						$fr->vialcontroltry = 0;
+						$mRet = 2;
+					} else {
+						$fr->vialcontroltry += 1;
+						$mRet = 0;
+					}
+					break;
 			default:
 				die($variable);
 				break;

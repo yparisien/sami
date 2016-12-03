@@ -5,7 +5,6 @@ return array(
 			'Manager\Controller\Activimeter'		=> 'Manager\Controller\ActivimeterController',
 			'Manager\Controller\Drug'				=> 'Manager\Controller\DrugController',
 			'Manager\Controller\Examination'		=> 'Manager\Controller\ExaminationController',
-			'Manager\Controller\InjectionProfile'	=> 'Manager\Controller\InjectionProfileController',
 			'Manager\Controller\Manager'			=> 'Manager\Controller\ManagerController',
 			'Manager\Controller\Radionuclide'		=> 'Manager\Controller\RadionuclideController',
 			'Manager\Controller\System'				=> 'Manager\Controller\SystemController',
@@ -79,24 +78,6 @@ return array(
 					'defaults' => array(
 						'__NAMESPACE__' => 'Manager\Controller',
 						'controller'	=> 'Drug',
-						'action'		=> 'index',
-						'timeout'		=> 'supervisor',
-						'pagetype'		=> 'admin',
-					),
-				),
-			),
-			'injection_profile' => array(
-				'type'	=> 'segment',
-				'options' => array(
-					// Change this to something specific to your module
-					'route'	=> '/injectionprofile[/][:action][/:id]',
-					'constraints'		=> array(
-						'action'		=> '[a-zA-Z][a-zA-Z0-9_-]*',
-						'id'			=> '[0-9]*',
-					),
-					'defaults' => array(
-						'__NAMESPACE__' => 'Manager\Controller',
-						'controller'	=> 'InjectionProfile',
 						'action'		=> 'index',
 						'timeout'		=> 'supervisor',
 						'pagetype'		=> 'admin',

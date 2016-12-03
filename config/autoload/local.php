@@ -51,8 +51,8 @@ return array(
 	 * Configuration des locks-screen (en secondes)
 	 */
 	'timeout' => array(
-			'operator'		=> 60 * 20, //Temps d'inactivité avec lock des écrans opérateurs
-			'supervisor'	=> 60 * 10, //Temps d'inactivité avec lock des écrans superviseurs
+			'operator'		=> 60 * 200, //Temps d'inactivité avec lock des écrans opérateurs
+			'supervisor'	=> 60 * 100, //Temps d'inactivité avec lock des écrans superviseurs
 			'robot'			=> 2.5, 		//Temps d'attente entre les essais de démarrage
 	),
 	/**

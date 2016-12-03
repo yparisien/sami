@@ -28,3 +28,11 @@
 .badge-inverse:hover {
 	background-color: #1a1a1a;
 }
+.badge-blackwhite {
+	background-color: white;
+	color: black;
+}
+.badge-blackwhite:hover {
+	background-color: #999;
+	color: white;
+}

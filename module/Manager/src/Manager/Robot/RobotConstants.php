@@ -38,6 +38,9 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTCONNECTION		= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Connection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTDISCONNECTION	= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALSAMPLING				= 'G_MainLogic.cmd.Input_Soft.Val_Sampling';
+	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROL				= 'G_MainLogic.cmd.Input_Soft.Vial_Control';
+	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Result'; //0 - EnCours //1-Probleme controle //2-Controle OK 
+	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Select'; //0 - Refus (Garde les valeurs saisies) //1- Accept (Garde les valeurs de control)
 	
 	const MAINLOGIC_CMD_INPUTSOFT_RAZ						= 'G_MainLogic.cmd.Input_Soft.RAZ';
 	
@@ -68,6 +71,9 @@ class RobotConstants {
 	
 	const MEDICAMENT_ACTUAL_ACTVOL 							= 'G_Medicament.Actual.Act_Vol';
 	const MEDICAMENT_ACTUAL_ACTDT 							= 'G_Medicament.Actual.Act_DT';
+	const MEDICAMENT_CONTROL_ACTVOL 						= 'G_Medicament.Control.Act_Vol';
+	const MEDICAMENT_CONTROL_ACTDT 							= 'G_Medicament.Control.Act_DT';
+	const MEDICAMENT_CONTROL_VOLUME 						= 'G_Medicament.Control.Vol';
 	const MEDICAMENT_CALCULATION_CACTDISPO 					= 'G_Medicament.Calculation.C_Act_Dispo';
 	const MEDICAMENT_CALCULATION_CACTPREV					= 'G_Medicament.Calculation.C_Act_Prev';
 	const MEDICAMENT_CALCULATION_CASTPREVACTIVITY			= 'G_Medicament.Calculation.Cast_Prev_Activity';
@@ -83,6 +89,8 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_PERIOD							= 'G_Medicament.Input.Period';
 	const MEDICAMENT_INPUT_VOL								= 'G_Medicament.Input.Vol';
 	const MEDICAMENT_INPUT_RADIONUCLIDEID					= 'G_Medicament.Input.ID';
+	
+	const MEDICAMENT_INPUT_DILUTABLE						= 'G_Medicament.Input.Dilutable';
 	
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
@@ -103,6 +111,8 @@ class RobotConstants {
 	const PATIENT_INPUT_TAUX								= 'G_Patient.Input.Taux';
 	const PATIENT_INPUT_TAUXMAX 							= 'G_Patient.Input.Taux_Max';
 	const PATIENT_INPUT_TAUXMIN 							= 'G_Patient.Input.Taux_Min';
+	const PATIENT_INPUT_FLOWMIN								= 'G_Patient.Input.Flow_Min';
+	const PATIENT_INPUT_FLOWMAX								= 'G_Patient.Input.Flow_Max';
 	
 	const KIT_VALKITP										= 'G_Kit.Val_Kit_P';
 	

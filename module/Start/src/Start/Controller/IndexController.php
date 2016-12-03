@@ -360,6 +360,7 @@ class IndexController extends CommonController
 			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($oContainer->sourcekitbarcode);
 			$oContainer->sourcekitid = $sourcekit->id;
 			$oContainer->sourcekitloaded = true;
+			//TODO Rajouter les etats de vérifs kit controllé et kit dilué 
 		} else if ($isLoaded === '0') {
 			$oContainer->sourcekitid = null;
 			$oContainer->sourcekitloaded = false;
@@ -452,6 +453,9 @@ class IndexController extends CommonController
 		$oSetup->sourcekitloaded = false;
 		$oSetup->markedasended = false;
 		$oSetup->issetup = false;
+		$oSetup->vialcontrolled = false;
+		$oSetup->vialisdilutable = false;
+		$oSetup->vialdilutabled = false;
 		
 		//Reinitialisation du patient en cours d'injection
 		$oInject = new Container('injection_profile');
@@ -506,6 +510,9 @@ class IndexController extends CommonController
 			$oContainer->sourcekitloaded = false;
 			$oContainer->markedasended = false;
 			$oContainer->issetup = false;
+			$oContainer->vialcontrolled = false;
+			$oContainer->vialisdilutable = false;
+			$oContainer->vialdilutabled = false;
 
 			$oInject = new Container('injection_profile');
 			$oInject->drugid = 0;

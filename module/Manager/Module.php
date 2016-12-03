@@ -79,17 +79,6 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype->setArrayObjectPrototype(new Examination());
 					return new TableGateway('examination', $dbAdapter, null, $resultSetPrototype);
 				},
-				'Manager\Model\InjectionProfileTable' =>  function($sm) {
-					$tableGateway = $sm->get('InjectionProfileTableGateway');
-					$table = new InjectionProfileTable($tableGateway);
-					return $table;
-				},
-				'InjectionProfileTableGateway' => function ($sm) {
-					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new InjectionProfile());
-					return new TableGateway('injection_profile', $dbAdapter, null, $resultSetPrototype);
-				},
 				'Manager\Model\RadionuclideTable' =>  function($sm) {
 					$tableGateway = $sm->get('RadionuclideTableGateway');
 					$table = new RadionuclideTable($tableGateway);
