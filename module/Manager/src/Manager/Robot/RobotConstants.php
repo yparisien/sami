@@ -41,6 +41,10 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROL				= 'G_MainLogic.cmd.Input_Soft.Vial_Control';
 	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Result'; //0 - EnCours //1-Probleme controle //2-Controle OK 
 	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Select'; //0 - Refus (Garde les valeurs saisies) //1- Accept (Garde les valeurs de control)
+	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTART			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStart';
+	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTATUS			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStatus'; //0 - EnCours //1-Probleme controle //2-Controle OK
+	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONPROGRESS		= 'G_MainLogic.cmd.Input_Soft.MedDilutionProgress';
+	
 	
 	const MAINLOGIC_CMD_INPUTSOFT_RAZ						= 'G_MainLogic.cmd.Input_Soft.RAZ';
 	

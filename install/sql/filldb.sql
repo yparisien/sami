@@ -270,26 +270,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` VALUES (1,'DelphInnove','1eaa1c5c50a7ceb103fcb8eae65395a5372a6766',1,'Michel','Henri',0);
 
---
--- Table structure for table `injection_profile`
---
-
-CREATE TABLE `injection_profile` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
-  `label` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `injection_profile` VALUES (1,'baby','Bébé');
-INSERT INTO `injection_profile` VALUES (1,'child','Enfant');
-INSERT INTO `injection_profile` VALUES (1,'adult','Adulte');
-
 
 --
 -- Final view structure for view `view_drug`

@@ -711,6 +711,7 @@ class InteractrobotController extends CommonController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$accept = (int) $this->getRequest()->getPost('accept', 0);
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => $accept));
+			$automateSetup->vialcontrolled = true;
 		}
 	
 		return new JsonModel(array('success' => true));
