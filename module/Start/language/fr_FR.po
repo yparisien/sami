@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sami\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 12:38+0100\n"
-"PO-Revision-Date: 2016-12-03 13:01+0100\n"
+"POT-Creation-Date: 2016-12-03 16:15+0100\n"
+"PO-Revision-Date: 2016-12-03 16:35+0100\n"
 "Last-Translator: Thomas DUBOIS <tdubois@softia-systems.net>\n"
 "Language-Team: Medinnove <contact@medinnove>\n"
 "Language: fr_FR\n"
@@ -337,9 +337,9 @@ msgstr "Confirmer Mot de Passe"
 #: module/Auth/view/auth/login/changepwd.phtml:38
 #: module/Operator/view/operator/inputdata/confirmpatient.phtml:80
 #: module/Operator/view/operator/inputdata/loadpatient.phtml:39
-#: module/Operator/view/operator/operator/index.phtml:176
-#: module/Operator/view/operator/operator/index.phtml:205
-#: module/Operator/view/operator/operator/index.phtml:455
+#: module/Operator/view/operator/operator/index.phtml:182
+#: module/Operator/view/operator/operator/index.phtml:211
+#: module/Operator/view/operator/operator/index.phtml:461
 msgid "Confirm"
 msgstr "Confirmez"
 
@@ -470,7 +470,7 @@ msgstr "Tableau de bord Superviseur"
 #: module/Manager/view/manager/activimeter/index.phtml:3
 #: module/Manager/view/manager/activimeter/index.phtml:9
 #: module/Manager/view/manager/system/index.phtml:57
-#: module/Operator/view/operator/operator/index.phtml:156
+#: module/Operator/view/operator/operator/index.phtml:162
 msgid "Activimeter"
 msgstr "Activimètre"
 
@@ -484,7 +484,7 @@ msgstr "Une nouvelle fenêtre devrait s'ouvrir dans quelques secondes."
 
 #: module/Manager/view/manager/activimeter/index.phtml:16
 msgid "Check on every desktop if ou don't see it."
-msgstr ""
+msgstr "Vérifier sur l'ensemble des écrans si une fenêtre a été ouverte."
 
 #: module/Manager/view/manager/drug/add.phtml:3
 #: module/Manager/view/manager/drug/edit.phtml:3
@@ -544,7 +544,7 @@ msgstr "Diluable"
 #: module/Manager/view/manager/user/edit.phtml:45
 #: module/Manager/view/manager/user/index.phtml:33
 #: module/Operator/view/operator/interactrobot/endinject.phtml:50
-#: module/Operator/view/operator/operator/index.phtml:231
+#: module/Operator/view/operator/operator/index.phtml:237
 #: module/Start/view/layout/logged.phtml:133
 msgid "No"
 msgstr "Non"
@@ -556,7 +556,7 @@ msgstr "Non"
 #: module/Manager/view/manager/user/edit.phtml:48
 #: module/Manager/view/manager/user/index.phtml:31
 #: module/Operator/view/operator/interactrobot/endinject.phtml:51
-#: module/Operator/view/operator/operator/index.phtml:227
+#: module/Operator/view/operator/operator/index.phtml:233
 #: module/Start/view/layout/logged.phtml:136
 msgid "Yes"
 msgstr "Oui"
@@ -929,9 +929,9 @@ msgstr "Valider"
 #: module/Operator/view/operator/inputdata/confirmpatient.phtml:316
 #: module/Operator/view/operator/inputdata/selectpatient.phtml:120
 #: module/Operator/view/operator/interactrobot/injection.phtml:125
-#: module/Operator/view/operator/operator/index.phtml:177
-#: module/Operator/view/operator/operator/index.phtml:206
-#: module/Operator/view/operator/operator/index.phtml:456
+#: module/Operator/view/operator/operator/index.phtml:183
+#: module/Operator/view/operator/operator/index.phtml:212
+#: module/Operator/view/operator/operator/index.phtml:462
 #: module/Start/view/layout/layout.phtml:103
 #: module/Start/view/layout/logged.phtml:291
 msgid "Cancel"
@@ -1651,139 +1651,143 @@ msgstr "Médicament chargé : <u>%s</u>"
 msgid "Scan source kit barcode"
 msgstr "Scannez le Code barre du Kit Source"
 
-#: module/Operator/view/operator/operator/index.phtml:80
+#: module/Operator/view/operator/operator/index.phtml:81
 msgid "Dilute"
 msgstr "Diluer"
 
-#: module/Operator/view/operator/operator/index.phtml:83
-#: module/Operator/view/operator/operator/index.phtml:219
+#: module/Operator/view/operator/operator/index.phtml:85
+msgid "Diluted"
+msgstr "Diluée"
+
+#: module/Operator/view/operator/operator/index.phtml:89
+#: module/Operator/view/operator/operator/index.phtml:225
 msgid "Launch a vial check process"
 msgstr "Lancer une vérification de la fiole"
 
-#: module/Operator/view/operator/operator/index.phtml:84
+#: module/Operator/view/operator/operator/index.phtml:90
 msgid "Check"
 msgstr "Vérifier"
 
-#: module/Operator/view/operator/operator/index.phtml:87
+#: module/Operator/view/operator/operator/index.phtml:93
 msgid "See vial results"
 msgstr "Voir les résulats de la fiole"
 
-#: module/Operator/view/operator/operator/index.phtml:88
+#: module/Operator/view/operator/operator/index.phtml:94
 msgid "Check results"
 msgstr "Vérifier les résultats"
 
-#: module/Operator/view/operator/operator/index.phtml:92
 #: module/Operator/view/operator/operator/index.phtml:98
 #: module/Operator/view/operator/operator/index.phtml:104
+#: module/Operator/view/operator/operator/index.phtml:110
 msgid "Loading Source kit & Source"
 msgstr "Charger le Kit Source et le Médicament"
 
-#: module/Operator/view/operator/operator/index.phtml:96
-#: module/Operator/view/operator/operator/index.phtml:129
-#: module/Operator/view/operator/operator/index.phtml:143
+#: module/Operator/view/operator/operator/index.phtml:102
+#: module/Operator/view/operator/operator/index.phtml:135
+#: module/Operator/view/operator/operator/index.phtml:149
 msgid "Action required"
 msgstr "Action requise"
 
-#: module/Operator/view/operator/operator/index.phtml:112
 #: module/Operator/view/operator/operator/index.phtml:118
+#: module/Operator/view/operator/operator/index.phtml:124
 msgid "Injection - Operator Authentification"
 msgstr "Injection - Identification de l'Opérateur"
 
-#: module/Operator/view/operator/operator/index.phtml:124
+#: module/Operator/view/operator/operator/index.phtml:130
 msgid "List of patients injected"
 msgstr "Liste des Patients Injectés"
 
-#: module/Operator/view/operator/operator/index.phtml:131
 #: module/Operator/view/operator/operator/index.phtml:137
+#: module/Operator/view/operator/operator/index.phtml:143
 msgid "Unloading"
 msgstr "Déchargement"
 
-#: module/Operator/view/operator/operator/index.phtml:145
 #: module/Operator/view/operator/operator/index.phtml:151
+#: module/Operator/view/operator/operator/index.phtml:157
 msgid "Transferting patient's data to software"
 msgstr "Transfert des Données Patient au logiciel de Radiopharmacie"
 
-#: module/Operator/view/operator/operator/index.phtml:170
+#: module/Operator/view/operator/operator/index.phtml:176
 msgid "Remove receipted drug."
 msgstr "Remplacer le Médicament"
 
-#: module/Operator/view/operator/operator/index.phtml:173
+#: module/Operator/view/operator/operator/index.phtml:179
 msgid "Are you sure to remove selected drug ?"
 msgstr "Voulez-vous remplacer le Médicament réceptionné ?"
 
-#: module/Operator/view/operator/operator/index.phtml:187
+#: module/Operator/view/operator/operator/index.phtml:193
 msgid "Launch dilution."
 msgstr "Lancer la dilution."
 
-#: module/Operator/view/operator/operator/index.phtml:191
+#: module/Operator/view/operator/operator/index.phtml:197
 msgid "Do you want to launch the dilution ?"
 msgstr "Voulez-vous lancer une dilution de la fiole ?"
 
-#: module/Operator/view/operator/operator/index.phtml:194
+#: module/Operator/view/operator/operator/index.phtml:200
 msgid "Dilution in progress"
 msgstr "Dilution en cours"
 
-#: module/Operator/view/operator/operator/index.phtml:209
-#: module/Operator/view/operator/operator/index.phtml:391
+#: module/Operator/view/operator/operator/index.phtml:215
+#: module/Operator/view/operator/operator/index.phtml:397
 #: module/Start/view/layout/logged.phtml:473
 msgid "Close"
 msgstr "Fermer"
 
-#: module/Operator/view/operator/operator/index.phtml:223
+#: module/Operator/view/operator/operator/index.phtml:229
 msgid "Do you want to launch a control on the vial ?"
 msgstr "Voulez-vous lancer un contrôle de la fiole ?"
 
-#: module/Operator/view/operator/operator/index.phtml:236
+#: module/Operator/view/operator/operator/index.phtml:242
 msgid "Vial Control in progress"
 msgstr "Contrôle de la fiole en cours"
 
-#: module/Operator/view/operator/operator/index.phtml:242
+#: module/Operator/view/operator/operator/index.phtml:248
 msgid ""
 "Please stay at a distance of few meters from the machine during this process."
 msgstr ""
 "Veuillez vous tenir (vous et toute autre personne) à l'écart de quelques "
 "mètres de la machine durant ce processus."
 
-#: module/Operator/view/operator/operator/index.phtml:247
+#: module/Operator/view/operator/operator/index.phtml:253
 msgid "Results of vial check"
 msgstr "Résultats du contrôle de la fiole."
 
-#: module/Operator/view/operator/operator/index.phtml:253
+#: module/Operator/view/operator/operator/index.phtml:259
 msgid "Vial infos setted by operator"
 msgstr "Informations de la fiole saisies par l'opérateur"
 
-#: module/Operator/view/operator/operator/index.phtml:260
-#: module/Operator/view/operator/operator/index.phtml:311
+#: module/Operator/view/operator/operator/index.phtml:266
+#: module/Operator/view/operator/operator/index.phtml:317
 msgid "Vial Volume"
 msgstr "Volume de la fiole"
 
-#: module/Operator/view/operator/operator/index.phtml:273
-#: module/Operator/view/operator/operator/index.phtml:324
+#: module/Operator/view/operator/operator/index.phtml:279
+#: module/Operator/view/operator/operator/index.phtml:330
 msgid "Vial Activity"
 msgstr "Activité de la fiole"
 
-#: module/Operator/view/operator/operator/index.phtml:286
-#: module/Operator/view/operator/operator/index.phtml:337
+#: module/Operator/view/operator/operator/index.phtml:292
+#: module/Operator/view/operator/operator/index.phtml:343
 msgid "Volumic Activity"
-msgstr "Volume d'activité"
+msgstr "Activité volumique"
 
-#: module/Operator/view/operator/operator/index.phtml:304
+#: module/Operator/view/operator/operator/index.phtml:310
 msgid "Vial infos measured by the system"
 msgstr "Informations de la fiole mesurées par le système"
 
-#: module/Operator/view/operator/operator/index.phtml:354
+#: module/Operator/view/operator/operator/index.phtml:360
 msgid "Measured infos are equivalent to setted infos."
 msgstr "Les informations mesurées sont conformes au informations saisies."
 
-#: module/Operator/view/operator/operator/index.phtml:355
+#: module/Operator/view/operator/operator/index.phtml:361
 msgid "The system is going to use measured infos."
 msgstr "Les informations mesurées par le système seront celles utilisées."
 
-#: module/Operator/view/operator/operator/index.phtml:360
+#: module/Operator/view/operator/operator/index.phtml:366
 msgid "Measured infos are different to setted infos."
 msgstr "Les informations mesurées diffèrent de celle saisies."
 
-#: module/Operator/view/operator/operator/index.phtml:362
+#: module/Operator/view/operator/operator/index.phtml:368
 msgid ""
 "The system has detect a signifiant difference between infos setted by the "
 "user and those measured."
@@ -1791,60 +1795,60 @@ msgstr ""
 "Le système a detecté une différence signifiant entre les informations "
 "renseignées par l'opérateur et les informations mesurées sur la fiole."
 
-#: module/Operator/view/operator/operator/index.phtml:364
+#: module/Operator/view/operator/operator/index.phtml:370
 msgid "This difference can be due by : "
 msgstr "Les différences peuvent être dues : "
 
-#: module/Operator/view/operator/operator/index.phtml:367
+#: module/Operator/view/operator/operator/index.phtml:373
 msgid "a bad input of the operator during setup drug process"
 msgstr "une mauvaise saisie de l'operateur durant le chargement du médicament"
 
-#: module/Operator/view/operator/operator/index.phtml:368
+#: module/Operator/view/operator/operator/index.phtml:374
 msgid ""
 "a delay between the first vial opening and the vial loading in the machine"
 msgstr ""
 "un délais significatif entre la première ouverture de la fiole et son "
 "placement dans la machine"
 
-#: module/Operator/view/operator/operator/index.phtml:369
+#: module/Operator/view/operator/operator/index.phtml:375
 msgid "a wrong information on the vial notice"
 msgstr "une information erronée sur la notice de la fiole"
 
-#: module/Operator/view/operator/operator/index.phtml:372
+#: module/Operator/view/operator/operator/index.phtml:378
 msgid "Recommanded choice is to keep measured infos."
 msgstr "Il est recommandé de choisir les informations mesurées par le système."
 
-#: module/Operator/view/operator/operator/index.phtml:378
+#: module/Operator/view/operator/operator/index.phtml:384
 msgid "Keep blue panel values"
 msgstr "Garder les informations du panneau bleu."
 
-#: module/Operator/view/operator/operator/index.phtml:380
+#: module/Operator/view/operator/operator/index.phtml:386
 msgid "Please choose what infos you want to keep for injections."
 msgstr "Quelles informations de la fiole voulez-vous retenir ?"
 
-#: module/Operator/view/operator/operator/index.phtml:382
+#: module/Operator/view/operator/operator/index.phtml:388
 msgid "Keep green panel values"
 msgstr "Garder les informations dans le tableau vert"
 
-#: module/Operator/view/operator/operator/index.phtml:388
+#: module/Operator/view/operator/operator/index.phtml:394
 msgid ""
 "You have choose to keep informations setted by the operator about the vial."
 msgstr ""
 "Vous avez choisi de conserver les informations saisies par l'opérateur pour "
 "la fiole."
 
-#: module/Operator/view/operator/operator/index.phtml:389
+#: module/Operator/view/operator/operator/index.phtml:395
 msgid ""
 "You have choose to keep informations measured by the system about the vial."
 msgstr ""
 "Vous avez choisi de conserver les informations de la fiole mesurées par le "
 "système."
 
-#: module/Operator/view/operator/operator/index.phtml:449
+#: module/Operator/view/operator/operator/index.phtml:455
 msgid "Remove receipted kit source."
 msgstr "Remplacer le Kit Source "
 
-#: module/Operator/view/operator/operator/index.phtml:452
+#: module/Operator/view/operator/operator/index.phtml:458
 msgid "Are you sure to remove selected source kit ?"
 msgstr "Voulez-vous remplacer  le Kit Source déjà sélectionné"
 
