@@ -77,7 +77,13 @@
 				<a href="#" class="list-group-item list-group-item-success">
 					<span class="badge badge-success"><span class="glyphicon glyphicon-ok"></span></span>
 					<?php if ($step->vialisdilutable === true && $step->vialdilutabled === false) { ?>
-					<span class="badge badge-info" style="font-size: 1.5em;"><span class="fa fa-flask"></span> <?php echo $this->translate('Dilute'); ?></span>
+					<span class="badge badge-info" style="font-size: 1.5em;" id="btnDilute">
+						<span class="fa fa-flask"></span> <?php echo $this->translate('Dilute'); ?>
+					</span>
+					<?php } else if ($step->vialisdilutable === true && $step->vialdilutabled === true) { ?>
+					<span class="badge badge-success" style="font-size: 1.5em;">
+						<span class="fa fa-flask"></span> <?php echo $this->translate('Diluted'); ?>
+					</span>
 					<?php } ?>
 					<?php if ($step->vialcontrolled === false) { ?>
 					<span class="badge badge-info" style="font-size: 1.5em;" id="btnCheckVial" title="<?php echo $this->translate('Launch a vial check process'); ?>">
@@ -191,7 +197,7 @@
 					<p class="alert alert-info"><?php echo $this->translate("Do you want to launch the dilution ?"); ?></p>
 				</div>
 				<div id="dilutionProgress" style="display: none;">
-					<h6><?php echo $this->translate("Dilution in progress"); ?></h6>
+					<h5><?php echo $this->translate("Dilution in progress"); ?></h5>
 					<div>
 						<div class="progress">
   							<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
@@ -201,11 +207,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer" id="dilutionFooter">
-				<button type="button" class="btn btn-success" onclick="removeDrug();"><?php echo $this->translate('Confirm');?></button>
+			<div class="modal-footer" id="dilutionFooterConfirm">
+				<button type="button" class="btn btn-success" onclick="lauchDilution();"><?php echo $this->translate('Confirm');?></button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->translate('Cancel');?></button>
 			</div>
-			<div class="modal-footer" id="dilutionFooter">
+			<div class="modal-footer" id="dilutionFooterClose">
 				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close');?></button>
 			</div>
 		</div>
@@ -274,7 +280,7 @@
 													<div class="col-sm-6">
 														<div class="input-group">
 															<input type="number" class="form-control" id="dbActivity" disabled="disabled">
-															<span class="input-group-addon"><?php echo $unit?>/ml</span>
+															<span class="input-group-addon"><?php echo $unit?></span>
 														</div>
 													</div>
 												</div>
@@ -499,6 +505,15 @@ $(function() {
 		$("#checkVial").modal('show');
 	});
 
+	$(document).on("click", "#btnDilute", function() {
+		$("#msgDilution").show();
+		$("#dilutionFooterConfirm").show();
+		$("#dilutionProgress").hide();
+		$("#dilutionFooterClose").hide();
+
+		$("#confirmDilution").modal('show');
+	});
+
 	$(document).on("click", "#btnVialResults", function() {
 		$("#vialResults").show();
 		$("#checkVial").modal('show');
@@ -507,7 +522,7 @@ $(function() {
 });
 
 function loadResults() {
-	
+	//TODO A Finir
 }
 
 function launchVialCheck() {
@@ -609,6 +624,25 @@ function removeSourceKit() {
 	$.ajax({
 		type: "GET",
 		url: "<?php echo $this->url('setup', array('action'=>'aunloadsourcekit'))?>",
+		cache: false,
+		dataType: "json",
+	}).done(function (result) {
+		location.reload();
+	});
+}
+
+function lauchDilution() {
+	//TODO Code temporaire
+
+	
+	$("#msgDilution").hide();
+	$("#dilutionFooterConfirm").hide();
+	$("#dilutionProgress").show();
+	$("#dilutionFooterClose").show();
+
+	$.ajax({
+		type: "GET",
+		url: "<?php echo $this->url('inject', array('action'=>'avioldilutionprogess'))?>",
 		cache: false,
 		dataType: "json",
 	}).done(function (result) {

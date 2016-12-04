@@ -702,7 +702,7 @@ class InteractrobotController extends CommonController
 	}
 	
 	
-	public function	arejectoracceptvialresultAction()
+	public function	arejectoracceptvialresultAction() 
 	{
 		$automateSetup = new Container('automate_setup');
 	
@@ -714,6 +714,15 @@ class InteractrobotController extends CommonController
 			$automateSetup->vialcontrolled = true;
 		}
 	
+		return new JsonModel(array('success' => true));
+	}
+	
+	public function avioldilutionprogessAction()
+	{
+		//TODO Temp code
+		sleep(5);
+		$automateSetup = new Container('automate_setup');
+		$automateSetup->vialdilutabled = true;
 		return new JsonModel(array('success' => true));
 	}
 }
