@@ -515,14 +515,23 @@ $(function() {
 	});
 
 	$(document).on("click", "#btnVialResults", function() {
-		$("#vialResults").show();
-		$("#checkVial").modal('show');
 		loadResults();
+			
 	});
 });
 
 function loadResults() {
 	//TODO A Finir
+	$.ajax({
+		url: "<?php echo $this->url('inject', array('action' => 'agetcheckresults'));?>",
+		type: "GET",
+		cache: false,
+		dataType: "json",
+	}).done(function(result) {
+		$("#vialResults").show();
+		$("#checkVial").modal('show');
+		$("#theChoice").show();	
+	});
 }
 
 function launchVialCheck() {

@@ -52,7 +52,6 @@ CREATE TABLE `input_action` (
 -- Table structure for table `input_drug`
 --
 
-DROP TABLE IF EXISTS `input_drug`;
 CREATE TABLE `input_drug` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inputdate` datetime NOT NULL,
@@ -65,10 +64,15 @@ CREATE TABLE `input_drug` (
   `activity` float NOT NULL,
   `activityconc` float NOT NULL,
   `activitycalib` float NOT NULL,
+  `controlled_activity` float DEFAULT NULL,
+  `controlled_volume` float DEFAULT NULL,
+  `controlled_actvol` float DEFAULT NULL,
+  `selected_activity` enum('controlled','setted') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`,`drugid`),
   KEY `drugid` (`drugid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `input_file`

@@ -259,16 +259,16 @@ class InputdataController extends CommonController
 			$r = $this->getRequest();
 			$user = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity());
 			$aDrugData = array(
-				'inputdate'			=> new \DateTime(),
+				'inputdate'			=> 'now',
 				'userid'			=> $user->id,
 				'drugid'			=> $r->getPost('drugid'),
 				'batchnum'			=> $r->getPost('batchnum'),
-				'calibrationtime'	=> \DateTime::createFromFormat('Y-m-d H:i', $r->getPost('calibrationdate') . ' ' . $r->getPost('calibrationtime')),
+				'calibrationtime'	=> $r->getPost('calibrationdate'),
 				'vialvol'			=> $r->getPost('vialvol'),
 				'activity'			=> $r->getPost('activity'),
 				'activityconc'		=> $r->getPost('activityconc'),
 				'activitycalib'		=> $r->getPost('activitycalib'),
-				'expirationtime'	=> \DateTime::createFromFormat('Y-m-d H:i', $r->getPost('expirationdate') . ' ' . $r->getPost('expirationtime')),
+				'expirationtime'	=> $r->getPost('expirationdate'),
 			);
 			
 			$inputdrug = new InputDrug();
@@ -277,7 +277,7 @@ class InputdataController extends CommonController
 			
 			// log action
 			$inputaction = new InputAction();
-			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->inputdate = new \DateTime();
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$inputaction->action = "Specify inputdrug #".$inputdrug->id;
 			$this->getInputActionTable()->saveInputAction($inputaction);
@@ -334,7 +334,7 @@ class InputdataController extends CommonController
 		
 		// log action
 		$inputaction = new InputAction();
-		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->inputdate = new \DateTime();
 		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$inputaction->action = "Cancel of import file";
 		$this->getInputActionTable()->saveInputAction($inputaction);
@@ -361,12 +361,12 @@ class InputdataController extends CommonController
 			'msg'		=> '',
 		);
 		
-		
 		$destPath = $config['import_export']['upload_path'];
 		if($this->getRequest()->isPost()) // du post en entrée, donc on traite un formulaire
 		{
 			if (class_exists('finfo', false) === false) {
 				$aRetVal['msg'] = $translate("PHP Fileinfo extension is missing. Contact your administrator.");
+				$aRetVal['success'] = 0;
 				return new JsonModel($aRetVal);
 			}
 			
@@ -375,7 +375,8 @@ class InputdataController extends CommonController
 			$type		= new MimeType(array('text/csv','text/plain'));
 			$exist		= new NotExists($destPath);
 			$adapter	= new \Zend\File\Transfer\Adapter\Http();
-			$adapter->setValidators(array($size,$type,$exist), $file['name']);
+// 			$adapter->setValidators(array($size,$type,$exist), $file['name']);
+			$adapter->setValidators(array($exist), $file['name']);
 			
 			$todayString = date('Ymd');
 			$pattern = '#^' . $todayString . '\d{4}#';
@@ -401,7 +402,7 @@ class InputdataController extends CommonController
 	
 						// log action
 						$inputaction = new InputAction();
-						$inputaction->inputdate = date('Y-m-d H:i:s');
+						$inputaction->inputdate = new \DateTime();
 						$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 						$inputaction->action = "Import new patients file";
 						$this->getInputActionTable()->saveInputAction($inputaction);
@@ -420,7 +421,7 @@ class InputdataController extends CommonController
 						$oContainer->fileexported = false;
 						$oContainer->markedasended = false;
 						$oContainer->loadedfilename = $file['name'];
-	
+						
 						//Copy file too archive
 						$source = realpath($destPath . DIRECTORY_SEPARATOR . $file['name']);
 						$pathname = $config['import_export']['import_archive_path'] . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m');
@@ -467,6 +468,13 @@ class InputdataController extends CommonController
 				if ($adapter->getErrors()[0] == NotExists::DOES_EXIST) {
 					$aRetVal['success'] = 0;
 					$aRetVal['msg'] = $translate("File " . realpath($destPath) . DIRECTORY_SEPARATOR  . $file['name'] . " already exists. Try to delete it.");
+				} else {
+					$aRetVal['success'] = 0;
+					$msg = '';
+					foreach ($adapter->getErrors() as $error) {
+						$msg = $error . ', ';
+					}
+					$aRetVal['msg'] = substr($msg, 0, -2);
 				}
 			}
 			
@@ -495,7 +503,7 @@ class InputdataController extends CommonController
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Try to rescan sourcekit #".$kit->serialnumber;
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -513,7 +521,7 @@ class InputdataController extends CommonController
 				$oKit = $this->getSourcekitTable()->saveSourcekit($oKit);
 
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Scan source barcode #".$oKit->id;
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -567,7 +575,7 @@ class InputdataController extends CommonController
 		else
 		{
 			$inputaction = new InputAction();
-			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->inputdate = new \DateTime();
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$inputaction->action = "User start loading source & kit.";
 			$this->getInputActionTable()->saveInputAction($inputaction);
@@ -588,7 +596,7 @@ class InputdataController extends CommonController
 			if($kit) // si on trouve le kit en bdd, on retourne sur la page du scan
 			{
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Try to rescan patientkit #".$kit->serialnumber;
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -627,7 +635,7 @@ class InputdataController extends CommonController
 		if($this->params('confirm'))
 		{
 			$inputaction = new InputAction();
-			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->inputdate = new \DateTime();
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$inputaction->action = "User mark patient kit plugged in";
 			$this->getInputActionTable()->saveInputAction($inputaction);
@@ -664,7 +672,7 @@ class InputdataController extends CommonController
 						 * Enregistre l'action en base de donnée
 						 */
 						$action = new InputAction();
-						$action->inputdate = date('Y-m-d H:i:s');
+						$action->inputdate = new \DateTime();
 						$action->userid = $superviseur->id;
 						$action->action = sprintf($translate("Maximum activity of center reachead. Activity setted: %s. Overpass by %s %s"), $activity, $superviseur->firstname, $superviseur->lastname);
 						$this->getInputActionTable()->saveInputAction($action);
@@ -692,9 +700,9 @@ class InputdataController extends CommonController
 		$inputDrug = $this->getInputDrugTable()->getInputDrug($inputdrugid);
 		
 		$now = new \DateTime();
-		$dateExpiration = new \DateTime($inputDrug->expirationtime);
+		$dateExpiration = $inputDrug->expirationtime;
 		
-		$perempted = ($now > $dateExpiration);
+		$perempted = ($now->getTimestamp() > $dateExpiration->getTimestamp());
 		
  		if($perempted)
 		{
@@ -716,7 +724,7 @@ class InputdataController extends CommonController
 							 * Enregistre l'action en base de donnée
 							 */
 							$action = new InputAction();
-							$action->inputdate = date('Y-m-d H:i:s');
+							$action->inputdate = new \DateTime();
 							$action->userid = $superviseur->id;
 							$action->action = sprintf($translate("Peremption limit reachead. Overpass by %s %s"), $superviseur->firstname, $superviseur->lastname);
 							$this->getInputActionTable()->saveInputAction($action);
@@ -744,7 +752,7 @@ class InputdataController extends CommonController
 			}
 			else {
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Peremption date reached.";
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -962,7 +970,7 @@ class InputdataController extends CommonController
 		$oContainer = new Container('automate_setup');
 	
 		$inputaction = new InputAction();
-		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->inputdate = new \DateTime();
 		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$inputaction->action = "Remove selected inputdrug #".$oContainer->inputdrugid;
 		$this->getInputActionTable()->saveInputAction($inputaction);
@@ -988,7 +996,7 @@ class InputdataController extends CommonController
 		$oContainer->sourcekitid = null;
 	
 		$inputaction = new InputAction();
-		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->inputdate = new \DateTime();
 		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$inputaction->action = "Remove selected source kit #" . $oldSourceKitId;
 		$this->getInputActionTable()->saveInputAction($inputaction);
@@ -1197,9 +1205,8 @@ class InputdataController extends CommonController
 			}
 			if ($r->getPost('expirationtime'))
 			{
-				$expiration = \DateTime::createFromFormat('d/m/Y H:i', $r->getPost('expirationtime'));
-				$fr->expirationtime = $expiration->format("Y-m-d H:i:s");
-				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = str_replace(" ", "-","DT#" . $fr->expirationtime);
+				$fr->expirationtime = \DateTime::createFromFormat('Y-m-d H:i:s', $r->getPost('expirationtime'));
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime'));
 			}
 			$fr->activityconfirm = null;
 			
@@ -1286,7 +1293,7 @@ class InputdataController extends CommonController
 			else
 			{
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Try to rescan sourcekit #".$kit->serialnumber;
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -1330,7 +1337,7 @@ class InputdataController extends CommonController
 			else
 			{
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = "Try to rescan patientkit #".$kit->serialnumber;
 				$this->getInputActionTable()->saveInputAction($inputaction);

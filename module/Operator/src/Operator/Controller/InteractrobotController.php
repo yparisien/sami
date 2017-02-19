@@ -300,7 +300,7 @@ class InteractrobotController extends CommonController
 			$oContainer->vialdilutabled = false;
 
 			$inputaction = new InputAction();
-			$inputaction->inputdate = date('Y-m-d H:i:s');
+			$inputaction->inputdate = new \DateTime();
 			$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 			$inputaction->action = "User mark automate unloaded";
 			$this->getInputActionTable()->saveInputAction($inputaction);
@@ -551,7 +551,7 @@ class InteractrobotController extends CommonController
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		
 		$inputaction = new InputAction();
-		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->inputdate = new \DateTime();
 		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$inputaction->action = "User mark the patient connected to SAMI";
 		$this->getInputActionTable()->saveInputAction($inputaction);
@@ -568,7 +568,7 @@ class InteractrobotController extends CommonController
 	{
 		$newActivity = $this->getRequest()->getPost('activity');
 		$inputaction = new InputAction();
-		$inputaction->inputdate = date('Y-m-d H:i:s');
+		$inputaction->inputdate = new \DateTime();
 		$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 		$inputaction->action = "New injected activity value: ".$newActivity;
 		$this->getInputActionTable()->saveInputAction($inputaction);
@@ -678,6 +678,12 @@ class InteractrobotController extends CommonController
 				$controlActDt = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_ACTDT);
 				$controlVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_VOLUME);
 				
+				$inputDrug->controlled_activity = $controlActDt;
+				$inputDrug->controlled_volume 	= $controlVol;
+				$inputDrug->controlled_actvol 	= $controlActVol;
+				
+				$this->getInputDrugTable()->saveInputDrug($inputDrug);
+				
 				$controls = array('actvol' => $controlActVol, 'actdt' => $controlActDt, 'vol' => (float) $controlVol);
 				
 				//TODO Voir avec Michel et Matthieu les seuils
@@ -709,12 +715,22 @@ class InteractrobotController extends CommonController
 		if ($automateSetup->vialcontrolled === false) {
 			/* @var $robotService RobotService */
 			$robotService = $this->getServiceLocator()->get('RobotService');
+			$inputDrug = $this->getInputDrugTable()->getInputDrug($automateSetup->inputdrugid);
 			$accept = (int) $this->getRequest()->getPost('accept', 0);
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => $accept));
 			$automateSetup->vialcontrolled = true;
 		}
 	
 		return new JsonModel(array('success' => true));
+	}
+	
+	public function agetcheckresultsAction() {
+		$automateSetup = new Container('automate_setup');
+		
+		if ($automateSetup->vialcontrolled === true) {
+			return new JsonModel(array('success' => true));
+		}
+		return new JsonModel(array('success' => false));
 	}
 	
 	public function avioldilutionprogessAction()

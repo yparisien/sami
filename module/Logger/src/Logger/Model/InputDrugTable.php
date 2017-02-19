@@ -63,16 +63,20 @@ class InputDrugTable
 	public function saveInputDrug(InputDrug &$inputdrug)
 	{
 		$data = array(
-			'inputdate'			=> $inputdrug->inputdate->format('Y-m-d H:i:s'),
-			'userid'			=> $inputdrug->userid,
-			'drugid'			=> $inputdrug->drugid,
-			'batchnum'			=> $inputdrug->batchnum,
-			'calibrationtime'	=> $inputdrug->calibrationtime->format('Y-m-d H:i:s'),
-			'expirationtime'	=> $inputdrug->expirationtime->format('Y-m-d H:i:s'),
-			'vialvol'			=> $inputdrug->vialvol,
-			'activity'			=> $inputdrug->activity,
-			'activityconc'		=> $inputdrug->activityconc,
-			'activitycalib'		=> $inputdrug->activitycalib,
+			'inputdate'				=> $inputdrug->inputdate->format('Y-m-d H:i:s'),
+			'userid'				=> $inputdrug->userid,
+			'drugid'				=> $inputdrug->drugid,
+			'batchnum'				=> $inputdrug->batchnum,
+			'calibrationtime'		=> $inputdrug->calibrationtime->format('Y-m-d H:i:s'),
+			'expirationtime'		=> $inputdrug->expirationtime->format('Y-m-d H:i:s'),
+			'vialvol'				=> $inputdrug->vialvol,
+			'activity'				=> $inputdrug->activity,
+			'activityconc'			=> $inputdrug->activityconc,
+			'activitycalib'			=> $inputdrug->activitycalib,
+			'controlled_activity' 	=> $inputdrug->controlled_activity,
+			'controlled_volume' 	=> $inputdrug->controlled_volume,
+			'controlled_actvol' 	=> $inputdrug->controlled_actvol,
+			'selected_activity' 	=> $inputdrug->selected_activity,
 		);
 		
 		$fr = new Container('fake_robot');
@@ -80,6 +84,10 @@ class InputDrugTable
 		$fr->activity = $inputdrug->activity;
 		$fr->activityconc = $inputdrug->activityconc;
 		$fr->activitycalib = $inputdrug->activitycalib;
+		$fr->controlled_activity = $inputdrug->controlled_activity;
+		$fr->controlled_volume = $inputdrug->controlled_volume;
+		$fr->controlled_actvol = $inputdrug->controlled_actvol;
+		$fr->selected_activity = $inputdrug->selected_activity;
 
 		$id = (int) $inputdrug->id;
 		if ($id == 0)

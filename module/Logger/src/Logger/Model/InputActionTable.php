@@ -34,7 +34,7 @@ class InputActionTable
 	public function saveInputAction(InputAction $action)
 	{
 		$data = array(
-			'inputdate'			=> $action->inputdate,
+			'inputdate'			=> $action->inputdate->format('Y-m-d H:i:s'),
 			'userid'			=> $action->userid,
 			'action'			=> $action->action,
 		);

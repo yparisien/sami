@@ -3,9 +3,28 @@ namespace Logger\Model;
 
 class InputAction
 {
+	/**
+	 * 
+	 * @var integer $id
+	 */
 	public	$id;
+	
+	/**
+	 * 
+	 * @var \DateTime $inputdate
+	 */
 	public	$inputdate;
+	
+	/**
+	 * 
+	 * @var integer $userid;
+	 */
 	public	$userid;
+	
+	/**
+	 * 
+	 * @var string $action
+	 */
 	public	$action;
 
 	public function	exchangeArray($data)

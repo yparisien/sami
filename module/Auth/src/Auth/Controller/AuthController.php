@@ -121,7 +121,7 @@ class AuthController extends AbstractActionController
 			{
 				$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 				$inputAction = new InputAction();
-				$inputAction->inputdate = date('Y-m-d H:i:s');
+				$inputAction->inputdate = new \DateTime();
 				$inputAction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputAction->action = $translate("Confirm his/her identity");
 				$this->getInputActionTable()->saveInputAction($inputAction);
@@ -165,7 +165,7 @@ class AuthController extends AbstractActionController
 
 				$oContainer->swaptrynumber = 0;
 				$inputAction = new InputAction();
-				$inputAction->inputdate = date('Y-m-d H:i:s');
+				$inputAction->inputdate = new \DateTime();
 				$inputAction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputAction->action = $translate("Switching user successfull");
 				$this->getInputActionTable()->saveInputAction($inputAction);

@@ -113,7 +113,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 		switch ($variable) {
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
 				$fr = new Container('fake_robot');
-				if (isset($fr->expirationtime) && $fr->expirationtime < $fr->calibrationtime) {
+				if (isset($fr->expirationtime) && $fr->expirationtime->getTimestamp() < $fr->calibrationtime->getTimestamp()) {
 					$mRet = -1;
 				} else if (isset($fr->activityconc) && $fr->activityconc <= 0) {
 					$mRet = -2;

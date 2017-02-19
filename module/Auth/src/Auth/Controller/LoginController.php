@@ -167,7 +167,7 @@ class LoginController extends AbstractActionController
 
 				$this->getSessionStorage()->storeAuth();
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = $this->getUserTable()->searchByLogin($this->getServiceLocator()->get('AuthService')->getIdentity())->id;
 				$inputaction->action = $translate("Auth success");
 				$this->getInputActionTable()->saveInputAction($inputaction);
@@ -255,7 +255,7 @@ class LoginController extends AbstractActionController
 			else // then go back to the login form and display error msg
 			{
 				$inputaction = new InputAction();
-				$inputaction->inputdate = date('Y-m-d H:i:s');
+				$inputaction->inputdate = new \DateTime();
 				$inputaction->userid = 0;
 				$inputaction->action = "Auth failure on login ".$sLogin;
 				$this->getInputActionTable()->saveInputAction($inputaction);
