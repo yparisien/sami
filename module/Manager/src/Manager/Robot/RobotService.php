@@ -46,7 +46,7 @@ class RobotService implements ServiceLocatorAwareInterface {
        	        $context  = stream_context_create($opts);
        	        $log->info('Send to robot [' . $k . '] : ' . $v);
        	         
-				file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+				file_get_contents($cfg['robot']['webservice']['read_write'], false, $context);
 			}
 		}
 		else {
@@ -100,7 +100,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 			);
 	        $context  = stream_context_create($opts);
 	                
-			$ret = @file_get_contents("http://10.0.0.100/goform/ReadWrite", false, $context);
+			$ret = @file_get_contents($cfg['robot']['webservice']['read_write'], false, $context);
 			$log->info('Get from robot [' . $variable . '] : ' . $ret);
 			
 			return $ret;

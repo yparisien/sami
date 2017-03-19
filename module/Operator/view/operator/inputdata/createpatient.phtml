@@ -104,6 +104,16 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="patient_type" class="col-sm-4 control-label"><?php echo $this->translate('Patient type')?></label>
+									<div class="col-sm-8">
+										<select class="form-control input-sm" tabindex="6" id="patient_type" name="patient_type" required>
+											<option value=""><?php echo $this->translate('Select a patient type...');?></option>
+											<option value="EXTERNE"><?php echo $this->translate('Extern');?></option>
+											<option value="HOSPITALISE"><?php echo $this->translate('Hospitalised');?></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="selected-patient" class="col-sm-4 control-label"><?php echo $this->translate('Gender')?></label>
 									<div class="col-sm-8">
 										<select class="form-control input-sm" tabindex="6" id="gender" name="gender" required>

@@ -282,89 +282,112 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
-					$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").not(":disabled").keyboard({
-						autoAccept: true,
-						usePreview: false,
-						display : {
-							bksp   : "\u21e6",
-							accept : "' . $this->translate('Validate') . '",
-							cancel : "' . $this->translate('Cancel') . '",
-							default: "ABC",
-							enter  : "' . $this->translate('Enter') . '",
-						},
-						layout: "french-azerty-1",
-						css: {
-					        input: "form-control input-md",
-					        container: "center-block dropdown-menu large-input",
-					        buttonDefault: "btn btn-default",
-					        buttonHover: "btn-primary",
-					        buttonDisabled: "disabled",
-					    },
-					});
 					
-					$("input[type=text].form-control.barcode").not(":disabled").keyboard({
-						autoAccept: true, 
-					    usePreview: false,
-						layout : "custom",
-						maxLength : 38,
-						customLayout: {
-							"normal" : [
-								"0 1 2 3 4 5 6 7 8 9",
-								"a b c d e f g h i j",
-								"k l m n o p q r s t",
-								"u v w x y z {b} {clear} {a} {c}"
-							]
-						},
-						css: {
-					        input: "form-control input-md",
-					        container: "center-block dropdown-menu",
-					        buttonDefault: "btn btn-default",
-					        buttonHover: "btn-primary",
-					        buttonDisabled: "disabled",
-					    },
-						beforeClose: function() {
-							checkInputVal();
-						}
-					});
+					var targetNodes         = $("input");
+					var MutationObserver    = window.MutationObserver || window.WebKitMutationObserver;
+					var myObserver          = new MutationObserver (mutationHandler);
+					var obsConfig           = { childList: true, characterData: true, attributes: true, subtree: true };
+
+					//--- Add a target node to the observer. Can only add one node at a time.
+					targetNodes.each ( function () {
+					    myObserver.observe (this, obsConfig);
+					} );
 					
-					$("textarea.form-control").not(":disabled").keyboard({
-						autoAccept: true,
-						usePreview: false,
-						layout: "french-azerty-1",
-						css: {
-					        input: "form-control input-md",
-					        container: "center-block dropdown-menu",
-					        buttonDefault: "btn btn-default",
-					        buttonHover: "btn-primary",
-					        buttonDisabled: "disabled",
-					    },
-					});
+					function mutationHandler (mutationRecords) {
 					
-					$("input[type=number].form-control,input[type=text].form-control.number").not(":disabled").keyboard({
-						layout : "custom",
-						usePreview: true,
-						customLayout: {
-							"normal" : [
-								"7 8 9 {b}",
-								"4 5 6 {clear}",
-								"1 2 3 {a}",
-								"0 {dec} - {c}"
-							]
-						}, 
-						autoAccept: true,
-						restrictInput : true,
-						preventPaste : true,
-						css: {
-					        input: "form-control input-md",
-					        container: "center-block dropdown-menu",
-					        buttonDefault: "btn btn-default",
-					        buttonHover: "btn-primary",
-					        buttonDisabled: "disabled",
-					    },
-						change: function(e, keyboard, el) {
-							checkInputOnChange(e, keyboard, el);
-						},
-					});
+					    mutationRecords.forEach ( function (mutation) {
+					
+					        if (mutation.attributeName == "disabled") {
+					           setVirtualKeyboards();
+					        }
+					    } );
+					}
+					
+					
+					function setVirtualKeyboards() {
+						$("input[type=text].form-control,input[type=password].form-control").not(".input-date").not(".barcode").not(".number").not(":disabled").keyboard({
+							autoAccept: true,
+							usePreview: false,
+							display : {
+								bksp   : "\u21e6",
+								accept : "' . $this->translate('Validate') . '",
+								cancel : "' . $this->translate('Cancel') . '",
+								default: "ABC",
+								enter  : "' . $this->translate('Enter') . '",
+							},
+							layout: "french-azerty-1",
+							css: {
+						        input: "form-control input-md",
+						        container: "center-block dropdown-menu large-input",
+						        buttonDefault: "btn btn-default",
+						        buttonHover: "btn-primary",
+						        buttonDisabled: "disabled",
+						    },
+						});
+						
+						$("input[type=text].form-control.barcode").not(":disabled").keyboard({
+							autoAccept: true, 
+						    usePreview: false,
+							layout : "custom",
+							maxLength : 38,
+							customLayout: {
+								"normal" : [
+									"0 1 2 3 4 5 6 7 8 9",
+									"a b c d e f g h i j",
+									"k l m n o p q r s t",
+									"u v w x y z {b} {clear} {a} {c}"
+								]
+							},
+							css: {
+						        input: "form-control input-md",
+						        container: "center-block dropdown-menu",
+						        buttonDefault: "btn btn-default",
+						        buttonHover: "btn-primary",
+						        buttonDisabled: "disabled",
+						    },
+							beforeClose: function() {
+								checkInputVal();
+							}
+						});
+						
+						$("textarea.form-control").not(":disabled").keyboard({
+							autoAccept: true,
+							usePreview: false,
+							layout: "french-azerty-1",
+							css: {
+						        input: "form-control input-md",
+						        container: "center-block dropdown-menu",
+						        buttonDefault: "btn btn-default",
+						        buttonHover: "btn-primary",
+						        buttonDisabled: "disabled",
+						    },
+						});
+						
+						$("input[type=number].form-control,input[type=text].form-control.number").not(":disabled").keyboard({
+							layout : "custom",
+							usePreview: true,
+							customLayout: {
+								"normal" : [
+									"7 8 9 {b}",
+									"4 5 6 {clear}",
+									"1 2 3 {a}",
+									"0 {dec} - {c}"
+								]
+							}, 
+							autoAccept: true,
+							restrictInput : true,
+							preventPaste : true,
+							css: {
+						        input: "form-control input-md",
+						        container: "center-block dropdown-menu",
+						        buttonDefault: "btn btn-default",
+						        buttonHover: "btn-primary",
+						        buttonDisabled: "disabled",
+							},
+						});
+					}
+					
+					setVirtualKeyboards();
 					
 				});
 			');

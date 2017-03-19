@@ -817,6 +817,7 @@ class InputdataController extends CommonController
 			$oPatient->weight = $oRequest->getPost('weight');
 			$oPatient->height = 0;
 			$oPatient->injected = false;
+			$oPatient->patienttype = $oRequest->getPost('patient_type');
 			$this->getPatientTable()->savePatient($oPatient);
 
 			$oInjection = new Injection();
@@ -827,7 +828,7 @@ class InputdataController extends CommonController
 			$oInjection->activity		= 0;
 			$oInjection->dose_status	= '';
 			$oInjection->unique_id		= $oRequest->getPost('expeditornum');
-			$oInjection->vial_id		= '';
+			$oInjection->vial_id		= null;
 			$oInjection->location		= '';
 			$oInjection->comments		= $oRequest->getPost('comment');
 			$oInjection->dci			= $examination->dci;
@@ -1132,6 +1133,10 @@ class InputdataController extends CommonController
 			{
 				$aData[RobotConstants::PATIENT_INPUT_DATENAISSANCE] = $r->getPost('birthdate');
 				$oPatient->birthdate = $r->getPost('birthdate');
+				$date = new \DateTime($oPatient->birthdate);
+				$now = new \DateTime();
+				$interval = $now->diff($date);
+				$oPatient->age = (int)$interval->y;
 			}
 			if ($r->getPost('expeditornum'))
 			{

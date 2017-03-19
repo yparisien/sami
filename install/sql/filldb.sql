@@ -52,6 +52,7 @@ CREATE TABLE `input_action` (
 -- Table structure for table `input_drug`
 --
 
+DROP TABLE IF EXISTS `input_drug`;
 CREATE TABLE `input_drug` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inputdate` datetime NOT NULL,
@@ -243,9 +244,9 @@ CREATE TABLE `tmp_patient` (
   `birthdate` date NOT NULL,
   `age` int(11) NOT NULL,
   `weight` decimal(5,2) NOT NULL,
-  `height` decimal(3,0) NOT NULL,
-  `patienttype` varchar(25) NOT NULL DEFAULT '',
-  `doctorname` varchar(100) NOT NULL DEFAULT '',
+  `height` decimal(3,0) DEFAULT NULL,
+  `patienttype` varchar(25) NULL DEFAULT '',
+  `doctorname` varchar(100) NULL DEFAULT '',
   `injected` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`patient_id`)

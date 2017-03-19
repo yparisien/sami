@@ -31,6 +31,9 @@ return array(
 				'patientid'			=> '67',									//Id du patient chargé lors d'un redemarrage
 			),
 		),
+		'webservice' => array(
+			'read_write' => 'http://10.0.0.100/goform/ReadWrite',
+		),
 	),
 	/**
 	 * Configuration du clavier virtuel
