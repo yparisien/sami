@@ -210,7 +210,10 @@
 				}
 			}
 			else {
-				//TODO Rajouter message d'erreur
+				$("#loading-progress").addClass("progress-bar-danger");
+				$("#loading-error").html("<?php echo sprintf($this->translate('Check of start code has failed.')); ?> : " + result.errorMessage);
+				$("#loading-error").show();
+				$("#loading-step-ok").hide();
 			}
 		});
 	}

@@ -401,7 +401,7 @@ class IndexController extends CommonController
 			}
 		} else {
 			$error = true;
-			$errorMessage = sprintf($translate("Don't know if kitsource & source has been loaded (%s)."), $restartType);
+			$errorMessage = sprintf($translate("Unable to find restart code (restartcode get : %s)."), $restartType);
 		}
 		
 		$jsonModel = new JsonModel();
