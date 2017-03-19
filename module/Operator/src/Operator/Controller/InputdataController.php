@@ -1202,6 +1202,7 @@ class InputdataController extends CommonController
 			if ($r->getPost('calibrationtime'))
 			{
 				$fr->calibrationtime = $r->getPost('calibrationtime');
+				//TODO Changer la date du jour par celle du formulaire
 				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = "DT#" . date("Y-m-d") . "-" . $r->getPost('calibrationtime') . ":00";
 			}
 			if ($r->getPost('batchnum'))
@@ -1210,8 +1211,9 @@ class InputdataController extends CommonController
 			}
 			if ($r->getPost('expirationtime'))
 			{
-				$fr->expirationtime = \DateTime::createFromFormat('Y-m-d H:i:s', $r->getPost('expirationtime'));
-				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = str_replace(" ", "-","DT#" . $r->getPost('expirationtime'));
+				$fr->expirationtime = $r->getPost('expirationtime');
+				//TODO Changer la date du jour par celle du formulaire
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = "DT#" . date("Y-m-d") . "-" . $r->getPost('expirationtime') . ":00";
 			}
 			$fr->activityconfirm = null;
 			
