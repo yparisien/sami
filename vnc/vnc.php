@@ -1,2 +1,2 @@
 <?php
-exec('vncviewer.exe -config trasys.vnc');
+exec('vnc-viewer.exe -config trasys.vnc');
