@@ -702,7 +702,9 @@ class InputdataController extends CommonController
 		$now = new \DateTime();
 		$dateExpiration = $inputDrug->expirationtime;
 		
+		//TODO VOIR l'utilité ou faire le controle coté automate
 		$perempted = ($now->getTimestamp() > $dateExpiration->getTimestamp());
+		$perempted = false;
 		
  		if($perempted)
 		{
