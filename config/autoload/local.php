@@ -15,7 +15,7 @@ return array(
 			'min' => 1,
 			'max' => 10,
 		),
-		'simulated'		=> true,												//Active (true) / Desactive (false) le mode de simulation
+		'simulated'		=> false,												//Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
 			'init' => array( 													//Paramètres de la séquence de démarrage
 				'trytogood'			=> '1',										//Nb d'essai avant OK
@@ -32,7 +32,7 @@ return array(
 			),
 		),
 		'webservice' => array(
-			'read_write' => 'http://10.0.0.100/goform/ReadWrite',
+			'read_write' => 'http://10.0.0.101/goform/ReadWrite',
 		),
 	),
 	/**
