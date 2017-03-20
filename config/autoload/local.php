@@ -15,7 +15,7 @@ return array(
 			'min' => 1,
 			'max' => 10,
 		),
-		'simulated'		=> false,												//Active (true) / Desactive (false) le mode de simulation
+		'simulated'		=> true,												//Active (true) / Desactive (false) le mode de simulation
 		'simulation'	=> array(
 			'init' => array( 													//Paramètres de la séquence de démarrage
 				'trytogood'			=> '1',										//Nb d'essai avant OK

@@ -289,26 +289,46 @@
 		});
 
 		//Envoie la date de calibration
-		$("#timepicker-calibration").on("dp.hide", function(e) {
-			$.ajax({
-	        	type: "POST",
-	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
-	        	dataType: "json",
-	        	data: {'calibrationtime': $("#calibrationtime").val() }
-	      	});
+		$("#datepicker-calibration").on("dp.hide", function(e) {
+			updateCalibrationDatetime();
 		});
+
+		$("#timepicker-calibration").on("dp.hide", function(e) {
+			updateCalibrationDatetime();
+		});
+
+		function updateCalibrationDatetime() {
+			if ($("#calibrationdate").val() != '' && $("#calibrationtime").val() != '') {
+				$.ajax({
+		        	type: "POST",
+		        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+		        	dataType: "json",
+		        	data: {'calibrationdatetime': $("#calibrationdate").val() + '-' + $("#calibrationtime").val() }
+		      	});
+			}
+		}
 		
 		//Envoie la date d'expiration
-		$("#timepicker-peremption").on("dp.hide", function(e) {
-			$.ajax({
-	        	type: "POST",
-	        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
-	        	dataType: "json",
-	        	data: {'expirationtime': $("#expirationtime").val() }
-			}).done(function(result) {
-	      		loadActivityData(false);
-		    });
+		$("#datepicker-peremption").on("dp.hide", function(e) {
+			updatePeremptionDatetime();
 		});
+
+		$("#timepicker-peremption").on("dp.hide", function(e) {
+			updatePeremptionDatetime();
+		});
+
+		function updatePeremptionDatetime() {
+			if ($("#expirationdate").val() != '' && $("#expirationtime").val() != '') {
+				$.ajax({
+		        	type: "POST",
+		        	url: "<?php echo $this->url('setup', array('action'=>'aupdatedrug'))?>",
+		        	dataType: "json",
+		        	data: {'expirationdatetime': $("#expirationdate").val() + '-' +  $("#expirationtime").val() }
+				}).done(function(result) {
+		      		loadActivityData(false);
+			    });
+			}
+		}
 
 		$('#vialvol').change(function() {
 			$('#activityconc').removeAttr('disabled');

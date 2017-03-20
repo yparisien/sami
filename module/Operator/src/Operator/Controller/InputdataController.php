@@ -1201,21 +1201,19 @@ class InputdataController extends CommonController
 				$fr->activitycalib = $r->getPost('activitycalib');
 				$aDrugData[RobotConstants::MEDICAMENT_INPUT_ACTDT] = $r->getPost('activitycalib');
 			}
-			if ($r->getPost('calibrationtime'))
+			if ($r->getPost('calibrationdatetime'))
 			{
-				$fr->calibrationtime = $r->getPost('calibrationtime');
-				//TODO Changer la date du jour par celle du formulaire
-				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = "DT#" . date("Y-m-d") . "-" . $r->getPost('calibrationtime') . ":00";
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTCALIB] = "DT#" . $r->getPost('calibrationdatetime') . ":00";
+				$fr->calibrationtime = \DateTime::createFromFormat('Y-m-d-H:i', $r->getPost('calibrationdatetime'));
 			}
 			if ($r->getPost('batchnum'))
 			{
 				$aDrugData[RobotConstants::MEDICAMENT_INPUT_NLOT] = $r->getPost('batchnum');
 			}
-			if ($r->getPost('expirationtime'))
+			if ($r->getPost('expirationdatetime'))
 			{
-				$fr->expirationtime = $r->getPost('expirationtime');
-				//TODO Changer la date du jour par celle du formulaire
-				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = "DT#" . date("Y-m-d") . "-" . $r->getPost('expirationtime') . ":00";
+				$aDrugData[RobotConstants::MEDICAMENT_INPUT_DTEND] = "DT#" . $r->getPost('expirationdatetime') . ":00";
+				$fr->expirationtime = \DateTime::createFromFormat('Y-m-d-H:i', $r->getPost('expirationdatetime'));
 			}
 			$fr->activityconfirm = null;
 			

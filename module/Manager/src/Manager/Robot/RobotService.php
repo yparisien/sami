@@ -83,19 +83,19 @@ class RobotService implements ServiceLocatorAwareInterface {
 		}
 		else {
 			$aData = array(
-					"redirect" => "response.asp",
-					"variable" => $variable,
-					"value" => "",
-					"read" => "Read",
+				"redirect" => "response.asp",
+				"variable" => $variable,
+				"value" => "",
+				"read" => "Read",
 			);
 	
 			$postdata = http_build_query($aData);
 	        $opts = array(
 	        	'http' => array(
-	        				'method'  => 'POST',
-	                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-	                        'content' => $postdata,
-	        				'timeout' => 5,
+	        		'method'  => 'POST',
+	                'header'  => 'Content-type: application/x-www-form-urlencoded',
+	                'content' => $postdata,
+	        		'timeout' => 5,
 				)
 			);
 	        $context  = stream_context_create($opts);
@@ -113,7 +113,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 		switch ($variable) {
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
 				$fr = new Container('fake_robot');
-				if (isset($fr->expirationtime) && $fr->expirationtime->getTimestamp() < $fr->calibrationtime->getTimestamp()) {
+				if (isset($fr->expirationtime) && isset($fr->calibrationtime) && $fr->expirationtime->getTimestamp() < $fr->calibrationtime->getTimestamp()) {
 					$mRet = -1;
 				} else if (isset($fr->activityconc) && $fr->activityconc <= 0) {
 					$mRet = -2;
