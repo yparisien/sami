@@ -1,3 +1,6 @@
+<?php
+use Logger\Model\InputDrug;
+?>
 <div id="mainContent">
 <ol class="breadcrumb">
 	<li class="active"><span class=" glyphicon glyphicon-home"></span> <?php echo $this->translate('Operator dashboard')?></li>
@@ -21,11 +24,11 @@
 	<p><?php echo sprintf('%s <a href="' . $this->url("examination", array("action" => "add")) . '" class="alert-link">%s</a> %s', $this->translate('No exams found in database. Please '), $this->translate('create an exam'), $this->translate(' to start injections.')); ?></p>
 </div>
 <?php } else { ?>
-<div>
+<div class="full-width-tabs">
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Preparation"); ?></a></li>
-    <li role="presentation"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Injection"); ?></a></li>
-    <li role="presentation"><a href="#dechargement" aria-controls="dechargement" role="tab" data-toggle="tab"><?php echo $this->translate("Unload/Transfer"); ?></a></li>
+    <li role="presentation" class="tab-max-width active"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Preparation"); ?></a></li>
+    <li role="presentation" class="tab-max-width"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Injection"); ?></a></li>
+    <li role="presentation" class="tab-max-width"><a href="#dechargement" aria-controls="dechargement" role="tab" data-toggle="tab"><?php echo $this->translate("Unload/Transfer"); ?></a></li>
   </ul>
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="preparation">
@@ -239,44 +242,57 @@
 		<div class="modal-content panel-primary" style="height: 100%;">
 			<div class="modal-header panel-heading" style="border-top-left-radius: inherit; border-top-right-radius: inherit;">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Launch a vial check process');?></h4>
+				<h4 id="modalTitleLaunch" class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $this->translate('Launch a vial check process');?></h4>
+				<h4 id="modalTitleConsult" class="modal-title"><span class="glyphicon glyphicon-info-sign"></span> <?php echo $this->translate('Vial check results');?></h4>
 			</div>
 			<div class="modal-body">
 				<div id="checkVialConfirm" style="display: none;">
 					<p><?php echo $this->translate("Do you want to launch a control on the vial ?"); ?></p>
-					<div class="btn-group" role="group">
-						<button class="btn btn-success" onclick="launchVialCheck()">
-							<i class="glyphicon glyphicon-ok"></i>
-							<?php echo $this->translate('Yes'); ?>
-						</button>
-						<button class="btn btn-danger" data-dismiss="modal">
-							<i class="glyphicon glyphicon-remove"></i>
-							<?php echo $this->translate('No'); ?>
-						</button>
+					<div class="row">
+						<div class="btn-group col-md-6 col-md-offset-3" role="group">
+							<button class="btn btn-lg btn-success col-md-6" onclick="launchVialCheck()">
+								<i class="glyphicon glyphicon-ok"></i>
+								<?php echo $this->translate('Yes'); ?>
+							</button>
+							<button class="btn btn-lg btn-danger col-md-6" data-dismiss="modal">
+								<i class="glyphicon glyphicon-remove"></i>
+								<?php echo $this->translate('No'); ?>
+							</button>
+						</div>
 					</div>
 				</div>
 				<div id="vialInProgress" style="display: none;">
-					<h1 style="font-size: 5em;"><?php echo $this->translate('Vial Control in progress'); ?></h1>
-					<div class="alert alert-danger" style="font-size: 3em;">
+					<h1 style="font-size: 3em;"><?php echo $this->translate('Vial Control in progress'); ?></h1>
+					<div class="alert alert-danger" style="font-size: 2em;">
 						<p class="text-center">
-							<span class="animate-neon" style="color: #e8bf28; font-size: 5em;">&#9762;</span>
+							<span class="animate-neon" style="color: #e8bf28; font-size: 3em;">&#9762;</span>
 						</p>
 						<p>
 						<?php echo $this->translate('Please stay at a distance of few meters from the machine during this process.'); ?>
 						</p>
 					</div>
 				</div>
+				<div id="vialInError" style="display: none;">
+					<h1><i class="glyphicon glyphicon-info-sign"></i> <?php echo $this->translate('Vial control has failed.'); ?></h1>
+					<div class="alert alert-danger">
+						<p>
+						<?php echo $this->translate('The vial control encountered a problem. Try to relaunch a control or see the manual.'); ?>
+						</p>
+					</div>
+					<div class="row">
+						<button class="btn btn-default col-md-6 col-md-offset-3" aria-label="Close" data-dismiss="modal"><?php echo $this->translate("Close"); ?></button>
+					</div>
+				</div>
 				<div id="vialResults" style="display: none;">
 					<h2><?php echo $this->translate("Results of vial check"); ?></h2>
 					<div class="row">
-						<div class="col-md-1"></div>
-						<div class="col-md-4">
-							<div class="panel panel-info">
+						<div class="col-md-6">
+							<div class="panel panel-info" id="panel-operator">
 								<div class="panel-heading">
 									<h4><?php echo $this->translate("Vial infos setted by operator"); ?></h4>
 								</div>
 								<div class="panel-body">
-									<table class="table table-condensed disabled-blank-input" id="tableSetted">
+									<table class="table table-condensed disabled-blank-input" id="tableSetted" style="min-width: 400px;">
 										<tr>
 											<td>
 												<div class="form-group">
@@ -320,9 +336,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-2"></div>
-						<div class="col-md-4">
-							<div class="panel panel-success">
+						<div class="col-md-6">
+							<div class="panel panel-success" id="panel-system">
 								<div class="panel-heading">
 									<h4><?php echo $this->translate("Vial infos measured by the system"); ?></h4>
 								</div>
@@ -371,7 +386,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-1"></div>
 					</div>
 					<div class="row" id="resultsSimilar" style="display: none;">
 						<h3><?php echo $this->translate("Measured infos are equivalent to setted infos."); ?></h3>
@@ -407,9 +421,11 @@
 						<div class="col-md-1"></div>
 					</div>
 					<div class="row" id="theChoice" style="display: none;">
-						<div class="col-md-10 col-md-offset-1 alert alert-info">
-							<p id="refuseChoice"><?php echo $this->translate("You have choose to keep informations setted by the operator about the vial."); ?></p>
-							<p id="acceptChoice"><?php echo $this->translate("You have choose to keep informations measured by the system about the vial."); ?></p>
+						<div class="col-md-10 col-md-offset-1 alert alert-info" id="refuseChoice">
+							<p class="text-center"><?php echo $this->translate("You have choose to keep informations setted by the operator about the vial."); ?></p>
+						</div>
+						<div class="col-md-10 col-md-offset-1 alert alert-success" id="acceptChoice">
+							<p class="text-center"><?php echo $this->translate("You have choose to keep informations measured by the system about the vial."); ?></p>
 						</div>
 						<button class="btn btn-default col-md-4 col-md-offset-4" data-dismiss="modal"><?php echo $this->translate("Close"); ?></button>
 					</div>
@@ -419,6 +435,7 @@
 	</div>
 </div>
 <style>
+
 @keyframes flickerAnimation {
   0%   { opacity:1; }
   50%  { opacity:0.5; }
@@ -518,32 +535,61 @@ $(function() {
 	});
 
 	$(document).on("click", "#btnCheckVial", function() {
+		$("#checkVial .modal-dialog .modal-content").removeClass("panel-danger").addClass("panel-primary");
 		$("#checkVialConfirm").show();
+		$("#vialInError").hide();
+		$("#vialResults").hide();
 		$("#checkVial").modal('show');
 	});
 
 	$(document).on("click", "#btnVialResults", function() {
 		loadResults();
-			
 	});
 });
 
 function loadResults() {
-	//TODO A Finir
 	$.ajax({
 		url: "<?php echo $this->url('inject', array('action' => 'agetcheckresults'));?>",
 		type: "GET",
 		cache: false,
 		dataType: "json",
 	}).done(function(result) {
+
+		$("#modalTitleLaunch").hide();
+		$("#modalTitleConsult").show();
+		
+		$("#dbVolume").val(result.actuals.vol);
+		$("#dbActivity").val(result.actuals.actdt);
+		$("#dbActVol").val(result.actuals.actvol);
+
+		$("#panel-operator").removeClass("disable-results");
+		$("#panel-system").removeClass("disable-results");
+
+		if (result.selected_activity == '<?php echo InputDrug::SELECTED_ACTIVITY_CONTROLLED; ?>') {
+			$("#refuseChoice").hide();
+			$("#acceptChoice").show();
+			$("#panel-operator").addClass("disable-results");
+		} else if (result.selected_activity == '<?php echo InputDrug::SELECTED_ACTIVITY_SETTED; ?>') {
+			$("#refuseChoice").show();
+			$("#acceptChoice").hide();
+			$("#panel-system").addClass("disable-results");
+		}
+
+		$("#measuredVolume").val(result.controls.vol);
+		$("#measuredActivity").val(result.controls.actdt);
+		$("#measuredActVol").val(result.controls.actvol);
+		
 		$("#vialResults").show();
-		$("#checkVial").modal('show');
 		$("#theChoice").show();	
+		$("#checkVial .modal-dialog").css('min-width', '90%');
+		$("#checkVial").modal('show');
 	});
 }
 
 function launchVialCheck() {
 	$("#checkVialConfirm").hide();
+	$("#vialInError").hide();
+	$("#vialResults").hide();
 
 	
 	$("#checkVial .modal-dialog").animate({
@@ -577,8 +623,11 @@ function checkVialResult() {
 				checkVialResult();
 			}, 25);
 		} else if (result.status == 'error') {
-			alert("ERREUR DE CONTROLE");
+			$("#vialInError").show();
+			$("#vialInProgress").hide();
 		} else if (result.status == 'done') {
+			$("#modalTitleLaunch").hide();
+			$("#modalTitleConsult").show();
 			$("#vialInProgress").hide();
 			$("#checkVial .modal-dialog .modal-content").removeClass("panel-danger").addClass("panel-success");
 
@@ -616,7 +665,7 @@ function acceptMeasure(acceptOrNot) {
 		if (acceptOrNot == 0) {
 			$("#refuseChoice").show();
 			$("#acceptChoice").hide();
-		} else if (acceptOrNot) {
+		} else if (acceptOrNot == 1) {
 			$("#refuseChoice").hide();
 			$("#acceptChoice").show();
 		}

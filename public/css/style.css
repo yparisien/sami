@@ -215,6 +215,33 @@ div.tooltip-inner {
     -moz-animation: spinm 1.4s infinite linear;
 }
 
+.disable-results input.form-control {
+	background-color: #eee;
+}
+
+.disable-results h4,  .disable-results label.control-label {
+	text-decoration: line-through;
+}
+
+.full-width-tabs > ul.nav.nav-tabs {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.full-width-tabs > ul.nav.nav-tabs > li {
+    float: none;
+    display: table-cell;
+}
+
+.full-width-tabs > ul.nav.nav-tabs > li > a {
+    text-align: center;
+}
+
+.tab-max-width {
+	width: 100%;
+}
+
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}

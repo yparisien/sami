@@ -20,6 +20,7 @@ use Manager\Robot\RobotConstants;
 use Zend\View\Model\Zend\View\Model;
 use Bufferspace\Model\PatientHistory;
 use Start\Controller\CommonController;
+use Logger\Model\InputDrug;
 
 class InteractrobotController extends CommonController
 {
@@ -717,6 +718,16 @@ class InteractrobotController extends CommonController
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$inputDrug = $this->getInputDrugTable()->getInputDrug($automateSetup->inputdrugid);
 			$accept = (int) $this->getRequest()->getPost('accept', 0);
+			
+			$selected_activity = InputDrug::SELECTED_ACTIVITY_CONTROLLED;
+			
+			if ($accept == 0) {
+				$selected_activity = InputDrug::SELECTED_ACTIVITY_SETTED;
+			}
+			
+			$inputDrug->selected_activity = $selected_activity;
+			$this->getInputDrugTable()->saveInputDrug($inputdrug);
+			
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => $accept));
 			$automateSetup->vialcontrolled = true;
 		}
@@ -726,10 +737,27 @@ class InteractrobotController extends CommonController
 	
 	public function agetcheckresultsAction() {
 		$automateSetup = new Container('automate_setup');
+
+		$inputDrug = $this->getInputDrugTable()->getInputDrug($automateSetup->inputdrugid);
+		/* @var $robotService RobotService */
+		$robotService = $this->getServiceLocator()->get('RobotService');
+		
+		$actualActVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTVOL);
+		$actualActDt = (float) $robotService->receive(RobotConstants::MEDICAMENT_ACTUAL_ACTDT);
+		$actualVol = (float) $inputDrug->vialvol;
+		
+		$actuals = array('actvol' => $actualActVol, 'actdt' => $actualActDt, 'vol' => (float) $actualVol);
+		
+		$controlActVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_ACTVOL);
+		$controlActDt = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_ACTDT);
+		$controlVol = (float) $robotService->receive(RobotConstants::MEDICAMENT_CONTROL_VOLUME);
+		
+		$controls = array('actvol' => $controlActVol, 'actdt' => $controlActDt, 'vol' => (float) $controlVol);
 		
 		if ($automateSetup->vialcontrolled === true) {
-			return new JsonModel(array('success' => true));
+			return new JsonModel(array('success' => true, 'actuals' => $actuals, 'controls' => $controls, 'selected_activity' => $inputDrug->selected_activity));
 		}
+		
 		return new JsonModel(array('success' => false));
 	}
 	

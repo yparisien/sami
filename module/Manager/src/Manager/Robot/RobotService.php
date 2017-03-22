@@ -306,24 +306,15 @@ class RobotService implements ServiceLocatorAwareInterface {
 				break;
 			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT:
 				$fr = new Container('fake_robot');
-				if ($fr->vialcontroltry == 10) {
+				$as = new Container('automate_setup');
+				if ($fr->vialcontroltry == 10 || $as->vialcontrolled === true) {
 					$fr->vialcontroltry = 0;
-					$mRet = 2;
+					$mRet = $cfg['robot']['simulation']['init']['vial_ctrl_result'];
 				} else {
 					$fr->vialcontroltry += 1;
 					$mRet = 0;
 				}
 				break;
-			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT:
-					$fr = new Container('fake_robot');
-					if ($fr->vialcontroltry == 10) {
-						$fr->vialcontroltry = 0;
-						$mRet = 2;
-					} else {
-						$fr->vialcontroltry += 1;
-						$mRet = 0;
-					}
-					break;
 			default:
 				die($variable);
 				break;

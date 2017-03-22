@@ -29,6 +29,7 @@ return array(
 				'unit'				=> 'mbq',									//Unit de mesure du robot mbq ou mci
 				'restarttype'		=> '8',										//Point de redemarrage
 				'patientid'			=> '67',									//Id du patient chargé lors d'un redemarrage
+				'vial_ctrl_result'	=> 2,										//(0) En cours, (1) Erreur, (2) OK
 			),
 		),
 		'webservice' => array(
