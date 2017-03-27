@@ -143,7 +143,20 @@ class OperatorController extends CommonController
 			//Rajouter log incoherence etat session etat robot
 			$oContainer->sourcekitloaded = false;
 		}
+		
+		$activeTab = null;
+		
+		if (isset($oContainer->activetab)) {
+			$activeTab = $oContainer->activetab;
+		} else {
+			$activeTab = 'setup';
+			$oContainer->activetab = $activeTab;
+		}
 
+		$aParam['preparationIsActive'] 	= ($activeTab == 'setup')  ? 'active' : '';
+		$aParam['injectionIsActive'] 	= ($activeTab == 'inject') ? 'active' : '';
+		$aParam['dechargementIsActive'] = ($activeTab == 'unload') ? 'active' : '';
+		
 		$aParam['partial'] = $partial;
 		$aParam['canWork'] = ($oContainer->canWork) ? true : false;
 		$aParam['canInject'] = ($ready) ? true : false;
@@ -201,6 +214,21 @@ class OperatorController extends CommonController
 		
 		$json = array('error' => false, 'html' => $html);
 		
+		return new JsonModel($json);
+	}
+	
+	public function achangetabAction() {
+		$bError = true;
+		
+		if($this->getRequest()->isPost()) // process the submitted form
+		{
+			$oContainer = new Container('automate_setup');
+			$bError = false;
+			$r = $this->getRequest();
+			$oContainer->activetab  = $r->getPost('selectedtab');
+		}
+		
+		$json = array('error' => $bError);
 		return new JsonModel($json);
 	}
 }

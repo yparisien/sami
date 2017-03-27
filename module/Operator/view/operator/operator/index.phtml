@@ -25,13 +25,13 @@ use Logger\Model\InputDrug;
 </div>
 <?php } else { ?>
 <div class="full-width-tabs">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="tab-max-width active"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Preparation"); ?></a></li>
-    <li role="presentation" class="tab-max-width"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><?php echo $this->translate("Injection"); ?></a></li>
-    <li role="presentation" class="tab-max-width"><a href="#dechargement" aria-controls="dechargement" role="tab" data-toggle="tab"><?php echo $this->translate("Unload/Transfer"); ?></a></li>
+  <ul class="nav nav-tabs" role="tablist" id="tablist">
+    <li role="presentation" class="tab-max-width <?php echo $preparationIsActive; ?>" data-tab-name="setup"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $this->translate("Preparation"); ?></a></li>
+    <li role="presentation" class="tab-max-width <?php echo $injectionIsActive; ?>" data-tab-name="inject"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $this->translate("Injection"); ?></a></li>
+    <li role="presentation" class="tab-max-width <?php echo $dechargementIsActive; ?>" data-tab-name="unload"><a href="#dechargement" aria-controls="dechargement" role="tab" data-toggle="tab"><i class="fa fa-eject" aria-hidden="true"></i> <?php echo $this->translate("Unload/Transfer"); ?></a></li>
   </ul>
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="preparation">
+    <div role="tabpanel" class="tab-pane <?php echo $preparationIsActive; ?>" id="preparation">
     	<div class="well">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
@@ -123,7 +123,7 @@ use Logger\Model\InputDrug;
 			</div>
 		</div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="injection">
+    <div role="tabpanel" class="tab-pane <?php echo $injectionIsActive; ?>" id="injection">
     	<div class="well">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
@@ -148,7 +148,7 @@ use Logger\Model\InputDrug;
 			</div>
 		</div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="dechargement">
+    <div role="tabpanel" class="tab-pane <?php echo $dechargementIsActive; ?>" id="dechargement">
     	<div class="well">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
@@ -506,6 +506,8 @@ use Logger\Model\InputDrug;
 			}, 10000);
 		});
 		
+		
+			
 		function reloadOperatorScreen() {
 			$.ajax({
 				type: "GET",
@@ -544,6 +546,19 @@ $(function() {
 
 	$(document).on("click", "#btnVialResults", function() {
 		loadResults();
+	});
+
+	//TODO remplacer par event bootstrap
+	$(document).on("click", "ul#tablist li", function() {
+		$.ajax({
+			type: "POST",
+			data: {selectedtab : $(this).data('tab-name')},
+	        url: "<?php echo $this->url('operator', array('action' => 'achangetab')); ?>",
+	        cache: false,
+	        dataType: "json",
+		}).done(function (result) {
+			console.info("DONE");
+		});
 	});
 });
 
