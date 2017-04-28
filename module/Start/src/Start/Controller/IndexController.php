@@ -456,6 +456,8 @@ class IndexController extends CommonController
 		$oSetup->vialcontrolled = false;
 		$oSetup->vialisdilutable = false;
 		$oSetup->vialdilutabled = false;
+		$oSetup->vialiscontrollable = false;
+		$oSetup->drugloaded = false;
 		$oSetup->activetab = 'setup';
 		
 		//Reinitialisation du patient en cours d'injection
@@ -514,6 +516,8 @@ class IndexController extends CommonController
 			$oContainer->vialcontrolled = false;
 			$oContainer->vialisdilutable = false;
 			$oContainer->vialdilutabled = false;
+			$oContainer->vialiscontrollable = false;
+			$oContainer->drugloaded = false;
 			$oContainer->activeTab = 'setup';
 
 			$oInject = new Container('injection_profile');

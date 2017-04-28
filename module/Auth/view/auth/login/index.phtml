@@ -17,7 +17,7 @@ if (isset($action) && $action === 'logindone') {
 <div class="col-md-4 col-md-offset-4" id="signinform">
 	<h2 class="form-signin-heading text-center"><?php echo $this->translate("Enter your password")?></h2>
 	<div class="well">
-		<form class="form-signin" role="form" method="post" action="<?php echo $this->url('log', array('action'=>'signin')); ?>" autocomplete="off">
+		<form class="form-signin" id="passwordSignIn" name="passwordSignIn" role="form" method="post" action="<?php echo $this->url('log', array('action'=>'signin')); ?>" autocomplete="off">
 			<input type="hidden" name="action" value="password" />
 			<p class="text-center"><strong><?php echo $login; ?></strong></p>
 			<div class="form-group">
@@ -30,12 +30,17 @@ if (isset($action) && $action === 'logindone') {
 		</form>
 	</div>
 </div>
-<?php } else {
-?>
+<script>
+function submitSignIn() {
+	console.log("submitSignIn Password");
+	$("#passwordSignIn").submit();
+}
+</script>
+<?php } else { ?>
 <div class="col-md-4 col-md-offset-4" id="signinform">
 	<h2 class="form-signin-heading text-center"><?php echo $this->translate("Please sign in")?></h2>
 	<div class="well">
-		<form class="form-signin" role="form" method="post" action="<?php echo $this->url('log')?>" autocomplete="off">
+		<form class="form-signin" id="loginSignIn" name="loginSignIn" role="form" method="post" action="<?php echo $this->url('log')?>" autocomplete="off">
 			<input type="hidden" name="action" value="login" />
 			<div class="form-group">
 				<input id="login" name="login" type="text" class="form-control" placeholder="<?php echo $this->translate("Login")?>" autocomplete="off" maxlength="100" required autofocus />
@@ -44,7 +49,10 @@ if (isset($action) && $action === 'logindone') {
 		</form>
 	</div>
 </div>
-<?php ?>
-
-<?php
+<script>
+function submitSignIn() {
+	console.log("submitSignIn Login");	
+	$("#loginSignIn").submit();
 }
+</script>
+<?php } ?>

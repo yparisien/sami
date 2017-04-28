@@ -2,9 +2,10 @@
 return array(
 	'controllers' => array(
 		'invokables' => array(
-			'Operator\Controller\Operator'		=> 'Operator\Controller\OperatorController',
+			'Operator\Controller\Activimeter'	=> 'Operator\Controller\ActivimeterController',
 			'Operator\Controller\Inputdata'		=> 'Operator\Controller\InputdataController',
 			'Operator\Controller\Interactrobot'	=> 'Operator\Controller\InteractrobotController',
+			'Operator\Controller\Operator'		=> 'Operator\Controller\OperatorController',
 		),
 	),
 	'router' => array(
@@ -72,6 +73,23 @@ return array(
 						'controller'	=> 'Interactrobot',
 						'action'		=> 'index',
 						'disable_links'	=> true,
+					),
+				),
+			),
+			'activimeter' => array(
+				'type'	=> 'segment',
+				'options' => array(
+					// Change this to something specific to your module
+					'route'	=> '/activimeter[/][:action][/:id]',
+					'constraints' => array(
+						'action'	=> '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id'		=> '[0-9]*',
+					),
+					'defaults' => array(
+						'__NAMESPACE__' => 'Manager\Controller',
+						'controller'	=> 'Activimeter',
+						'action'		=> 'index',
+						'pagetype'		=> 'admin',
 					),
 				),
 			),

@@ -112,6 +112,12 @@ class OperatorController extends CommonController
 		
 		$robotService = $this->getServiceLocator()->get('RobotService');
 		$robotCanInject = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED);
+		$isVialControlable = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ISVIALCONTROLLABLE);
+		$hasDrugLoaded = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_HASDRUGLOADED);
+		
+		$oContainer->vialiscontrollable = $isVialControlable;
+		$oContainer->drugloaded = $hasDrugLoaded;
+		
 		if ($robotCanInject === true) {
 			$oContainer->sourcekitloaded = true;
 		}
@@ -161,7 +167,7 @@ class OperatorController extends CommonController
 		$aParam['canWork'] = ($oContainer->canWork) ? true : false;
 		$aParam['canInject'] = ($ready) ? true : false;
 		$aParam['canUnload'] = ($canUnload) ? true : false;
-		$aParam['canExport'] = (!$oContainer->fileexported && $oContainer->markedasended) ? true : false;
+		$aParam['canExport'] = (!$oContainer->fileexported && !$oContainer->drugloaded) ? true : false;
 		$aParam['needScan'] = true;
 		$aParam['showGloballErrorMessage'] = false;
 		$aParam['hasExams'] = ($nbExams > 0) ? true : false;

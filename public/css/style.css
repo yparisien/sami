@@ -66,6 +66,17 @@ body {
   background-color: #57a900;
 }
 
+.non-printable .btn.disabled,
+.non-printable .btn[disabled],
+.non-printable fieldset[disabled] .btn {
+  pointer-events: none;
+  cursor: not-allowed;
+  filter: alpha(opacity=35);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  opacity: .35;
+}
+
 /* Bouton Clavier Virtuel Accept */
 /* Style Bootstrap btn-success */
 .ui-keyboard-accept {

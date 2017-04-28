@@ -2,7 +2,6 @@
 return array(
 	'controllers' => array(
 		'invokables' => array(
-			'Manager\Controller\Activimeter'		=> 'Manager\Controller\ActivimeterController',
 			'Manager\Controller\Drug'				=> 'Manager\Controller\DrugController',
 			'Manager\Controller\Examination'		=> 'Manager\Controller\ExaminationController',
 			'Manager\Controller\Manager'			=> 'Manager\Controller\ManagerController',
@@ -116,23 +115,6 @@ return array(
 						'controller'	=> 'System',
 						'action'		=> 'index',
 						'timeout'		=> 'supervisor',
-						'pagetype'		=> 'admin',
-					),
-				),
-			),
-			'activimeter' => array(
-				'type'	=> 'segment',
-				'options' => array(
-					// Change this to something specific to your module
-					'route'	=> '/activimeter[/][:action][/:id]',
-					'constraints' => array(
-						'action'	=> '[a-zA-Z][a-zA-Z0-9_-]*',
-						'id'		=> '[0-9]*',
-					),
-					'defaults' => array(
-						'__NAMESPACE__' => 'Manager\Controller',
-						'controller'	=> 'Activimeter',
-						'action'		=> 'index',
 						'pagetype'		=> 'admin',
 					),
 				),

@@ -39,10 +39,10 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_VALPATIENTDISCONNECTION	= 'G_MainLogic.cmd.Input_Soft.Val_Patient_Deconnection';
 	const MAINLOGIC_CMD_INPUTSOFT_VALSAMPLING				= 'G_MainLogic.cmd.Input_Soft.Val_Sampling';
 	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROL				= 'G_MainLogic.cmd.Input_Soft.Vial_Control';
-	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Result'; //0 - EnCours //1-Probleme controle //2-Controle OK 
-	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Select'; //0 - Refus (Garde les valeurs saisies) //1- Accept (Garde les valeurs de control)
+	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Result'; //0 - EnCours //1 - Probleme controle //2 - Controle OK 
+	const MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT			= 'G_MainLogic.cmd.Input_Soft.Vial_Control_Select'; //0 - Refus (Garde les valeurs saisies) //1 - Accept (Garde les valeurs de control)
 	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTART			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStart';
-	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTATUS			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStatus'; //0 - EnCours //1-Probleme controle //2-Controle OK
+	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTATUS			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStatus'; //0 - EnCours //1 - Probleme controle //2 - Controle OK
 	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONPROGRESS		= 'G_MainLogic.cmd.Input_Soft.MedDilutionProgress';
 	
 	
@@ -72,6 +72,8 @@ class RobotConstants {
 	const MAINLOGIC_STATUS_RESTARTTYPE 						= 'G_MainLogic.status.Restart_Type';
 	const MAINLOGIC_STATUS_RINSINGEVOLUTION 				= 'G_MainLogic.status.Rinsing_Evolution';
 	const MAINLOGIC_STATUS_SAMPLINGEVOLUTION 				= 'G_MainLogic.status.Sampling_Evolution';
+	const MAINLOGIC_STATUS_ISVIALCONTROLLABLE				= 'G_MainLogic.status.IsVialControllable'; //0 - Non //1 - Oui
+	const MAINLOGIC_STATUS_HASDRUGLOADED					= 'G_MainLogic.status.Has_Drug_Loaded'; //0 - Non //1 - Oui
 	
 	const MEDICAMENT_ACTUAL_ACTVOL 							= 'G_Medicament.Actual.Act_Vol';
 	const MEDICAMENT_ACTUAL_ACTDT 							= 'G_Medicament.Actual.Act_DT';

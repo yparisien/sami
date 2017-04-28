@@ -25,6 +25,7 @@ use Logger\Model\InputDrug;
 </div>
 <?php } else { ?>
 <div class="full-width-tabs">
+	<?php var_dump($_SESSION['automate_setup']); ?>
   <ul class="nav nav-tabs" role="tablist" id="tablist">
     <li role="presentation" class="tab-max-width <?php echo $preparationIsActive; ?>" data-tab-name="setup"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $this->translate("Preparation"); ?></a></li>
     <li role="presentation" class="tab-max-width <?php echo $injectionIsActive; ?>" data-tab-name="inject"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $this->translate("Injection"); ?></a></li>
@@ -103,15 +104,21 @@ use Logger\Model\InputDrug;
 							<?php echo $this->translate('Loading Source kit & Source'); ?>
 						</a>
 						<?php } ?>
-						<?php if ($step->vialcontrolled === false) { ?>
+						<?php if ($step->vialcontrolled === false && $step->vialiscontrollable === true && $step->drugloaded === true) { ?>
 						<a href="#" class="list-group-item" id="btnCheckVial">
 							<span class="fa fa-shield"></span>
 							<?php echo $this->translate('Check vial'); ?>
 						</a>
-						<?php } else { ?>
+						<?php } else if ($step->vialcontrolled === true) { ?>
 						<a href="#" class="list-group-item list-group-item-success" id="btnVialResults">
 							<span class="fa fa-shield"></span>
 							<?php echo $this->translate('See vial check results'); ?>
+						</a>
+						<?php } else { ?>
+						<a href="#" class="list-group-item">
+							<span class="fa fa-shield"></span>
+							<span class="badge"><span class="glyphicon glyphicon-lock"></span></span>
+							<?php echo $this->translate('Check vial'); ?>
 						</a>
 						<?php } ?>
 						<a href="<?php echo $this->url('activimeter')?>" class="list-group-item">

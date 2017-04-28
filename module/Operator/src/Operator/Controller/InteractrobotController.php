@@ -297,6 +297,7 @@ class InteractrobotController extends CommonController
 			$oContainer->sourcekitscanned = false;
 			$oContainer->sourcekitloaded = false;
 			$oContainer->vialcontrolled = false;
+			$oContainer->vialiscontrollable = false;
 			$oContainer->vialisdilutable = false;
 			$oContainer->vialdilutabled = false;
 
@@ -635,7 +636,7 @@ class InteractrobotController extends CommonController
 		$success = false;
 		$automateSetup = new Container('automate_setup');
 		
-		if ($automateSetup->vialcontrolled === false) {
+		if ($automateSetup->vialcontrolled === false && $automateSetup->vialiscontrollable === true) {
 			/* @var $robotService RobotService */
 			$robotService = $this->getServiceLocator()->get('RobotService');
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROL => 1));
@@ -696,6 +697,7 @@ class InteractrobotController extends CommonController
 				} else {
 					$mustChoose = false;
 					$automateSetup->vialcontrolled = true;
+					$automateSetup->vialiscontrollable = false;
 					$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => 1));
 				}
 				
@@ -730,6 +732,7 @@ class InteractrobotController extends CommonController
 			
 			$robotService->send(array(RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLSELECT => $accept));
 			$automateSetup->vialcontrolled = true;
+			$automateSetup->vialiscontrollable = false;
 		}
 	
 		return new JsonModel(array('success' => true));
