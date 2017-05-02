@@ -23,6 +23,7 @@
 							<div class="tab-content">
 								<div role="tabpanel" class="tab-pane active" id="init">
 									<form class="form form-horizontal">
+										
 										<div class="form-group">
 											<label class="control-label col-sm-2">trytogood</label>
 											<div class="col-sm-2">
@@ -30,7 +31,9 @@
 											</div>
 											<label class="control-label col-sm-2">robotinerror</label>
 											<div class="col-sm-2">
-												<input id="robotinerror" name="init.robotinerror" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>" value="<?php echo $initRobotinerror; ?>" <?php echo $initRobotinerror == 1 ? 'checked="checked"' : '' ; ?>>
+												<input id="robotinerror" name="init.robotinerror" type="checkbox" class="toggle-switch" 
+														data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>" 
+														value="<?php echo $initRobotinerror; ?>" <?php echo $initRobotinerror == 1 ? 'checked="checked"' : '' ; ?>>
 											</div>
 											<label class="control-label col-sm-2">roboterrorcode</label>
 											<div class="col-sm-2">
@@ -46,7 +49,9 @@
 										<div class="form-group">
 											<label class="control-label col-sm-2">hasmed</label>
 											<div class="col-sm-2">
-												<input id="hasmed" name="init.hasmed" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+												<input id="hasmed" name="init.hasmed" type="checkbox" class="toggle-switch" 
+														data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>"
+														value="<?php echo $initHasmed; ?>" <?php echo $initHasmed == 1 ? 'checked="checked"' : '' ; ?>>
 											</div>
 											
 											<label class="control-label col-sm-2" title="<?php echo $this->translate("Name of the loaded drug"); ?>"><?php echo $this->translate("Loaded drug"); ?></label>
@@ -61,11 +66,15 @@
 										<div class="form-group">
 											<label class="control-label col-sm-2">loadedsourcekit</label>
 											<div class="col-sm-2">
-												<input id="loadedsourcekit" name="init.loadedsourcekit" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+												<input id="loadedsourcekit" name="init.loadedsourcekit" type="checkbox" class="toggle-switch" 
+														data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>"
+														value="<?php echo $initLoadedsourcekit; ?>" <?php echo $initLoadedsourcekit == 1 ? 'checked="checked"' : '' ; ?>>
 											</div>
 											<label class="control-label col-sm-2">sourcekitscanned</label>
 											<div class="col-sm-2">
-												<input id="sourcekitscanned" name="init.sourcekitscanned" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+												<input id="sourcekitscanned" name="init.sourcekitscanned" type="checkbox" class="toggle-switch" 
+														data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>"
+														value="<?php echo $initSourcekitscanned; ?>" <?php echo $initSourcekitscanned == 1 ? 'checked="checked"' : '' ; ?>>
 											</div>
 											<label class="control-label col-sm-1" title="<?php echo $this->translate("Source kit serial ID"); ?>"><?php echo $this->translate("SK SID"); ?></label>
 											<div class="col-sm-3">
@@ -95,6 +104,7 @@
 												<input id="patientid" name="init.patientid" class="form-control" type="number" min="1" />
 											</div>
 										</div>
+										
 									</form>
 								</div>
 								<div role="tabpanel" class="tab-pane" id="process">...</div>
@@ -120,13 +130,26 @@
 						dataType:"json",
 						data: {"name": paramName, "value": paramValue},
 					}).done(function(result){
-						
+						if (result.error == true) {
+							console.warn(result.errorMessage);
+						}
 					});
 					
 				};
 				
 				$("#consoleModal .form-control").on('change', function(e) {
 					updateConsoleParam($(this).attr("name"), $(this).val());
+				});
+
+				$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+					  console.log(this); // DOM element
+					  console.log(event); // jQuery event
+					  console.log(state); // true | false
+					  if (state === true) {
+						  updateConsoleParam($(this).attr("name"), 1);
+					  } else {
+						  updateConsoleParam($(this).attr("name"), 0);
+					  }
 				});
 			});
 		</script>
