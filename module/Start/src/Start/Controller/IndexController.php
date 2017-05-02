@@ -557,4 +557,31 @@ class IndexController extends CommonController
 		$jsonModel = new JsonModel();
 		return $jsonModel;
 	}
+	
+	public function setconfigvariableAction() {
+		//TODO Rajouter if simulated === true
+	
+		if ($this->getRequest()->isPost())
+		{
+			$oRobotConfig = new Container('robot_config');
+			$simulation = $oRobotConfig->simulation;
+			
+			$name = $this->getRequest()->getPost('name');
+			$value = $this->getRequest()->getPost('value');
+			
+			$names = explode('.', $name);
+			$depth = count($names);
+			
+			if ($depth == 2) {
+				list($n1, $n2) = $names;
+				$simulation[$n1][$n2] = $value;
+			}
+			
+			$oRobotConfig->simulation = $simulation;
+			
+			return new JsonModel(array('error' => false));
+		}
+		
+		return new JsonModel(array('error' => 'true', 'errorMessage' => "Can't realize action on set config variable"));
+	}
 }

@@ -26,14 +26,17 @@ if ($virtualkeyboardEnable === true) {
 		<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/injection.ico'))
 						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
 						->prependStylesheet($this->basepath() . '/css/keyboard.css')
+						->prependStylesheet($this->basepath() . '/css/animate.css')
 						->prependStylesheet($this->basePath() . '/css/style.css')
+						->prependStylesheet($this->basepath() . '/css/bootstrap-switch.min.css')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-patch.css')
-						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+// 						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
 						->prependStylesheet($this->basePath() . '/css/signin.css')
 						->prependStylesheet($this->basePath() . '/css/print.css', 'print')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-datetimepicker.min.css')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-slider.css')
+						->prependStylesheet($this->basepath() . '/css/font-awesome.min.css');
 		?>
 
 		<!-- Scripts -->
@@ -42,6 +45,7 @@ if ($virtualkeyboardEnable === true) {
 			->prependFile($this->basepath() . '/js/jquery.keyboard.extension-all.js')
 			->prependFile($this->basepath() . '/js/jquery.keyboard.js')
 			->prependFile($this->basepath() . '/js/jquery-barcode.min.js')
+			->prependFile($this->basePath() . '/js/bootstrap-switch.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
 			->prependFile($this->basePath() . '/js/jquery-ui.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
@@ -87,16 +91,28 @@ if ($virtualkeyboardEnable === true) {
 		<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
 			<div class="container">
 				<ul class="nav navbar-nav navbar-right">
-					<li><p class="navbar-text"><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></p></li>
+					<li>
+						<p class="navbar-text">
+							<a href="#" data-toggle="modal" data-target="#consoleModal" class="btn btn-info">
+								<span class="badge"><i class="fa fa-terminal"></i></span> Console
+							</a>
+						</p>
+					</li>
+					<li>
+						<p class="navbar-text">
+							<span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?>
+						</p>
+					</li>
 				</ul>
 			</div>
 		</nav>
+		<?php echo $this->partial('start/common/console.phtml');?>
 		<?php
 		if ($virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").keyboard({
-						autoAccept: true,
+						autoAccept: false,
 						display : {
 							bksp   : "\u21e6",
 							accept : "' . $this->translate('Validate') . '", 
@@ -123,6 +139,8 @@ if ($virtualkeyboardEnable === true) {
 					$(".ui-keyboard-input").bind("accepted", function(e, keyboard, el){
   						submitSignIn();
 					});
+					
+					$("input.toggle-switch").bootstrapSwitch();
 				});
 			');
 		}

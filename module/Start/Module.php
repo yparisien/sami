@@ -11,7 +11,7 @@ namespace Start;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class Module
 {
@@ -33,6 +33,17 @@ class Module
 		// initialize global configuration values
 		$serviceManager = $e->getApplication()->getServiceManager();
 		$config = $serviceManager->get('config');
+		
+		$oContainer = new Container('robot_config');
+		
+		if (!isset($oContainer->simulation)) {
+			$oContainer->simulation = $config['robot']['simulation'];
+		}
+		
+		$oContainer->vialvol	= $config['robot']['vialvol'];
+		$oContainer->simulated	= $config['robot']['simulated'];
+		$oContainer->webservice = $config['robot']['webservice'];
+		
 		$layoutViewModel->virtualkeyboardEnable = $config['virtualkeyboard']['enable'];
 		$layoutViewModel->virtualkeyboardSize = $config['virtualkeyboard']['size'];
 		

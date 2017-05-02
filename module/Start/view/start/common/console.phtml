@@ -1,0 +1,132 @@
+		<!-- Modal Console -->
+		<div class="modal fade" id="consoleModal" tabindex="-1" role="dialog" aria-labelledby="consoleModalLabel">
+			<div class="modal-dialog slideInUp animated" role="document" style="width: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="consoleModalLabel"><?php echo $this->translate("Interactive console"); ?></h4>
+					</div>
+					<div class="modal-body">
+						<div style="min-width: 600px; max-width: 90%;">
+			
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active">
+									<a href="#init" aria-controls="init" role="tab" data-toggle="tab">Init</a>
+								</li>
+								<li role="presentation">
+									<a href="#process" aria-controls="process" role="tab" data-toggle="tab">Process</a>
+								</li>
+							</ul>
+							
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane active" id="init">
+									<form class="form form-horizontal">
+										<div class="form-group">
+											<label class="control-label col-sm-2">trytogood</label>
+											<div class="col-sm-2">
+												<input id="trytogood" name="init.trytogood" class="form-control" type="number" min="0" max="6" value="<?php echo $initTrytogood; ?>" />
+											</div>
+											<label class="control-label col-sm-2">robotinerror</label>
+											<div class="col-sm-2">
+												<input id="robotinerror" name="init.robotinerror" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>" value="<?php echo $initRobotinerror; ?>" <?php echo $initRobotinerror == 1 ? 'checked="checked"' : '' ; ?>>
+											</div>
+											<label class="control-label col-sm-2">roboterrorcode</label>
+											<div class="col-sm-2">
+												<select id="roboterrorcode" name="init.roboterrorcode" class="form-control">
+													<option value="1">1 : Erreur 1</option>
+													<option value="2">2 : Erreur 2</option>
+													<option value="3">3 : Erreur 3</option>
+													<option value="4">4 : Erreur 4</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label col-sm-2">hasmed</label>
+											<div class="col-sm-2">
+												<input id="hasmed" name="init.hasmed" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+											</div>
+											
+											<label class="control-label col-sm-2" title="<?php echo $this->translate("Name of the loaded drug"); ?>"><?php echo $this->translate("Loaded drug"); ?></label>
+											<div class="col-sm-2">
+												<select class="form-control" id="loadedmed" name="init.loadedmed">
+													<option value="Flucis">Flucis</option>
+													<option value="Radio">Radio</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label col-sm-2">loadedsourcekit</label>
+											<div class="col-sm-2">
+												<input id="loadedsourcekit" name="init.loadedsourcekit" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+											</div>
+											<label class="control-label col-sm-2">sourcekitscanned</label>
+											<div class="col-sm-2">
+												<input id="sourcekitscanned" name="init.sourcekitscanned" type="checkbox" class="toggle-switch" data-on-text="<?php echo $this->translate("Yes"); ?>" data-off-text="<?php echo $this->translate("No"); ?>">
+											</div>
+											<label class="control-label col-sm-1" title="<?php echo $this->translate("Source kit serial ID"); ?>"><?php echo $this->translate("SK SID"); ?></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" id="sourcekitserial" name="init.sourcekitserial" />
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label col-sm-2">unit</label>
+											<div class="col-sm-2">
+												<select id="unit" name="init.unit" class="form-control">
+													<option value="mbq">MBq</option>
+													<option value="mci">MCi</option>
+												</select>
+											</div>
+											<label class="control-label col-sm-2">restarttype</label>
+											<div class="col-sm-2">
+												<select id="restarttype" name="init.restarttype" class="form-control">
+													<option value="1">Restart 1</option>
+													<option value="2">Restart 2</option>
+													<option value="3">Restart 3</option>
+													<option value="4">Restart 4</option>
+												</select>
+											</div>
+											<label class="control-label col-sm-2">patientid</label>
+											<div class="col-sm-2">
+												<input id="patientid" name="init.patientid" class="form-control" type="number" min="1" />
+											</div>
+										</div>
+									</form>
+								</div>
+								<div role="tabpanel" class="tab-pane" id="process">...</div>
+							</div>
+						
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(function() { 
+
+				var updateConsoleParam = function(paramName, paramValue) {
+					console.info(paramName, paramValue);
+
+					$.ajax({
+						url: "<?php echo $this->url('setconfigvariable'); ?>",
+						type: "POST",
+						dataType:"json",
+						data: {"name": paramName, "value": paramValue},
+					}).done(function(result){
+						
+					});
+					
+				};
+				
+				$("#consoleModal .form-control").on('change', function(e) {
+					updateConsoleParam($(this).attr("name"), $(this).val());
+				});
+			});
+		</script>

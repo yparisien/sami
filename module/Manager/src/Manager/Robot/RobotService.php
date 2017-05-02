@@ -110,6 +110,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 	private function fakeReceive($variable) {
 		$mRet = null;
 		$cfg = $this->sm->get('Config');
+		$oRobotConfig = new Container('robot_config');
 		switch ($variable) {
 			case RobotConstants::MEDICAMENT_CALCULATION_CACTDISPO:
 				$fr = new Container('fake_robot');
@@ -119,7 +120,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 					$mRet = -2;
 				} else if (isset($fr->activitycalib) && $fr->activitycalib <= 0) {
 					$mRet = -3;
-				} else if (isset($fr->vialvol) && $fr->vialvol < $cfg['robot']['vialvol']['min'] && $fr->vialvol > $cfg['robot']['vialvol']['max']) {
+				} else if (isset($fr->vialvol) && $fr->vialvol < $oRobotConfig->vialvol['min'] && $fr->vialvol > $oRobotConfig->vialvol['max']) {
 					$mRet = -4;
 				} else {
 					$mRet = mt_rand(4000, 5000);
@@ -228,7 +229,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$mRet = "Version 0.1b";
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_RESTARTTYPE:
-				$mRet = $cfg['robot']['simulation']['init']['restarttype'];
+				$mRet = $oRobotConfig->simulation['init']['restarttype'];
 				break;
 			case RobotConstants::ISOTOPES_NB:
 				$mRet = 6;
@@ -266,7 +267,7 @@ class RobotService implements ServiceLocatorAwareInterface {
 				sleep($cfg['timeout']['robot']);
 				$fr = new Container('fake_robot');
 				$mRet = false;
-				if ($fr->tryconnect == $cfg['robot']['simulation']['init']['trytogood']) {
+				if ($fr->tryconnect == $oRobotConfig->simulation['init']['trytogood']) {
 					$mRet = true;
 					$fr->tryconnect = 0;
 				}
@@ -274,52 +275,52 @@ class RobotService implements ServiceLocatorAwareInterface {
 				$fr->tryconnect = $try;
 				break;
 			case RobotConstants::MAINLOGIC_PAR_MEASUREUNIT:
-				$mRet = $cfg['robot']['simulation']['init']['unit'];
+				$mRet = $oRobotConfig->simulation['init']['unit'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASMEDICAMENTLOADED:
-				$mRet = $cfg['robot']['simulation']['init']['hasmed'];
+				$mRet = $oRobotConfig->simulation['init']['hasmed'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_GETMEDICAMENTLOADED:
-				$mRet = $cfg['robot']['simulation']['init']['loadedmed'];
+				$mRet = $oRobotConfig->simulation['init']['loadedmed'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCESCANNED:
-				$mRet = $cfg['robot']['simulation']['init']['sourcekitscanned'];
+				$mRet = $oRobotConfig->simulation['init']['sourcekitscanned'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_GETSERIALKITSOURCE:
-				$mRet = $cfg['robot']['simulation']['init']['sourcekitserial'];
+				$mRet = $oRobotConfig->simulation['init']['sourcekitserial'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASKITSOURCELOADED:
-				$mRet = $cfg['robot']['simulation']['init']['loadedsourcekit'];
+				$mRet = $oRobotConfig->simulation['init']['loadedsourcekit'];
 				$fr = new Container('fake_robot');
  				if ($fr->offsetExists('haskitsourceloaded') && $fr->haskitsourceloaded === true) {
  					$mRet = '1';
  				}
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ERROR:
-				$mRet = $cfg['robot']['simulation']['init']['robotinerror'];
+				$mRet = $oRobotConfig->simulation['init']['robotinerror'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ERRORID:
-				$mRet = $cfg['robot']['simulation']['init']['roboterrorcode'];
+				$mRet = $oRobotConfig->simulation['init']['roboterrorcode'];
 				break;
 			case RobotConstants::PATIENT_ACTUAL_PATIENTID:
-				$mRet = $cfg['robot']['simulation']['init']['patientid'];
+				$mRet = $oRobotConfig->simulation['init']['patientid'];
 				break;
 			case RobotConstants::MAINLOGIC_CMD_INPUTSOFT_VIALCONTROLRESULT:
 				$fr = new Container('fake_robot');
 				$as = new Container('automate_setup');
 				if ($fr->vialcontroltry == 10 || $as->vialcontrolled === true) {
 					$fr->vialcontroltry = 0;
-					$mRet = $cfg['robot']['simulation']['process']['vial_ctrl_result'];
+					$mRet = $oRobotConfig->simulation['process']['vial_ctrl_result'];
 				} else {
 					$fr->vialcontroltry += 1;
 					$mRet = 0;
 				}
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_ISVIALCONTROLLABLE:
-				$mRet = $cfg['robot']['simulation']['process']['is_vial_controllable'];
+				$mRet = $oRobotConfig->simulation['process']['is_vial_controllable'];
 				break;
 			case RobotConstants::MAINLOGIC_STATUS_HASDRUGLOADED:
-				$mRet = $cfg['robot']['simulation']['process']['has_drug_loaded'];
+				$mRet = $oRobotConfig->simulation['process']['has_drug_loaded'];
 				break;
 			default:
 				die($variable);

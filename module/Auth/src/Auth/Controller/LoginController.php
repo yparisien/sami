@@ -9,7 +9,6 @@
 
 namespace Auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Session\Container;
@@ -19,8 +18,9 @@ use Logger\Model\InputAction;
 use Manager\Robot\RobotConstants;
 use Manager\Robot\RobotService;
 use Manager\Model\User;
+use Start\Controller\CommonController;
 
-class LoginController extends AbstractActionController
+class LoginController extends CommonController
 {
 	protected $storage;
 	protected $authservice;
@@ -121,7 +121,12 @@ class LoginController extends AbstractActionController
 			} else if ($sAction === 'login' && $user instanceof User) {
 				$oContainer->login = $user->login;
 				$this->getAuthService()->getAdapter();
-				return new ViewModel(array('action' => 'logindone', 'login' => $sLogin));
+				
+				$variables = array('action' => 'logindone', 'login' => $sLogin);
+				
+				$variables = array_merge($variables, $this->getDefaultVariables());
+				
+				return new ViewModel($variables);
 			}
 			
 		}
