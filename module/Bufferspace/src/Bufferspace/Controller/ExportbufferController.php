@@ -15,8 +15,11 @@ use Zend\Session\Container;
 use Bufferspace\File\Exporter;
 use Start\Controller\CommonController;
 
-
-
+/**
+ * 
+ * @author yohann.parisien
+ *
+ */
 class ExportbufferController extends CommonController
 {
 	protected $inputfileTable;	
@@ -40,6 +43,11 @@ class ExportbufferController extends CommonController
 		return array();
 	}
 
+	/**
+	 * Methode ajax de creation d'un export csv
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function agenfileAction()
 	{
 		$success = 0;

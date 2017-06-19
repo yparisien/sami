@@ -125,6 +125,11 @@ class MonitorController extends CommonController
 		return array();
 	}
 
+	/**
+	 * Récupération de la liste des patients injectés
+	 * 
+	 * @return string[]|NULL[]
+	 */
 	public function	patientlistAction()
 	{
 		$aParam = array(
@@ -135,8 +140,10 @@ class MonitorController extends CommonController
 		return $aParam;
 	}
 
-	/*
-	 * Ajax's calls beyond this line
+	/**
+	 * Action ajax de récupération des informations du patient à injecter
+	 * 
+	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function	aloadpatientAction()
 	{
@@ -153,6 +160,11 @@ class MonitorController extends CommonController
 		return $result;
 	}
 
+	/**
+	 * Action ajax de récupération des informations de l'injection en cours
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function	aloadinjectionAction()
 	{
 		/* @var $robotService RobotService  */
@@ -169,6 +181,11 @@ class MonitorController extends CommonController
 		return $result;
 	}
 	
+	/**
+	 * Action ajax de récupération des informations détaillées d'un patient injecté
+	 *
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function agetinjectedpatientsdetailsAction() {
 		$aParams = array();
 	

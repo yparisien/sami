@@ -1,8 +1,10 @@
 <?php
-namespace Bufferspace\Model;
+namespace Logger\Model;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
+
 /**
+ * Classe modèle de la table patient_history
  * 
  * @author yohann.parisien
  *

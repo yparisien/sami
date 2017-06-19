@@ -1,6 +1,12 @@
 <?php
 namespace Bufferspace\View;
 
+/**
+ * Classe modèle de la vue view_toinject
+ * 
+ * @author yohann.parisien
+ *
+ */
 class ToInject
 {
 	public	$patientId;

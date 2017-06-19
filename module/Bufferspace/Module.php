@@ -25,8 +25,6 @@ use Bufferspace\View\InjectedTable;
 use Bufferspace\View\ToInjectTable;
 use Bufferspace\View\ToInject;
 use Bufferspace\View\Bufferspace\View;
-use Bufferspace\Model\PatientHistoryTable;
-use Bufferspace\Model\PatientHistory;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -108,17 +106,6 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new ToInject());
 					return new TableGateway('view_toinject', $dbAdapter, null, $resultSetPrototype);
-				},
-				'Bufferspace\Model\PatientHistoryTable' =>  function($sm) {
-					$tableGateway = $sm->get('PatientHistoryTableGateway');
-					$table = new PatientHistoryTable($tableGateway);
-					return $table;
-				},
-				'PatientHistoryTableGateway' => function ($sm) {
-					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new PatientHistory());
-					return new TableGateway('patient_history', $dbAdapter, null, $resultSetPrototype);
 				},
 			),
 		);

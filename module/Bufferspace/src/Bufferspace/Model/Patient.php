@@ -1,6 +1,12 @@
 <?php
 namespace Bufferspace\Model;
 
+/**
+ * Classe modèle de la table tmp_patient
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Patient
 {
 	public	$id;

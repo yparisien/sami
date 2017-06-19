@@ -14,13 +14,16 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
 
-use Logger\Model\InputAction;
+use Zend\View\Model\Zend\View\Model;
+
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
-use Zend\View\Model\Zend\View\Model;
-use Bufferspace\Model\PatientHistory;
-use Start\Controller\CommonController;
+
+use Logger\Model\InputAction;
+use Logger\Model\PatientHistory;
 use Logger\Model\InputDrug;
+
+use Start\Controller\CommonController;
 
 class InteractrobotController extends CommonController
 {
@@ -176,7 +179,7 @@ class InteractrobotController extends CommonController
 		if(!$this->patienthistoryTable)
 		{
 			$sm = $this->getServiceLocator();
-			$this->patienthistoryTable = $sm->get('Bufferspace\Model\PatientHistoryTable');
+			$this->patienthistoryTable = $sm->get('Logger\Model\PatientHistoryTable');
 		}
 		return $this->patienthistoryTable;
 	}

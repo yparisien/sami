@@ -90,6 +90,17 @@ class Module implements AutoloaderProviderInterface
 					$resultSetPrototype->setArrayObjectPrototype(new InputFile());
 					return new TableGateway('input_file', $dbAdapter, null, $resultSetPrototype);
 				},
+				'Logger\Model\PatientHistoryTable' =>  function($sm) {
+					$tableGateway = $sm->get('LogPatientHistoryTableGateway');
+					$table = new PatientHistoryTable($tableGateway);
+					return $table;
+				},
+				'LogPatientHistoryTableGateway' => function ($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new PatientHistory());
+					return new TableGateway('patient_history', $dbAdapter, null, $resultSetPrototype);
+				},
 			),
 		);
 	}

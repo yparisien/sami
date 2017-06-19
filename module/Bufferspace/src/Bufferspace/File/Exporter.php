@@ -3,6 +3,12 @@ namespace Bufferspace\File;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Classe d'export / création du fichier csv
+ * 
+ * @author yohann.parisien
+ *
+ */
 class	Exporter
 {
 	protected	$_pathfile;
@@ -74,6 +80,10 @@ class	Exporter
 	public function	setHeader()		{ return $this->_header; }
 	public function	setDataStruct()	{ return $this->_datastruct; }
 
+	/**
+	 * 
+	 * @param string $pathfile
+	 */
 	public function	setPathFile($pathfile)
 	{
 		if(file_exists($pathfile))
@@ -86,6 +96,12 @@ class	Exporter
 		}
 	}
 
+	/**
+	 * Génération du fichier d'export
+	 * 
+	 * @param unknown $filename
+	 * @return void
+	 */
 	public function	generateFile($filename)
 	{
 		if(file_exists($this->_pathfile . '/' . $filename))
@@ -135,6 +151,9 @@ class	Exporter
 		}
 	}
 	
+	/**
+	 * Nettoyage des tables tmp_patient & tmp_injection après création de l'export
+	 */
 	public function cleanDataBase()
 	{
 		$patientTable = $this->getPatientTable();

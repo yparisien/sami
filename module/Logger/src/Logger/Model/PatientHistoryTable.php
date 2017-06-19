@@ -1,9 +1,10 @@
 <?php
-namespace Bufferspace\Model;
+namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
 /**
+ * Classe DAO de requêtage de la table patient_history
  * 
  * @author yohann.parisien
  *

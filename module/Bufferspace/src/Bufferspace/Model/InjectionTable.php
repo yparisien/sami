@@ -3,6 +3,12 @@ namespace Bufferspace\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Classe DAO de requêtage de la table tmp_injection
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InjectionTable
 {
 	protected $tableGateway;
@@ -12,12 +18,24 @@ class InjectionTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Récupère toutes les injections
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
 
+	/**
+	 * Récupération d'une injection par id
+	 * 
+	 * @param integer $id
+	 * @throws \Exception
+	 * @return Injection
+	 */
 	public function getInjection($id)
 	{
 		$id  = (int) $id;
@@ -31,6 +49,7 @@ class InjectionTable
 	}
 
 	/**
+	 * Récupération d'une injection par id patient
 	 * 
 	 * @param integer $patientId
 	 * @throws \Exception
@@ -49,6 +68,12 @@ class InjectionTable
 
 	}
 
+	/**
+	 * Création / Mise à jour des informations d'une injection
+	 * 
+	 * @param Injection $injection
+	 * @throws \Exception
+	 */
 	public function saveInjection(Injection $injection)
 	{
 		$data = $injection->toArray();
@@ -70,6 +95,11 @@ class InjectionTable
 		}
 	}
 
+	/**
+	 * Suppression d'une injection par id
+	 * 
+	 * @param integer $id
+	 */
 	public function deleteInjection($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));

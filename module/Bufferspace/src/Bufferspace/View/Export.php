@@ -1,6 +1,12 @@
 <?php
 namespace Bufferspace\View;
 
+/**
+ * Classe modèle de la vue view_export
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Export
 {
 	public	$type;

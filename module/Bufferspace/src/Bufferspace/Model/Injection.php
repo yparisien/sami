@@ -1,6 +1,12 @@
 <?php
 namespace Bufferspace\Model;
 
+/**
+ * Classe modèle de la table tmp_injection
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Injection
 {
 	public	$id;

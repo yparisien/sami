@@ -4,6 +4,12 @@ namespace Bufferspace\File;
 use Bufferspace\Model\Patient;
 use Bufferspace\Model\Injection;
 
+/**
+ * Classe d'import / parsing du fichier CSV
+ * 
+ * @author yohann.parisien
+ *
+ */
 class	Importer
 {
 	protected	$_pathfile;
@@ -36,6 +42,10 @@ class	Importer
 	public function	getPatients()	{ return $this->_patients; }
 	public function	getChecksum()	{ return $this->_checksum; }
 
+	/**
+	 * 
+	 * @param string $pathfile
+	 */
 	public function	setPathFile($pathfile)
 	{
 		if(file_exists($pathfile))
@@ -48,7 +58,12 @@ class	Importer
 		}
 	}
 	
-
+	/**
+	 * Chargement et parsing du fichier CSV
+	 * 
+	 * @param string $file
+	 * @throws \Exception
+	 */
 	public function	loadFile($file)
 	{
 		$bCheckSumFound = false;
@@ -166,6 +181,9 @@ class	Importer
 		}
 	}
 
+	/**
+	 * Remplissage des tables tmp_patient & tmp_injection à partir des informations contenues dans le fichier CSV
+	 */
 	public function	fillDataBase()
 	{
 		/* @var $patientTable \Bufferspace\Model\PatientTable */
@@ -207,6 +225,9 @@ class	Importer
 		}
 	}
 
+	/**
+	 * Nettoyage des tables tmp_patient & tmp_injection
+	 */
 	public function	cleanDataBase()
 	{
 		$patientTable = $this->_servicelocator->get('Bufferspace\Model\PatientTable');

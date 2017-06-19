@@ -3,6 +3,11 @@ namespace Bufferspace\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * 
+ * @author yohann.parisien
+ *
+ */
 class PatientTable
 {
 	protected $tableGateway;
@@ -12,18 +17,33 @@ class PatientTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Récupération de tous les patients
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
 
+	/**
+	 * Récupération de tous les patients à injecter
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function	getToInject()
 	{
 		$rowset = $this->tableGateway->select(array('injected' => 0));
 		return $rowset;
 	}
 
+	/**
+	 * Récupération de tous les patiens injectés
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function	getInjected()
 	{
 		$rowset = $this->tableGateway->select(array('injected' => 1));
@@ -31,7 +51,8 @@ class PatientTable
 	}
 
 	/**
-	 * Get Patient
+	 * Récupéation d'un patient par id
+	 * 
 	 * @param integer $id
 	 * @throws \Exception
 	 * @return \Bufferspace\Model\Patient
@@ -48,6 +69,12 @@ class PatientTable
 		return $row;
 	}
 	
+	/**
+	 * Création / Mise à jour des informations d'un patient
+	 * 
+	 * @param Patient $patient
+	 * @throws \Exception
+	 */
 	public function savePatient(Patient &$patient)
 	{
 		$data = array(
@@ -83,6 +110,11 @@ class PatientTable
 		}
 	}
 
+	/**
+	 * Suppression d'un patient par id
+	 * 
+	 * @param integer $id
+	 */
 	public function deletePatient($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
