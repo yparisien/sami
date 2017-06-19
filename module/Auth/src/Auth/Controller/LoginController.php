@@ -20,6 +20,11 @@ use Manager\Robot\RobotService;
 use Manager\Model\User;
 use Start\Controller\CommonController;
 
+/**
+ * 
+ * @author yohann.parisien
+ *
+ */
 class LoginController extends CommonController
 {
 	protected $storage;

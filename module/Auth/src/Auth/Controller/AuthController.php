@@ -15,6 +15,11 @@ use Zend\Authentication\Result;
 use Zend\Session\Container;
 use Logger\Model\InputAction;
 
+/**
+ * 
+ * @author yohann.parisien
+ *
+ */
 class AuthController extends AbstractActionController
 {
 	protected $storage;
