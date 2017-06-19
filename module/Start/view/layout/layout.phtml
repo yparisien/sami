@@ -109,6 +109,9 @@ if ($virtualkeyboardEnable === true) {
 		<?php echo $this->partial('start/common/console.phtml');?>
 		<?php
 		if ($virtualkeyboardEnable === true) {
+			/*
+			 * Définition du layout du clavier virtuel
+			 */
 			$this->inlineScript()->appendScript('
 				$(function(){
 					$("input[type=text].form-control,input[type=password].form-control").keyboard({
@@ -143,9 +146,7 @@ if ($virtualkeyboardEnable === true) {
 			');
 		}
 		?>
-		<?php $this->inlineScript()->appendScript('
-			$("input.toggle-switch").bootstrapSwitch();
-		'); ?>
+		<?php $this->inlineScript()->appendScript('$("input.toggle-switch").bootstrapSwitch();'); ?>
 		<?php echo $this->inlineScript() ?>
 	</body>
 </html>

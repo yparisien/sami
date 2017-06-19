@@ -10,6 +10,7 @@ use Zend\View\Model\ViewModel;
 use Manager\Robot\RobotConstants;
 
 /**
+ * Classe de gestion de code d'erreur
  * 
  * @author yohann.parisien
  *
@@ -26,6 +27,12 @@ class ErrorService implements ServiceLocatorAwareInterface {
 		return $this->sm;
 	}
 	
+	/**
+	 * Vérification de la présence d'un code d'erreur auprès de l'automate
+	 * 
+	 * @param string $modal Génère une modale ou non
+	 * @return boolean[]|NULL[]|unknown[]
+	 */
 	public function checkErrorStatus($modal = false) {
 		$oContainer = new Container('automate_setup');
 		$oContainer->canWork = true;
@@ -41,6 +48,10 @@ class ErrorService implements ServiceLocatorAwareInterface {
 		$translate = $this->sm->get('viewhelpermanager')->get('translate');
 		$error = (bool) $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERROR);
 		
+		/*
+		 * Si une erreur est renvoyée par l'automate
+		 * le controlleur affiche la page d'erreur correspondant au code
+		 */
 		if ($error === true) {
 			$errorID = $robotService->receive(RobotConstants::MAINLOGIC_STATUS_ERRORID);
 			$operator = new Container('operator');

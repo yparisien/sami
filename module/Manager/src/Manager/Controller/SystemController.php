@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
+
 use Start\Controller\CommonController;
 
 class SystemController extends CommonController
@@ -34,6 +35,12 @@ class SystemController extends CommonController
 		return $this->systemTable;
 	}
 
+	/**
+	 * Action affichant l'ensemble des paramètres relatifs au système
+	 * 
+	 * {@inheritDoc}
+	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+	 */
 	public function indexAction()
 	{
 		$oSystem = $this->getSystemTable()->getSystem();
@@ -49,6 +56,7 @@ class SystemController extends CommonController
 
 	/**
 	 * Retrive datas about robot throught http request
+	 * 
 	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function	agetsystemAction()
@@ -75,7 +83,8 @@ class SystemController extends CommonController
 	}
 
 	/**
-	 * @todo insert http call to robot (set locale?)
+	 * Action Ajax de changement de la langue du système
+	 * 
 	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function	asetlocalsystemAction()
@@ -86,9 +95,9 @@ class SystemController extends CommonController
 		return new JsonModel(array('success'=>1));
 	}
 
-
-	
 	/**
+	 * Action Ajax de réglage de l'activité maximum
+	 * 
 	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function	asetmaxactivityAction()

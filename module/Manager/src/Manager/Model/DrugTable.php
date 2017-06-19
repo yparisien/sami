@@ -5,8 +5,12 @@ namespace Manager\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 
-//TODO Rajouter une colonne killed car on ne pas perdre des données du fait que tous les input drug sont sauvegardés
-
+/**
+ * Classe DAO de la table drug
+ * 
+ * @author yohann.parisien
+ *
+ */
 class DrugTable
 {
 	protected $tableGateway;
@@ -16,6 +20,11 @@ class DrugTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Récupération de l'ensemble des DCI
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAllDCI()
 	{
 		$resultSet = $this->tableGateway->select(function (Select $select) {
@@ -31,6 +40,11 @@ class DrugTable
 		return $resultSet;
 	}
 	
+	/**
+	 * Récupération de tous les médicaments
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select();
@@ -38,6 +52,7 @@ class DrugTable
 	}
 
 	/**
+	 * Récupération d'un médicament par id
 	 * 
 	 * @param integer $id
 	 * @throws \Exception
@@ -56,6 +71,7 @@ class DrugTable
 	}
 	
 	/**
+	 * Récupération d'un médicament par DCI
 	 *
 	 * @param string $dci
 	 * @throws \Exception
@@ -73,6 +89,7 @@ class DrugTable
 	}
 	
 	/**
+	 * Récupération d'un médicament par nom
 	 *
 	 * @param string $name
 	 * @throws \Exception
@@ -89,6 +106,12 @@ class DrugTable
 		return $row;
 	}
 
+	/**
+	 * Creátion / Modification d'un médicament en base de donnée
+	 * 
+	 * @param Drug $drug
+	 * @throws \Exception
+	 */
 	public function saveDrug(Drug $drug)
 	{
 		$data = array(
@@ -116,11 +139,21 @@ class DrugTable
 		}
 	}
 
+	/**
+	 * Suppression d'un médicament par id
+	 * 
+	 * @param unknown $id
+	 */
 	public function deleteDrug($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}
 	
+	/**
+	 * Comptage de l'ensemble des médicaments en base de donnée
+	 * 
+	 * @return integer
+	 */
 	public function count()
 	{
 		$resultSet = $this->tableGateway->select();

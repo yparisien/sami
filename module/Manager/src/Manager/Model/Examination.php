@@ -1,6 +1,13 @@
 <?php
+
 namespace Manager\Model;
 
+/**
+ * Classe Modèle de la table examination 
+ * 
+ * @author yohann.parisien
+ * 
+ */
 class Examination
 {
 	public	$id;

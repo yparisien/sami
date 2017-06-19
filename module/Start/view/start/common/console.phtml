@@ -120,10 +120,10 @@
 		</div>
 		<script>
 			$(function() { 
-
+				/*
+				 * Appel AJAX pour changer la valeur d'un paramètre simulé
+				 */
 				var updateConsoleParam = function(paramName, paramValue) {
-					console.info(paramName, paramValue);
-
 					$.ajax({
 						url: "<?php echo $this->url('setconfigvariable'); ?>",
 						type: "POST",
@@ -134,17 +134,19 @@
 							console.warn(result.errorMessage);
 						}
 					});
-					
 				};
-				
+
+				/*
+				 * Détecte le changement d'un valeur pour appel du service AJAX
+				 */
 				$("#consoleModal .form-control").on('change', function(e) {
 					updateConsoleParam($(this).attr("name"), $(this).val());
 				});
 
+				/*
+				 * Détecte le changement d'un valeur pour appel du service AJAX sur les boutons switch
+				 */
 				$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
-					  console.log(this); // DOM element
-					  console.log(event); // jQuery event
-					  console.log(state); // true | false
 					  if (state === true) {
 						  updateConsoleParam($(this).attr("name"), 1);
 					  } else {

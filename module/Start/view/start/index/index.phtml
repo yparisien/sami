@@ -14,7 +14,10 @@
 	var value = 0;
 	var nbConnectionAttempt = 0;
 	var nbConnectionTry = 5;
-	
+
+	/*
+	 * Fonction de calcul de l'avancement de la barre de chargement
+	 */
 	function moveProgressBar(valToAdd, valueToSet)
 	{
 		if (typeof(valToAdd) !== 'undefined') {
@@ -25,6 +28,7 @@
 		}
 		
 		if(value < 100) {
+			//Avancement de la barre avant les 100%
 			$("#loading-progress").css('width', value+'%');
 		} else {
 			$.ajax({
@@ -38,6 +42,7 @@
 					window.setTimeout(function(){gotoindex();}, 1000);
 				}
 				else {
+					//Erreur détectée
 					$("#loading-progress").addClass("progress-bar-danger");
 					$("#loading-error").html("<?php echo sprintf($this->translate('An error occured during setup. Please retry.')); ?><br />" + result.errorMessage);
 					$("#loading-error").show();
@@ -45,7 +50,10 @@
 			});
 		}
 	}
-	
+
+	/*
+	 * Appel de la page de login
+	 */ 
 	function gotoindex() {
 		$(location).attr('href',<?php echo $this->url('log'); ?>);
 	}

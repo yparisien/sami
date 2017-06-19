@@ -15,6 +15,12 @@ use Manager\Model\User;
 use Manager\Model\UserTable;
 use Start\Controller\CommonController;
 
+/**
+ * Controlleur de l'écran superviseurs de création / modification / suppression des utilisateurs
+ * 
+ * @author yohann.parisien
+ *
+ */
 class UserController extends CommonController
 {
 	protected $userTable;
@@ -33,6 +39,12 @@ class UserController extends CommonController
 		return $this->userTable;
 	}
 
+	/**
+	 * Action listant l'ensemble des utilisateurs du S.A.M.I.
+	 * 
+	 * {@inheritDoc}
+	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+	 */
 	public function	indexAction()
 	{
 		$aParam = array();
@@ -40,6 +52,11 @@ class UserController extends CommonController
 		return new ViewModel($aParam);
 	}
 
+	/**
+	 * Action d'ajout d'un utilisateur en base de donnée
+	 * 
+	 * @return \Zend\Http\Response
+	 */
 	public function	addAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -73,6 +90,11 @@ class UserController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de modification d'un utilisateur en base de donnée
+	 * 
+	 * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+	 */
 	public function	editAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -110,6 +132,11 @@ class UserController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de suppression d'un utilisateur en base de donnée
+	 * 
+	 * @return \Zend\Http\Response
+	 */
 	public function	deleteAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -117,8 +144,6 @@ class UserController extends CommonController
 		$oRequest = $this->getRequest();
 		$userId = $this->params('id');
 		$user = $this->getUserTable()->getUser($userId);
-		
-		//TODO Check user can
 		
 		$this->getUserTable()->deleteUser($userId);
 		$message = sprintf($translate("Operator (%s) has been deleted."), $user->login);

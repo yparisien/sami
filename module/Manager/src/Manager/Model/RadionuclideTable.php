@@ -4,6 +4,12 @@ namespace Manager\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Classe DAO de la table radionuclide
+ * 
+ * @author yohann.parisien
+ *
+ */
 class RadionuclideTable
 {
 	protected $tableGateway;
@@ -13,6 +19,11 @@ class RadionuclideTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Liste l'ensemble des radionuclides
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select();
@@ -20,8 +31,9 @@ class RadionuclideTable
 	}
 
 	/**
+	 * Récupération d'un radionuclide par id
 	 * 
-	 * @param unknown $id
+	 * @param integer $id
 	 * @return \Manager\Model\Radionuclide
 	 */
 	public function getRadionuclide($id)
@@ -32,6 +44,11 @@ class RadionuclideTable
 		return $row;
 	}
 
+	/**
+	 * Création / Modification d'un radionuclide
+	 * 
+	 * @param Radionuclide $radionuclide
+	 */
 	public function saveRadionuclide(Radionuclide $radionuclide)
 	{
 		$data = array(
@@ -44,16 +61,19 @@ class RadionuclideTable
 
 		if ($this->getRadionuclide($radionuclide->id))
 		{
-			//TODO Rajouter log fichier
 			$this->tableGateway->update($data, array('id' => $radionuclide->id));
 		}
 		else
 		{
-			//TODO Rajouter log fichier
 			$this->tableGateway->insert($data);
 		}
 	}
 	
+	/**
+	 * Comptage des radionuclides en base de donnée
+	 * 
+	 * @return number
+	 */
 	public function count()
 	{
 		$resultSet = $this->tableGateway->select();

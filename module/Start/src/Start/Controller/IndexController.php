@@ -22,6 +22,12 @@ use Logger\Model\InputDrug;
 use Operator\Model\Sourcekit;
 use Zend\I18n\View\Helper\Translate;
 
+/**
+ * Contolleur de gestion du chargement de l'IHM
+ * 
+ * @author yohann.parisien
+ *
+ */
 class IndexController extends CommonController
 {
 	protected $authservice;
@@ -36,8 +42,7 @@ class IndexController extends CommonController
 	public function getAuthService()
 	{
 		if(!$this->authservice) {
-			$this->authservice = $this->getServiceLocator()
-				->get('AuthService');
+			$this->authservice = $this->getServiceLocator()->get('AuthService');
 		}
 		return $this->authservice;
 	}
@@ -45,8 +50,7 @@ class IndexController extends CommonController
 	public function getSessionStorage()
 	{
 		if(!$this->storage) {
-			$this->storage = $this->getServiceLocator()
-				->get('Auth\Model\AuthStorage');
+			$this->storage = $this->getServiceLocator()->get('Auth\Model\AuthStorage');
 		}
 		return $this->storage;
 	}
@@ -186,7 +190,6 @@ class IndexController extends CommonController
  				$shortName = $robotService->receive($keyShortName);
 				$name = $robotService->receive($keyName);
 				$period = $robotService->receive($keyPeriod);
-// 				$coefficient = $robotService->receive("Isotopes[$n].coefficient");
 				$coefficient = 1;
 				
 				$rn = new Radionuclide();
@@ -318,8 +321,6 @@ class IndexController extends CommonController
 				$oContainer->sourcekitscanned = true;
 				$oContainer->sourcekitbarcode = $sourcekit->serialnumber;
 			}
-			
-			//TODO Rajouter verif retour robot et comparer entrée base sinon erreur
 		} else if ($hasScan === '0') {
 			$hasScan = false;
 			$oContainer->sourcekitscanned = false;
@@ -360,7 +361,6 @@ class IndexController extends CommonController
 			$sourcekit = $this->getSourcekitTable()->searchBySerialNumber($oContainer->sourcekitbarcode);
 			$oContainer->sourcekitid = $sourcekit->id;
 			$oContainer->sourcekitloaded = true;
-			//TODO Rajouter les etats de vérifs kit controllé et kit dilué 
 		} else if ($isLoaded === '0') {
 			$oContainer->sourcekitid = null;
 			$oContainer->sourcekitloaded = false;
@@ -413,14 +413,13 @@ class IndexController extends CommonController
 	}	
 
 	/**
+	 * Vérification que l'interface est prête a être utilisée 
 	 * 
 	 * @return \Zend\View\Model\JsonModel
 	 */
 	public function initsdAction() {
 		$error = false;
 		$errorMessage = null;
-
-		//TODO Check that all inits are OK
 
 		if ($error === false) {
 			$oContainer = new Container('automate_setup');
@@ -435,6 +434,7 @@ class IndexController extends CommonController
 	}
 
 	/**
+	 * Redémmarage de l'interface
 	 * 
 	 * @return \Zend\Http\Response
 	 */
@@ -484,6 +484,8 @@ class IndexController extends CommonController
 	}
 	
 	/**
+	 * Action de la page principale de chargement
+	 * 
 	 * (non-PHPdoc)
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
@@ -546,6 +548,11 @@ class IndexController extends CommonController
 		}
 	}
 	
+	/**
+	 * Action d'échappement d'erreur
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function skiperrorAction() {
 		
 		if($this->getRequest()->isPost()) {
@@ -558,9 +565,12 @@ class IndexController extends CommonController
 		return $jsonModel;
 	}
 	
+	/**
+	 * Enregistrement d'une variable de configuration pour la console de simulation
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function setconfigvariableAction() {
-		//TODO Rajouter if simulated === true
-	
 		if ($this->getRequest()->isPost())
 		{
 			$oRobotConfig = new Container('robot_config');

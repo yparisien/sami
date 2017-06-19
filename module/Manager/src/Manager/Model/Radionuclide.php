@@ -1,6 +1,13 @@
 <?php
+
 namespace Manager\Model;
 
+/**
+ * Classe modèle de la table radionuclide
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Radionuclide
 {
 	public	$id;

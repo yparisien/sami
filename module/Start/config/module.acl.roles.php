@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Règles ACL en fonction des routes
+ */
 return array(
 	'guest'		=> array(
 		'auth',

@@ -5,6 +5,12 @@ namespace Manager\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 
+/**
+ * Classe DAO de la table examination
+ * 
+ * @author yohann.parisien
+ *
+ */
 class ExaminationTable
 {
 	protected $tableGateway;
@@ -14,6 +20,11 @@ class ExaminationTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Récupération de l'ensemble des examens
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select(function (Select $select) {
@@ -24,6 +35,7 @@ class ExaminationTable
 	}
 
 	/**
+	 * Récupération d'un examen par id
 	 * 
 	 * @param integer $id
 	 * @throws \Exception
@@ -41,6 +53,12 @@ class ExaminationTable
 		return $row;
 	}
 
+	/**
+	 * Ajout / Modification d'un examen en base de donnée
+	 * 
+	 * @param Examination $user
+	 * @throws \Exception
+	 */
 	public function saveExamination(Examination $user)
 	{
 		$data = array(
@@ -69,11 +87,21 @@ class ExaminationTable
 		}
 	}
 
+	/**
+	 * Suppression d'un examen par id
+	 * 
+	 * @param unknown $id
+	 */
 	public function deleteExamination($id)
 	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}
 	
+	/**
+	 * Comptage du nombre d'examens en base de donnée
+	 * 
+	 * @return number
+	 */
 	public function count()
 	{
 		$resultSet = $this->tableGateway->select();

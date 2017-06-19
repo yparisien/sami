@@ -14,12 +14,22 @@ use Manager\Model\Drug;
 use Zend\View\Model\JsonModel;
 use Start\Controller\CommonController;
 
+/**
+ * Controlleur des écrans superviseurs de création / modification / suppression des médicaments
+ * 
+ * @author yohann.parisien
+ *
+ */
 class DrugController extends CommonController
 {
 	protected	$drugTable;
 	protected	$radionuclideTable;
 	protected	$vdrugTable;
 
+	/**
+	 * 
+	 * @return \Manager\Model\RadionuclideTable
+	 */
 	public function getRadionuclideTable()
 	{
 		if(!$this->radionuclideTable)
@@ -44,6 +54,10 @@ class DrugController extends CommonController
 		return $this->drugTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\View\VDrugTable
+	 */
 	public function getVDrugTable()
 	{
 		if(!$this->vdrugTable)
@@ -54,7 +68,12 @@ class DrugController extends CommonController
 		return $this->vdrugTable;
 	}
 
-
+	/**
+	 * Action d'affichage des médicaments
+	 * 
+	 * {@inheritDoc}
+	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+	 */
 	public function	indexAction()
 	{
 		$aParam = array();
@@ -62,6 +81,11 @@ class DrugController extends CommonController
 		return new ViewModel($aParam);
 	}
 
+	/**
+	 * Action d'ajout d'un médicament à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+	 */
 	public function	addAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -88,6 +112,11 @@ class DrugController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de modification d'un médicament à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+	 */
 	public function	editAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -117,6 +146,11 @@ class DrugController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de suppression d'un médicament à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response
+	 */
 	public function	deleteAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -124,19 +158,18 @@ class DrugController extends CommonController
 		$drugId = $this->params('id');
 		$vdrug = $this->getVDrugTable()->getVDrug($drugId);
 		
-// 		if ($vdrug->nbExams == 0) {
-			$this->getDrugTable()->deleteDrug($drugId);
-			$message = sprintf($translate("Drug (%s) has been deleted."), $vdrug->drug_name);
-			$this->flashMessenger()->addSuccessMessage($message);
-// 		}
-// 		else {
-// 			$message = sprintf($translate("Drug (%s) can't be deleted. Already in use in %s examinations"), $vdrug->drug_name, $vdrug->nbExams);
-// 			$this->flashMessenger()->addErrorMessage($message);
-// 		}
+		$this->getDrugTable()->deleteDrug($drugId);
+		$message = sprintf($translate("Drug (%s) has been deleted."), $vdrug->drug_name);
+		$this->flashMessenger()->addSuccessMessage($message);
 		
 		return $this->redirect()->toRoute('drug');
 	}
 	
+	/**
+	 * Action Ajax de vérification d'unicité du nom du medicament
+	 * 
+	 * @return \Zend\View\Model\JsonModel
+	 */
 	public function acheckuniqueAction() {
 		$aParams = array('error' => true, 'errorMessage' => 'This drug name already exists.');
 		

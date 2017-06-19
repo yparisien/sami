@@ -13,8 +13,19 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container;
 
+/**
+ * 
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Module
 {
+	/**
+	 * Chargement des ACL et de variables globales à l'initialisation du module
+	 * 
+	 * @param MvcEvent $e
+	 */
 	public function onBootstrap(MvcEvent $e)
 	{
 		// initialize acl handlers
@@ -40,10 +51,16 @@ class Module
 			$oContainer->simulation = $config['robot']['simulation'];
 		}
 		
+		/*
+		 * Récupération des variables de configuration pour les stocker dans la session
+		 */
 		$oContainer->vialvol	= $config['robot']['vialvol'];
 		$oContainer->simulated	= $config['robot']['simulated'];
 		$oContainer->webservice = $config['robot']['webservice'];
 		
+		/*
+		 * Assigne les variables concernant le clavier virtuel dans le layout 
+		 */
 		$layoutViewModel->virtualkeyboardEnable = $config['virtualkeyboard']['enable'];
 		$layoutViewModel->virtualkeyboardSize = $config['virtualkeyboard']['size'];
 		
@@ -67,6 +84,11 @@ class Module
 		);
 	}
 
+	/**
+	 * Initialisation des rôles ACL définis dans le fichier de configuration des rôles
+	 * 
+	 * @param MvcEvent $e
+	 */
 	public function initAcl(MvcEvent $e)
 	{
 
@@ -83,8 +105,9 @@ class Module
 			//adding resources
 			foreach ($resources as $resource) {
 				// Edit 4
-				if(!$acl->hasResource($resource))
+				if(!$acl->hasResource($resource)) {
 					$acl->addResource(new \Zend\Permissions\Acl\Resource\GenericResource($resource));
+				}
 			}
 			//adding restrictions
 			foreach ($allResources as $resource) {
@@ -96,6 +119,11 @@ class Module
 		$e->getViewModel()->acl = $acl;
 	}
 
+	/**
+	 * Determination des rôles ACL en fonction du profil de l'utilisateur
+	 * 
+	 * @param MvcEvent $e
+	 */
 	public function checkAcl(MvcEvent $e)
 	{
 		$route = $e->getRouteMatch()->getMatchedRouteName();
@@ -119,17 +147,20 @@ class Module
 		{
 			$userRole = 'guest';
 		}
-		//if (!$e->getViewModel()->acl->isAllowed($userRole, $route)) {
 		if ($e->getViewModel()->acl->hasResource($route) && !$e->getViewModel()->acl->isAllowed($userRole, $route))
 		{
 			$app = $e->getTarget();
 			$route = $e->getRouteMatch();
-			$e->setError('ACL_ACCESS_DENIED')
-				->setParam('route', $route->getMatchedRouteName());
+			$e->setError('ACL_ACCESS_DENIED')->setParam('route', $route->getMatchedRouteName());
 			$app->getEventManager()->trigger('dispatch.error', $e);
 		}
 	}
 
+	/**
+	 * Fonction de blocage des accès ACL
+	 * 
+	 * @param MvcEvent $e
+	 */
 	public function	blockAccess(MvcEvent $e)
 	{
 		$error = $e->getError();
@@ -143,8 +174,8 @@ class Module
 		if ($result instanceof StdResponse) {
 			return;
 		}
-
 		
+		//Redirection vers la route pour forcer la deconnexion de l'utilisateur
 		$urlToLogin = $e->getRouter()->assemble(array('action' => 'logout'), array('name' => 'log'));
 		
 		$response = $e->getResponse();

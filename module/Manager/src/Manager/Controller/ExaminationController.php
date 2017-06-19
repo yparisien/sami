@@ -16,6 +16,12 @@ use Manager\Model\ExaminationTable;
 use Manager\View\VExaminationTable;
 use Start\Controller\CommonController;
 
+/**
+ * Controlleur des écrans superviseurs de création / modification / suppression des examens
+ * 
+ * @author yohann.parisien
+ *
+ */
 class ExaminationController extends CommonController
 {
 	protected $drugTable;
@@ -51,6 +57,10 @@ class ExaminationController extends CommonController
 		return $this->examinationTable;
 	}
 
+	/**
+	 * 
+	 * @return \Manager\Model\SystemTable
+	 */
 	public function getSystemTable()
 	{
 		if(!$this->systemTable)
@@ -75,6 +85,12 @@ class ExaminationController extends CommonController
 		return $this->vexaminationTable;
 	}
 
+	/**
+	 * Action d'affichage des examens
+	 * 
+	 * {@inheritDoc}
+	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+	 */
 	public function	indexAction()
 	{
 		$aParam = array(
@@ -84,6 +100,11 @@ class ExaminationController extends CommonController
 		return new ViewModel($aParam);
 	}
 
+	/**
+	 * Action d'ajout d'un examen à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+	 */
 	public function	addAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -112,6 +133,11 @@ class ExaminationController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de modification d'un examen à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+	 */
 	public function	editAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -143,6 +169,11 @@ class ExaminationController extends CommonController
 		}
 	}
 
+	/**
+	 * Action de suppression d'un examen à la base de donnée
+	 * 
+	 * @return \Zend\Http\Response
+	 */
 	public function	deleteAction()
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
@@ -151,15 +182,9 @@ class ExaminationController extends CommonController
 		$examinationID = $this->params('id');
 		$examination = $this->getVExaminationTable()->getVExamination($examinationID);
 		
-// 		if ($examination->nbExamsInProgress == 0) {
-			$this->getExaminationTable()->deleteExamination($examinationID);
-			$message = sprintf($translate("Examination (%s) has been deleted."), $examination->examination_name);
-			$this->flashMessenger()->addSuccessMessage($message);
-// 		}
-// 		else {
-// 			$message = sprintf($translate("Examination (%s) can't be deleted. Already %s examinations in progress."), $examination->examination_name, $examination->nbExamsInProgress);
-// 			$this->flashMessenger()->addErrorMessage($message);
-// 		}
+		$this->getExaminationTable()->deleteExamination($examinationID);
+		$message = sprintf($translate("Examination (%s) has been deleted."), $examination->examination_name);
+		$this->flashMessenger()->addSuccessMessage($message);
 		
 		return $this->redirect()->toRoute('examination');
 	}

@@ -102,6 +102,11 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 				</div>
 			</nav>
 			<div class="container">
+				<?php
+					/*
+					 * Bloc d'affichage des messages d'alertes
+					 */
+				?>
 				<?php $flash = $this->flashMessenger(); ?>
 				<?php 
 					$flash->setMessageOpenFormat('<div%s>
@@ -187,7 +192,11 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			</nav>
 		<?php echo $this->partial('start/common/console.phtml');?>
 		<?php 
+		// Désactivation des fonctions d'historiques du navigateur
 		$this->inlineScript()->appendScript("history.pushState(null, null, location.href); window.onpopstate = function(event) { history.go(1); };");
+		/*
+		 * Gestion de la popup de confirmation de suprression d'un élément
+		 */
 		$this->inlineScript()->appendScript('
 			$(function(){
 				$("input[role=\'delete\'].btn, a[role=\'delete\'].btn").on("click", function() {
@@ -207,6 +216,9 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			});
 		');
 		
+		/*
+		 * Gestion de l'impression de l'étiquette
+		 */
 		$this->inlineScript()->appendScript('
 			function printElement(elem, append, delimiter) 
 			{
@@ -235,6 +247,10 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 				
 			}');
 		
+		/*
+		 * Système de gestion de déconnexion automatique + Popup d'alerte de timeout
+		 * Check du timeout sur les pages de type Superviseur
+		 */
 		if (isset($appendSupervisorJsTimeout) && $appendSupervisorJsTimeout === true) {
 			$this->inlineScript()->appendScript('
 					$(function() {
@@ -253,6 +269,10 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			');
 		}
 		
+		/*
+		 * Système de gestion de déconnexion automatique + Popup d'alerte de timeout
+		 * Check du timeout sur les pages de type Opérateur
+		 */
 		if (isset($appendOperatorJsTimeout) && $appendOperatorJsTimeout === true) {
 			$this->inlineScript()->appendScript('
 					$(function() {
@@ -271,6 +291,9 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			');
 		}
 
+		/*
+		 * Système de désactivation des liens pour éviter un retour de l'utilisateur durant certaines opérations
+		 */
 		if (isset($disableLinks) && $disableLinks === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
@@ -295,6 +318,9 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			');
 		}
 		
+		/*
+		 * Réglage du clavier virtuel et des ses différents templates en fonction des différents types de champs de saisie
+		 */
 		if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			$this->inlineScript()->appendScript('
 				$(function(){
@@ -409,6 +435,10 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			');
 		}
 		
+		/*
+		 * Détection des erreurs en provenance de l'automate
+		 * Vérification périodique si autorisée 
+		 */
 		if (!$isAdminPage) {
 			$this->inlineScript()->appendScript('
 				var autorizeCheckErrorSystem = true;
@@ -444,10 +474,11 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		}
 		?>
 		<?php echo $this->inlineScript() ?>
-		<?php if ($this->login == "DelphInnove") {
+		<?php 
+		if ($this->login == "DelphInnove") {
 				echo '<H1 style="z-index: 5000;position: absolute; top: 0px; left: 40%; border: 2px; border-color: red; border-style: dashed;color:red; margin:3px; padding:3px;"> <u>/!\</u> MODE DEMO <u>/!\ </u></H1>'; 
-		};?>
-		
+		};
+		?>
 		<div id="deleteConfirmation" class="modal fade" tabindex="-1" role="dialog" aria-labbeledby="deleteConfirmationTitle" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -518,6 +549,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		</div>
 <?php if (isset($disableRightClick) && $disableRightClick === true) { ?>
 		<script>
+			// Desactivation du clic droit
 			document.onmousedown=disableclick;
 			function disableclick(event) {
   				if (event.button==2) {

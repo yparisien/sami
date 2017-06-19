@@ -13,6 +13,12 @@ use Zend\View\Model\ViewModel;
 
 use Start\Controller\CommonController;
 
+/**
+ * Controlleur de l'écran principal de la section Manager
+ * 
+ * @author yohann.parisien
+ *
+ */
 class RadionuclideController extends CommonController
 {
 	protected $radionuclideTable;
@@ -27,6 +33,11 @@ class RadionuclideController extends CommonController
 		return $this->radionuclideTable;
 	}
 
+	/**
+	 * Liste l'ensemble des radionucléides présent en base
+	 * 
+	 * @return \Zend\View\Model\ViewModel
+	 */
 	public function	indexAction()
 	{
 		$aParam = array();

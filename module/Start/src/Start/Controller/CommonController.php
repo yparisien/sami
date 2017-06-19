@@ -5,6 +5,12 @@ use Zend\Mvc\MvcEvent;
 use Zend\Session\Container;
 use Zend\Mvc\Controller\AbstractActionController;
 
+/**
+ * Controlleur commun 
+ * 
+ * @author yohann.parisien
+ *
+ */
 class CommonController extends AbstractActionController
 {
 	protected $defaultVariables;
@@ -13,6 +19,10 @@ class CommonController extends AbstractActionController
 
 		$oContainer = new Container('automate_setup');
 		
+		/*
+		 * Si l'automate n'est pas en mesure de travailler, 
+		 * redirection systématique vers l'écran principal Opérateur
+		 */
 		if (isset($oContainer->canWork) && $oContainer->canWork === false) {
 			if ($this->getEvent()->getRouteMatch()->getParam('pagetype') == 'frontpage') {
 				if ($this->getEvent()->getRouteMatch()->getMatchedRouteName() != 'operator') {
@@ -26,7 +36,11 @@ class CommonController extends AbstractActionController
 		$this->defaultVariables = array();
 		
 		$oContainer = new Container('robot_config');
-		
+
+		/*
+		 * En mode simulé : Assignation des variables de simulation de la session dans le layout
+		 * Permet d'affiche les valeurs des variables de simulation dans le formulaire de la console
+		 */
 		if ($config['robot']['simulated'] === true) {
 			$this->defaultVariables['initTrytogood']		= $oContainer->simulation['init']['trytogood'];
 			$this->defaultVariables['initRobotinerror']		= $oContainer->simulation['init']['robotinerror'];

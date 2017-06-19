@@ -1,6 +1,13 @@
 <?php
+
 namespace Manager\Model;
 
+/**
+ * Classe Modèle de la table drug
+ * 
+ * @author yohann.parisien
+ *
+ */
 class Drug
 {
 	public	$id;
