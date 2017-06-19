@@ -44,10 +44,7 @@ class RobotConstants {
 	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTART			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStart';
 	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONSTATUS			= 'G_MainLogic.cmd.Input_Soft.MedDilutionStatus'; //0 - EnCours //1 - Probleme controle //2 - Controle OK
 	const MAINLOGIC_CMD_INPUTSOFT_MEDDILUTIONPROGRESS		= 'G_MainLogic.cmd.Input_Soft.MedDilutionProgress';
-	
-	
 	const MAINLOGIC_CMD_INPUTSOFT_RAZ						= 'G_MainLogic.cmd.Input_Soft.RAZ';
-	
 	const MAINLOGIC_CMD_INPUTTRASYS_MEASUREDVALUE 			= 'G_MainLogic.cmd.Input_Trasys.Measured_Value';
 	
 	const MAINLOGIC_PAR_DEMOMODE							= 'G_MainLogic.par.Demo_Mode';
@@ -95,9 +92,7 @@ class RobotConstants {
 	const MEDICAMENT_INPUT_PERIOD							= 'G_Medicament.Input.Period';
 	const MEDICAMENT_INPUT_VOL								= 'G_Medicament.Input.Vol';
 	const MEDICAMENT_INPUT_RADIONUCLIDEID					= 'G_Medicament.Input.ID';
-	
 	const MEDICAMENT_INPUT_DILUTABLE						= 'G_Medicament.Input.Dilutable';
-	
 	
 	const PATIENT_ACTUAL_ACTTOINJ 							= 'G_Patient.Actual.ActToInj';
 	const PATIENT_ACTUAL_PATIENTID							= 'G_Patient.Actual.Patient_ID';
@@ -121,8 +116,6 @@ class RobotConstants {
 	const PATIENT_INPUT_FLOWMAX								= 'G_Patient.Input.Flow_Max';
 	
 	const KIT_VALKITP										= 'G_Kit.Val_Kit_P';
-	
-	
 	const SUBPURGE_STATUS_EVOLUTION							= 'SubPurge.status.Evolution';
 	
 // 	const ERROR_CODE_1										= 'Fiole non conforme';

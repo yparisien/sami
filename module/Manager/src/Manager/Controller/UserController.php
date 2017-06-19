@@ -9,12 +9,13 @@
 
 namespace Manager\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+
 use Manager\Model\User;
 use Manager\Model\UserTable;
+use Start\Controller\CommonController;
 
-class UserController extends AbstractActionController
+class UserController extends CommonController
 {
 	protected $userTable;
 

@@ -139,12 +139,13 @@ if ($virtualkeyboardEnable === true) {
 					$(".ui-keyboard-input").bind("accepted", function(e, keyboard, el){
   						submitSignIn();
 					});
-					
-					$("input.toggle-switch").bootstrapSwitch();
 				});
 			');
 		}
 		?>
+		<?php $this->inlineScript()->appendScript('
+			$("input.toggle-switch").bootstrapSwitch();
+		'); ?>
 		<?php echo $this->inlineScript() ?>
 	</body>
 </html>

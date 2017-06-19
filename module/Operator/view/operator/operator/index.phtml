@@ -25,7 +25,6 @@ use Logger\Model\InputDrug;
 </div>
 <?php } else { ?>
 <div class="full-width-tabs">
-	<?php var_dump($_SESSION['automate_setup']); ?>
   <ul class="nav nav-tabs" role="tablist" id="tablist">
     <li role="presentation" class="tab-max-width <?php echo $preparationIsActive; ?>" data-tab-name="setup"><a href="#preparation" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $this->translate("Preparation"); ?></a></li>
     <li role="presentation" class="tab-max-width <?php echo $injectionIsActive; ?>" data-tab-name="inject"><a href="#injection" aria-controls="injection" role="tab" data-toggle="tab"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $this->translate("Injection"); ?></a></li>

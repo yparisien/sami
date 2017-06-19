@@ -9,10 +9,11 @@
 
 namespace Operator\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ActivimeterController extends AbstractActionController
+use Start\Controller\CommonController;
+
+class ActivimeterController extends CommonController
 {
 
 	public function	indexAction()

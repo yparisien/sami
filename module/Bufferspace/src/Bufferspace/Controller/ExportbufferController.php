@@ -9,15 +9,15 @@
 
 namespace Bufferspace\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Bufferspace\File\Exporter;
-use Zend\View\Helper\ViewModel;
 use Zend\Session\Container;
 
+use Bufferspace\File\Exporter;
+use Start\Controller\CommonController;
 
 
-class ExportbufferController extends AbstractActionController
+
+class ExportbufferController extends CommonController
 {
 	protected $inputfileTable;	
 	

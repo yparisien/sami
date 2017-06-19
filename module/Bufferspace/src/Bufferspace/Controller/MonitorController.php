@@ -8,15 +8,13 @@
  */
 namespace Bufferspace\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container;
-use Zend\Config\Reader\Json;
-use Zend\View\Helper\ViewModel;
-use Manager\Robot\RobotService;
 use Zend\View\Model\JsonModel;
-use Manager\Robot\RobotConstants;
 
-class MonitorController extends AbstractActionController
+use Manager\Robot\RobotConstants;
+use Manager\Robot\RobotService;
+use Start\Controller\CommonController;
+
+class MonitorController extends CommonController
 {
 	protected	$drugTable;
 	protected	$injectionTable;

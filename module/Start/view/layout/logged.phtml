@@ -26,8 +26,9 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 		<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/injection.ico'))
 						->prependStylesheet($this->basepath() . '/css/keyboard-previewkeyset.css')
 						->prependStylesheet($this->basepath() . '/css/keyboard.css')
+						->prependStylesheet($this->basepath() . '/css/animate.css')
 						->prependStylesheet($this->basePath() . '/css/style.css')
-						->prependStylesheet($this->basePath() . '/css/print.css', 'print')
+						->prependStylesheet($this->basepath() . '/css/bootstrap-switch.min.css')
 						->prependStylesheet($this->basepath() . '/css/bootstrap-patch.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
 						->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
@@ -45,6 +46,7 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			->prependFile($this->basepath() . '/js/jquery.keyboard.extension-all.js')
 			->prependFile($this->basepath() . '/js/jquery.keyboard.js')
 			->prependFile($this->basepath() . '/js/jquery-barcode.min.js')
+			->prependFile($this->basePath() . '/js/bootstrap-switch.min.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
 			->prependFile($this->basePath() . '/js/jquery-ui.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
@@ -168,11 +170,22 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 			<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
 				<div class="container">
 					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-text"><span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?></p></li>
-						<li><p class="navbar-text">TOTO</p></li>
+						<li>
+							<p class="navbar-text">
+								<a href="#" data-toggle="modal" data-target="#consoleModal" class="btn btn-info">
+									<span class="badge"><i class="fa fa-terminal"></i></span> Console
+								</a>
+							</p>
+						</li>
+						<li>
+							<p class="navbar-text">
+								<span class="glyphicon glyphicon-copyright-mark"></span> 2013 - <?php echo date('Y'); ?> <?php echo $this->translate('by Delphinnove. All rights reserved.')?>
+							</p>
+						</li>
 					</ul>
 				</div>
 			</nav>
+		<?php echo $this->partial('start/common/console.phtml');?>
 		<?php 
 		$this->inlineScript()->appendScript("history.pushState(null, null, location.href); window.onpopstate = function(event) { history.go(1); };");
 		$this->inlineScript()->appendScript('
@@ -189,6 +202,8 @@ if (isset($virtualkeyboardEnable) && $virtualkeyboardEnable === true) {
 					
 					return false;
 				});
+				
+				$("input.toggle-switch").bootstrapSwitch();
 			});
 		');
 		

@@ -1,77 +1,24 @@
-ZendSkeletonApplication
+Interface graphique S.A.M.I.
 =======================
-
 Introduction
-------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+------------------
+L'interface graphique (IHM) S.A.M.I permet de piloter le système S.A.M.I. de DelphInnove.
+L'IHM est une application web PHP basée sur le framework Zend Framework 2. Couplée à une base de donnée MySQL, elle permet de paramétrer l'accès à l'IHM et d'archiver l'ensemble des informations relatives aux injections. L'envoi et la réception de données en provenance de l'automate se fait par webservices en mode texte.
 
 Installation
-------------
-
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
-
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project -sdev --repository-url="https://packages.zendframework.com" zendframework/skeleton-application path/to/install
-
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
-
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
-
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
-
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
-
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
-
-You would then invoke `composer` to install dependencies per the previous
-example.
-
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
-
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
-
-Web Server Setup
 ----------------
-
-### PHP CLI Server
-
-The simplest way to get started if you are using PHP 5.4 or above is to start the internal PHP cli-server in the root directory:
-
-    php -S 0.0.0.0:8080 -t public/ public/index.php
-
-This will start the cli-server on port 8080, and bind it to all network
-interfaces.
-
-**Note: ** The built-in CLI server is *for development only*.
-
-### Apache Setup
-
-To setup apache, setup a virtual host to point to the public/ directory of the
-project and you should be ready to go! It should look something like below:
-
-    <VirtualHost *:80>
-        ServerName zf2-tutorial.localhost
-        DocumentRoot /path/to/zf2-tutorial/public
-        SetEnv APPLICATION_ENV "development"
-        <Directory /path/to/zf2-tutorial/public>
-            DirectoryIndex index.php
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-    </VirtualHost>
+###Pré-requis
+####Pour Windows
+ 1. Serveur IIS
+ 2. Web Plateform Installer
+ 3. PHP 5.6 ou supérieur
+ 4. Serveur MySQL Community 5.6 ou supérieur
+ 5. GIT
+ 
+###Procédure d'installation
+####Pour Windows 
+ 6. Ouvrir l'invite de commande Git Bash dans à la racine du disque système (C:)
+ 7. Lancer la commande git suivante : 
+`git clone https://bitbucket.org/delphinnove/sami.git`
+ 8. Lancer la commande suivante :
+`php public/index.php install` 

@@ -18,10 +18,4 @@ class IndexController extends AbstractActionController
         return array();
     }
 
-    public function fooAction()
-    {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /index/index/foo
-        return array();
-    }
 }

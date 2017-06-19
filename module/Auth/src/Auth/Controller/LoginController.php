@@ -124,8 +124,6 @@ class LoginController extends CommonController
 				
 				$variables = array('action' => 'logindone', 'login' => $sLogin);
 				
-				$variables = array_merge($variables, $this->getDefaultVariables());
-				
 				return new ViewModel($variables);
 			}
 			
@@ -178,6 +176,10 @@ class LoginController extends CommonController
 				$this->getInputActionTable()->saveInputAction($inputaction);
 				
 				$startPos = 0;
+				/**
+				 * L'interface a redémarré en cours de fonctionnement
+				 * Calcul de l'écran a afficher en fonction du précédent état de l'interface
+				 */
 				if ($oSetup->startposition > 0 && $oSetup->startposition <= 7) {
 					$startPos = $oSetup->startposition;
 					

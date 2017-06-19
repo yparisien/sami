@@ -22,6 +22,10 @@ class AuthController extends AbstractActionController
 	protected $inputActionTable;
 	protected $userTable;
 
+	/**
+	 * Instancie le service ZF2 Auth
+	 * @return object
+	 */
 	public function getAuthService()
 	{
 		if(!$this->authservice) {
@@ -31,6 +35,10 @@ class AuthController extends AbstractActionController
 		return $this->authservice;
 	}
 
+	/**
+	 * Instancie la couche de la session
+	 * @return object
+	 */
 	public function getSessionStorage()
 	{
 		if(!$this->storage) {
@@ -40,6 +48,10 @@ class AuthController extends AbstractActionController
 		return $this->storage;
 	}
 
+	/**
+	 * Connexion à la table InputAction
+	 * @return object
+	 */
 	public function getInputActionTable()
 	{
 		if(!$this->inputActionTable)
@@ -50,6 +62,10 @@ class AuthController extends AbstractActionController
 		return $this->inputActionTable;
 	}
 
+	/**
+	 * Connexion à la table user
+	 * @return object
+	 */
 	public function getUserTable()
 	{
 		if(!$this->userTable)
@@ -79,22 +95,26 @@ class AuthController extends AbstractActionController
 	{
 		$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 		$oContainer = new Container('automate_setup');
+		
+		//Vérification que le système est initialisé
 		$ready = ($oContainer->drugspecified == true
 			&& $oContainer->sourcekitscanned == true
 			&& $oContainer->sourcekitloaded == true
 			&& $oContainer->markedasended == false) ?
 			true : false;
+		
 		if($ready)
 		{
 			$allowedtry = 3;
 
+			//Si on a reçu des données du formulaire d'authentification
 			if($this->getRequest()->isPost())
 			{
 				$oContainer = new Container('authtry');
 				$sLogin = $this->getRequest()->getPost('login');
 				$sPassword = $this->getRequest()->getPost('password');
 				$oUser = $this->getUserTable()->searchByLogin($sLogin);
-				if($oUser && $oUser->password == sha1($sPassword)) // if credential is valid
+				if($oUser && $oUser->password == sha1($sPassword)) // Authentification complète et réussie
 				{
 					$oContainer->confirmtrynumber = 0;
 					$this->redirect()->toRoute('setup', array('action'=>'checkperemption'));
@@ -102,6 +122,7 @@ class AuthController extends AbstractActionController
 				else
 				{
 					$oContainer->confirmtrynumber = (isset($oContainer->confirmtrynumber)) ? $oContainer->confirmtrynumber + 1 : 1;
+					//Trop de mauvais essai ==> Deconnexion
 					if($oContainer->confirmtrynumber >= $allowedtry)
 					{
 						// @todo fix it
@@ -111,6 +132,7 @@ class AuthController extends AbstractActionController
 					}
 					else
 					{
+						//On informe l'utilisateur que le mot de passe saisi est invalide
 						$message = sprintf($translate("Bad password - %s try(s) remaining"), $allowedtry - $oContainer->confirmtrynumber);
 						$this->flashmessenger()->addErrorMessage($message);
 						$this->redirect()->toRoute('auth', array('action'=>'confirmauth'));
@@ -119,6 +141,7 @@ class AuthController extends AbstractActionController
 			}
 			else
 			{
+				//Affichage de la page mot de passe
 				$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
 				$inputAction = new InputAction();
 				$inputAction->inputdate = new \DateTime();
@@ -134,6 +157,7 @@ class AuthController extends AbstractActionController
 		}
 		else
 		{
+			// Erreur et redirection vers la route principale operateur
 			$message = sprintf($translate("You are not authorized to perform this action for the moment"));
 			$this->flashmessenger()->addErrorMessage($message);
 			$this->redirect()->toRoute('operator');

@@ -9,15 +9,14 @@
 
 namespace Manager\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ConsoleModel;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 use Manager\Robot\RobotService;
 use Manager\Robot\RobotConstants;
+use Start\Controller\CommonController;
 
-class SystemController extends AbstractActionController
+class SystemController extends CommonController
 {
 	protected $systemTable;
 

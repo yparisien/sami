@@ -5,7 +5,7 @@ use Zend\Authentication\Storage;
 
 class AuthStorage extends Storage\Session
 {
-	public function	storeAuth($time = 1209600)
+	public function	storeAuth($time = 7200)
 	{
 		$this->session->getManager()->rememberMe($time);
 	}

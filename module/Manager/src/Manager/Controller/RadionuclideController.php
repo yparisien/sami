@@ -9,11 +9,11 @@
 
 namespace Manager\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Manager\Model\Radionuclide;
 
-class RadionuclideController extends AbstractActionController
+use Start\Controller\CommonController;
+
+class RadionuclideController extends CommonController
 {
 	protected $radionuclideTable;
 

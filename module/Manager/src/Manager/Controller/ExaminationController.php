@@ -9,15 +9,14 @@
 
 namespace Manager\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Manager\Model\Drug;
+
 use Manager\Model\Examination;
-use Manager\View\VExamination;
 use Manager\Model\ExaminationTable;
 use Manager\View\VExaminationTable;
+use Start\Controller\CommonController;
 
-class ExaminationController extends AbstractActionController
+class ExaminationController extends CommonController
 {
 	protected $drugTable;
 	protected $examinationTable;

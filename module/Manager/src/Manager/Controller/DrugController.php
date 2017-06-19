@@ -9,12 +9,12 @@
 
 namespace Manager\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Manager\Model\Drug;
 use Zend\View\Model\JsonModel;
+use Start\Controller\CommonController;
 
-class DrugController extends AbstractActionController
+class DrugController extends CommonController
 {
 	protected	$drugTable;
 	protected	$radionuclideTable;
