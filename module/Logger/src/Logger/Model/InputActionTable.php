@@ -4,6 +4,12 @@ namespace Logger\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Classe DAO de la table input_action
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InputActionTable
 {
 	protected $tableGateway;
@@ -13,12 +19,13 @@ class InputActionTable
 		$this->tableGateway = $tableGateway;
 	}
 
-	public function fetchAll()
-	{
-		$resultSet = $this->tableGateway->select();
-		return $resultSet;
-	}
-
+	/**
+	 * Récupération d'un input_action par id
+	 * 
+	 * @param unknown $id
+	 * @throws \Exception
+	 * @return ArrayObject|NULL
+	 */
 	public function getInputAction($id)
 	{
 		$id  = (int) $id;
@@ -31,6 +38,12 @@ class InputActionTable
 		return $row;
 	}
 
+	/**
+	 *  Création / Mise à jour des informations d'une injection
+	 * 
+	 * @param InputAction $action
+	 * @throws \Exception
+	 */
 	public function saveInputAction(InputAction $action)
 	{
 		$data = array(

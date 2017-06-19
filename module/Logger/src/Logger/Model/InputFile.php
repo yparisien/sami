@@ -1,6 +1,12 @@
 <?php
 namespace Logger\Model;
 
+/**
+ * Classe modèle de la table input_file
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InputFile
 {
 	public	$id;

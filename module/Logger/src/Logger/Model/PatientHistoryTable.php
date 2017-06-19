@@ -18,6 +18,12 @@ class PatientHistoryTable {
 		$this->tableGateway = $tableGateway;
 	}
 	
+	/**
+	 * Création / Mise à jour des informations d'un objet PatientHistory
+	 * 
+	 * @param PatientHistory $patientHistory
+	 * @return boolean
+	 */
 	public function save(PatientHistory $patientHistory)
 	{
 		return true;

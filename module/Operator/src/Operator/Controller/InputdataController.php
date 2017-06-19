@@ -7,17 +7,14 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-//TODO Transformer les appels robots
-
 namespace Operator\Controller;
 
 use Zend\Session\Container;
-use Zend\Session\Zend\Session;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Zend\Validator\File\MimeType;
 use Zend\Validator\File\NotExists;
 use Zend\Validator\File\Size;
-use Zend\Validator\File\MimeType;
+use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 use Zend\View\View;
 
 use Bufferspace\File\Importer;
@@ -25,19 +22,29 @@ use Bufferspace\Model\Injection;
 use Bufferspace\Model\InjectionTable;
 use Bufferspace\Model\Patient;
 use Bufferspace\Model\PatientTable;
+
 use Logger\Model\InputAction;
 use Logger\Model\InputDrug;
 use Logger\Model\InputDrugTable;
 use Logger\Model\InputFile;
 use Logger\Model\Logger\Model;
+
 use Manager\Model\ExaminationTable;
+use Manager\Model\User;
 use Manager\Robot\RobotConstants;
 use Manager\Robot\RobotService;
-use Manager\Model\User;
-use Operator\Model\Sourcekit;
+
 use Operator\Model\Patientkit;
+use Operator\Model\Sourcekit;
+
 use Start\Controller\CommonController;
 
+/**
+ * 
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InputdataController extends CommonController
 {
 	protected $inputActionTable;

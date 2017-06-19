@@ -6,6 +6,12 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 use Zend\Session\Container;
 
+/**
+ * Classe DAO de la table input_drug
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InputDrugTable
 {
 	protected $tableGateway;
@@ -15,6 +21,11 @@ class InputDrugTable
 		$this->tableGateway = $tableGateway;
 	}
 
+	/**
+	 * Récupère l'ensemble de input_drug
+	 * 
+	 * @return \Zend\Db\ResultSet\ResultSet
+	 */
 	public function fetchAll()
 	{
 		$resultSet = $this->tableGateway->select();
@@ -22,7 +33,8 @@ class InputDrugTable
 	}
 
 	/**
-	 * Get a single InputDrug
+	 * Get a single InputDrug by id
+	 * 
 	 * @param integer $id
 	 * @throws \Exception
 	 * @return InputDrug
@@ -40,7 +52,8 @@ class InputDrugTable
 	}
 	
 	/**
-	 * Get a single InputDrug
+	 * Get a single InputDrug by drug_id
+	 * 
 	 * @param integer $drugid
 	 * @throws \Exception
 	 * @return InputDrug
@@ -60,6 +73,12 @@ class InputDrugTable
 		return $row;
 	}
 
+	/**
+	 * Création / Mise à jour des informations d'un objet InputDrug
+	 * 
+	 * @param InputDrug $inputdrug
+	 * @throws \Exception
+	 */
 	public function saveInputDrug(InputDrug &$inputdrug)
 	{
 		$data = array(

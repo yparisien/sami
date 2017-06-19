@@ -6,6 +6,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 
 /**
+ * Classe DAO de la table input_file
  * 
  * @author yohann.parisien
  *
@@ -24,6 +25,7 @@ class InputFileTable
 	}
 
 	/**
+	 * Récupération de l'ensemble des InputFiles
 	 * 
 	 * @return \Zend\Db\ResultSet\ResultSet
 	 */
@@ -34,7 +36,8 @@ class InputFileTable
 	}
 
 	/**
-	 * Get a single InputFile
+	 * Get a single InputFile by id
+	 * 
 	 * @param integer $id
 	 * @throws \Exception
 	 * @return InputFile
@@ -52,7 +55,8 @@ class InputFileTable
 	}
 	
 	/**
-	 * Get a single InputFile
+	 * Get last used InputFile
+	 * 
 	 * @throws \Exception
 	 * @return InputFile
 	 */
@@ -76,6 +80,7 @@ class InputFileTable
 	}
 
 	/**
+	 * Création / Mise à jour des informations d'un objet InputFile
 	 * 
 	 * @param InputFile $inputFile
 	 * @throws \Exception

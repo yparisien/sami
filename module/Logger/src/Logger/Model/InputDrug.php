@@ -1,6 +1,12 @@
 <?php
 namespace Logger\Model;
 
+/**
+ * Classe modèle de la table input_drug
+ * 
+ * @author yohann.parisien
+ *
+ */
 class InputDrug
 {
 	public	$id;
